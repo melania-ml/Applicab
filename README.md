@@ -16,16 +16,16 @@ PHP / React.js / Vue.js
 - Interface du client
 
 # Espace de l’administrateur technique 
-Forest Admin / Auth0
+Forest Admin / Auth0 / in house development
 - Administration de l’organisation et gestion de ses utilisateurs
 
 # Back-office
-Auth0 / MySQL / MongoDB / RestApi
+Auth0 / MySQL / MongoDB / RestApi 
 - Contrôle d'accès basé sur les rôles (RBAC)
 - Base de connaissance
 
 # Landing page V1
-Wordpress / Crisp / Auth0
+Wordpress / Freshdesk / Auth0 / in house development
 - Conception et développement du site web “non-connecté” (6 pages max.) 
 - Développement ou intégration d’un espace de connexion utilisateur (login)
 - Développement ou intégration d’un FAQ
