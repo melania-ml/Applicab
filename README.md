@@ -21,7 +21,7 @@ Forest Admin / Auth0 / in house development
 - Administration de l’organisation et gestion de ses utilisateurs
 
 # Back-office
-Auth0 / MySQL / MongoDB / RestApi 
+Auth0 / MySQL / MongoDB / RestApi / Express.js
 - Contrôle d'accès basé sur les rôles (RBAC)
 - Base de connaissance
 
