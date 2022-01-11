@@ -1,6 +1,6 @@
 # Applicab
 
-Le cabinet Soussens Avocats (le “Client”) utilise une application pour suivre chaque dossier et apporter de la transparence à ses clients (l’“Outil”). 
+Le “Client” utilise une application pour suivre chaque dossier et apporter de la transparence à ses clients (l’“Outil”). 
 Le projet a pour objectif de développer l'Outil pour le lancer sur le marché des avocats et des cabinets d’avocats (le “Projet”).
 Altata Conseil (“Altata”) propose de mettre en œuvre une solution permettant une mise sur le marché la plus rapide possible.
 
