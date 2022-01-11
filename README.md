@@ -8,7 +8,7 @@ Altata Conseil (“Altata”) propose de mettre en œuvre une solution permettan
 
 
 # Application V1
-PHP / React.js / Vue.js
+React.js
 - Fiche client
 - Gestion des dossier clients
 - Gestion des étapes d’un dossier 
@@ -17,11 +17,11 @@ PHP / React.js / Vue.js
 - Interface du client
 
 # Espace de l’administrateur technique 
-Forest Admin / Auth0 / in house development
+Auth0 / in house development
 - Administration de l’organisation et gestion de ses utilisateurs
 
 # Back-office
-Auth0 / MySQL / MongoDB / RestApi / Express.js
+Auth0 / Python
 - Contrôle d'accès basé sur les rôles (RBAC)
 - Base de connaissance
 
