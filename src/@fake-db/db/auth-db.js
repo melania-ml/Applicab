@@ -34,7 +34,7 @@ const authDB = {
 								position: 'below'
 							},
 							footer: {
-								display: true,
+								display: false,
 								style: 'fixed',
 								position: 'below'
 							},
@@ -43,10 +43,10 @@ const authDB = {
 					},
 					customScrollbars: true,
 					theme: {
-						main: 'defaultDark',
-						navbar: 'defaultDark',
-						toolbar: 'defaultDark',
-						footer: 'defaultDark'
+						main: 'legacy',
+						navbar: 'legacy',
+						toolbar: 'legacy',
+						footer: 'legacy'
 					}
 				},
 				shortcuts: ['calendar', 'mail', 'contacts']
@@ -136,7 +136,7 @@ mock.onGet('/api/auth/access-token').reply(config => {
 	const data = JSON.parse(config.data);
 	const { access_token } = data;
 
-	if(verifyJWTToken(access_token)) {
+	if (verifyJWTToken(access_token)) {
 		const { id } = jwtDecode(access_token);
 
 		const user = _.cloneDeep(authDB.users.find(_user => _user.uuid === id));
@@ -151,7 +151,7 @@ mock.onGet('/api/auth/access-token').reply(config => {
 		};
 
 		return [200, response];
-	} else{
+	} else {
 		const error = 'Invalid access token detected';
 		return [401, { error }];
 	}
@@ -222,10 +222,9 @@ mock.onPost('/api/auth/user/update').reply(config => {
  * !! Created for Demonstration Purposes, cannot be used for PRODUCTION
  */
 
-const jwtSecret= 'some-secret-code-goes-here';
+const jwtSecret = 'some-secret-code-goes-here';
 
-function base64url(source)
-{
+function base64url(source) {
 	// Encode in classical base64
 	let encodedSource = Base64.stringify(source);
 
@@ -240,8 +239,7 @@ function base64url(source)
 	return encodedSource;
 }
 
-function generateJWTToken(tokenPayload)
-{
+function generateJWTToken(tokenPayload) {
 	// Define token header
 	const header = {
 		alg: 'HS256',
@@ -278,8 +276,7 @@ function generateJWTToken(tokenPayload)
 	return encodedHeader + '.' + encodedPayload + '.' + signature;
 }
 
-function verifyJWTToken(token)
-{
+function verifyJWTToken(token) {
 	// Split the token into parts
 	const parts = token.split('.');
 	const header = parts[0];

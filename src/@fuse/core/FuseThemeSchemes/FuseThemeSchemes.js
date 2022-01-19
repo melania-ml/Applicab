@@ -81,6 +81,7 @@ function FuseThemeSchemes(props) {
   const settings = useSelector(({ fuse }) => fuse.settings.current);
 
   function handleSchemeSelect(themeId) {
+    console.log('settings', settings)
     const newSettings = {
       ...settings,
       theme: {

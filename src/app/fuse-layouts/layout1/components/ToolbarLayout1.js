@@ -16,6 +16,7 @@ import AdjustFontSize from '../../shared-components/AdjustFontSize';
 import FullScreenToggle from '../../shared-components/FullScreenToggle';
 import LanguageSwitcher from '../../shared-components/LanguageSwitcher';
 import NotificationPanelToggleButton from '../../shared-components/notificationPanel/NotificationPanelToggleButton';
+import MessagePanelToggleButton from '../../shared-components/messagePanel/MessagePanelToggleButton';
 
 function ToolbarLayout1(props) {
   const config = useSelector(({ fuse }) => fuse.settings.current.layout.config);
@@ -38,8 +39,8 @@ function ToolbarLayout1(props) {
                 <Hidden lgDown>
                   {(config.navbar.style === 'style-3' ||
                     config.navbar.style === 'style-3-dense') && (
-                    <NavbarToggleButton className="w-40 h-40 p-0 mx-0" />
-                  )}
+                      <NavbarToggleButton className="w-40 h-40 p-0 mx-0" />
+                    )}
 
                   {config.navbar.style === 'style-1' && !navbar.open && (
                     <NavbarToggleButton className="w-40 h-40 p-0 mx-0" />
@@ -58,19 +59,21 @@ function ToolbarLayout1(props) {
           </div>
 
           <div className="flex items-center px-8 h-full overflow-x-auto">
-            <LanguageSwitcher />
+            {/* <LanguageSwitcher />
 
             <AdjustFontSize />
 
             <FullScreenToggle />
 
-            <FuseSearch />
+            <FuseSearch /> */}
 
-            <Hidden lgUp>
+            {/* <Hidden lgUp>
               <ChatPanelToggleButton />
             </Hidden>
 
-            <QuickPanelToggleButton />
+            <QuickPanelToggleButton /> */}
+
+            <MessagePanelToggleButton />
 
             <NotificationPanelToggleButton />
 

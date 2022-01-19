@@ -1,0 +1,55 @@
+import { motion } from 'framer-motion';
+import { Table, TableBody, TableCell, TableRow, TableHead } from '@mui/material';
+
+const todos = [
+    {
+        id: 1,
+        Étapes: 'Rendez-vous-de travail',
+        client: 'Adhoc',
+        status: 'A faire',
+        date: '06/01/2022 12:54',
+    },
+    {
+        id: 2,
+        Étapes: 'Take a look',
+        client: 'Adhoc',
+        status: 'A faire',
+        date: '07/01/2022 06:10',
+    },
+];
+
+export default function TodoList() {
+    return (
+        <motion.div
+            initial={{ y: 50, opacity: 0.8 }}
+            animate={{ y: 0, opacity: 1, transition: { delay: 0.3 } }}
+            style={{ background: '#FFFFFF', padding: 15, marginLeft: 15, borderRadius: 10 }}
+        >
+            <h1 style={{ padding: 8 }}>
+                <b>To do</b>
+            </h1>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Date</TableCell>
+                        <TableCell>Étapes</TableCell>
+                        <TableCell className="hidden sm:table-cell">Client</TableCell>
+                        <TableCell className="hidden sm:table-cell">Status</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {todos.map((item) => {
+                        return (
+                            <TableRow key={item.id} hover className="h-64">
+                                <TableCell className="font-medium">{item.date}</TableCell>
+                                <TableCell className="font-medium">{item.Étapes}</TableCell>
+                                <TableCell className="hidden sm:table-cell">{item.client}</TableCell>
+                                <TableCell className="hidden sm:table-cell">{item.status}</TableCell>
+                            </TableRow>
+                        );
+                    })}
+                </TableBody>
+            </Table>
+        </motion.div>
+    )
+}

@@ -2,6 +2,7 @@ import FuseScrollbars from '@fuse/core/FuseScrollbars';
 import { styled, useTheme } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Logo from 'app/fuse-layouts/shared-components/Logo';
+import Typography from '@mui/material/Typography';
 import NavbarToggleButton from 'app/fuse-layouts/shared-components/NavbarToggleButton';
 import Navigation from 'app/fuse-layouts/shared-components/Navigation';
 import UserNavbarHeader from 'app/fuse-layouts/shared-components/UserNavbarHeader';
@@ -12,14 +13,12 @@ const Root = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
   color: theme.palette.text.primary,
   '& ::-webkit-scrollbar-thumb': {
-    boxShadow: `inset 0 0 0 20px ${
-      theme.palette.mode === 'light' ? 'rgba(0, 0, 0, 0.24)' : 'rgba(255, 255, 255, 0.24)'
-    }`,
+    boxShadow: `inset 0 0 0 20px ${theme.palette.mode === 'light' ? 'rgba(0, 0, 0, 0.24)' : 'rgba(255, 255, 255, 0.24)'
+      }`,
   },
   '& ::-webkit-scrollbar-thumb:active': {
-    boxShadow: `inset 0 0 0 20px ${
-      theme.palette.mode === 'light' ? 'rgba(0, 0, 0, 0.37)' : 'rgba(255, 255, 255, 0.37)'
-    }`,
+    boxShadow: `inset 0 0 0 20px ${theme.palette.mode === 'light' ? 'rgba(0, 0, 0, 0.37)' : 'rgba(255, 255, 255, 0.37)'
+      }`,
   },
 }));
 
@@ -46,7 +45,11 @@ function NavbarStyle1Content(props) {
         className="flex flex-row items-center shrink h-48 md:h-64 min-h-48 md:min-h-64 px-12 shadow-0"
       >
         <div className="flex flex-1 mx-4">
-          <Logo />
+          <img src="assets/images/logos/applicab.svg" alt="logo" />
+          {/* <h1 className="logo-text ml-8" style={{ fontFamily: 'cursive' }} color="inherit">
+            Applicab
+          </h1> */}
+          {/* <Logo /> */}
         </div>
 
         <NavbarToggleButton className="w-40 h-40 p-0" />

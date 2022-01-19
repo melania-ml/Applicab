@@ -113,7 +113,7 @@ function FuseShortcuts(props) {
         animate="show"
         className={clsx('flex flex-1', props.variant === 'vertical' && 'flex-col')}
       >
-        {shortcutItems.map(
+        {/* {shortcutItems.map(
           (_item) =>
             _item && (
               <Link to={_item.url} key={_item.id} role="button">
@@ -136,9 +136,9 @@ function FuseShortcuts(props) {
                 </Tooltip>
               </Link>
             )
-        )}
+        )} */}
 
-        <Tooltip
+        {/* <Tooltip
           title="Click to add/remove shortcut"
           placement={props.variant === 'horizontal' ? 'bottom' : 'left'}
         >
@@ -153,7 +153,7 @@ function FuseShortcuts(props) {
           >
             <Icon sx={{ color: amber[600] }}>star</Icon>
           </IconButton>
-        </Tooltip>
+        </Tooltip> */}
       </motion.div>
 
       <Menu

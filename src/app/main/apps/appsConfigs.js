@@ -1,5 +1,5 @@
 import AcademyAppConfig from './academy/AcademyAppConfig';
-import CalendarAppConfig from './calendar/CalendarAppConfig';
+import DashboardAppConfig from './dashboard/DashboardAppConfig';
 import ChatAppConfig from './chat/ChatAppConfig';
 import ContactsAppConfig from './contacts/ContactsAppConfig';
 import AnalyticsDashboardAppConfig from './dashboards/analytics/AnalyticsDashboardAppConfig';
@@ -18,7 +18,7 @@ const appsConfigs = [
   TodoAppConfig,
   FileManagerAppConfig,
   ContactsAppConfig,
-  CalendarAppConfig,
+  DashboardAppConfig,
   ChatAppConfig,
   ECommerceAppConfig,
   ScrumboardAppConfig,
