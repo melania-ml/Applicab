@@ -50,7 +50,7 @@ export default function Filters() {
             <FormControl className="flex w-full sm:w-320 mx-16" variant="outlined">
                 <InputLabel style={{ color: '#FFFFFF' }}>Dossiers</InputLabel>
                 <Select
-                    label="Status"
+                    label="Dossiers"
                     value={selectedFolder}
                     onChange={(e) => setSelectedFolder(e.target.value)}
                 >

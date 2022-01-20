@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { FormControl, InputLabel, Select, MenuItem, TextField } from '@mui/material';
 
 const status = [
     {
@@ -186,6 +186,16 @@ export default function Filters() {
                     ))}
                 </Select>
             </FormControl>
+            {/* <FormControl className="flex w-full sm:w-200 mx-16" variant="outlined">
+                <TextField
+                    // {...field}
+                    style={{ color: '#FFFFFF' }}
+                    className="mb-12"
+                    label="Tags"
+                    variant="outlined"
+                    fullWidth
+                />
+            </FormControl> */}
         </div>
     )
 }

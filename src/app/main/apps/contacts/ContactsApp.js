@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useDeepCompareEffect } from '@fuse/hooks';
 import { styled } from '@mui/material/styles';
-import ContactDialog from './components/ContactDialog';
+import ContactDialog from './components/ContactDialog/ContactDialog';
 import ContactsHeader from './components/ContactsHeader';
 import ContactsList from './components/ContactsList';
 import reducer from './store';
