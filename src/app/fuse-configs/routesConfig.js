@@ -32,6 +32,7 @@ const routes = [
   {
     path: '/',
     element: <Navigate to="apps/dashboard" />,
+    //element: <Navigate to="/login" />,
   },
   {
     path: 'loading',

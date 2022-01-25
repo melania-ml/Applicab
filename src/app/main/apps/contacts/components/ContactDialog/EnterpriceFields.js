@@ -7,13 +7,14 @@ import {
     InputLabel,
     Select,
     Autocomplete,
-    InputAdornment
+    InputAdornment,
+    Chip
 } from "@mui/material";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
 
-import Nationalities from '../../../../constants/Nationalities';
+import Countries from '../../../../constants/Countries';
 
 const defaultValues = {
     id: "",
@@ -30,7 +31,7 @@ const defaultValues = {
     notes: "",
 };
 
-
+const tags = []
 const titles = [
     {
         id: 1,
@@ -117,14 +118,6 @@ const pays = [
     },
 ];
 
-const cities = [
-    {
-        id: 1,
-        value: "Ahmedabad",
-        label: "Ahmedabad",
-    },
-];
-
 const status = [{
     id: 1,
     value: "Actif",
@@ -135,10 +128,10 @@ const status = [{
     label: "Inactif",
 },]
 
-const nationalities = Nationalities
+const countries = Countries
 
 const schema = yup.object().shape({
-    name: yup.string().required("You must enter a name"),
+    companyName: yup.string().required("You must enter a companyName"),
 });
 
 export default function EnterpriceFields() {
@@ -146,6 +139,7 @@ export default function EnterpriceFields() {
     const [selectedPays, setSelectedPays] = useState("");
     const [selectedCity, setSelectedCity] = useState("");
     const [selectedStatus, setSelectedStatus] = useState("")
+    const [tagValue, setTagValue] = useState([...tags]);
 
     const { control, watch, reset, handleSubmit, formState, getValues } = useForm(
         {
@@ -167,44 +161,43 @@ export default function EnterpriceFields() {
                             value={selectedTitle}
                             onChange={(e) => setSelectedTitle(e.target.value)}
                         >
-                            {titles.map((category) => (
-                                <MenuItem value={category.value} key={category.id}>
-                                    {category.label}
-                                </MenuItem>
-                            ))}
+                            <div style={{ height: 300 }}>
+                                {titles.map((category) => (
+                                    <MenuItem value={category.value} key={category.id}>
+                                        {category.label}
+                                    </MenuItem>
+                                ))}
+                            </div>
                         </Select>
                     </FormControl>
                 )}
             />
             <Controller
                 control={control}
-                render={({ field }) => (
+                name='companyName'
+                render={({ field: { onChange } }) => (
                     <TextField
                         // {...field}
                         className="mb-12"
                         label="Nom de la compagnie"
                         variant="outlined"
                         fullWidth
+                        onChange={(e) => onChange(e)}
                     />
                 )}
             />
             <Controller
                 control={control}
                 render={({ field }) => (
-                    <FormControl className="flex w-full mb-12" variant="outlined">
-                        <InputLabel>Pays</InputLabel>
-                        <Select
-                            label="Pays"
-                            value={selectedPays}
-                            onChange={(e) => setSelectedPays(e.target.value)}
-                        >
-                            {nationalities.map((category) => (
-                                <MenuItem value={category.en_short_name} key={category.alpha_3_code}>
-                                    {category.en_short_name}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
+                    <Autocomplete
+                        className='flex w-full mb-12'
+                        disablePortal
+                        style={{ color: '#FFFFFF' }}
+                        options={Countries}
+                        renderInput={(params) =>
+                            <TextField {...params} label="Pays" />
+                        }
+                    />
                 )}
             />
             <Controller
@@ -222,20 +215,13 @@ export default function EnterpriceFields() {
             <Controller
                 control={control}
                 render={({ field }) => (
-                    <FormControl className="flex w-full mb-12" variant="outlined">
-                        <InputLabel>Ville</InputLabel>
-                        <Select
-                            label="Ville"
-                            value={selectedCity}
-                            onChange={(e) => setSelectedCity(e.target.value)}
-                        >
-                            {cities.map((category) => (
-                                <MenuItem value={category.value} key={category.id}>
-                                    {category.label}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
+                    <TextField
+                        // {...field}
+                        className="mb-12"
+                        label="Ville"
+                        variant="outlined"
+                        fullWidth
+                    />
                 )}
             />
             <Controller
@@ -258,7 +244,7 @@ export default function EnterpriceFields() {
                         className="mt-8 mb-16"
                         label="Capital social"
                         InputProps={{
-                            startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                            startAdornment: <InputAdornment position="start">€</InputAdornment>,
                         }}
                         type="number"
                         variant="outlined"
@@ -376,27 +362,31 @@ export default function EnterpriceFields() {
                 name="categories"
                 control={control}
                 defaultValue={[]}
-                render={({ field: { onChange, value } }) => (
+                render={({ field }) => (
                     <Autocomplete
-                        className="mb-12"
+                        className='w-full mb-12'
                         multiple
                         freeSolo
-                        options={[]}
-                        value={value}
-                        // onChange={(event, newValue) => {
-                        //   onChange(newValue);
-                        // }}
+                        value={tagValue}
+                        onChange={(event, newValue) => {
+                            setTagValue([
+                                ...tags,
+                                ...newValue.filter((option) => tags.indexOf(option) === -1),
+                            ]);
+                        }}
+                        options={tags}
+                        getOptionLabel={(option) => option.title}
+                        renderTags={(tagValue, getTagProps) =>
+                            tagValue.map((option, index) => (
+                                <Chip
+                                    label={option}
+                                    {...getTagProps({ index })}
+                                    disabled={tags.indexOf(option) !== -1}
+                                />
+                            ))
+                        }
                         renderInput={(params) => (
-                            <TextField
-                                // {...params}
-                                placeholder="Tags"
-                                label="Tags"
-                                variant="outlined"
-                                fullWidth
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                            />
+                            <TextField {...params} label="Tags" placeholder="Add your tags" />
                         )}
                     />
                 )}

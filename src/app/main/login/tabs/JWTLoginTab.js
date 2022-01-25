@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import TextField from '@mui/material/TextField';
+import { TextField, FormGroup, FormControlLabel, Checkbox } from '@mui/material';
 import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
 import Icon from '@mui/material/Icon';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -8,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { motion } from 'framer-motion';
 import { submitLogin } from 'app/auth/store/loginSlice';
 import * as yup from 'yup';
 import _ from '@lodash';
@@ -20,7 +22,10 @@ const schema = yup.object().shape({
   password: yup
     .string()
     .required('Please enter your password.')
-    .min(4, 'Password is too short - should be 4 chars minimum.'),
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{13,20}$/,
+      "Must Contain 13 Characters not more than 20, One Uppercase, One Lowercase, One Number and one special case Character"
+    ),
 });
 
 const defaultValues = {
@@ -94,7 +99,7 @@ function JWTLoginTab(props) {
             <TextField
               {...field}
               className="mb-16"
-              label="Password"
+              label="Mot de passe"
               type="password"
               error={!!errors.password}
               helperText={errors?.password?.message}
@@ -117,6 +122,15 @@ function JWTLoginTab(props) {
           )}
         />
 
+        <div className="flex flex-row items-center justify-between pb-32">
+          <FormGroup>
+            <FormControlLabel control={<Checkbox defaultChecked />} label="Se souvenir de moi" />
+          </FormGroup>
+          <Link className="font-normal" to="/register">
+            Mot de passe oublié ?
+          </Link>
+        </div>
+
         <Button
           type="submit"
           variant="contained"
@@ -126,11 +140,34 @@ function JWTLoginTab(props) {
           disabled={_.isEmpty(dirtyFields) || !isValid}
           value="legacy"
         >
-          Login
+          Connexion
         </Button>
       </form>
-
-      <table className="w-full mt-32 text-center">
+      <br />
+      <div className="flex flex-row items-center justify-center">
+        <hr style={{ width: 50 }} />
+        <b className='m-10'>OU</b>
+        <hr style={{ width: 50 }} />
+      </div>
+      <br />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, transition: { delay: 0.3 } }}
+        style={{ display: 'grid' }}
+      >
+        <Button
+          variant="outlined"
+        >
+          Connexion avec Google
+        </Button>
+        <br />
+        <Button
+          variant="outlined"
+        >
+          Connexion avec Linkedin
+        </Button>
+      </motion.div>
+      {/* <table className="w-full mt-32 text-center">
         <thead className="mb-4">
           <tr>
             <th>
@@ -178,7 +215,7 @@ function JWTLoginTab(props) {
             </td>
           </tr>
         </tbody>
-      </table>
+      </table> */}
     </div>
   );
 }

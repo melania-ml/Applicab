@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { FormControl, InputLabel, Select, MenuItem, Autocomplete, TextField } from '@mui/material';
 
 const status = [
     {
@@ -47,20 +47,13 @@ export default function Filters() {
         <div
             className="bgm-10 flex items-center"
         >
-            <FormControl className="flex w-full sm:w-320 mx-16" variant="outlined">
-                <InputLabel style={{ color: '#FFFFFF' }}>Dossiers</InputLabel>
-                <Select
-                    label="Dossiers"
-                    value={selectedFolder}
-                    onChange={(e) => setSelectedFolder(e.target.value)}
-                >
-                    {folders.map((category) => (
-                        <MenuItem value={category.value} key={category.id}>
-                            {category.label}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
+            <Autocomplete
+                className='w-full sm:w-320 mx-16'
+                disablePortal
+                style={{ color: '#FFFFFF' }}
+                options={folders}
+                renderInput={(params) => <TextField style={{ color: '#FFFFFF' }} {...params} label="Dossiers" InputLabelProps={{ style: { color: '#FFFFFF' } }} />}
+            />
             <FormControl className="flex w-full sm:w-320 mx-16" variant="outlined">
                 <InputLabel style={{ color: '#FFFFFF' }}>Status</InputLabel>
                 <Select

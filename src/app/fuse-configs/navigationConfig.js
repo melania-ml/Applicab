@@ -25,6 +25,14 @@ const navigationConfig = [
     icon: 'account_box',
     url: 'apps/contacts/all',
   },
+  {
+    id: 'dossiers',
+    title: 'Dossiers',
+    translate: 'Dossiers',
+    type: 'item',
+    icon: 'view_column',
+    url: 'apps/dossiers/all',
+  },
 ];
 
 // const navigationConfig = [

@@ -108,12 +108,12 @@ mock.onGet('/api/auth').reply(async (config) => {
 		});
 	}
 
-	if (user && user.password !== password) {
-		error.push({
-			type: 'password',
-			message: 'Check your password'
-		});
-	}
+	// if (user && user.password !== password) {
+	// 	error.push({
+	// 		type: 'password',
+	// 		message: 'Check your password'
+	// 	});
+	// }
 
 
 	if (error.length === 0) {

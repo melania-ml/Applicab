@@ -142,6 +142,7 @@ export default function Filters() {
     const [selectedTitle, setSelectedTitle] = useState('');
     return (
         <div
+            style={{ marginTop: 12 }}
             className="bgm-10 flex"
         >
             <FormControl className="flex w-full sm:w-200 mx-16" variant="outlined">
@@ -151,11 +152,13 @@ export default function Filters() {
                     value={selectedType}
                     onChange={(e) => setSelectedType(e.target.value)}
                 >
-                    {types.map((category) => (
-                        <MenuItem value={category.value} key={category.id}>
-                            {category.label}
-                        </MenuItem>
-                    ))}
+                    <div style={{ height: 300 }}>
+                        {types.map((category) => (
+                            <MenuItem value={category.value} key={category.id}>
+                                {category.label}
+                            </MenuItem>
+                        ))}
+                    </div>
                 </Select>
             </FormControl>
             <FormControl className="flex w-full sm:w-200 mx-16" variant="outlined">
@@ -165,11 +168,13 @@ export default function Filters() {
                     value={selectedTitle}
                     onChange={(e) => setSelectedTitle(e.target.value)}
                 >
-                    {titles.map((category) => (
-                        <MenuItem value={category.value} key={category.id}>
-                            {category.label}
-                        </MenuItem>
-                    ))}
+                    <div style={{ height: 300 }}>
+                        {titles.map((category) => (
+                            <MenuItem value={category.value} key={category.id}>
+                                {category.label}
+                            </MenuItem>
+                        ))}
+                    </div>
                 </Select>
             </FormControl>
             <FormControl className="flex w-full sm:w-200 mx-16" variant="outlined">
@@ -186,16 +191,17 @@ export default function Filters() {
                     ))}
                 </Select>
             </FormControl>
-            {/* <FormControl className="flex w-full sm:w-200 mx-16" variant="outlined">
+            <FormControl className="flex w-full sm:w-200 mx-16" variant="outlined">
                 <TextField
                     // {...field}
+                    InputLabelProps={{ style: { color: '#FFFFFF' } }}
                     style={{ color: '#FFFFFF' }}
                     className="mb-12"
                     label="Tags"
                     variant="outlined"
                     fullWidth
                 />
-            </FormControl> */}
+            </FormControl>
         </div>
     )
 }
