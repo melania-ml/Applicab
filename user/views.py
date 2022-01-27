@@ -2,6 +2,8 @@ import secrets
 import string
 
 # Create your views here.
+from datetime import datetime, timedelta
+
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -68,6 +70,28 @@ class validateEmailOtp(APIView):
         except Exception as e:
             res = ResponseInfo({'validation': False}, "Invalid Otp", False, status.HTTP_401_UNAUTHORIZED)
             return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
+    def put(self, request):
+        userid = request.data.get('userId', None)
+        try:
+            secretsGenerator = secrets.SystemRandom()
+            emailOtp = secretsGenerator.randrange(100000, 999999)
+
+            userData = User.objects.get(id=userid)
+            userData.emil_otp = emailOtp
+            userData.email_otp_date = datetime.now()
+            userData.save()
+            stPasswordText = emailText.setPassword() | emailText.commonUrls()
+            stPasswordText['otp'] = emailOtp
+            send_email([userData.email],
+                       'Password Set', 'email.html', stPasswordText)
+            res = ResponseInfo({'otp_shared': True},
+                               "Otp shared Successfully", False, status.HTTP_200_OK)
+            return Response(res.success_payload(), status=status.HTTP_200_OK)
+        except Exception as e:
+            print(e)
+            res = ResponseInfo({'otp_shared': False}, "User Not Found", False, status.HTTP_404_NOT_FOUND)
+            return Response(res.success_payload(), status=status.HTTP_404_NOT_FOUND)
 
 
 class setPassword(APIView):

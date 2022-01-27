@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 
+import django
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.contrib.postgres.fields import CIEmailField
@@ -69,8 +70,9 @@ class User(AbstractUser):
     profile = models.ImageField(
         upload_to=profile_upload_image_to, blank=True, null=True)
     is_locked = models.BooleanField(default=False)
-    created_date = models.DateTimeField(auto_now=True)
+    created_date = models.DateTimeField(auto_now=False, default=django.utils.timezone.now)
     updated_date = models.DateTimeField(auto_now=True)
+    email_otp_date = models.DateTimeField(auto_now=False, default=django.utils.timezone.now)
 
     is_active = models.BooleanField(default=False)
     emil_otp = models.IntegerField(default=None, blank=True, null=True)
