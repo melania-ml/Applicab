@@ -156,9 +156,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads/')  # 'uploads' is my media folder
 MEDIA_URL = '/uploads/'
 
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'test13samcom13@gmail.com'
-EMAIL_HOST_PASSWORD = 'samcom@84'
+EMAIL_USE_SSL = False
+EMAIL_HOST = 'ssl0.ovh.net'
+EMAIL_HOST_USER = 'support@applicab-avocats.com'
+EMAIL_HOST_PASSWORD = "(*nM45!ynq>7M#'."
 EMAIL_PORT = 587
 
 ATA_UPLOAD_MAX_MEMORY_SIZE = 50000000

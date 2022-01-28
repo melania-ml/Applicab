@@ -11,11 +11,11 @@ def send_email(email_list, subject, template_name, context):
             subject=subject,
             html_message=msg_html,
             message=msg_html,
-            from_email="samcom@gmail.com",
+            from_email="support@applicab-avocats.com",
             recipient_list=email_list,
             fail_silently=True
         )
         return 'success your email has been sent'
     except BadHeaderError as e:
-        print(e)
+        print("err",e)
         raise e
