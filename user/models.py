@@ -83,6 +83,7 @@ class User(AbstractUser):
     is_active = models.BooleanField(default=False)
     emil_otp = models.IntegerField(default=None, blank=True, null=True)
     email_token = models.CharField(max_length=40, blank=True, null=True)
+    forgot_password_token = models.CharField(max_length=40, blank=True, null=True)
     # token is used to reset pw
     token = models.CharField(max_length=10, null=True, blank=True)
 

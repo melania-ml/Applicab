@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'email', 'first_name',
-                  'last_name', 'phone_number', 'password', 'emil_otp', 'email_token']
+                  'last_name', 'phone_number', 'password', 'emil_otp', 'email_token','user_type','legal_status','title','company_name','country','nationality','address','city','postal_code','capital_social','RCS_city','native_city','number','fixe','comments','tags','profession','status','department','client_type',]
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
