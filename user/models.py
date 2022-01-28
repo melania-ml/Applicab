@@ -3,12 +3,13 @@ from datetime import datetime, timedelta
 import django
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
-from django.contrib.postgres.fields import CIEmailField
+from django.contrib.postgres.fields import CIEmailField, ArrayField
 from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 import jwt
 from django.conf import settings
+from static import staticModelChoiceFields
 
 
 def profile_upload_image_to(instance, filename):
@@ -61,12 +62,17 @@ class User(AbstractUser):
     first_name = models.CharField(max_length=40,
                                   validators=[RegexValidator(r'^[a-zA-Z ]*$', 'Only characters are allowed.')],
                                   help_text='Enter name', blank=True, null=True)
+    name = models.CharField(max_length=40,
+                            validators=[RegexValidator(r'^[a-zA-Z ]*$', 'Only characters are allowed.')],
+                            help_text='Enter name', blank=True, null=True)
     last_name = models.CharField(max_length=40,
                                  validators=[RegexValidator(r'^[a-zA-Z ]*$', 'Only characters are allowed.')],
                                  help_text='Enter name', blank=True, null=True)
     phone_number = models.CharField(max_length=40,
                                     validators=[RegexValidator(r'^[0-9 ]*$', 'Only numbers are allowed.')],
                                     verbose_name='phone_number', blank=True, null=True)
+    date_of_birth = models.DateField(blank=True, null=True)
+    city_of_birth = models.DateField(blank=True, null=True)
     profile = models.ImageField(
         upload_to=profile_upload_image_to, blank=True, null=True)
     is_locked = models.BooleanField(default=False)
@@ -80,6 +86,34 @@ class User(AbstractUser):
     # token is used to reset pw
     token = models.CharField(max_length=10, null=True, blank=True)
 
+    user_type = models.CharField(max_length=255,
+                                 choices=staticModelChoiceFields.userTypeChoiceFields(),
+                                 null=True, blank=True)
+    legal_status = models.CharField(max_length=255, choices=staticModelChoiceFields.legalStatusChoiceFields(),
+                                    null=True, blank=True)
+    title = models.CharField(max_length=255, choices=staticModelChoiceFields.titleChoiceFields(),
+                             null=True, blank=True)
+    company_name = models.CharField(max_length=255, null=True, blank=True)
+    country = models.CharField(max_length=255, null=True, blank=True)
+    nationality = models.CharField(max_length=255, null=True, blank=True)
+    address = models.CharField(max_length=255, null=True, blank=True)
+    city = models.CharField(max_length=255, null=True, blank=True)
+    postal_code = models.IntegerField(null=True, blank=True)
+    capital_social = models.IntegerField(null=True, blank=True)
+    RCS_city = models.CharField(max_length=255, null=True, blank=True)
+    native_city = models.CharField(max_length=255, null=True, blank=True)
+    number = models.CharField(max_length=255, null=True, blank=True)
+    fixe = models.IntegerField(null=True, blank=True)
+    comments = models.CharField(max_length=5000, null=True, blank=True)
+    tags = ArrayField(models.CharField(max_length=200), null=True,blank=True)#models.CharField(max_length=255, null=True, blank=True)
+    profession = models.CharField(max_length=255, null=True, blank=True)
+    status = models.CharField(max_length=255, choices=staticModelChoiceFields.statusChoiceFields(),
+                              null=True, blank=True)
+    department = models.CharField(max_length=255, choices=staticModelChoiceFields.departmentChoiceFields(),
+                                  null=True, blank=True)
+    # Used for marital status of client
+    client_type = models.CharField(max_length=255, choices=staticModelChoiceFields.clientTypeChoiceFields(),
+                                   null=True, blank=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 

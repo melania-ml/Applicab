@@ -1,12 +1,19 @@
 from django.contrib import admin
-
-# Register your models here.
-from django.apps import apps
+from .models import *
 
 
-models = apps.get_models()
-for model in models:
-    try:
-        admin.site.register(model)
-    except admin.sites.AlreadyRegistered:
-        pass
+# Register All your models here.
+# from django.apps import apps
+#
+#
+# models = apps.get_models()
+# for model in models:
+#     try:
+#         admin.site.register(model)
+#     except admin.sites.AlreadyRegistered:
+#         pass
+
+@admin.register(User)
+class GradeAdmin(admin.ModelAdmin):
+    list_display = ("id","email")
+    radio_fields = {'legal_status': admin.VERTICAL}
