@@ -17,6 +17,11 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
       minHeight: 100,
       height: 100,
     },
+    '@media (max-width: 767px)': {
+      display: "block",
+      paddingTop: "10px",
+      width: "100%",
+    },
   },
   '& .FusePageSimple-wrapper': {
     minHeight: 0,
@@ -31,6 +36,9 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
   '& .FusePageSimple-content': {
     display: 'flex',
     height: 'auto',
+    '@media (max-width: 767px)': {
+      display: "block"
+    }
   },
   '& .FusePageSimple-sidebar': {
     width: 256,

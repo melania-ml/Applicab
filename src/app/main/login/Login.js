@@ -32,13 +32,39 @@ const Root = styled("div")(({ theme }) => ({
 
   "& .Login-leftSection": {
     width: "50%",
+    '@media (max-width: 767px)': {
+      width: "100%"
+    }
+  },
+  "& .leading-tight": {
+    '@media (max-width: 767px)': {
+      fontSize: "30px"
+    }
   },
 
   "& .Login-rightSection": {
     background: `linear-gradient(to right, ${theme.palette.primary.dark
       } 0%, ${darken(theme.palette.primary.dark, 0.5)} 100%)`,
     color: theme.palette.primary.contrastText,
+    '@media (max-width: 767px)': {
+      padding: "30px"
+    }
   },
+  "& .login-responsive": {
+    '@media (max-width: 767px)': {
+      display: "block",
+      width: "100%"
+    }
+  },
+  "& .MuiCardContent-root": {
+    '@media (max-width: 767px)': {
+      marginLeft: "auto",
+      marginRight: "auto"
+    }
+  },
+  "& .MuiFormControl-root": {
+    width: "100%",
+  }
 }));
 
 const schema = yup.object().shape({
@@ -115,7 +141,7 @@ function Login() {
       <motion.div
         initial={{ opacity: 0, scale: 0.6 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="flex w-full max-w-400 md:max-w-full shadow-2xl overflow-hidden h-full"
+        className="flex w-full md:max-w-full shadow-2xl overflow-hidden h-full login-responsive"
       >
         <Card
           className="Login-leftSection flex flex-col w-full items-center justify-center shadow-0"
@@ -250,7 +276,7 @@ function Login() {
           </CardContent>
         </Card>
 
-        <div className="Login-rightSection hidden md:flex flex-1 items-center justify-center p-64">
+        <div className="Login-rightSection md:flex flex-1 items-center justify-center p-64">
           <div className="max-w-500">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
