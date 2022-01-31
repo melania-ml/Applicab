@@ -148,7 +148,7 @@ export default function Filters() {
             <FormControl className="flex w-full sm:w-200 mx-16" variant="outlined">
                 <InputLabel style={{ color: '#FFFFFF' }}>Type</InputLabel>
                 <Select
-                    label="Status"
+                    label="Type"
                     value={selectedType}
                     onChange={(e) => setSelectedType(e.target.value)}
                 >
@@ -164,7 +164,7 @@ export default function Filters() {
             <FormControl className="flex w-full sm:w-200 mx-16" variant="outlined">
                 <InputLabel style={{ color: '#FFFFFF' }}>Titre</InputLabel>
                 <Select
-                    label="Status"
+                    label="Titre"
                     value={selectedTitle}
                     onChange={(e) => setSelectedTitle(e.target.value)}
                 >

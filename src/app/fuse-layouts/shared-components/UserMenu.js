@@ -14,6 +14,7 @@ import { logoutUser } from 'app/auth/store/userSlice';
 function UserMenu(props) {
   const dispatch = useDispatch();
   const user = useSelector(({ auth }) => auth.user);
+  console.log('user', user)
   const navigate = useNavigate();
 
   const [userMenu, setUserMenu] = useState(null);
@@ -46,7 +47,7 @@ function UserMenu(props) {
         {user.data.photoURL ? (
           <Avatar className="md:mx-4" alt="user photo" src={user.data.photoURL} />
         ) : (
-          <Avatar className="md:mx-4">{user.data.displayName[0]}</Avatar>
+          <Avatar className="md:mx-4">{user.data?.displayName}</Avatar>
         )}
       </Button>
 
@@ -68,17 +69,14 @@ function UserMenu(props) {
       >
         {!user.role || user.role.length === 0 ? (
           <>
-            <MenuItem component={Link} to="/login" role="button">
+            <MenuItem onClick={() => {
+              dispatch(logoutUser());
+              userMenuClose()
+            }} role="button">
               <ListItemIcon className="min-w-40">
-                <Icon>lock</Icon>
+                <Icon>exit_to_app</Icon>
               </ListItemIcon>
-              <ListItemText primary="Login" />
-            </MenuItem>
-            <MenuItem component={Link} to="/register" role="button">
-              <ListItemIcon className="min-w-40">
-                <Icon>person_add</Icon>
-              </ListItemIcon>
-              <ListItemText primary="Register" />
+              <ListItemText primary="Logout" />
             </MenuItem>
           </>
         ) : (

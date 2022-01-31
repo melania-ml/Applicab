@@ -268,10 +268,10 @@ function FuseNavigationDoc(props) {
                                                         'icon' : 'lock'
                                                     },
                                                     {
-                                                        'id'   : 'register',
-                                                        'title': 'Register',
+                                                        'id'   : 'forgotPassord',
+                                                        'title': 'Forgot Password',
                                                         'type' : 'item',
-                                                        'url'  : '/register',
+                                                        'url'  : '/forgotPassord',
                                                         auth   : authRoles.onlyGuest,
                                                         'icon' : 'person_add'
                                                     },

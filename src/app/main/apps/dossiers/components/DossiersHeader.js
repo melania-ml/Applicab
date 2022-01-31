@@ -44,9 +44,8 @@ function DossiersHeader(props) {
       </div>
       <div>
         <Button
-          //component={Link}
-          //to="apps/dossiers/new"
-          onClick={() => alert('hii')}
+          // component={Link}
+          // to="/apps/dossiers/new"
           variant="contained"
           color="secondary"
           className="w-full rounded"

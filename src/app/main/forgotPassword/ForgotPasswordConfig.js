@@ -1,7 +1,7 @@
 import { authRoles } from 'app/auth';
-import Register from './Register';
+import ForgotPassword from './ForgotPassword';
 
-const RegisterConfig = {
+const ForgotPasswordConfig = {
   settings: {
     layout: {
       config: {
@@ -26,10 +26,10 @@ const RegisterConfig = {
   auth: authRoles.onlyGuest,
   routes: [
     {
-      path: 'register',
-      element: <Register />,
+      path: 'forgotPassword',
+      element: <ForgotPassword />,
     },
   ],
 };
 
-export default RegisterConfig;
+export default ForgotPasswordConfig;

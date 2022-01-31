@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useDeepCompareEffect } from '@fuse/hooks';
 import { styled } from '@mui/material/styles';
-import DossierDialog from './components/DossierDialog';
 import DossiersHeader from './components/DossiersHeader';
 import DossiersList from './components/DossiersList';
 import reducer from './store';
@@ -62,7 +61,6 @@ function DossiersApp(props) {
         ref={pageLayout}
         innerScroll
       />
-      <DossierDialog />
     </>
   );
 }

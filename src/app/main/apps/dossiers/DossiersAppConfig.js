@@ -1,8 +1,7 @@
-import { lazy } from 'react';
-import { Navigate } from 'react-router-dom';
+import { lazy } from "react";
 
-const DossiersApp = lazy(() => import('./DossiersApp'));
-const Product = lazy(() => import('./dossier/Dossier'));
+const DossiersApp = lazy(() => import("./DossiersApp"));
+const NewDossier = lazy(() => import("./dossier/Dossier"));
 
 const DossiersAppConfig = {
   settings: {
@@ -10,12 +9,12 @@ const DossiersAppConfig = {
   },
   routes: [
     {
-      path: 'apps/dossiers/:dossiersId/*',
-      element: <Product />,
+      path: "apps/dossiers/all",
+      element: <DossiersApp />,
     },
     {
-      path: 'apps/dossiers/all',
-      element: <DossiersApp />,
+      path: "apps/dossiers/new",
+      element: <NewDossier />,
     },
   ],
 };

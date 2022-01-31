@@ -17,12 +17,11 @@ import * as yup from 'yup';
 import { styled } from '@mui/material/styles';
 import { addContact, resetDossier, getContacts } from '../store/dossiersSlice';
 import reducer from '../store';
-import ProductHeader from './DossierHeader';
-import BasicInfoTab from './tabs/BasicInfoTab';
-import InventoryTab from './tabs/InventoryTab';
-import PricingTab from './tabs/PricingTab';
-import ProductImagesTab from './tabs/ProductImagesTab';
-import ShippingTab from './tabs/ShippingTab';
+import DossierHeader from './DossierHeader';
+import InformationTab from './tabs/InformationTab';
+import DocumentsTab from './tabs/DocumentsTab';
+import EmailTab from './tabs/EmailTab';
+import StepsTab from './tabs/StepsTab';
 
 const Root = styled(FusePageCarded)(({ theme }) => ({
   '& .FusePageCarded-header': {
@@ -30,10 +29,13 @@ const Root = styled(FusePageCarded)(({ theme }) => ({
     height: 72,
     alignItems: 'center',
     [theme.breakpoints.up('sm')]: {
-      minHeight: 136,
-      height: 136,
+      minHeight: 100,
+      height: 100,
     },
   },
+  '& .FusePageCarded-contentWrapper': {
+    padding: 0
+  }
 }));
 
 /**
@@ -46,115 +48,18 @@ const schema = yup.object().shape({
     .min(5, 'The product name must be at least 5 characters'),
 });
 
-function Product(props) {
-  const dispatch = useDispatch();
-  const product = useSelector(({ contactsApp }) => contactsApp?.contacts.contactDialog.data);
 
-  const routeParams = useParams();
+
+function Dossier(props) {
   const [tabValue, setTabValue] = useState(0);
-  const [noProduct, setNoProduct] = useState(false);
-  const methods = useForm({
-    mode: 'onChange',
-    defaultValues: {},
-    resolver: yupResolver(schema),
-  });
-  const { reset, watch, control, onChange, formState } = methods;
-  const form = watch();
 
-  useDeepCompareEffect(() => {
-    function updateProductState() {
-      const { productId } = routeParams;
-
-      if (productId === 'new') {
-        /**
-         * Create New Product data
-         */
-        dispatch(addContact());
-      } else {
-        /**
-         * Get Product data
-         */
-        dispatch(getContacts(routeParams)).then((action) => {
-          /**
-           * If the requested product is not exist show message
-           */
-          if (!action.payload) {
-            setNoProduct(true);
-          }
-        });
-      }
-    }
-
-    updateProductState();
-  }, [dispatch, routeParams]);
-
-  useEffect(() => {
-    if (!product) {
-      return;
-    }
-    /**
-     * Reset the form on product state changes
-     */
-    reset(product);
-  }, [product, reset]);
-
-  useEffect(() => {
-    return () => {
-      /**
-       * Reset Product on component unload
-       */
-      dispatch(resetDossier());
-      setNoProduct(false);
-    };
-  }, [dispatch]);
-
-  /**
-   * Tab Change
-   */
-  function handleTabChange(event, value) {
+  const handleTabChange = (event, value) => {
     setTabValue(value);
   }
 
-  /**
-   * Show Message if the requested products is not exists
-   */
-  if (noProduct) {
-    return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, transition: { delay: 0.1 } }}
-        className="flex flex-col flex-1 items-center justify-center h-full"
-      >
-        <Typography color="textSecondary" variant="h5">
-          There is no such product!
-        </Typography>
-        <Button
-          className="mt-24"
-          component={Link}
-          variant="outlined"
-          to="/apps/e-commerce/products"
-          color="inherit"
-        >
-          Go to Products Page
-        </Button>
-      </motion.div>
-    );
-  }
-
-  /**
-   * Wait while product data is loading and form is setted
-   */
-  if (
-    _.isEmpty(form) ||
-    (product && routeParams.dossiersId !== product.id && routeParams.dossiersId !== 'new')
-  ) {
-    return <FuseLoading />;
-  }
-
   return (
-    <FormProvider {...methods}>
-      <Root
-        header={<ProductHeader />}
+    <FormProvider>
+      <Root header={<DossierHeader />}
         contentToolbar={
           <Tabs
             value={tabValue}
@@ -165,40 +70,187 @@ function Product(props) {
             scrollButtons="auto"
             classes={{ root: 'w-full h-64' }}
           >
-            <Tab className="h-64" label="Basic Info" />
-            <Tab className="h-64" label="Product Images" />
-            <Tab className="h-64" label="Pricing" />
-            <Tab className="h-64" label="Inventory" />
-            <Tab className="h-64" label="Shipping" />
+            <Tab className="h-64" label="Informations dossier" />
+            <Tab className="h-64" label="Documents" />
+            <Tab className="h-64" label="Email" />
+            <Tab className="h-64" label="Étapes" />
           </Tabs>
         }
         content={
           <div className="p-16 sm:p-24 max-w-2xl">
             <div className={tabValue !== 0 ? 'hidden' : ''}>
-              <BasicInfoTab />
+              <InformationTab />
             </div>
-
             <div className={tabValue !== 1 ? 'hidden' : ''}>
-              <ProductImagesTab />
+              <DocumentsTab />
             </div>
-
             <div className={tabValue !== 2 ? 'hidden' : ''}>
-              <PricingTab />
+              <EmailTab />
             </div>
-
             <div className={tabValue !== 3 ? 'hidden' : ''}>
-              <InventoryTab />
-            </div>
-
-            <div className={tabValue !== 4 ? 'hidden' : ''}>
-              <ShippingTab />
+              <StepsTab />
             </div>
           </div>
         }
         innerScroll
       />
     </FormProvider>
-  );
+  )
 }
 
-export default withReducer('eCommerceApp', reducer)(Product);
+// function Dossier(props) {
+//   const dispatch = useDispatch();
+//   const product = useSelector(({ contactsApp }) => contactsApp?.contacts.contactDialog.data);
+
+//   const routeParams = useParams();
+//   const [tabValue, setTabValue] = useState(0);
+//   const [noProduct, setNoProduct] = useState(false);
+//   const methods = useForm({
+//     mode: 'onChange',
+//     defaultValues: {},
+//     resolver: yupResolver(schema),
+//   });
+//   const { reset, watch, control, onChange, formState } = methods;
+//   const form = watch();
+
+//   useDeepCompareEffect(() => {
+//     function updateProductState() {
+//       const { productId } = routeParams;
+
+//       if (productId === 'new') {
+//         /**
+//          * Create New Product data
+//          */
+//         dispatch(addContact());
+//       } else {
+//         /**
+//          * Get Product data
+//          */
+//         dispatch(getContacts(routeParams)).then((action) => {
+//           /**
+//            * If the requested product is not exist show message
+//            */
+//           if (!action.payload) {
+//             setNoProduct(true);
+//           }
+//         });
+//       }
+//     }
+
+//     updateProductState();
+//   }, [dispatch, routeParams]);
+
+//   useEffect(() => {
+//     if (!product) {
+//       return;
+//     }
+//     /**
+//      * Reset the form on product state changes
+//      */
+//     reset(product);
+//   }, [product, reset]);
+
+//   useEffect(() => {
+//     return () => {
+//       /**
+//        * Reset Product on component unload
+//        */
+//       dispatch(resetDossier());
+//       setNoProduct(false);
+//     };
+//   }, [dispatch]);
+
+//   /**
+//    * Tab Change
+//    */
+//   function handleTabChange(event, value) {
+//     setTabValue(value);
+//   }
+
+//   /**
+//    * Show Message if the requested products is not exists
+//    */
+//   if (noProduct) {
+//     return (
+//       <motion.div
+//         initial={{ opacity: 0 }}
+//         animate={{ opacity: 1, transition: { delay: 0.1 } }}
+//         className="flex flex-col flex-1 items-center justify-center h-full"
+//       >
+//         <Typography color="textSecondary" variant="h5">
+//           There is no such product!
+//         </Typography>
+//         <Button
+//           className="mt-24"
+//           component={Link}
+//           variant="outlined"
+//           to="/apps/e-commerce/products"
+//           color="inherit"
+//         >
+//           Go to Products Page
+//         </Button>
+//       </motion.div>
+//     );
+//   }
+
+//   /**
+//    * Wait while product data is loading and form is setted
+//    */
+//   // if (
+//   //   _.isEmpty(form) ||
+//   //   (product && routeParams.dossiersId !== product.id && routeParams.dossiersId !== 'new')
+//   // ) {
+//   //   return <FuseLoading />;
+//   // }
+
+//   return (
+//     <FormProvider {...methods}>
+//       <Root
+//         header={<DossierHeader />}
+//         contentToolbar={
+//           <Tabs
+//             value={tabValue}
+//             onChange={handleTabChange}
+//             indicatorColor="primary"
+//             textColor="primary"
+//             variant="scrollable"
+//             scrollButtons="auto"
+//             classes={{ root: 'w-full h-64' }}
+//           >
+//             <Tab className="h-64" label="Basic Info" />
+//             <Tab className="h-64" label="Product Images" />
+//             <Tab className="h-64" label="Pricing" />
+//             <Tab className="h-64" label="Inventory" />
+//             <Tab className="h-64" label="Shipping" />
+//           </Tabs>
+//         }
+//         content={
+//           <div className="p-16 sm:p-24 max-w-2xl">
+//             <div className={tabValue !== 0 ? 'hidden' : ''}>
+//               <BasicInfoTab />
+//             </div>
+
+//             <div className={tabValue !== 1 ? 'hidden' : ''}>
+//               <ProductImagesTab />
+//             </div>
+
+//             <div className={tabValue !== 2 ? 'hidden' : ''}>
+//               <PricingTab />
+//             </div>
+
+//             <div className={tabValue !== 3 ? 'hidden' : ''}>
+//               <InventoryTab />
+//             </div>
+
+//             <div className={tabValue !== 4 ? 'hidden' : ''}>
+//               <ShippingTab />
+//             </div>
+//           </div>
+//         }
+//         innerScroll
+//       />
+//     </FormProvider>
+//   );
+// }
+
+export default withReducer('eCommerceApp', reducer)(Dossier);

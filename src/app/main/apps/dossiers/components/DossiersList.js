@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import FuseUtils from '@fuse/utils';
+import withRouter from '@fuse/core/withRouter';
 import Fab from '@mui/material/Fab';
 import Icon from '@mui/material/Icon';
 import IconButton from '@mui/material/IconButton';
@@ -169,7 +170,7 @@ function DossiersList(props) {
         data={filteredData}
         onRowClick={(ev, row) => {
           if (row) {
-            dispatch(openEditContactDialog(row.original));
+            props.navigate(`/apps/dossiers/${row.id}`);
           }
         }}
       />
@@ -177,4 +178,4 @@ function DossiersList(props) {
   );
 }
 
-export default DossiersList;
+export default withRouter(DossiersList);

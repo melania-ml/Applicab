@@ -1,43 +1,115 @@
-import Card from '@mui/material/Card';
-import { styled, darken } from '@mui/material/styles';
-import CardContent from '@mui/material/CardContent';
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
-import { Typography, Button } from '@mui/material';
-import { motion } from 'framer-motion';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import Auth0LoginTab from './tabs/Auth0LoginTab';
-import FirebaseLoginTab from './tabs/FirebaseLoginTab';
-import JWTLoginTab from './tabs/JWTLoginTab';
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Controller, useForm } from "react-hook-form";
+import * as yup from "yup";
+import { submitLogin } from "app/auth/store/loginSlice";
+import { yupResolver } from "@hookform/resolvers/yup";
+import _ from "@lodash";
+import history from "@history";
+import { motion } from "framer-motion";
 
-const Root = styled('div')(({ theme }) => ({
-  background: `linear-gradient(to right, ${theme.palette.primary.dark} 0%, ${darken(
-    theme.palette.primary.dark,
-    0.5
-  )} 100%)`,
+// material-ui
+import { styled, darken } from "@mui/material/styles";
+import {
+  Typography,
+  Button,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+  TextField,
+  InputAdornment,
+  Icon,
+  IconButton,
+  Card,
+  CardContent,
+} from "@mui/material";
+
+const Root = styled("div")(({ theme }) => ({
+  background: `linear-gradient(to right, ${theme.palette.primary.dark
+    } 0%, ${darken(theme.palette.primary.dark, 0.5)} 100%)`,
   color: theme.palette.primary.contrastText,
 
-  '& .Login-leftSection': {
-    width: '50%'
+  "& .Login-leftSection": {
+    width: "50%",
   },
 
-  '& .Login-rightSection': {
-    background: `linear-gradient(to right, ${theme.palette.primary.dark} 0%, ${darken(
-      theme.palette.primary.dark,
-      0.5
-    )} 100%)`,
+  "& .Login-rightSection": {
+    background: `linear-gradient(to right, ${theme.palette.primary.dark
+      } 0%, ${darken(theme.palette.primary.dark, 0.5)} 100%)`,
     color: theme.palette.primary.contrastText,
   },
 }));
 
+const schema = yup.object().shape({
+  email: yup
+    .string()
+    .email("You must enter a valid email")
+    .required("You must enter a email"),
+  password: yup
+    .string()
+    .required("Please enter your password.")
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{13,20}$/,
+      "Must Contain 13 Characters not more than 20, One Uppercase, One Lowercase, One Number and one special case Character"
+    ),
+});
+
+const defaultValues = {
+  email: "",
+  password: "",
+};
+
 function Login() {
-  const [selectedTab, setSelectedTab] = useState(0);
+  const dispatch = useDispatch();
+  const login = useSelector(({ auth }) => auth.login);
+  const {
+    control,
+    setValue,
+    formState,
+    handleSubmit,
+    reset,
+    trigger,
+    setError,
+  } = useForm({
+    mode: "onChange",
+    defaultValues,
+    resolver: yupResolver(schema),
+  });
 
-  function handleTabChange(event, value) {
-    setSelectedTab(value);
+  const { isValid, dirtyFields, errors } = formState;
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    setValue("email", "soham.s@samcomtechnobrains.com", {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+    setValue("password", "Samcom@123456", {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+  }, [reset, setValue, trigger]);
+
+  useEffect(() => {
+    login.errors.forEach((error) => {
+      setError(error.type, {
+        type: "manual",
+        message: error.message,
+      });
+    });
+
+    if (login.success) {
+      history.push({
+        pathname: "/apps/dashboard",
+      });
+    }
+  }, [login.errors, setError]);
+
+  function onSubmit(model) {
+    dispatch(submitLogin(model));
   }
-
   return (
     <Root className="flex flex-col flex-auto items-center shrink-0">
       <motion.div
@@ -59,45 +131,117 @@ function Login() {
               </div>
             </motion.div>
 
-            {/* <Tabs
-              value={selectedTab}
-              onChange={handleTabChange}
-              variant="fullWidth"
-              className="w-full mb-32"
-            >
-              <Tab
-                icon={
-                  <img
-                    className="h-40 p-4 bg-black rounded-12"
-                    src="assets/images/logos/jwt.svg"
-                    alt="firebase"
-                  />
-                }
-                className="min-w-0"
-                label="JWT"
-              />
-              <Tab
-                icon={
-                  <img className="h-40" src="assets/images/logos/firebase.svg" alt="firebase" />
-                }
-                className="min-w-0"
-                label="Firebase"
-              />
-              <Tab
-                icon={<img className="h-40" src="assets/images/logos/auth0.svg" alt="auth0" />}
-                className="min-w-0"
-                label="Auth0"
-              />
-            </Tabs> */}
+            <>
+              <form
+                className="flex flex-col justify-center w-full"
+                onSubmit={handleSubmit(onSubmit)}
+              >
+                <Controller
+                  name="email"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      className="mb-16"
+                      type="text"
+                      error={!!errors.email}
+                      helperText={errors?.email?.message}
+                      label="Email"
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <Icon className="text-20" color="action">
+                              user
+                            </Icon>
+                          </InputAdornment>
+                        ),
+                      }}
+                      variant="outlined"
+                    />
+                  )}
+                />
 
-            {selectedTab === 0 && <JWTLoginTab />}
-            {/* {selectedTab === 1 && <FirebaseLoginTab />}
-            {selectedTab === 2 && <Auth0LoginTab />} */}
+                <Controller
+                  name="password"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      className="mb-16"
+                      label="Mot de passe"
+                      type="password"
+                      error={!!errors.password}
+                      helperText={errors?.password?.message}
+                      variant="outlined"
+                      InputProps={{
+                        className: "pr-2",
+                        type: showPassword ? "text" : "password",
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              onClick={() => setShowPassword(!showPassword)}
+                              size="large"
+                            >
+                              <Icon className="text-20" color="action">
+                                {showPassword ? "visibility" : "visibility_off"}
+                              </Icon>
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                      required
+                    />
+                  )}
+                />
+
+                <div className="flex flex-row items-center justify-between pb-32">
+                  <FormGroup>
+                    <FormControlLabel
+                      control={<Checkbox defaultChecked />}
+                      label="Se souvenir de moi"
+                    />
+                  </FormGroup>
+                  <Link className="font-normal" to="/forgotPassword">
+                    Mot de passe oublié ?
+                  </Link>
+                </div>
+
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  className="w-full mx-auto mt-16"
+                  aria-label="LOG IN"
+                  disabled={_.isEmpty(dirtyFields) || !isValid}
+                  value="legacy"
+                >
+                  Connexion
+                </Button>
+              </form>
+              <br />
+              <div className="flex flex-row items-center justify-center">
+                <hr style={{ width: 50 }} />
+                <b className="m-10">OU</b>
+                <hr style={{ width: 50 }} />
+              </div>
+              <br />
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1, transition: { delay: 0.3 } }}
+                style={{ display: "grid" }}
+              >
+                <Button variant="outlined">Connexion avec Google</Button>
+                <br />
+                <Button variant="outlined">Connexion avec Linkedin</Button>
+              </motion.div>
+            </>
             <br />
             <br />
             <div className="flex flex-col items-center justify-center pb-32">
               <div>
-                <span className="font-normal mr-8">Vous n'avez pas encore de compte ?</span>
+                <span className="font-normal mr-8">
+                  Vous n'avez pas encore de compte ?
+                </span>
               </div>
               <Link className="font-normal mt-8" to="/">
                 Contactez-nous
@@ -112,7 +256,11 @@ function Login() {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0, transition: { delay: 0.2 } }}
             >
-              <Typography variant="h3" color="inherit" className="font-semibold leading-tight">
+              <Typography
+                variant="h3"
+                color="inherit"
+                className="font-semibold leading-tight"
+              >
                 AppliCab crée et maintient <br />
                 le lien entre l'avocat et son <br />
                 client
@@ -124,7 +272,8 @@ function Login() {
               animate={{ opacity: 1, transition: { delay: 0.3 } }}
             >
               <Typography variant="subtitle1" color="inherit" className="mt-32">
-                Plateforme de suivi des dossiers et de gestion du cabinet, pensée par des avocats pour des avocats
+                Plateforme de suivi des dossiers et de gestion du cabinet,
+                pensée par des avocats pour des avocats
               </Typography>
             </motion.div>
             <br />
@@ -134,11 +283,7 @@ function Login() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { delay: 0.3 } }}
             >
-              <Button
-                variant="contained"
-                color="secondary"
-                className="p-30"
-              >
+              <Button variant="contained" color="secondary" className="p-30">
                 Demander une démo
               </Button>
             </motion.div>

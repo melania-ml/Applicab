@@ -18,7 +18,7 @@ class JwtService extends FuseUtils.EventEmitter {
         return new Promise((resolve, reject) => {
           if (err.response.status === 401 && err.config && !err.config.__isRetryRequest) {
             // if you ever get an unauthorized response, logout the user
-            this.emit('onAutoLogout', 'Invalid access_token');
+            this.emit('onAutoLogout', err.response.data.message);
             this.setSession(null);
           }
           throw err;
@@ -61,22 +61,39 @@ class JwtService extends FuseUtils.EventEmitter {
   signInWithEmailAndPassword = (email, password) => {
     return new Promise((resolve, reject) => {
       axios
-        .get('/api/auth', {
-          data: {
-            email,
-            password,
-          },
+        .post('http://178.79.138.121:8080/auth/user/loginClient', {
+          email,
+          password,
         })
         .then((response) => {
-          if (response.data.user) {
-            this.setSession(response.data.access_token);
-            resolve(response.data.user);
+          if (response.data.data.email) {
+            this.setSession(response.data.data.jwtoken);
+            resolve(response.data);
           } else {
             reject(response.data.error);
           }
         });
     });
   };
+  // signInWithEmailAndPassword = (email, password) => {
+  //   return new Promise((resolve, reject) => {
+  //     axios
+  //       .get('/api/auth', {
+  //         data: {
+  //           email,
+  //           password,
+  //         },
+  //       })
+  //       .then((response) => {
+  //         if (response.data.user) {
+  //           this.setSession(response.data.access_token);
+  //           resolve(response.data.user);
+  //         } else {
+  //           reject(response.data.error);
+  //         }
+  //       });
+  //   });
+  // };
 
   signInWithToken = () => {
     return new Promise((resolve, reject) => {

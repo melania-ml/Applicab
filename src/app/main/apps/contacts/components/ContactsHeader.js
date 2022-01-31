@@ -68,7 +68,7 @@ function ContactsHeader(props) {
           }}
           variant="contained"
           color="secondary"
-          className="w-full"
+          className="w-full rounded"
         >
           Nouveau contact
         </Button>

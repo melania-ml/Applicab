@@ -50,29 +50,7 @@ function ContactsMultiSelectMenu(props) {
             <ListItemIcon className="min-w-40">
               <Icon>delete</Icon>
             </ListItemIcon>
-            <ListItemText primary="Remove" />
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              dispatch(setContactsStarred(selectedContactIds));
-              closeSelectedContactsMenu();
-            }}
-          >
-            <ListItemIcon className="min-w-40">
-              <Icon>star</Icon>
-            </ListItemIcon>
-            <ListItemText primary="Starred" />
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              dispatch(setContactsUnstarred(selectedContactIds));
-              closeSelectedContactsMenu();
-            }}
-          >
-            <ListItemIcon className="min-w-40">
-              <Icon>star_border</Icon>
-            </ListItemIcon>
-            <ListItemText primary="Unstarred" />
+            <ListItemText primary="Supprimer" />
           </MenuItem>
         </MenuList>
       </Menu>
