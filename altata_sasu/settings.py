@@ -35,6 +35,7 @@ AUTH_USER_MODEL = 'user.User'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Application definition
 Api_url = "http://178.79.138.121:8080/"
+Admin_url = 'http://applicab.admin.sctestingsite.com/'
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -145,12 +146,6 @@ REST_FRAMEWORK = {
     #     'common.jwtConf.jwtBaseAuthentication',
     # ),
 }
-# DEFAULT_FROM_EMAIL = 'tech@apllicab.io'
-# EMAIL_HOST = 'smtp.sendgrid.net'
-# EMAIL_HOST_USER = 'apikey'  # this is exactly the value 'apikey'
-# EMAIL_HOST_PASSWORD = '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'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads/')  # 'uploads' is my media folder
 MEDIA_URL = '/uploads/'
@@ -163,3 +158,8 @@ EMAIL_HOST_PASSWORD = "(*nM45!ynq>7M#'."
 EMAIL_PORT = 587
 
 ATA_UPLOAD_MAX_MEMORY_SIZE = 50000000
+
+# Static social media url's
+Linkedin_url = 'https://www.linkedin.com/company/applicab-avocats/',
+faceBook_url = 'https://www.facebook.com/AppliCabAvocats',
+Instagram_url = 'https://www.instagram.com/applicab_avocats/'

@@ -1,5 +1,4 @@
-from altata_sasu.settings import Api_url
-
+from altata_sasu.settings import *
 
 def setPassword():
     textDict = {
@@ -10,7 +9,9 @@ def setPassword():
         'text4': 'Copiez collez le simplement ou bien saisissez le dans votre interface Applicab pour poursuivre '
                  'votre inscription.',
         'before_button': 'Ce code expirera dans 24 heures.',
-        'button_text': 'Confirmez votre email'
+        'button_text': 'Confirmez votre email',
+        'button_url': Admin_url
+
     }
     return textDict
 
@@ -22,7 +23,9 @@ def forgotPassword():
         'text2': 'Vous avez demandé la réinitialisation du mot de passe de votre compte.',
         'text3': "Pour finaliser votre demande, merci de cliquer sur le bouton 'réinitialiser ​mon mot de passe'. ",
         'text4': 'Rappel de votre identifiant : {userEmail}',
-        'button_text': 'Réinitialiser mon mot de passe'
+        'button_text': 'Réinitialiser mon mot de passe',
+        'button_url': Admin_url + 'resetPassword/'
+
     }
     return textDict
 
@@ -34,8 +37,8 @@ def commonUrls():
         'Linkedin_image': Api_url + 'uploads/mail_template_img/Linkedin.png',
         'logo_image': Api_url + "uploads/mail_template_img/Logo.png",
         'cube_image': Api_url + 'uploads/mail_template_img/cube.png',
-        'Linkedin_url': 'https://www.linkedin.com/company/applicab-avocats/',
-        'faceBook_url': 'https://www.facebook.com/AppliCabAvocats',
-        'Instagram_url': 'https://www.instagram.com/applicab_avocats/'
+        'Linkedin_url': Linkedin_url,
+        'faceBook_url': faceBook_url,
+        'Instagram_url': Instagram_url
     }
     return urlDict

@@ -34,7 +34,7 @@ class registerClient(APIView):
             stPasswordText['text1'] = stPasswordText['text1'].format(userName=serializer.data['first_name'])
 
             send_email([serializer.data['email']],
-                       'Saisissez ' + emailOtp + ' comme code de confirmation Applicab', 'email.html', stPasswordText)
+                       'Saisissez ' + str(emailOtp) + ' comme code de confirmation Applicab', 'email.html', stPasswordText)
             res = ResponseInfo(serializer.data, "Client Register successfully", False, status.HTTP_201_CREATED)
             return Response(res.success_payload(), status.HTTP_201_CREATED)
         return Response({"data": "Email Already Registered"}, status.HTTP_400_BAD_REQUEST)
@@ -124,6 +124,7 @@ class forgotPassword(APIView):
             forgotPasswordText = emailText.forgotPassword() | emailText.commonUrls()
             forgotPasswordText['text1'] = forgotPasswordText['text1'].format(userName=userData.first_name)
             forgotPasswordText['text4'] = forgotPasswordText['text4'].format(userEmail=userData.email)
+            forgotPasswordText['button_url'] = forgotPasswordText['button_url'] + forgotPasswordToken
             send_email([userData.email],
                        'Réinitialisation de ton mot de passe', 'email.html', forgotPasswordText)
             res = ResponseInfo({'email_shared': True}, "Forgot password email send successfully", False, status.HTTP_201_CREATED)
@@ -135,10 +136,10 @@ class forgotPassword(APIView):
 
     def put(self, request):
         try:
-            userEmail = request.data.get('email', None)
+            userforgotPasswordToken = request.data.get('forgotPasswordToken', None)
             password = request.data.get('password', None)
 
-            userData = User.objects.get(email=userEmail, forgot_password_token__isnull=False)
+            userData = User.objects.get(forgot_password_token=userforgotPasswordToken, forgot_password_token__isnull=False)
             userData.set_password(password)
             userData.forgot_password_token = None
             userData.save()
