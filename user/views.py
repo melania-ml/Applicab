@@ -35,7 +35,7 @@ class registerClient(APIView):
 
             send_email([serializer.data['email']],
                        'Saisissez ' + str(emailOtp) + ' comme code de confirmation Applicab', 'email.html', stPasswordText)
-            res = ResponseInfo(serializer.data, "Client Register successfully", False, status.HTTP_201_CREATED)
+            res = ResponseInfo(serializer.data, "Client Register successfully", True, status.HTTP_201_CREATED)
             return Response(res.success_payload(), status.HTTP_201_CREATED)
         return Response({"data": "Email Already Registered"}, status.HTTP_400_BAD_REQUEST)
 
@@ -67,7 +67,7 @@ class validateEmailOtp(APIView):
             userData.emil_otp = None
             userData.save()
             res = ResponseInfo({'validation': True, 'setPasswordToken': userData.email_token},
-                               "Otp Validated Successfully", False, status.HTTP_200_OK)
+                               "Otp Validated Successfully", True, status.HTTP_200_OK)
             return Response(res.success_payload(), status=status.HTTP_200_OK)
         except Exception as e:
             res = ResponseInfo({'validation': False}, "Invalid Otp", False, status.HTTP_401_UNAUTHORIZED)
@@ -88,7 +88,7 @@ class validateEmailOtp(APIView):
             send_email([userData.email],
                        'Password Set', 'email.html', stPasswordText)
             res = ResponseInfo({'otp_shared': True},
-                               "Otp shared Successfully", False, status.HTTP_200_OK)
+                               "Otp shared Successfully", True, status.HTTP_200_OK)
             return Response(res.success_payload(), status=status.HTTP_200_OK)
         except Exception as e:
             res = ResponseInfo({'otp_shared': False}, "User Not Found", False, status.HTTP_404_NOT_FOUND)
@@ -104,7 +104,7 @@ class setPassword(APIView):
             userData.email_token = None
             userData.is_active = True
             userData.save()
-            res = ResponseInfo({}, "Password registered successfully", False, status.HTTP_200_OK)
+            res = ResponseInfo({}, "Password registered successfully", True, status.HTTP_200_OK)
             return Response(res.success_payload(), status=status.HTTP_200_OK)
         except Exception as err:
             res = ResponseInfo({}, "Invalid Token", False, status.HTTP_401_UNAUTHORIZED)
@@ -127,7 +127,7 @@ class forgotPassword(APIView):
             forgotPasswordText['button_url'] = forgotPasswordText['button_url'] + forgotPasswordToken
             send_email([userData.email],
                        'Réinitialisation de ton mot de passe', 'email.html', forgotPasswordText)
-            res = ResponseInfo({'email_shared': True}, "Forgot password email send successfully", False, status.HTTP_201_CREATED)
+            res = ResponseInfo({'email_shared': True}, "Forgot password email send successfully", True, status.HTTP_201_CREATED)
             return Response(res.success_payload(), status.HTTP_201_CREATED)
         except Exception as err:
             print(err)
@@ -144,7 +144,7 @@ class forgotPassword(APIView):
             userData.forgot_password_token = None
             userData.save()
 
-            res = ResponseInfo({'password_changed': True}, "Password changed successfully", False,
+            res = ResponseInfo({'password_changed': True}, "Password changed successfully", True,
                                status.HTTP_200_OK)
             return Response(res.success_payload(), status.HTTP_200_OK)
         except Exception as err:
