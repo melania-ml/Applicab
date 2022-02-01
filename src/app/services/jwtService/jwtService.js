@@ -75,25 +75,42 @@ class JwtService extends FuseUtils.EventEmitter {
         });
     });
   };
-  // signInWithEmailAndPassword = (email, password) => {
-  //   return new Promise((resolve, reject) => {
-  //     axios
-  //       .get('/api/auth', {
-  //         data: {
-  //           email,
-  //           password,
-  //         },
-  //       })
-  //       .then((response) => {
-  //         if (response.data.user) {
-  //           this.setSession(response.data.access_token);
-  //           resolve(response.data.user);
-  //         } else {
-  //           reject(response.data.error);
-  //         }
-  //       });
-  //   });
-  // };
+
+  getForgotPasswordMail = ({ email }) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .post('http://178.79.138.121:8080/auth/user/forgotPassword', {
+          email,
+        })
+        .then((response) => {
+          debugger;
+          if (response.data.data.email_shared) {
+            resolve(response.data);
+          } else {
+            reject(response.data.error);
+          }
+        })
+    });
+  }
+
+  postCallResetPassword = ({ params }) => {
+    const { forgotPasswordToken, password } = params
+    return new Promise((resolve, reject) => {
+      axios
+        .put('http://178.79.138.121:8080/auth/user/changePassword', {
+          forgotPasswordToken,
+          password
+        })
+        .then((response) => {
+          debugger;
+          if (response.data.data.password_changed) {
+            resolve(response.data);
+          } else {
+            reject(response.data.error);
+          }
+        })
+    });
+  }
 
   signInWithToken = () => {
     return new Promise((resolve, reject) => {

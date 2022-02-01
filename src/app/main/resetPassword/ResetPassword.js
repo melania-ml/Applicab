@@ -6,10 +6,14 @@ import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
-import { Link } from 'react-router-dom';
+import withReducer from 'app/store/withReducer';
+import { Link, useSearchParams } from 'react-router-dom';
 import * as yup from "yup";
+import history from "@history";
 import { yupResolver } from "@hookform/resolvers/yup";
 import _ from "@lodash";
+import reducer from './store';
+import { callResetPassword } from "./store/resetPasswordSlice";
 
 const Root = styled('div')(({ theme }) => ({
   background: `linear-gradient(to right, ${theme.palette.primary.dark} 0%, ${darken(
@@ -51,14 +55,27 @@ const schema = yup.object().shape({
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{13,20}$/,
       "Must Contain 13 Characters not more than 20, One Uppercase, One Lowercase, One Number and one special case Character"
     )
+    .oneOf([yup.ref('password'), null], 'Passwords must match')
 });
 
-function ResetPassword() {
+function ResetPassword(props) {
   const dispatch = useDispatch();
+  const searchParam = window.location.pathname.split('/')[2]
   const authRegister = useSelector(({ auth }) => auth.register);
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const resetPasswordState = useSelector(({ resetPassword }) => resetPassword);
+
+  useEffect(() => {
+    debugger;
+    if (resetPasswordState?.success) {
+      history.push({
+        pathname: "/login",
+      });
+    }
+  }, [resetPasswordState])
 
   const { control, formState, handleSubmit, reset, setError } = useForm({
     mode: "onChange",
@@ -78,7 +95,7 @@ function ResetPassword() {
   }, [authRegister.errors, setError]);
 
   function onSubmit(model) {
-    //dispatch(submitRegister(model));
+    dispatch(callResetPassword({ ...model, forgotPasswordToken: searchParam }));
   }
   return (
     <Root className="flex flex-col flex-auto items-center justify-center shrink-0">
@@ -229,4 +246,4 @@ function ResetPassword() {
   );
 }
 
-export default ResetPassword;
+export default withReducer('resetPassword', reducer)(ResetPassword);
