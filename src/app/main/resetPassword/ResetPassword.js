@@ -1,38 +1,43 @@
-import Card from '@mui/material/Card';
-import { styled, darken } from '@mui/material/styles';
-import CardContent from '@mui/material/CardContent';
-import { Typography, Button, TextField, IconButton, InputAdornment, Icon } from '@mui/material';
-import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import Card from "@mui/material/Card";
+import { styled, darken } from "@mui/material/styles";
+import CardContent from "@mui/material/CardContent";
+import {
+  Typography,
+  Button,
+  TextField,
+  IconButton,
+  InputAdornment,
+  Icon
+} from "@mui/material";
+import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
-import withReducer from 'app/store/withReducer';
-import { Link, useSearchParams } from 'react-router-dom';
+import withReducer from "app/store/withReducer";
+import { Link, useSearchParams } from "react-router-dom";
 import * as yup from "yup";
 import history from "@history";
 import { yupResolver } from "@hookform/resolvers/yup";
 import _ from "@lodash";
-import reducer from './store';
+import reducer from "./store";
 import { callResetPassword } from "./store/resetPasswordSlice";
 
-const Root = styled('div')(({ theme }) => ({
-  background: `linear-gradient(to right, ${theme.palette.primary.dark} 0%, ${darken(
-    theme.palette.primary.dark,
-    0.5
-  )} 100%)`,
+const Root = styled("div")(({ theme }) => ({
+  background: `linear-gradient(to right, ${
+    theme.palette.primary.dark
+  } 0%, ${darken(theme.palette.primary.dark, 0.5)} 100%)`,
   color: theme.palette.primary.contrastText,
 
-  '& .Register-leftSection': {
-    width: '50%'
+  "& .Register-leftSection": {
+    width: "50%"
   },
 
-  '& .Register-rightSection': {
-    background: `linear-gradient(to right, ${theme.palette.primary.dark} 0%, ${darken(
-      theme.palette.primary.dark,
-      0.5
-    )} 100%)`,
-    color: theme.palette.primary.contrastText,
-  },
+  "& .Register-rightSection": {
+    background: `linear-gradient(to right, ${
+      theme.palette.primary.dark
+    } 0%, ${darken(theme.palette.primary.dark, 0.5)} 100%)`,
+    color: theme.palette.primary.contrastText
+  }
 }));
 
 const defaultValues = {
@@ -43,44 +48,45 @@ const defaultValues = {
 const schema = yup.object().shape({
   password: yup
     .string()
-    .required('Please enter your password.')
+    .required("Please enter your password.")
     .matches(
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{13,20}$/,
       "Must Contain 13 Characters not more than 20, One Uppercase, One Lowercase, One Number and one special case Character"
     ),
   confirmPassword: yup
     .string()
-    .required('Please enter your password.')
+    .required("Please enter your password.")
     .matches(
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{13,20}$/,
       "Must Contain 13 Characters not more than 20, One Uppercase, One Lowercase, One Number and one special case Character"
     )
-    .oneOf([yup.ref('password'), null], 'Passwords must match')
+    .oneOf([yup.ref("password"), null], "Passwords must match")
 });
 
 function ResetPassword(props) {
   const dispatch = useDispatch();
-  const searchParam = window.location.pathname.split('/')[2]
+  const searchParam = window.location.pathname.split("/")[2];
   const authRegister = useSelector(({ auth }) => auth.register);
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const resetPasswordState = useSelector(({ resetPassword }) => resetPassword);
+  const resetPasswordState = useSelector(
+    ({ resetPassword }) => resetPassword.resetPassword
+  );
 
   useEffect(() => {
-    debugger;
-    if (resetPasswordState?.success) {
+    if (resetPasswordState.success) {
       history.push({
-        pathname: "/login",
+        pathname: "/login"
       });
     }
-  }, [resetPasswordState])
+  }, [resetPasswordState]);
 
   const { control, formState, handleSubmit, reset, setError } = useForm({
     mode: "onChange",
     defaultValues,
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema)
   });
 
   const { isValid, dirtyFields, errors } = formState;
@@ -89,7 +95,7 @@ function ResetPassword(props) {
     authRegister.errors.forEach((error) => {
       setError(error.type, {
         type: "manual",
-        message: error.message,
+        message: error.message
       });
     });
   }, [authRegister.errors, setError]);
@@ -135,17 +141,20 @@ function ResetPassword(props) {
                     helperText={errors?.password?.message}
                     variant="outlined"
                     InputProps={{
-                      className: 'pr-2',
-                      type: showPassword ? 'text' : 'password',
+                      className: "pr-2",
+                      type: showPassword ? "text" : "password",
                       endAdornment: (
                         <InputAdornment position="end">
-                          <IconButton onClick={() => setShowPassword(!showPassword)} size="large">
+                          <IconButton
+                            onClick={() => setShowPassword(!showPassword)}
+                            size="large"
+                          >
                             <Icon className="text-20" color="action">
-                              {showPassword ? 'visibility' : 'visibility_off'}
+                              {showPassword ? "visibility" : "visibility_off"}
                             </Icon>
                           </IconButton>
                         </InputAdornment>
-                      ),
+                      )
                     }}
                     required
                   />
@@ -164,17 +173,24 @@ function ResetPassword(props) {
                     helperText={errors?.confirmPassword?.message}
                     variant="outlined"
                     InputProps={{
-                      className: 'pr-2',
-                      type: showConfirmPassword ? 'text' : 'password',
+                      className: "pr-2",
+                      type: showConfirmPassword ? "text" : "password",
                       endAdornment: (
                         <InputAdornment position="end">
-                          <IconButton onClick={() => setShowConfirmPassword(!showConfirmPassword)} size="large">
+                          <IconButton
+                            onClick={() =>
+                              setShowConfirmPassword(!showConfirmPassword)
+                            }
+                            size="large"
+                          >
                             <Icon className="text-20" color="action">
-                              {showConfirmPassword ? 'visibility' : 'visibility_off'}
+                              {showConfirmPassword
+                                ? "visibility"
+                                : "visibility_off"}
                             </Icon>
                           </IconButton>
                         </InputAdornment>
-                      ),
+                      )
                     }}
                     required
                   />
@@ -209,7 +225,11 @@ function ResetPassword(props) {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0, transition: { delay: 0.2 } }}
             >
-              <Typography variant="h3" color="inherit" className="font-semibold leading-tight">
+              <Typography
+                variant="h3"
+                color="inherit"
+                className="font-semibold leading-tight"
+              >
                 AppliCab crée et maintient <br />
                 le lien entre l'avocat et son <br />
                 client
@@ -221,7 +241,8 @@ function ResetPassword(props) {
               animate={{ opacity: 1, transition: { delay: 0.3 } }}
             >
               <Typography variant="subtitle1" color="inherit" className="mt-32">
-                Plateforme de suivi des dossiers et de gestion du cabinet, pensée par des avocats pour des avocats
+                Plateforme de suivi des dossiers et de gestion du cabinet,
+                pensée par des avocats pour des avocats
               </Typography>
             </motion.div>
             <br />
@@ -231,11 +252,7 @@ function ResetPassword(props) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { delay: 0.3 } }}
             >
-              <Button
-                variant="contained"
-                color="secondary"
-                className="p-30"
-              >
+              <Button variant="contained" color="secondary" className="p-30">
                 Demander une démo
               </Button>
             </motion.div>
@@ -246,4 +263,4 @@ function ResetPassword(props) {
   );
 }
 
-export default withReducer('resetPassword', reducer)(ResetPassword);
+export default withReducer("resetPassword", reducer)(ResetPassword);

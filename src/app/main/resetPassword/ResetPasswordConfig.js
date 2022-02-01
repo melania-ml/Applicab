@@ -1,35 +1,35 @@
-import { authRoles } from 'app/auth';
-import ResetPassword from './ResetPassword';
+import { authRoles } from "app/auth";
+import ResetPassword from "./ResetPassword";
 
 const ResetPasswordConfig = {
   settings: {
     layout: {
       config: {
         navbar: {
-          display: false,
+          display: false
         },
         toolbar: {
-          display: false,
+          display: false
         },
         footer: {
-          display: false,
+          display: false
         },
         leftSidePanel: {
-          display: false,
+          display: false
         },
         rightSidePanel: {
-          display: false,
-        },
-      },
-    },
+          display: false
+        }
+      }
+    }
   },
   auth: authRoles.onlyGuest,
   routes: [
     {
-      path: 'resetPassword/R8W11LPVAHLKNZUI',
-      element: <ResetPassword />,
-    },
-  ],
+      path: "resetPassword/:token",
+      element: <ResetPassword />
+    }
+  ]
 };
 
 export default ResetPasswordConfig;
