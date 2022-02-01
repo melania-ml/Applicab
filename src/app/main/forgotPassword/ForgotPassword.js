@@ -228,9 +228,15 @@ function ForgotPassword() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { delay: 0.3 } }}
             >
-              <Button variant="contained" color="secondary" className="p-30">
-                Demander une démo
-              </Button>
+              <a
+                href="https://calendly.com/applicab"
+                style={{ background: "none" }}
+                target={"_blank"}
+              >
+                <Button variant="contained" color="secondary" className="p-30">
+                  Demander une démo
+                </Button>
+              </a>
             </motion.div>
           </div>
         </div>

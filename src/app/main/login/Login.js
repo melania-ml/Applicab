@@ -22,48 +22,50 @@ import {
   Icon,
   IconButton,
   Card,
-  CardContent,
+  CardContent
 } from "@mui/material";
 
 const Root = styled("div")(({ theme }) => ({
-  background: `linear-gradient(to right, ${theme.palette.primary.dark
-    } 0%, ${darken(theme.palette.primary.dark, 0.5)} 100%)`,
+  background: `linear-gradient(to right, ${
+    theme.palette.primary.dark
+  } 0%, ${darken(theme.palette.primary.dark, 0.5)} 100%)`,
   color: theme.palette.primary.contrastText,
 
   "& .Login-leftSection": {
     width: "50%",
-    '@media (max-width: 767px)': {
+    "@media (max-width: 767px)": {
       width: "100%"
     }
   },
   "& .leading-tight": {
-    '@media (max-width: 767px)': {
+    "@media (max-width: 767px)": {
       fontSize: "30px"
     }
   },
 
   "& .Login-rightSection": {
-    background: `linear-gradient(to right, ${theme.palette.primary.dark
-      } 0%, ${darken(theme.palette.primary.dark, 0.5)} 100%)`,
+    background: `linear-gradient(to right, ${
+      theme.palette.primary.dark
+    } 0%, ${darken(theme.palette.primary.dark, 0.5)} 100%)`,
     color: theme.palette.primary.contrastText,
-    '@media (max-width: 767px)': {
+    "@media (max-width: 767px)": {
       padding: "30px"
     }
   },
   "& .login-responsive": {
-    '@media (max-width: 767px)': {
+    "@media (max-width: 767px)": {
       display: "block",
       width: "100%"
     }
   },
   "& .MuiCardContent-root": {
-    '@media (max-width: 767px)': {
+    "@media (max-width: 767px)": {
       marginLeft: "auto",
       marginRight: "auto"
     }
   },
   "& .MuiFormControl-root": {
-    width: "100%",
+    width: "100%"
   }
 }));
 
@@ -78,12 +80,12 @@ const schema = yup.object().shape({
     .matches(
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{13,20}$/,
       "Must Contain 13 Characters not more than 20, One Uppercase, One Lowercase, One Number and one special case Character"
-    ),
+    )
 });
 
 const defaultValues = {
   email: "",
-  password: "",
+  password: ""
 };
 
 function Login() {
@@ -96,39 +98,39 @@ function Login() {
     handleSubmit,
     reset,
     trigger,
-    setError,
+    setError
   } = useForm({
     mode: "onChange",
     defaultValues,
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema)
   });
 
   const { isValid, dirtyFields, errors } = formState;
 
   const [showPassword, setShowPassword] = useState(false);
 
-  useEffect(() => {
-    setValue("email", "soham.s@samcomtechnobrains.com", {
-      shouldDirty: true,
-      shouldValidate: true,
-    });
-    setValue("password", "Samcom@123456", {
-      shouldDirty: true,
-      shouldValidate: true,
-    });
-  }, [reset, setValue, trigger]);
+  // useEffect(() => {
+  //   setValue("email", "soham.s@samcomtechnobrains.com", {
+  //     shouldDirty: true,
+  //     shouldValidate: true
+  //   });
+  //   setValue("password", "Samcom@123456", {
+  //     shouldDirty: true,
+  //     shouldValidate: true
+  //   });
+  // }, [reset, setValue, trigger]);
 
   useEffect(() => {
     login.errors.forEach((error) => {
       setError(error.type, {
         type: "manual",
-        message: error.message,
+        message: error.message
       });
     });
 
     if (login.success) {
       history.push({
-        pathname: "/apps/dashboard",
+        pathname: "/apps/dashboard"
       });
     }
   }, [login.errors, setError]);
@@ -180,7 +182,7 @@ function Login() {
                               user
                             </Icon>
                           </InputAdornment>
-                        ),
+                        )
                       }}
                       variant="outlined"
                     />
@@ -213,7 +215,7 @@ function Login() {
                               </Icon>
                             </IconButton>
                           </InputAdornment>
-                        ),
+                        )
                       }}
                       required
                     />
@@ -269,9 +271,17 @@ function Login() {
                   Vous n'avez pas encore de compte ?
                 </span>
               </div>
-              <Link className="font-normal mt-8" to="/">
+              <a
+                className="font-normal mt-8"
+                href="https://qbgcvoq4svu.typeform.com/to/ojDZd0pG"
+                style={{ background: "none", color: "#22d3ee" }}
+                target={"_blank"}
+              >
                 Contactez-nous
-              </Link>
+              </a>
+              {/* <Link className="font-normal mt-8" to="/">
+                Contactez-nous
+              </Link> */}
             </div>
           </CardContent>
         </Card>
@@ -309,9 +319,15 @@ function Login() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { delay: 0.3 } }}
             >
-              <Button variant="contained" color="secondary" className="p-30">
-                Demander une démo
-              </Button>
+              <a
+                href="https://calendly.com/applicab"
+                style={{ background: "none" }}
+                target={"_blank"}
+              >
+                <Button variant="contained" color="secondary" className="p-30">
+                  Demander une démo
+                </Button>
+              </a>
             </motion.div>
           </div>
         </div>
