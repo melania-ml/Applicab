@@ -179,9 +179,6 @@ function ForgotPassword() {
                       </div>
                     )}
                   />
-                  <Button component={Link} to="/resetPassword/435345">
-                    Jump
-                  </Button>
                 </>
               )}
             </div>
