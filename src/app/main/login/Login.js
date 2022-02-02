@@ -175,15 +175,6 @@ function Login() {
                       error={!!errors.email}
                       helperText={errors?.email?.message}
                       label="Email"
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <Icon className="text-20" color="action">
-                              user
-                            </Icon>
-                          </InputAdornment>
-                        )
-                      }}
                       variant="outlined"
                     />
                   )}

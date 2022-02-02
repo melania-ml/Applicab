@@ -1,16 +1,18 @@
-import FuseUtils from '@fuse/utils';
-import appsConfigs from 'app/main/apps/appsConfigs';
-import authRoleExamplesConfigs from 'app/main/auth/authRoleExamplesConfigs';
-import CallbackConfig from 'app/main/callback/CallbackConfig';
-import DocumentationConfig from 'app/main/documentation/DocumentationConfig';
-import LoginConfig from 'app/main/login/LoginConfig';
-import LogoutConfig from 'app/main/logout/LogoutConfig';
-import pagesConfigs from 'app/main/pages/pagesConfigs';
-import ForgotPasswordConfig from 'app/main/forgotPassword/ForgotPasswordConfig';
-import ResetPasswordConfig from 'app/main/resetPassword/ResetPasswordConfig';
-import UserInterfaceConfig from 'app/main/user-interface/UserInterfaceConfig';
-import FuseLoading from '@fuse/core/FuseLoading';
-import { Navigate } from 'react-router-dom';
+import FuseUtils from "@fuse/utils";
+import appsConfigs from "app/main/apps/appsConfigs";
+import authRoleExamplesConfigs from "app/main/auth/authRoleExamplesConfigs";
+import CallbackConfig from "app/main/callback/CallbackConfig";
+import DocumentationConfig from "app/main/documentation/DocumentationConfig";
+import LoginConfig from "app/main/login/LoginConfig";
+import LogoutConfig from "app/main/logout/LogoutConfig";
+import pagesConfigs from "app/main/pages/pagesConfigs";
+import ForgotPasswordConfig from "app/main/forgotPassword/ForgotPasswordConfig";
+import ResetPasswordConfig from "app/main/resetPassword/ResetPasswordConfig";
+import VerifyEmailConfig from "app/main/verifyEmail/VerifyEmailConfig";
+import CreatePasswordConfig from "app/main/createPassword/CreatePasswordConfig";
+import UserInterfaceConfig from "app/main/user-interface/UserInterfaceConfig";
+import FuseLoading from "@fuse/core/FuseLoading";
+import { Navigate } from "react-router-dom";
 
 const routeConfigs = [
   ...appsConfigs,
@@ -22,8 +24,10 @@ const routeConfigs = [
   LoginConfig,
   ForgotPasswordConfig,
   ResetPasswordConfig,
+  VerifyEmailConfig,
+  CreatePasswordConfig,
   LogoutConfig,
-  CallbackConfig,
+  CallbackConfig
 ];
 
 const routes = [
@@ -32,18 +36,18 @@ const routes = [
   // The individual route configs which has auth option won't be overridden.
   ...FuseUtils.generateRoutesFromConfigs(routeConfigs, null),
   {
-    path: '/',
+    path: "/",
     //element: <Navigate to="apps/dashboard" />,
-    element: <Navigate to="/login" />,
+    element: <Navigate to="/login" />
   },
   {
-    path: 'loading',
-    element: <FuseLoading />,
+    path: "loading",
+    element: <FuseLoading />
   },
   {
-    path: '*',
-    element: <Navigate to="pages/errors/error-404" />,
-  },
+    path: "*",
+    element: <Navigate to="pages/errors/error-404" />
+  }
 ];
 
 export default routes;
