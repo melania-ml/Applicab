@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import jwtService from "app/services/jwtService";
+import { showMessage } from "app/store/fuse/messageSlice";
 
 export const callResetPassword = (params) => async (dispatch) => {
   return jwtService
     .postCallResetPassword({ params })
     .then((data) => {
       if (data.status === 200 && data.success) {
+        dispatch(showMessage({ message: "Votre mot de passe a été modifié" }));
         return dispatch(ResetPasswordSuccess());
       }
     })
