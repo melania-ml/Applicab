@@ -142,10 +142,11 @@ export default function Filters() {
     const [selectedTitle, setSelectedTitle] = useState('');
     return (
         <div
-            style={{ marginTop: 12 }}
-            className="bgm-10 flex"
+            className="bgm-10"
         >
-            <FormControl className="flex w-full sm:w-200 mx-16" variant="outlined">
+            <div className="row">
+            <div className="col-md-3 col-lg-3 col-12 col-xl-3 mb-3 mb-xl-0">
+            <FormControl className="w-full" variant="outlined">
                 <InputLabel style={{ color: '#FFFFFF' }}>Type</InputLabel>
                 <Select
                     label="Type"
@@ -161,7 +162,9 @@ export default function Filters() {
                     </div>
                 </Select>
             </FormControl>
-            <FormControl className="flex w-full sm:w-200 mx-16" variant="outlined">
+            </div>
+            <div className="col-md-3 col-lg-3 col-12 col-xl-3 mb-3 mb-xl-0">
+            <FormControl className="w-full" variant="outlined">
                 <InputLabel style={{ color: '#FFFFFF' }}>Titre</InputLabel>
                 <Select
                     label="Titre"
@@ -177,7 +180,9 @@ export default function Filters() {
                     </div>
                 </Select>
             </FormControl>
-            <FormControl className="flex w-full sm:w-200 mx-16" variant="outlined">
+            </div>
+            <div className="col-md-3 col-lg-3 col-12 col-xl-3 mb-3 mb-xl-0">
+            <FormControl className="w-full" variant="outlined">
                 <InputLabel style={{ color: '#FFFFFF' }}>Status</InputLabel>
                 <Select
                     label="Status"
@@ -191,7 +196,9 @@ export default function Filters() {
                     ))}
                 </Select>
             </FormControl>
-            <FormControl className="flex w-full sm:w-200 mx-16" variant="outlined">
+            </div>
+            <div className="col-md-3 col-lg-3 col-12 col-xl-3 mb-3 mb-xl-0">
+            <FormControl className="w-full" variant="outlined">
                 <TextField
                     // {...field}
                     InputLabelProps={{ style: { color: '#FFFFFF' } }}
@@ -202,6 +209,8 @@ export default function Filters() {
                     fullWidth
                 />
             </FormControl>
+            </div>
+            </div>
         </div>
     )
 }

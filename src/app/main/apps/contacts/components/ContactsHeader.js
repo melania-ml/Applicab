@@ -15,9 +15,10 @@ function ContactsHeader(props) {
   const mainTheme = useSelector(selectMainTheme);
 
   return (
-    <div className="flex flex-1 items-center justify-between p-4">
+    <div className="flex-1 items-center justify-between p-4">
       <Filters />
-      <div className="flex flex-1 items-center px-8 sm:px-12">
+      <div className="flex for-res-flex-direction">
+      <div className="flex flex-1 items-center mb-3 mb-xl-0">
         <ThemeProvider theme={mainTheme}>
           <Paper
             component={motion.div}
@@ -41,7 +42,7 @@ function ContactsHeader(props) {
           </Paper>
         </ThemeProvider>
       </div>
-      <div className='mr-20'>
+      <div className='mr-md-5 mr-0 mb-3 mb-xl-0'>
         <Button
           onClick={(e) => setMoreMenuEl(e.currentTarget)}
           variant="outlined"
@@ -72,6 +73,7 @@ function ContactsHeader(props) {
         >
           Nouveau contact
         </Button>
+      </div>
       </div>
     </div>
   );
