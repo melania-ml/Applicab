@@ -13,15 +13,14 @@ import { getUserData } from './store/userSlice';
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
   '& .FusePageSimple-header': {
-    minHeight: 72,
-    height: 72,
-    [theme.breakpoints.up('lg')]: {
-      minHeight: 100,
-      height: 100,
+    minHeight: 'auto',
+    height: 'auto',
+    [theme.breakpoints.up('lg')]: {     
+      height: 140,
     },
   },
   '& .FusePageSimple-wrapper': {
-    minHeight: 0,
+    minHeight: '70vh',
   },
   '& .FusePageSimple-contentWrapper': {
     padding: 0,
@@ -39,6 +38,14 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
     width: 256,
     border: 0,
   },
+  '& .for-res-flex-direction':{
+    "@media (max-width: 767px)": {
+      flexDirection: 'column',
+    }
+  },
+  '& .for-date label':{   
+	  paddingRight: "25px"
+  }
 }));
 
 function DossiersApp(props) {

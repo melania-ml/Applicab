@@ -115,9 +115,11 @@ export default function Filters() {
     const [selectedTags, setSelectedTags] = useState('');
     return (
         <div
-            className="bgm-10 flex mt-12"
+            className="bgm-10 for-res-flex-direction"
         >
-            <FormControl className="flex w-full mx-7 sm:w-160" variant="outlined">
+            <div className="row">
+            <div className="col-md-4 col-lg-4 col-12 col-xl-2 mb-3 mb-xl-0">
+                <FormControl className="w-full" variant="outlined">
                 <InputLabel style={{ color: '#FFFFFF' }}>Procédure</InputLabel>
                 <Select
                     label="Status"
@@ -131,7 +133,9 @@ export default function Filters() {
                     ))}
                 </Select>
             </FormControl>
-            <FormControl className="flex w-full mx-7 sm:w-160" variant="outlined">
+            </div>
+            <div className="col-md-4 col-lg-4 col-12 col-xl-2 mb-3 mb-xl-0">
+                <FormControl className="w-full" variant="outlined">
                 <InputLabel style={{ color: '#FFFFFF' }}>Type</InputLabel>
                 <Select
                     label="Status"
@@ -145,7 +149,9 @@ export default function Filters() {
                     ))}
                 </Select>
             </FormControl>
-            <FormControl className="flex w-full mx-7 sm:w-160" variant="outlined">
+            </div>
+            <div className="col-md-4 col-lg-4 col-12 col-xl-2 mb-3 mb-xl-0">
+                <FormControl className="w-full" variant="outlined">
                 <InputLabel style={{ color: '#FFFFFF' }}>Status</InputLabel>
                 <Select
                     label="Status"
@@ -159,7 +165,9 @@ export default function Filters() {
                     ))}
                 </Select>
             </FormControl>
-            <FormControl className="flex w-full mx-7 sm:w-160" variant="outlined">
+            </div>
+            <div className="col-md-4 col-lg-4 col-12 col-xl-2 mb-3 mb-xl-0">
+                <FormControl className="w-full" variant="outlined">
                 <InputLabel style={{ color: '#FFFFFF' }}>Nature</InputLabel>
                 <Select
                     label="Status"
@@ -173,7 +181,9 @@ export default function Filters() {
                     ))}
                 </Select>
             </FormControl>
-            <FormControl className="flex w-full mx-7 sm:w-160" variant="outlined">
+            </div>
+            <div className="col-md-4 col-lg-4 col-12 col-xl-2 mb-3 mb-xl-0">
+                <FormControl className="w-full for-date" variant="outlined">
                 <DatePicker
                     label="Date de naissance"
                     value={selectedDateOfCreated}
@@ -185,7 +195,9 @@ export default function Filters() {
                     )}
                 />
             </FormControl>
-            <FormControl className="flex w-full mx-7 sm:w-160" variant="outlined">
+            </div>
+            <div className="col-md-4 col-lg-4 col-12 col-xl-2 mb-3 mb-xl-0">
+                <FormControl className="w-full" variant="outlined">
                 <TextField
                     // {...field}
                     InputLabelProps={{ style: { color: '#FFFFFF' } }}
@@ -196,6 +208,8 @@ export default function Filters() {
                     fullWidth
                 />
             </FormControl>
+            </div>
+        </div>
         </div>
     )
 }
