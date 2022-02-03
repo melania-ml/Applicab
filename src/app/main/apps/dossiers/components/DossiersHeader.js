@@ -16,9 +16,10 @@ function DossiersHeader(props) {
   const mainTheme = useSelector(selectMainTheme);
 
   return (
-    <div className="flex flex-1 items-center justify-between p-4">
+    <div className="flex-1 items-center justify-between p-4">
       <Filters />
-      <div className="flex flex-1 items-center px-8 sm:px-12">
+      <div className="flex">
+      <div className="flex flex-1 items-center mr-5">
         <ThemeProvider theme={mainTheme}>
           <Paper
             component={motion.div}
@@ -42,7 +43,7 @@ function DossiersHeader(props) {
           </Paper>
         </ThemeProvider>
       </div>
-      <div>
+      <div className="flex items-center">
         <Button
           // component={Link}
           // to="/apps/dossiers/new"
@@ -54,6 +55,7 @@ function DossiersHeader(props) {
         </Button>
       </div>
     </div>
+    </div>    
   );
 }
 
