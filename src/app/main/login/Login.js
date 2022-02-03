@@ -243,16 +243,6 @@ function Login() {
                 <b className="m-10">OU</b>
                 <hr style={{ width: 50 }} />
               </div>
-              <br />
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1, transition: { delay: 0.3 } }}
-                style={{ display: "grid" }}
-              >
-                <Button variant="outlined">Connexion avec Google</Button>
-                <br />
-                <Button variant="outlined">Connexion avec Linkedin</Button>
-              </motion.div>
             </>
             <br />
             <br />
