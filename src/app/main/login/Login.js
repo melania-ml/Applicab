@@ -72,14 +72,14 @@ const Root = styled("div")(({ theme }) => ({
 const schema = yup.object().shape({
   email: yup
     .string()
-    .email("You must enter a valid email")
-    .required("You must enter a email"),
+    .email("Saisissez une adresse e-mail valide")
+    .required("Saisissez une adresse e-mail"),
   password: yup
     .string()
-    .required("Please enter your password.")
+    .required("Entrez un mot de passe")
     .matches(
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{13,20}$/,
-      "Must Contain 13 Characters not more than 20, One Uppercase, One Lowercase, One Number and one special case Character"
+      "13 caractères minimum, Au moins 1 lettre majuscule, Au moins 1 chiffre, Au moins 1 caractère spécial"
     )
 });
 

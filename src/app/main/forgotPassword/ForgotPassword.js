@@ -45,8 +45,8 @@ const Root = styled("div")(({ theme }) => ({
 const schema = yup.object().shape({
   email: yup
     .string()
-    .email("You must enter a valid email")
-    .required("You must enter a email")
+    .email("Saisissez une adresse e-mail valide")
+    .required("Saisissez une adresse e-mail")
 });
 
 const defaultValues = {
