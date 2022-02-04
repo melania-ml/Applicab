@@ -32,15 +32,44 @@ const Root = styled("div")(({ theme }) => ({
   } 0%, ${darken(theme.palette.primary.dark, 0.5)} 100%)`,
   color: theme.palette.primary.contrastText,
 
-  "& .Register-leftSection": {
-    width: "50%"
+  "& .email-leftSection": {
+    width: "50%",
+    "@media (max-width: 767px)": {
+      width: "100%"
+    }
   },
-
-  "& .Register-rightSection": {
+  "& .leading-tight": {
+    "@media (max-width: 767px)": {
+      fontSize: "30px"
+    }
+  },
+  "& .email-rightSection": {
     background: `linear-gradient(to right, ${
       theme.palette.primary.dark
     } 0%, ${darken(theme.palette.primary.dark, 0.5)} 100%)`,
-    color: theme.palette.primary.contrastText
+    color: theme.palette.primary.contrastText,
+    "@media (max-width: 767px)": {
+      padding: "30px"
+    }
+  }
+  ,
+  "& .email-responsive": {
+    "@media (max-width: 767px)": {
+      display: "block",
+      width: "100%"
+    }
+  },
+  "& .MuiCardContent-root": {
+    "@media (max-width: 767px)": {
+      marginLeft: "auto",
+      marginRight: "auto"
+    }
+  },
+  "& .MuiFormControl-root": {
+    width: "100%"
+  },
+  "& .email-leftSection input":{
+    outlineColor: '#22d3ee'
   }
 }));
 
@@ -59,10 +88,10 @@ function VerifyEmail() {
       <motion.div
         initial={{ opacity: 0, scale: 0.6 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="flex w-full max-w-400 md:max-w-full shadow-2xl overflow-hidden h-full"
+        className="flex w-full md:max-w-full shadow-2xl overflow-hidden h-full email-responsive"
       >
         <Card
-          className="Register-leftSection flex flex-col w-full items-center justify-center shadow-0"
+          className="email-leftSection flex flex-col w-full items-center justify-center shadow-0"
           square
         >
           <CardContent className="flex flex-col items-center justify-center w-full max-w-400">
@@ -87,11 +116,11 @@ function VerifyEmail() {
                 </div>
                 <div className="flex" style={{ background: "#FCF1F1" }}>
                   <img
-                    className="m-5"
+                    className="m-2"
                     src="assets/icons/custom-svgs/warning.svg"
                     alt="warning"
                   />
-                  <span className="m-5">
+                  <span className="m-2">
                     Vous avez saisi un code confidentiel incorrect, expiré ou
                     déjà utilisé.
                   </span>
@@ -138,7 +167,7 @@ function VerifyEmail() {
           </CardContent>
         </Card>
 
-        <div className="Register-rightSection hidden md:flex flex-1 items-center justify-center p-64">
+        <div className="email-rightSection md:flex flex-1 items-center justify-center p-64">
           <div className="max-w-500">
             <motion.div
               initial={{ opacity: 0, y: 40 }}

@@ -34,6 +34,11 @@ const Root = styled("div")(({ theme }) => ({
       width: "100%"
     }
   },
+  "& .leading-tight": {
+    "@media (max-width: 767px)": {
+      fontSize: "30px"
+    }
+  },
 
   "& .Resetpass-rightSection": {
     background: `linear-gradient(to right, ${
