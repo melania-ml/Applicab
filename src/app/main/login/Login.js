@@ -176,6 +176,15 @@ function Login() {
                       helperText={errors?.email?.message}
                       label="Email"
                       variant="outlined"
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <Icon className="text-20" color="action">
+                              email
+                            </Icon>
+                          </InputAdornment>
+                        )
+                      }}
                     />
                   )}
                 />
@@ -229,7 +238,7 @@ function Login() {
                   type="submit"
                   variant="contained"
                   color="primary"
-                  className="w-full mx-auto mt-16"
+                  className="w-full mx-auto"
                   aria-label="LOG IN"
                   disabled={_.isEmpty(dirtyFields) || !isValid}
                   value="legacy"
@@ -237,14 +246,7 @@ function Login() {
                   Connexion
                 </Button>
               </form>
-              <br />
-              <div className="flex flex-row items-center justify-center">
-                <hr style={{ width: 50 }} />
-                <b className="m-10">OU</b>
-                <hr style={{ width: 50 }} />
-              </div>
             </>
-            <br />
             <br />
             <div className="flex flex-col items-center justify-center pb-32">
               <div>

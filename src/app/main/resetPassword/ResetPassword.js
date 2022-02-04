@@ -81,7 +81,10 @@ const schema = yup.object().shape({
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{13,20}$/,
       "13 caractères minimum, Au moins 1 lettre majuscule, Au moins 1 chiffre, Au moins 1 caractère spécial"
     )
-    .oneOf([yup.ref("password"), null], "Passwords must match")
+    .oneOf(
+      [yup.ref("password"), null],
+      "Le nouveau mot de passe et le mot de passe de confirmation ne correspondent pas"
+    )
 });
 
 function ResetPassword(props) {
