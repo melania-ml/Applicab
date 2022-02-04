@@ -24,7 +24,7 @@ function ContactsHeader(props) {
             component={motion.div}
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}
-            className="flex p-4 items-center max-w-300 h-48 px-16 py-4 shadow"
+            className="flex p-4 items-center search-bar-contact h-48 px-16 py-4 shadow"
           >
             <Icon color="action">search</Icon>
 
@@ -42,7 +42,7 @@ function ContactsHeader(props) {
           </Paper>
         </ThemeProvider>
       </div>
-      <div className='mr-md-5 mr-0 mb-3 mb-xl-0'>
+      <div className='mr-md-5 mr-0 mb-3 mb-md-0 flex items-center'>
         <Button
           onClick={(e) => setMoreMenuEl(e.currentTarget)}
           variant="outlined"
@@ -62,7 +62,7 @@ function ContactsHeader(props) {
           <MenuItem onClick={() => setMoreMenuEl(null)}><img className='mr-5' src="assets/icons/custom-svgs/export.svg" alt="export" />Exporter contacts</MenuItem>
         </Menu>
       </div>
-      <div>
+      <div className="flex items-center">
         <Button
           onClick={() => {
             dispatch(dispatch(openNewContactDialog()))

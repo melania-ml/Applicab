@@ -43,6 +43,12 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
     "@media (max-width: 767px)": {
       flexDirection: 'column',
     }
+  },
+  '& .search-bar-contact':{
+    width:300,
+    "@media (max-width: 767px)": {
+      width:'100%'
+    }
   }
 }));
 

@@ -28,16 +28,37 @@ const Root = styled("div")(({ theme }) => ({
   } 0%, ${darken(theme.palette.primary.dark, 0.5)} 100%)`,
   color: theme.palette.primary.contrastText,
 
-  "& .Register-leftSection": {
-    width: "50%"
+  "& .Resetpass-leftSection": {
+    width: "50%",
+    "@media (max-width: 767px)": {
+      width: "100%"
+    }
   },
 
-  "& .Register-rightSection": {
+  "& .Resetpass-rightSection": {
     background: `linear-gradient(to right, ${
       theme.palette.primary.dark
     } 0%, ${darken(theme.palette.primary.dark, 0.5)} 100%)`,
-    color: theme.palette.primary.contrastText
-  }
+    color: theme.palette.primary.contrastText,
+    "@media (max-width: 767px)": {
+      padding: "30px"
+    }
+  },
+    "& .Resetpass-responsive": {
+      "@media (max-width: 767px)": {
+        display: "block",
+        width: "100%"
+      }
+    },
+    "& .MuiCardContent-root": {
+      "@media (max-width: 767px)": {
+        marginLeft: "auto",
+        marginRight: "auto"
+      }
+    },
+    "& .MuiFormControl-root": {
+      width: "100%"
+    }
 }));
 
 const defaultValues = {
@@ -108,10 +129,10 @@ function ResetPassword(props) {
       <motion.div
         initial={{ opacity: 0, scale: 0.6 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="flex w-full max-w-400 md:max-w-full shadow-2xl overflow-hidden h-full"
+        className="flex w-full md:max-w-full shadow-2xl overflow-hidden h-full Resetpass-responsive"
       >
         <Card
-          className="Register-leftSection flex flex-col w-full items-center justify-center shadow-0"
+          className="Resetpass-leftSection flex flex-col w-full items-center justify-center shadow-0"
           square
         >
           <CardContent className="flex flex-col items-center justify-center w-full max-w-400">
@@ -219,7 +240,7 @@ function ResetPassword(props) {
           </div>
         </Card>
 
-        <div className="Register-rightSection hidden md:flex flex-1 items-center justify-center p-64">
+        <div className="Resetpass-rightSection md:flex flex-1 items-center justify-center p-64">
           <div className="max-w-500">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
