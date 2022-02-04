@@ -237,12 +237,6 @@ function Login() {
                   Connexion
                 </Button>
               </form>
-              <br />
-              <div className="flex flex-row items-center justify-center">
-                <hr style={{ width: 50 }} />
-                <b className="m-10">OU</b>
-                <hr style={{ width: 50 }} />
-              </div>
             </>
             <br />
             <div className="flex flex-col items-center justify-center pb-32">
