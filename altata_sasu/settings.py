@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'common',
     'rest_framework',
     'user',
+    'caseManagement',
 ]
 
 AUTHENTICATION_BACKENDS = {

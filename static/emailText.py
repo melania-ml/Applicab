@@ -10,7 +10,7 @@ def setPassword():
                  'votre inscription.',
         'before_button': 'Ce code expirera dans 24 heures.',
         'button_text': 'Confirmez votre email',
-        'button_url': Admin_url
+        'button_url': Admin_url + 'verifyEmail/'
 
     }
     return textDict

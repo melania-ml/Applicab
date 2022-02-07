@@ -43,6 +43,7 @@ class registerClient(APIView):
                 stPasswordText = emailText.setPassword() | emailText.commonUrls()
                 stPasswordText['otp'] = emailOtp
                 stPasswordText['text1'] = stPasswordText['text1'].format(userName=serializer.data['first_name'])
+                stPasswordText['button_url'] = stPasswordText['button_url'] + str(serializer.data['id'])
 
                 send_email([serializer.data['email']],
                            'Saisissez ' + str(emailOtp) + ' comme code de confirmation Applicab', 'email.html', stPasswordText)
@@ -87,7 +88,7 @@ class validateEmailOtp(APIView):
                                "Otp Validated Successfully", True, status.HTTP_200_OK)
             return Response(res.success_payload(), status=status.HTTP_200_OK)
         except Exception as e:
-            res = ResponseInfo({'validation': False}, "Invalid Otp", False, status.HTTP_401_UNAUTHORIZED)
+            res = ResponseInfo({'validation': False}, INVALID_OTP, False, status.HTTP_401_UNAUTHORIZED)
             return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
 
     def put(self, request):

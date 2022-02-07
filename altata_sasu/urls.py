@@ -23,5 +23,6 @@ admin.site.enable_nav_sidebar = False
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/common/', include('common.urls')),
-    path('auth/user/', include('user.urls'))
+    path('auth/user/', include('user.urls')),
+    path('api/caseManagement/', include('caseManagement.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

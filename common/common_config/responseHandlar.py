@@ -18,12 +18,12 @@ class ResponseInfo:
 
     def errors_payload(self):
         # if error in payload
-        if 'error' in self.data:
-            self.message = self.data['error']
-            self.data = {}
+        # if 'error' in self.data:
+        #     self.message = self.data['error']
+        #     self.data = {}
 
         temp_custom_failed = {
-            "data": self.data,
+            "data": str(self.data),
             "message": self.message,
             "success": False,
             "status": self.status

@@ -5,19 +5,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from common.common_config.responseHandlar import ResponseInfo, exception_payload
 from rest_framework import status, viewsets, generics
+
+from static.responseMessages import *
 from .serializers import *
-
-
-@authentication_classes([])
-@permission_classes([])
-class CompanyViewSet(APIView):
-    def get(self, request):
-        return Response(exception_payload({'token': 'data'}, "message failure", status.HTTP_200_OK),
-                        status=status.HTTP_200_OK)
-
-    def post(self, request, params_id=None):
-        res = ResponseInfo({}, "First Message success", False, status.HTTP_200_OK)
-        return Response(res.success_payload(), status=status.HTTP_200_OK)
 
 
 @authentication_classes([])
@@ -36,7 +26,7 @@ class GeneralGetAddViewSet(generics.ListCreateAPIView):
         GeneralSerializer.Meta.model = self.model
         return GeneralSerializer
 
-    def retrieve(self, request, *args, **kwargs):
+    def list(self, request, *args, **kwargs):
         response = super(GeneralGetAddViewSet, self).list(request)
         # prepare response
         res = ResponseInfo(response.data, "Success", True, 200)
@@ -64,3 +54,27 @@ class GeneralGetUpdateViewSet(generics.RetrieveUpdateDestroyAPIView):
         # prepare response
         res = ResponseInfo(response.data, "Success", True, 200)
         return Response(res.success_payload())
+
+
+@authentication_classes([])
+@permission_classes([])
+class FilterViewSet(APIView):
+
+    def post(self, request, app_label, model_name):
+        try:
+            reqData = request.data
+            # Get Dynamic model from req
+            model = apps.get_model(app_label=str(app_label), model_name=str(model_name))
+            # add model to serializer
+            GeneralDepthSerializer.Meta.model = model
+
+            kwargs = reqData['query']
+            data = model.objects.filter(**kwargs)
+            serializer = GeneralDepthSerializer(data, many=True)
+            res = ResponseInfo(serializer.data, SUCCESS, True,
+                               status.HTTP_200_OK)
+            return Response(res.success_payload(), status=status.HTTP_200_OK)
+        except Exception as err:
+            res = ResponseInfo(err, SOMETHING_WENT_WRONG, False,
+                               status.HTTP_401_UNAUTHORIZED)
+            return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
