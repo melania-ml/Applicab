@@ -1,30 +1,16 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import _ from "@lodash";
 import withReducer from "app/store/withReducer";
 import reducer from "./store";
-import { showMessage } from "app/store/fuse/messageSlice";
-import OTPInput, { ResendOTP } from "otp-input-react";
+import OTPInput from "otp-input-react";
 
 //material-ui
 import { styled, darken } from "@mui/material/styles";
-import {
-  Typography,
-  Button,
-  TextField,
-  InputAdornment,
-  Icon,
-  Card,
-  CardContent
-} from "@mui/material";
+import { Typography, Button, Card, CardContent } from "@mui/material";
 import { motion } from "framer-motion";
 
-import { callForgotPassword } from "./store/verifyEmailSlice";
-import { color } from "@mui/system";
+import { callVerifyEmail, callResendOTP } from "./store/verifyEmailSlice";
 
 const Root = styled("div")(({ theme }) => ({
   background: `linear-gradient(to right, ${
@@ -51,8 +37,7 @@ const Root = styled("div")(({ theme }) => ({
     "@media (max-width: 767px)": {
       padding: "30px"
     }
-  }
-  ,
+  },
   "& .email-responsive": {
     "@media (max-width: 767px)": {
       display: "block",
@@ -68,20 +53,42 @@ const Root = styled("div")(({ theme }) => ({
   "& .MuiFormControl-root": {
     width: "100%"
   },
-  "& .email-leftSection input":{
-    outlineColor: '#22d3ee'
+  "& .email-leftSection input": {
+    outlineColor: "#22d3ee"
   }
 }));
 
 function VerifyEmail() {
   const [otp, setOtp] = useState("");
+  const searchParam = window.location.pathname.split("/")[2];
+  const [isValid, setIsValid] = useState(false);
   const dispatch = useDispatch();
-  // const forgotPasswordState = useSelector(
-  //   ({ forgotPassword }) => forgotPassword.forgotPassword
-  // );
-  function onSubmit(model) {
-    dispatch(callForgotPassword(model));
+  const verifyEmailState = useSelector(
+    ({ verifyEmail }) => verifyEmail.verifyEmail
+  );
+  function onSubmit() {
+    dispatch(callVerifyEmail(otp));
   }
+
+  function onResentOTP() {
+    dispatch(callResendOTP({ userId: searchParam }));
+  }
+
+  useEffect(() => {
+    if (verifyEmailState.success) {
+      history.push({
+        pathname: "/login"
+      });
+    }
+  }, [verifyEmailState]);
+
+  useEffect(() => {
+    if (otp.length === 6) {
+      setIsValid(true);
+    } else {
+      setIsValid(false);
+    }
+  }, [otp]);
 
   return (
     <Root className="flex flex-col flex-auto items-center justify-center shrink-0">
@@ -105,64 +112,50 @@ function VerifyEmail() {
             </motion.div>
 
             <div className="w-full">
-              <form
-                className="flex flex-col justify-center w-full"
-                //onSubmit={handleSubmit(onSubmit)}
+              <div className="mb-14 text-center">
+                <h2>
+                  <b>Vérifiez votre identité</b>
+                </h2>
+              </div>
+              <div className="mb-16 text-center">
+                <span>
+                  Saisissez le code que nous avons envoyé au melania@altata.tech
+                </span>
+              </div>
+              <br />
+              <OTPInput
+                style={{ justifyContent: "center", marginLeft: 10 }}
+                value={otp}
+                onChange={setOtp}
+                OTPLength={6}
+                otpType="number"
+                disabled={false}
+                inputStyles={{ border: "1px solid gray", marginRight: 10 }}
+              />
+              <br />
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                className="w-full mx-auto mt-16"
+                aria-label="REGISTER"
+                disabled={!isValid}
+                value="legacy"
+                onClick={onSubmit}
               >
-                <div className="mb-14 text-center">
-                  <h2>
-                    <b>Vérifiez votre identité</b>
-                  </h2>
+                Vérifier
+              </Button>
+              <br />
+              <div className="flex flex-col items-center justify-center">
+                <div>
+                  <Link
+                    className="font-normal align-center"
+                    onClick={onResentOTP}
+                  >
+                    Renvoyer le code
+                  </Link>
                 </div>
-                <div className="flex" style={{ background: "#FCF1F1" }}>
-                  <img
-                    className="m-2"
-                    src="assets/icons/custom-svgs/warning.svg"
-                    alt="warning"
-                  />
-                  <span className="m-2">
-                    Vous avez saisi un code confidentiel incorrect, expiré ou
-                    déjà utilisé.
-                  </span>
-                </div>
-                <br />
-                <div className="mb-16 text-center">
-                  <span>
-                    Saisissez le code que nous avons envoyé au
-                    melania@altata.tech
-                  </span>
-                </div>
-                <br />
-                <OTPInput
-                  style={{ justifyContent: "center", marginLeft: 10 }}
-                  value={otp}
-                  onChange={setOtp}
-                  OTPLength={6}
-                  otpType="number"
-                  disabled={false}
-                  inputStyles={{ border: "1px solid gray", marginRight: 10 }}
-                />
-                <br />
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  className="w-full mx-auto mt-16"
-                  aria-label="REGISTER"
-                  //disabled={_.isEmpty(dirtyFields) || !isValid}
-                  value="legacy"
-                >
-                  Vérifier
-                </Button>
-                <br />
-                <div className="flex flex-col items-center justify-center">
-                  <div>
-                    <Link className="font-normal align-center" to="/">
-                      Renvoyer le code
-                    </Link>
-                  </div>
-                </div>
-              </form>
+              </div>
             </div>
           </CardContent>
         </Card>
