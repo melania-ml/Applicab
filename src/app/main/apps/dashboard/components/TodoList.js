@@ -20,7 +20,7 @@ const todos = [
 
 export default function TodoList() {
     return (
-        <motion.div className="mb-5 mb-md-0 ml-md-5 ml-0 box-shadow-dash"
+        <motion.div className="mb-5 mb-md-0 ml-lg-5 ml-0 box-shadow-dash"
             initial={{ y: 50, opacity: 0.8 }}
             animate={{ y: 0, opacity: 1, transition: { delay: 0.3 } }}
             style={{ background: '#FFFFFF', padding: 15, borderRadius: 10 }}
