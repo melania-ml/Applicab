@@ -36,7 +36,7 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
   '& .FusePageSimple-content': {
     display: 'flex',
     height: 'auto',
-    '@media (max-width: 767px)': {
+    '@media (max-width: 991px)': {
       display: "block"
     }
   },

@@ -49,7 +49,7 @@ function CalendarHeader(props) {
     <ThemeProvider theme={mainThemeDark}>
       <Root
         className={clsx(
-          'flex h-100 min-h-100 relative',
+          'flex relative',
           format(new Date(currentDate?.start || null), 'MMM')
         )}
       >

@@ -100,7 +100,7 @@ export default function Calendar() {
     }
     return (
         <Root
-            className="flex flex-col flex-auto relative p-5 my-5 my-md-0 box-shadow-dash"
+            className="flex flex-col flex-auto relative p-5 my-5 my-lg-0 box-shadow-dash"
             style={{ background: '#FFFFFF', padding: 15, borderRadius: 10 }}
         >
             <CalendarHeader calendarRef={calendarRef} currentDate={currentDate} />
