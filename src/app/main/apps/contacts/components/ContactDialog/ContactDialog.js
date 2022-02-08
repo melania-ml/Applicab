@@ -21,6 +21,7 @@ import {
   InputAdornment,
   Chip
 } from "@mui/material";
+import { createFilterOptions } from "@mui/material/Autocomplete";
 import DatePicker from "@mui/lab/DatePicker";
 import Countries from "../../../../constants/Countries";
 import Nationalities from "../../../../constants/Nationalities";
@@ -39,7 +40,7 @@ import {
 } from "../../store/contactsSlice";
 
 const tags = [];
-
+const filter = createFilterOptions();
 function ContactDialog(props) {
   const [allFields, setAllFields] = useState({
     type: "Client",
@@ -92,7 +93,7 @@ function ContactDialog(props) {
       }
     } else if (
       allFields.type === "Client" &&
-      allFields.legalStatus === "Personne"
+      allFields.legalStatus === "Particulier"
     ) {
       if (
         allFields.type &&
@@ -108,7 +109,7 @@ function ContactDialog(props) {
       }
     } else if (
       allFields.type !== "Client" &&
-      allFields.legalStatus === "Personne"
+      allFields.legalStatus === "Particulier"
     ) {
       if (allFields.type && allFields.title && allFields.name) {
         setIsValid(true);
@@ -162,7 +163,10 @@ function ContactDialog(props) {
         setErrors({ ...errors, companyName: "Must enter a Company name" });
       }
     }
-    if (allFields.type !== "Client" && allFields.legalStatus === "Personne") {
+    if (
+      allFields.type !== "Client" &&
+      allFields.legalStatus === "Particulier"
+    ) {
       if (name === "name") {
         if (value) {
           setErrors({ ...errors, name: "" });
@@ -284,9 +288,9 @@ function ContactDialog(props) {
                   label="Enterprise"
                 />
                 <FormControlLabel
-                  value="Personne"
+                  value="Particulier"
                   control={<Radio />}
-                  label="Personne"
+                  label="Particulier"
                 />
               </RadioGroup>
             </FormControl>
@@ -294,6 +298,53 @@ function ContactDialog(props) {
           {allFields.legalStatus === "Enterprise" ? (
             <>
               <Autocomplete
+                className="flex w-full mb-12"
+                value={allFields.title}
+                onChange={(event, newValue) => {
+                  if (typeof newValue === "string") {
+                    setAllFields({ ...allFields, title: newValue });
+                  } else if (newValue && newValue.inputValue) {
+                    setAllFields({ ...allFields, title: newValue.inputValue });
+                  } else {
+                    setAllFields({ ...allFields, title: newValue });
+                  }
+                }}
+                filterOptions={(options, params) => {
+                  const filtered = filter(options, params);
+                  const { inputValue } = params;
+                  const isExisting = options.some(
+                    (option) => inputValue === option.title
+                  );
+                  if (inputValue !== "" && !isExisting) {
+                    filtered.push({
+                      inputValue,
+                      label: `Ajouter "${inputValue}"`
+                    });
+                  }
+                  return filtered;
+                }}
+                selectOnFocus
+                clearOnBlur
+                handleHomeEndKeys
+                options={EnterpriseTitles}
+                getOptionLabel={(option) => {
+                  if (typeof option === "string") {
+                    return option;
+                  }
+                  if (option.inputValue) {
+                    return option.inputValue;
+                  }
+                  return option.label;
+                }}
+                renderOption={(props, option) => (
+                  <li {...props}>{option.label}</li>
+                )}
+                freeSolo
+                renderInput={(params) => (
+                  <TextField {...params} label="Choisissez un titre*" />
+                )}
+              />
+              {/* <Autocomplete
                 className="flex w-full mb-12"
                 disablePortal
                 style={{ color: "#FFFFFF" }}
@@ -308,7 +359,7 @@ function ContactDialog(props) {
                 renderInput={(params) => (
                   <TextField {...params} label="Choisissez un titre*" />
                 )}
-              />
+              /> */}
               <TextField
                 className="mb-12"
                 label="Nom de la compagnie*"
@@ -712,7 +763,7 @@ function ContactDialog(props) {
                 <b>Information complémentaire</b>
               </div>
               <DatePicker
-                label="Date de naissance"
+                label="Date de création"
                 value={allFields.dateValue}
                 maxDate={new Date()}
                 onChange={(newValue) => {
