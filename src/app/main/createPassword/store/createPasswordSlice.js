@@ -1,34 +1,38 @@
 import { createSlice } from "@reduxjs/toolkit";
-import jwtService from "app/services/jwtService";
+import axios from "axios";
+import { showMessage } from "app/store/fuse/messageSlice";
 
-export const callForgotPassword =
-  ({ email }) =>
+export const callCreatePassword =
+  ({ password, token }) =>
   async (dispatch) => {
-    return jwtService
-      .getForgotPasswordMail({ email })
+    debugger;
+    await axios
+      .post(`http://178.79.138.121:8080/auth/user/setPassword/${token}`, {
+        password
+      })
       .then((data) => {
-        if (data.status === 201 && data.success) {
-          return dispatch(ForgotPasswordSuccess());
+        if (data.data.data.passwordCreated && data.data.success) {
+          dispatch(showMessage({ message: data.data.message }));
+          return dispatch(CreatePasswordSuccess());
         }
       })
       .catch((errors) => {
-        debugger;
-        return dispatch(ForgotPasswordError(errors));
+        return dispatch(CreatePasswordError(errors));
       });
   };
 
-const forgotPasswordSlice = createSlice({
-  name: "forgotPassword",
+const createPasswordSlice = createSlice({
+  name: "createPassword",
   initialState: {
     success: false,
     errors: []
   },
   reducers: {
-    ForgotPasswordSuccess: (state, action) => {
+    CreatePasswordSuccess: (state, action) => {
       state.success = true;
       state.errors = [];
     },
-    ForgotPasswordError: (state, action) => {
+    CreatePasswordError: (state, action) => {
       state.success = false;
       state.errors = action.payload;
     }
@@ -36,7 +40,7 @@ const forgotPasswordSlice = createSlice({
   extraReducers: {}
 });
 
-export const { ForgotPasswordSuccess, ForgotPasswordError } =
-  forgotPasswordSlice.actions;
+export const { CreatePasswordSuccess, CreatePasswordError } =
+  createPasswordSlice.actions;
 
-export default forgotPasswordSlice.reducer;
+export default createPasswordSlice.reducer;

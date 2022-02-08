@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
@@ -7,7 +6,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import _ from "@lodash";
 import withReducer from "app/store/withReducer";
 import reducer from "./store";
-import { showMessage } from "app/store/fuse/messageSlice";
 
 //material-ui
 import { styled, darken } from "@mui/material/styles";
@@ -23,8 +21,7 @@ import {
 } from "@mui/material";
 import { motion } from "framer-motion";
 
-import { callForgotPassword } from "./store/createPasswordSlice";
-import { color } from "@mui/system";
+import { callCreatePassword } from "./store/createPasswordSlice";
 
 const Root = styled("div")(({ theme }) => ({
   background: `linear-gradient(to right, ${
@@ -43,15 +40,45 @@ const Root = styled("div")(({ theme }) => ({
     color: theme.palette.primary.contrastText
   }
 }));
-
+const defaultValues = {
+  password: ""
+};
+const schema = yup.object().shape({
+  password: yup
+    .string()
+    .required("Entrez un mot de passe")
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{13,20}$/,
+      "13 caractères minimum, Au moins 1 lettre majuscule, Au moins 1 chiffre, Au moins 1 caractère spécial"
+    )
+});
 function CreatePassword() {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
-  // const forgotPasswordState = useSelector(
-  //   ({ forgotPassword }) => forgotPassword.forgotPassword
-  // );
+  const { control, setValue, formState, handleSubmit } = useForm({
+    mode: "onChange",
+    defaultValues,
+    resolver: yupResolver(schema)
+  });
+  const { isValid, dirtyFields, errors } = formState;
+  const createPasswordState = useSelector(
+    ({ createPassword }) => createPassword.createPassword
+  );
+  const verifyEmailState = useSelector(
+    ({ verifyEmail }) => verifyEmail.verifyEmail
+  );
+
+  useEffect(() => {
+    if (createPasswordState.success) {
+      history.push({
+        pathname: "/login"
+      });
+    }
+  }, [createPasswordState]);
+
   function onSubmit(model) {
-    dispatch(callForgotPassword(model));
+    const token = verifyEmailState.token;
+    dispatch(callCreatePassword({ ...model, token }));
   }
 
   return (
@@ -76,41 +103,47 @@ function CreatePassword() {
             </motion.div>
 
             <div className="w-full">
+              <div className="mb-14 text-center">
+                <h2>
+                  <b>Créez un mot de passe sécurisé</b>
+                </h2>
+              </div>
+              <br />
               <form
                 className="flex flex-col justify-center w-full"
-                //onSubmit={handleSubmit(onSubmit)}
+                onSubmit={handleSubmit(onSubmit)}
               >
-                <div className="mb-14 text-center">
-                  <h2>
-                    <b>Créez un mot de passe sécurisé</b>
-                  </h2>
-                </div>
-                <br />
-                <TextField
-                  //{...field}
-                  className="mb-16"
-                  label="Mot de passe"
-                  type="password"
-                  //error={!!errors.password}
-                  //helperText={errors?.password?.message}
-                  variant="outlined"
-                  InputProps={{
-                    className: "pr-2",
-                    type: showPassword ? "text" : "password",
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          onClick={() => setShowPassword(!showPassword)}
-                          size="large"
-                        >
-                          <Icon className="text-20" color="action">
-                            {showPassword ? "visibility" : "visibility_off"}
-                          </Icon>
-                        </IconButton>
-                      </InputAdornment>
-                    )
-                  }}
-                  required
+                <Controller
+                  name="password"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      className="mb-16 w-full"
+                      label="Mot de passe"
+                      type="password"
+                      error={!!errors.password}
+                      helperText={errors?.password?.message}
+                      variant="outlined"
+                      InputProps={{
+                        className: "pr-2",
+                        type: showPassword ? "text" : "password",
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              onClick={() => setShowPassword(!showPassword)}
+                              size="large"
+                            >
+                              <Icon className="text-20" color="action">
+                                {showPassword ? "visibility" : "visibility_off"}
+                              </Icon>
+                            </IconButton>
+                          </InputAdornment>
+                        )
+                      }}
+                      required
+                    />
+                  )}
                 />
                 <br />
                 <Button
@@ -119,7 +152,7 @@ function CreatePassword() {
                   color="primary"
                   className="w-full mx-auto mt-16"
                   aria-label="REGISTER"
-                  //disabled={_.isEmpty(dirtyFields) || !isValid}
+                  disabled={_.isEmpty(dirtyFields) || !isValid}
                   value="legacy"
                 >
                   Créer le mot de passe

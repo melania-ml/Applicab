@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import withReducer from "app/store/withReducer";
 import reducer from "./store";
+import history from "@history";
 import OTPInput from "otp-input-react";
 
 //material-ui
@@ -77,7 +78,7 @@ function VerifyEmail() {
   useEffect(() => {
     if (verifyEmailState.success) {
       history.push({
-        pathname: "/login"
+        pathname: "/createPassword"
       });
     }
   }, [verifyEmailState]);
@@ -147,14 +148,26 @@ function VerifyEmail() {
               </Button>
               <br />
               <div className="flex flex-col items-center justify-center">
-                <div>
-                  <Link
+                <a
+                  className="font-normal mt-8"
+                  //href="https://qbgcvoq4svu.typeform.com/to/ojDZd0pG"
+                  onClick={onResentOTP}
+                  style={{
+                    background: "none",
+                    color: "#22d3ee",
+                    cursor: "pointer"
+                  }}
+                  //target={"_blank"}
+                >
+                  Renvoyer le code
+                </a>
+                {/* <Link
                     className="font-normal align-center"
-                    onClick={onResentOTP}
+                    to={"/"}
+                    //onClick={onResentOTP}
                   >
                     Renvoyer le code
-                  </Link>
-                </div>
+                  </Link> */}
               </div>
             </div>
           </CardContent>
