@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import _ from "@lodash";
+import history from "@history";
 import withReducer from "app/store/withReducer";
 import reducer from "./store";
 

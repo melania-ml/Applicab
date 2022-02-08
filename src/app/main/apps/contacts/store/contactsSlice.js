@@ -27,6 +27,7 @@ export const addContact = createAsyncThunk(
       .post("http://178.79.138.121:8080/auth/user/registerClient", contact)
       .then((data) => {
         if (data.data.status === 201 && data.data.success) {
+          dispatch(showMessage({ message: data.data.message }));
           return dispatch(addContactSuccess());
         }
       })
