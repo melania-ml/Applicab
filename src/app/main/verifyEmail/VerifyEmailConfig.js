@@ -26,7 +26,7 @@ const VerifyEmailConfig = {
   auth: authRoles.onlyGuest,
   routes: [
     {
-      path: "verifyEmail/54",
+      path: "verifyEmail/:token",
       element: <VerifyEmail />
     }
   ]
