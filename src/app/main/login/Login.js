@@ -108,17 +108,11 @@ function Login() {
   const { isValid, dirtyFields, errors } = formState;
 
   const [showPassword, setShowPassword] = useState(false);
-
-  // useEffect(() => {
-  //   setValue("email", "soham.s@samcomtechnobrains.com", {
-  //     shouldDirty: true,
-  //     shouldValidate: true
-  //   });
-  //   setValue("password", "Samcom@123456", {
-  //     shouldDirty: true,
-  //     shouldValidate: true
-  //   });
-  // }, [reset, setValue, trigger]);
+  const [isRememberMe, setIsRememberMe] = useState(true);
+  useEffect(() => {
+    setValue("email", localStorage.getItem("email"), {});
+    setValue("password", localStorage.getItem("password"), {});
+  }, [reset, setValue, trigger]);
 
   useEffect(() => {
     login.errors.forEach((error) => {
@@ -136,6 +130,14 @@ function Login() {
   }, [login.errors, setError]);
 
   function onSubmit(model) {
+    const { email, password } = model;
+    if (isRememberMe) {
+      localStorage.setItem("email", email);
+      localStorage.setItem("password", password);
+    } else {
+      localStorage.setItem("email", "");
+      localStorage.setItem("password", "");
+    }
     dispatch(submitLogin(model));
   }
   return (
@@ -185,6 +187,7 @@ function Login() {
                           </InputAdornment>
                         )
                       }}
+                      required
                     />
                   )}
                 />
@@ -225,7 +228,12 @@ function Login() {
                 <div className="flex flex-row items-center justify-between pb-32">
                   <FormGroup>
                     <FormControlLabel
-                      control={<Checkbox defaultChecked />}
+                      control={
+                        <Checkbox
+                          defaultChecked={isRememberMe}
+                          onChange={() => setIsRememberMe(!isRememberMe)}
+                        />
+                      }
                       label="Se souvenir de moi"
                     />
                   </FormGroup>
