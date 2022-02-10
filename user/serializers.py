@@ -1,3 +1,4 @@
+from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
 
 from user.models import User
@@ -11,7 +12,10 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'email', 'first_name',
-                  'last_name', 'phone_number', 'password', 'emil_otp', 'email_token','user_type','legal_status','title','company_name','country','nationality','address','city','postal_code','capital_social','RCS_city','native_city','number','fixe','comments','tags','profession','status','department','client_type',]
+                  'last_name', 'phone_number', 'password', 'emil_otp', 'email_token', 'user_type', 'legal_status',
+                  'title', 'company_name', 'country', 'nationality', 'address', 'city', 'postal_code', 'capital_social',
+                  'RCS_city', 'native_city', 'number', 'fixe', 'comments', 'tags', 'profession', 'status', 'department',
+                  'client_type', ]
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
@@ -22,5 +26,13 @@ class LoginSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['password', 'email', 'jwtoken']
+        fields = ['password', 'email', 'jwtoken', 'id']
         read_only_fields = ['jwtoken']
+
+
+class userProfileSerializer(serializers.ModelSerializer):
+    profile = Base64ImageField(allow_null=True, required=False)
+
+    class Meta:
+        model = User
+        fields = '__all__'

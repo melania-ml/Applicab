@@ -55,6 +55,15 @@ class GeneralGetUpdateViewSet(generics.RetrieveUpdateDestroyAPIView):
         res = ResponseInfo(response.data, "Success", True, 200)
         return Response(res.success_payload())
 
+    def partial_update(self, request, *args, **kwargs):
+        response = super(GeneralGetUpdateViewSet, self).partial_update(request)
+        # prepare response
+        message = SUCCESS
+        if self.kwargs['model_name'] == 'User':
+            message = PROFILE_UPDATE_SUCCESS
+        res = ResponseInfo(response.data, message, True, 200)
+        return Response(res.success_payload())
+
 
 @authentication_classes([])
 @permission_classes([])

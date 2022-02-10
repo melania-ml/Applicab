@@ -6,6 +6,7 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.postgres.fields import CIEmailField, ArrayField
 from django.core.validators import RegexValidator
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 import jwt
 from django.conf import settings
@@ -74,7 +75,7 @@ class User(AbstractUser):
     date_of_birth = models.DateField(blank=True, null=True)
     city_of_birth = models.DateField(blank=True, null=True)
     profile = models.ImageField(
-        upload_to=profile_upload_image_to, blank=True, null=True)
+        upload_to='user_profile', blank=True, null=True)
     is_locked = models.BooleanField(default=False)
     created_date = models.DateTimeField(auto_now=False, default=django.utils.timezone.now)
     updated_date = models.DateTimeField(auto_now=True)
@@ -98,6 +99,7 @@ class User(AbstractUser):
     country = models.CharField(max_length=255, null=True, blank=True)
     nationality = models.CharField(max_length=255, null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
+    website = models.CharField(max_length=255, null=True, blank=True)
     city = models.CharField(max_length=255, null=True, blank=True)
     postal_code = models.IntegerField(null=True, blank=True)
     capital_social = models.IntegerField(null=True, blank=True)
@@ -106,7 +108,8 @@ class User(AbstractUser):
     number = models.CharField(max_length=255, null=True, blank=True)
     fixe = models.IntegerField(null=True, blank=True)
     comments = models.CharField(max_length=5000, null=True, blank=True)
-    tags = ArrayField(models.CharField(max_length=200), null=True,blank=True)#models.CharField(max_length=255, null=True, blank=True)
+    tags = ArrayField(models.CharField(max_length=200), null=True,
+                      blank=True)  # models.CharField(max_length=255, null=True, blank=True)
     profession = models.CharField(max_length=255, null=True, blank=True)
     status = models.CharField(max_length=255, choices=staticModelChoiceFields.statusChoiceFields(),
                               null=True, blank=True)

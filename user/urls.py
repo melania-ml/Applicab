@@ -11,4 +11,5 @@ urlpatterns = [
     path('setPassword/<slug:emailToken>', setPassword.as_view(), name="setPassword"),
     path('forgotPassword', forgotPassword.as_view(), name="forgotPassword"),
     path('changePassword', forgotPassword.as_view(), name="changePassword"),
+    path('updateUser/<int:pk>', userUpdateViewSet.as_view(), name="changePassword"),
 ]

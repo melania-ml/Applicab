@@ -4,7 +4,7 @@ import string
 # Create your views here.
 from datetime import datetime, timedelta
 
-from rest_framework import status, permissions
+from rest_framework import status, permissions, generics
 from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -46,7 +46,8 @@ class registerClient(APIView):
                 stPasswordText['button_url'] = stPasswordText['button_url'] + str(serializer.data['id'])
 
                 send_email([serializer.data['email']],
-                           'Saisissez ' + str(emailOtp) + ' comme code de confirmation Applicab', 'email.html', stPasswordText)
+                           'Saisissez ' + str(emailOtp) + ' comme code de confirmation Applicab', 'email.html',
+                           stPasswordText)
             res = ResponseInfo(serializer.data, USER_REGISTERED_SUCCESSFULLY, True, status.HTTP_201_CREATED)
             return Response(res.success_payload(), status.HTTP_201_CREATED)
         res = ResponseInfo({"data": serializer.errors}, "something went wrong", False,
@@ -103,6 +104,8 @@ class validateEmailOtp(APIView):
             userData.save()
             stPasswordText = emailText.setPassword() | emailText.commonUrls()
             stPasswordText['otp'] = emailOtp
+            stPasswordText['button_url'] = stPasswordText['button_url'] + str(userData['id'])
+
             send_email([userData.email],
                        'Password Set', 'email.html', stPasswordText)
             res = ResponseInfo({'otp_shared': True},
@@ -124,10 +127,10 @@ class setPassword(APIView):
             userData.email_token = None
             userData.is_active = True
             userData.save()
-            res = ResponseInfo({}, YOUR_PASSWORD_CHANGED, True, status.HTTP_200_OK)
+            res = ResponseInfo({"passwordCreated": True}, YOUR_PASSWORD_CHANGED, True, status.HTTP_200_OK)
             return Response(res.success_payload(), status=status.HTTP_200_OK)
         except Exception as err:
-            res = ResponseInfo({}, EMAIL_TOKEN_EXPIRES, False, status.HTTP_401_UNAUTHORIZED)
+            res = ResponseInfo({"passwordCreated": False}, EMAIL_TOKEN_EXPIRES, False, status.HTTP_401_UNAUTHORIZED)
             return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
 
 
@@ -174,3 +177,24 @@ class forgotPassword(APIView):
             res = ResponseInfo({'password_changed': False}, EMAIL_TOKEN_EXPIRES, False,
                                status.HTTP_401_UNAUTHORIZED)
             return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
+
+class userUpdateViewSet(generics.RetrieveUpdateDestroyAPIView):
+
+    def get_queryset(self):
+        return User.objects.all()
+
+    def get_serializer_class(self):
+        return userProfileSerializer
+
+    def retrieve(self, request, *args, **kwargs):
+        response = super(userUpdateViewSet, self).retrieve(request)
+        # prepare response
+        res = ResponseInfo(response.data, SUCCESS, True, 200)
+        return Response(res.success_payload())
+
+    def partial_update(self, request, *args, **kwargs):
+        response = super(userUpdateViewSet, self).partial_update(request)
+        # prepare response
+        res = ResponseInfo(response.data, PROFILE_UPDATE_SUCCESS, True, 200)
+        return Response(res.success_payload())
