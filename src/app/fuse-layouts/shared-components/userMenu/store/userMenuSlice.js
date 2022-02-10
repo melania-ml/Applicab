@@ -25,7 +25,7 @@ export const updateProfileData = (fields, userId) => async (dispatch) => {
     )
     .then((data) => {
       if (data.data.status === 200 && data.data.success) {
-        dispatch(setProfileData(data.data.data));
+        dispatch(showMessage({ message: data.data.message }));
       }
     })
     .catch((errors) => {

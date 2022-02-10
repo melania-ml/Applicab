@@ -1,28 +1,28 @@
-import AppBar from '@mui/material/AppBar';
-import { styled } from '@mui/material/styles';
-import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
-import { useSelector } from 'react-redux';
+import AppBar from "@mui/material/AppBar";
+import { styled } from "@mui/material/styles";
+import Avatar from "@mui/material/Avatar";
+import Typography from "@mui/material/Typography";
+import { useSelector } from "react-redux";
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  '& .username, & .email': {
-    transition: theme.transitions.create('opacity', {
+  "& .username, & .email": {
+    transition: theme.transitions.create("opacity", {
       duration: theme.transitions.duration.shortest,
-      easing: theme.transitions.easing.easeInOut,
-    }),
+      easing: theme.transitions.easing.easeInOut
+    })
   },
 
-  '& .avatar': {
+  "& .avatar": {
     background: theme.palette.background.default,
-    transition: theme.transitions.create('all', {
+    transition: theme.transitions.create("all", {
       duration: theme.transitions.duration.shortest,
-      easing: theme.transitions.easing.easeInOut,
+      easing: theme.transitions.easing.easeInOut
     }),
     bottom: 0,
-    '& > img': {
-      borderRadius: '50%',
-    },
-  },
+    "& > img": {
+      borderRadius: "50%"
+    }
+  }
 }));
 
 function UserNavbarHeader(props) {
@@ -34,7 +34,10 @@ function UserNavbarHeader(props) {
       color="primary"
       className="user relative flex flex-col items-center justify-center pt-24 pb-64 mb-32 z-0 shadow-0"
     >
-      <Typography className="username text-18 whitespace-nowrap font-semibold mb-4" color="inherit">
+      <Typography
+        className="username text-18 whitespace-nowrap font-semibold mb-4"
+        color="inherit"
+      >
         {/* {user.data.displayName} */}
         Melania Munoz
       </Typography>
@@ -50,11 +53,11 @@ function UserNavbarHeader(props) {
           className="avatar w-72 h-72 p-8 box-content"
           alt="user photo"
           src="assets/images/logos/melania.jpg"
-        // src={
-        //   user.data.photoURL && user.data.photoURL !== ''
-        //     ? user.data.photoURL
-        //     : 'assets/images/avatars/profile.jpg'
-        // }
+          // src={
+          //   user.data.photoURL && user.data.photoURL !== ''
+          //     ? user.data.photoURL
+          //     : 'assets/images/avatars/profile.jpg'
+          // }
         />
       </div>
     </StyledAppBar>

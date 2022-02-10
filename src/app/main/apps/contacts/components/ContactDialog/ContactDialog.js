@@ -306,7 +306,7 @@ function ContactDialog(props) {
                   } else if (newValue && newValue.inputValue) {
                     setAllFields({ ...allFields, title: newValue.inputValue });
                   } else {
-                    setAllFields({ ...allFields, title: newValue });
+                    setAllFields({ ...allFields, title: newValue.label });
                   }
                 }}
                 filterOptions={(options, params) => {
@@ -475,7 +475,7 @@ function ContactDialog(props) {
                   })
                 }
               />
-              <div className="mb-12 text-center">
+              <div className="flex mb-14 w-full justify-center">
                 <b>Premier contact</b>
               </div>
               <TextField
@@ -759,7 +759,7 @@ function ContactDialog(props) {
                   })
                 }
               />
-              <div className="mb-12 text-center">
+              <div className="flex mb-14 w-full justify-center">
                 <b>Information complémentaire</b>
               </div>
               <DatePicker

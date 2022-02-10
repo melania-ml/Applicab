@@ -9,7 +9,8 @@ import {
   DialogContent,
   DialogActions,
   Button,
-  TextField
+  TextField,
+  Avatar
 } from "@mui/material";
 
 function EditProfileDialog(props) {
@@ -17,6 +18,8 @@ function EditProfileDialog(props) {
   const user = useSelector(({ auth }) => auth.user);
   const { userData } = useSelector(({ userMenu }) => userMenu.userMenu);
   const [allFields, setAllFields] = useState({
+    image: "",
+    imageURL: "",
     enterPriseName: "",
     name: "",
     firstName: "",
@@ -45,8 +48,26 @@ function EditProfileDialog(props) {
   }, [userData]);
 
   const saveProfile = () => {
+    console.log("allFields", allFields);
     dispatch(updateProfileData(allFields, user.data.id));
     props.onClose();
+  };
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+  const onImageUpload = async (event) => {
+    const file = event.target.files[0];
+    const base64 = await convertBase64(file);
+    setAllFields({ ...allFields, imageURL: file, image: base64 });
   };
   return (
     <Dialog
@@ -64,6 +85,27 @@ function EditProfileDialog(props) {
             Modifier mes données personnelles
           </Typography>
         </Toolbar>
+        <div className="flex justify-center align-center">
+          <Avatar
+            className="w-72 h-72"
+            alt="user photo"
+            src={allFields.imageURL && URL.createObjectURL(allFields.imageURL)}
+          />
+        </div>
+        <label
+          style={{ cursor: "pointer" }}
+          className="flex justify-center align-center w-full mb-8"
+          htmlFor="icon-button-file"
+        >
+          Choisir une photo
+        </label>
+        <input
+          accept="image/*"
+          style={{ display: "none" }}
+          id="icon-button-file"
+          type="file"
+          onChange={onImageUpload}
+        />
       </AppBar>
       <DialogContent>
         <TextField
@@ -201,20 +243,19 @@ function EditProfileDialog(props) {
             });
           }}
         />
-        <br />
-        <DialogActions className="justify-between p-0">
-          <div>
-            <Button
-              variant="contained"
-              color="secondary"
-              style={{ borderRadius: 0 }}
-              onClick={saveProfile}
-            >
-              Enregistrer
-            </Button>
-          </div>
-        </DialogActions>
       </DialogContent>
+      <DialogActions className="justify-between p-4 pb-16">
+        <div>
+          <Button
+            variant="contained"
+            color="secondary"
+            style={{ borderRadius: 0 }}
+            onClick={saveProfile}
+          >
+            Enregistrer
+          </Button>
+        </div>
+      </DialogActions>
     </Dialog>
   );
 }
