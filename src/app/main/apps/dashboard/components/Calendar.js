@@ -65,6 +65,12 @@ const Root = styled('div')(({ theme }) => ({
         padding: '0 6px',
         borderRadius: '16px!important',
     },
+    '& .for-width-cal':{
+        width: '50%',
+        "@media (max-width: 992px)": {
+            width: '100%'
+    }
+    },
 }));
 
 export default function Calendar() {
@@ -100,8 +106,8 @@ export default function Calendar() {
     }
     return (
         <Root
-            className="flex flex-col flex-auto relative p-5 my-5 my-lg-0 box-shadow-dash"
-            style={{ background: '#FFFFFF', padding: 15, borderRadius: 10 }}
+            className="flex flex-col flex-auto relative p-5 my-5 my-lg-0 box-shadow-dash for-width-cal" 
+            style={{ background: '#FFFFFF', padding: 15, borderRadius: 10}}
         >
             <CalendarHeader calendarRef={calendarRef} currentDate={currentDate} />
 

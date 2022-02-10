@@ -29,7 +29,7 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
   '& .FusePageSimple-contentWrapper': {
     padding: 0,
     [theme.breakpoints.up('sm')]: {
-      padding: 24,
+      padding: "24px 16px",
       height: '100%',
     },
   },
@@ -46,7 +46,13 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
   },
   '& .box-shadow-dash': {
     boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px'
-  }
+  },
+  '& .for-width-todo': {
+    width: '50%',
+    "@media (max-width: 992px)": {
+      width: '100%'
+    }
+  },
 }));
 
 function MainDashboard() {
