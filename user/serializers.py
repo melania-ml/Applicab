@@ -26,7 +26,7 @@ class LoginSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['password', 'email', 'jwtoken', 'id', 'first_name', 'profile']
+        fields = ['password', 'email', 'jwtoken', 'id', 'first_name','last_name', 'profile', 'last_login']
         read_only_fields = ['jwtoken']
 
     def get_profile(self, obj):

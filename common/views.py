@@ -29,7 +29,7 @@ class GeneralGetAddViewSet(generics.ListCreateAPIView):
     def list(self, request, *args, **kwargs):
         response = super(GeneralGetAddViewSet, self).list(request)
         # prepare response
-        res = ResponseInfo(response.data, "Success", True, 200)
+        res = ResponseInfo(response.data, SUCCESS, True, 200)
         return Response(res.success_payload())
 
 
@@ -52,7 +52,7 @@ class GeneralGetUpdateViewSet(generics.RetrieveUpdateDestroyAPIView):
     def retrieve(self, request, *args, **kwargs):
         response = super(GeneralGetUpdateViewSet, self).retrieve(request)
         # prepare response
-        res = ResponseInfo(response.data, "Success", True, 200)
+        res = ResponseInfo(response.data, SUCCESS, True, 200)
         return Response(res.success_payload())
 
     def partial_update(self, request, *args, **kwargs):

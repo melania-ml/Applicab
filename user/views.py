@@ -4,6 +4,7 @@ import string
 # Create your views here.
 from datetime import datetime, timedelta
 
+from django.contrib.auth.models import update_last_login
 from rest_framework import status, permissions, generics
 from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.response import Response
@@ -36,6 +37,14 @@ class registerClient(APIView):
         request.data['emil_otp'] = emailOtp
         request.data['password'] = setPasswordToken
         request.data['email_token'] = setPasswordToken.lower()
+
+        clientTitle = Client_title.objects.filter(title=request.data['title']).first()
+        if clientTitle:
+            request.data['title'] = clientTitle.id
+        else:
+            createTitle = Client_title(title=request.data['title'])
+            createTitle.save()
+            request.data['title'] = createTitle.id
         serializer = self.serializers_class(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -67,6 +76,7 @@ class loginClient(APIView):
             user = authenticate(email=email, password=password)
             if user:
                 serializer = self.serializers_class(user, context={'request': request})
+                update_last_login(None, user)
                 res = ResponseInfo(serializer.data, USER_LOGGED_IN_SUCCESSFULLY, True, status.HTTP_200_OK)
                 return Response(res.success_payload(), status=status.HTTP_200_OK)
             res = ResponseInfo({}, EMAIL_PASSWORD_INCORRECT, False, status.HTTP_401_UNAUTHORIZED)
@@ -197,6 +207,16 @@ class userUpdateViewSet(generics.RetrieveUpdateDestroyAPIView):
         return Response(res.success_payload())
 
     def partial_update(self, request, *args, **kwargs):
+        title = request.data.get('title', None)
+        if title is not None:
+            clientTitle = Client_title.objects.filter(title=request.data['title']).first()
+            if clientTitle:
+                request.data['title'] = clientTitle.id
+            else:
+                createTitle = Client_title(title=request.data['title'])
+                createTitle.save()
+                request.data['title'] = createTitle.id
+
         response = super(userUpdateViewSet, self).partial_update(request)
         # prepare response
         res = ResponseInfo(response.data, PROFILE_UPDATE_SUCCESS, True, 200)
