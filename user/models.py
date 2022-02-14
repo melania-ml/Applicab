@@ -10,7 +10,19 @@ from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 import jwt
 from django.conf import settings
+
+from common.models import CommonBase
 from static import staticModelChoiceFields
+
+
+class Client_title(CommonBase):
+    title = models.CharField(max_length=100, blank=True, null=True)
+
+    def __str__(self):
+        return '{}'.format(self.title)
+
+    class Meta:
+        db_table = 'client_title'
 
 
 def profile_upload_image_to(instance, filename):
@@ -93,8 +105,8 @@ class User(AbstractUser):
                                  null=True, blank=True)
     legal_status = models.CharField(max_length=255, choices=staticModelChoiceFields.legalStatusChoiceFields(),
                                     null=True, blank=True)
-    title = models.CharField(max_length=255, choices=staticModelChoiceFields.titleChoiceFields(),
-                             null=True, blank=True)
+    title = models.ForeignKey(Client_title, blank=True, null=True,
+                                on_delete=models.DO_NOTHING, db_column='title')
     company_name = models.CharField(max_length=255, null=True, blank=True)
     country = models.CharField(max_length=255, null=True, blank=True)
     nationality = models.CharField(max_length=255, null=True, blank=True)

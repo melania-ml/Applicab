@@ -66,7 +66,7 @@ class loginClient(APIView):
             password = request.data.get('password', None)
             user = authenticate(email=email, password=password)
             if user:
-                serializer = self.serializers_class(user)
+                serializer = self.serializers_class(user, context={'request': request})
                 res = ResponseInfo(serializer.data, USER_LOGGED_IN_SUCCESSFULLY, True, status.HTTP_200_OK)
                 return Response(res.success_payload(), status=status.HTTP_200_OK)
             res = ResponseInfo({}, EMAIL_PASSWORD_INCORRECT, False, status.HTTP_401_UNAUTHORIZED)
@@ -86,7 +86,7 @@ class validateEmailOtp(APIView):
             userData.emil_otp = None
             userData.save()
             res = ResponseInfo({'validation': True, 'setPasswordToken': userData.email_token},
-                               "Otp Validated Successfully", True, status.HTTP_200_OK)
+                               OTP_VALID_SUCCESSFULLY, True, status.HTTP_200_OK)
             return Response(res.success_payload(), status=status.HTTP_200_OK)
         except Exception as e:
             res = ResponseInfo({'validation': False}, INVALID_OTP, False, status.HTTP_401_UNAUTHORIZED)
@@ -96,20 +96,23 @@ class validateEmailOtp(APIView):
         userid = request.data.get('userId', None)
         try:
             secretsGenerator = secrets.SystemRandom()
+            setPasswordToken = ''.join(secrets.choice(string.ascii_uppercase + string.digits)
+                                       for i in range(16))
             emailOtp = secretsGenerator.randrange(100000, 999999)
 
             userData = User.objects.get(id=userid)
             userData.emil_otp = emailOtp
+            userData.email_token = setPasswordToken.lower()
             userData.email_otp_date = datetime.now()
             userData.save()
             stPasswordText = emailText.setPassword() | emailText.commonUrls()
             stPasswordText['otp'] = emailOtp
-            stPasswordText['button_url'] = stPasswordText['button_url'] + str(userData['id'])
+            stPasswordText['button_url'] = stPasswordText['button_url'] + str(userData.id)
 
             send_email([userData.email],
                        'Password Set', 'email.html', stPasswordText)
             res = ResponseInfo({'otp_shared': True},
-                               "Otp shared Successfully", True, status.HTTP_200_OK)
+                               OTP_SHARED_SUCCESSFULLY, True, status.HTTP_200_OK)
             return Response(res.success_payload(), status=status.HTTP_200_OK)
         except Exception as e:
             res = ResponseInfo({'otp_shared': False}, USER_NOT_FOUND, False, status.HTTP_404_NOT_FOUND)
@@ -198,3 +201,5 @@ class userUpdateViewSet(generics.RetrieveUpdateDestroyAPIView):
         # prepare response
         res = ResponseInfo(response.data, PROFILE_UPDATE_SUCCESS, True, 200)
         return Response(res.success_payload())
+
+

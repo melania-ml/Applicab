@@ -64,6 +64,12 @@ class GeneralGetUpdateViewSet(generics.RetrieveUpdateDestroyAPIView):
         res = ResponseInfo(response.data, message, True, 200)
         return Response(res.success_payload())
 
+    def delete(self, request, *args, **kwargs):
+        response = super(GeneralGetUpdateViewSet, self).delete(request)
+        # prepare response
+        res = ResponseInfo("", RECORD_DELETED_SUCCESSFULLY, True, 200)
+        return Response(res.success_payload())
+
 
 @authentication_classes([])
 @permission_classes([])

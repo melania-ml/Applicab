@@ -1,7 +1,7 @@
 from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
 
-from user.models import User
+from user.models import *
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -26,8 +26,11 @@ class LoginSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['password', 'email', 'jwtoken', 'id']
+        fields = ['password', 'email', 'jwtoken', 'id', 'first_name', 'profile']
         read_only_fields = ['jwtoken']
+
+    def get_profile(self, obj):
+        return self.context['request'].build_absolute_uri(obj.image.url)
 
 
 class userProfileSerializer(serializers.ModelSerializer):

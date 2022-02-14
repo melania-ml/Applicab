@@ -26,24 +26,6 @@ def legalStatusChoiceFields():
     return LEGAL_STATUS_CHOICES
 
 
-def titleChoiceFields():
-    TITLE_CHOICES = (
-        ('Association', 'Association'),
-        ('Syndicat des copropriétaires', 'Syndicat des copropriétaires'),
-        ('S.A.R.L', 'S.A.R.L'),
-        ('S.C.I', 'S.C.I'),
-        ('S.A', 'S.A'),
-        ('S.A.S', 'S.A.S'),
-        ('S.A.S.U', 'S.A.S.U'),
-        ('S.C.P.', 'S.C.P.'),
-        ('A.S.L.', 'A.S.L.'),
-        ('Conseil syndical', 'Conseil syndical'),
-        ('Syndic', 'Syndic'),
-        ('Autre - Personne and Enterprise', 'Autre - Personne and Enterprise')
-    )
-    return TITLE_CHOICES
-
-
 def statusChoiceFields():
     STATUS_CHOICES = (
         ('Actif', 'Actif'),
