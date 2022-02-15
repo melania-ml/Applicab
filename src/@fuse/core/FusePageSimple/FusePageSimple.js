@@ -161,7 +161,7 @@ const FusePageSimple = forwardRef((props, ref) => {
         })}
       />
       <Root
-        style={{ overflow: "hidden" }}
+        style={{ overflow: "hidden", overflowY: "auto" }}
         className={clsx(
           "FusePageSimple-root",
           props.innerScroll && "FusePageSimple-innerScroll",

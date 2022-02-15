@@ -1,12 +1,10 @@
-import { combineReducers } from '@reduxjs/toolkit';
-import login from './loginSlice';
-import register from './registerSlice';
-import user from './userSlice';
+import { combineReducers } from "@reduxjs/toolkit";
+import login from "./loginSlice";
+import user from "./userSlice";
 
 const authReducers = combineReducers({
   user,
-  login,
-  register,
+  login
 });
 
 export default authReducers;

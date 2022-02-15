@@ -1,6 +1,4 @@
 import FuseSplashScreen from "@fuse/core/FuseSplashScreen";
-import auth0Service from "app/services/auth0Service";
-import firebaseService from "app/services/firebaseService";
 import jwtService from "app/services/jwtService";
 import { Component } from "react";
 import { connect } from "react-redux";
