@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProfileData } from "./store/userMenuSlice";
+import { setUser } from "app/auth/store/userSlice";
 import {
   Dialog,
   AppBar,
@@ -19,7 +20,7 @@ function EditProfileDialog(props) {
   const { userData } = useSelector(({ userMenu }) => userMenu.userMenu);
   const [allFields, setAllFields] = useState({
     image: "",
-    imageURL: "",
+    profile: "",
     enterPriseName: "",
     name: "",
     firstName: "",
@@ -43,12 +44,22 @@ function EditProfileDialog(props) {
       city: userData.city,
       postalCode: userData.postal_code,
       mobile1: userData.phone_number,
-      mobile2: userData.fixe
+      mobile2: userData.fixe,
+      profile: userData.profile
     });
+    const newUser = {
+      ...user,
+      data: {
+        ...user.data,
+        profile: userData.profile
+      }
+    };
+    if (userData.profile) {
+      dispatch(setUser(newUser));
+    }
   }, [userData]);
 
   const saveProfile = () => {
-    console.log("allFields", allFields);
     dispatch(updateProfileData(allFields, user.data.id));
     props.onClose();
   };
@@ -67,7 +78,7 @@ function EditProfileDialog(props) {
   const onImageUpload = async (event) => {
     const file = event.target.files[0];
     const base64 = await convertBase64(file);
-    setAllFields({ ...allFields, imageURL: file, image: base64 });
+    setAllFields({ ...allFields, profile: base64, image: file });
   };
   return (
     <Dialog
@@ -89,7 +100,10 @@ function EditProfileDialog(props) {
           <Avatar
             className="w-72 h-72"
             alt="user photo"
-            src={allFields.imageURL && URL.createObjectURL(allFields.imageURL)}
+            src={
+              (allFields.image && URL.createObjectURL(allFields.image)) ||
+              allFields.profile
+            }
           />
         </div>
         <label

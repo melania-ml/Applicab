@@ -1,8 +1,7 @@
-import AppBar from "@mui/material/AppBar";
-import { styled } from "@mui/material/styles";
-import Avatar from "@mui/material/Avatar";
-import Typography from "@mui/material/Typography";
 import { useSelector } from "react-redux";
+import moment from "moment";
+import { AppBar, Avatar, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   "& .username, & .email": {
@@ -38,26 +37,20 @@ function UserNavbarHeader(props) {
         className="username text-18 whitespace-nowrap font-semibold mb-4"
         color="inherit"
       >
-        {/* {user.data.displayName} */}
-        Melania Munoz
+        {user.data?.first_name + " " + user.data?.last_name}
       </Typography>
       <Typography
-        className="email text-13 opacity-50 whitespace-nowrap font-medium"
+        className="email text-13 opacity-50 whitespace-nowrap font-medium text-center"
         color="inherit"
       >
         Dernière connexion : <br />
-        04-12-2020 11:54:13
+        {moment(user.data.last_login).utc().format("DD-MM-YYYY HH:mm:ss")}
       </Typography>
       <div className="flex items-center justify-center absolute bottom-0 -mb-44">
         <Avatar
           className="avatar w-72 h-72 p-8 box-content"
           alt="user photo"
-          src="assets/images/logos/melania.jpg"
-          // src={
-          //   user.data.photoURL && user.data.photoURL !== ''
-          //     ? user.data.photoURL
-          //     : 'assets/images/avatars/profile.jpg'
-          // }
+          src={user.data.profile}
         />
       </div>
     </StyledAppBar>

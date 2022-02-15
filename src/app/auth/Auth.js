@@ -73,69 +73,6 @@ class Auth extends Component {
       return Promise.resolve();
     });
 
-  auth0Check = () =>
-    new Promise((resolve) => {
-      auth0Service.init((success) => {
-        if (!success) {
-          resolve();
-        }
-      });
-
-      if (auth0Service.isAuthenticated()) {
-        this.props.showMessage({ message: "Logging in with Auth0" });
-
-        /**
-         * Retrieve user data from Auth0
-         */
-        auth0Service.getUserData().then((tokenData) => {
-          this.props.setUserDataAuth0(tokenData);
-
-          resolve();
-
-          this.props.showMessage({ message: "Logged in with Auth0" });
-        });
-      } else {
-        resolve();
-      }
-
-      return Promise.resolve();
-    });
-
-  firebaseCheck = () =>
-    new Promise((resolve) => {
-      firebaseService.init((success) => {
-        if (!success) {
-          resolve();
-        }
-      });
-
-      firebaseService.onAuthStateChanged((authUser) => {
-        if (authUser) {
-          this.props.showMessage({ message: "Logging in with Firebase" });
-
-          /**
-           * Retrieve user data from Firebase
-           */
-          firebaseService.getUserData(authUser.uid).then(
-            (user) => {
-              this.props.setUserDataFirebase(user, authUser);
-
-              resolve();
-
-              this.props.showMessage({ message: "Logged in with Firebase" });
-            },
-            (error) => {
-              resolve();
-            }
-          );
-        } else {
-          resolve();
-        }
-      });
-
-      return Promise.resolve();
-    });
-
   render() {
     return this.state.waitAuthCheck ? (
       <FuseSplashScreen />

@@ -1,24 +1,26 @@
-import { motion } from 'framer-motion';
-import FuseUtils from '@fuse/utils';
-import Avatar from '@mui/material/Avatar';
-import Icon from '@mui/material/Icon';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import { useMemo, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import ContactsMultiSelectMenu from './ContactsMultiSelectMenu';
-import ContactsTable from './ContactsTable';
+import { motion } from "framer-motion";
+import FuseUtils from "@fuse/utils";
+import Avatar from "@mui/material/Avatar";
+import Icon from "@mui/material/Icon";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import { useMemo, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import ContactsMultiSelectMenu from "./ContactsMultiSelectMenu";
+import ContactsTable from "./ContactsTable";
 import {
   openEditContactDialog,
   removeContact,
   toggleStarredContact,
-  selectContacts,
-} from '../store/contactsSlice';
+  selectContacts
+} from "../store/contactsSlice";
 
 function ContactsList(props) {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
-  const searchText = useSelector(({ contactsApp }) => contactsApp.contacts.searchText);
+  const searchText = useSelector(
+    ({ contactsApp }) => contactsApp.contacts.searchText
+  );
   const user = useSelector(({ contactsApp }) => contactsApp.user);
 
   const [filteredData, setFilteredData] = useState(null);
@@ -35,47 +37,48 @@ function ContactsList(props) {
             )
           );
         },
-        accessor: 'avatar',
+        accessor: "avatar",
         Cell: ({ row }) => {
+          debugger;
           return null;
           // <Avatar className="mx-8" alt={row.original.name} src={row.original.avatar} />;
         },
-        className: 'justify-center',
+        className: "justify-center",
         width: 64,
-        sortable: false,
+        sortable: false
       },
       {
-        Header: 'Type',
-        accessor: 'name',
-        className: 'font-medium',
-        sortable: true,
+        Header: "Type",
+        accessor: "user_type",
+        className: "font-medium",
+        sortable: true
       },
       {
-        Header: 'Titre',
-        accessor: 'lastName',
-        className: 'font-medium',
-        sortable: true,
+        Header: "Titre",
+        accessor: "title",
+        className: "font-medium",
+        sortable: true
       },
       {
-        Header: 'Nom',
-        accessor: 'company',
-        sortable: true,
+        Header: "Nom",
+        accessor: "first_name",
+        sortable: true
       },
       {
-        Header: 'Téléphone',
-        accessor: 'phone',
-        sortable: true,
+        Header: "Téléphone",
+        accessor: "phone_number",
+        sortable: true
       },
       {
-        Header: 'Email',
-        accessor: 'email',
-        sortable: true,
+        Header: "Email",
+        accessor: "email",
+        sortable: true
       },
       {
-        Header: 'Status',
-        accessor: 'jobTitle',
-        sortable: true,
-      },
+        Header: "Status",
+        accessor: "is_active",
+        sortable: true
+      }
       // {
       //   id: 'action',
       //   width: 128,

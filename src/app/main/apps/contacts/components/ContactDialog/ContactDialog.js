@@ -628,16 +628,47 @@ function ContactDialog(props) {
             <>
               <Autocomplete
                 className="flex w-full mb-12"
-                disablePortal
-                style={{ color: "#FFFFFF" }}
-                options={PersonTitles}
                 value={allFields.title}
-                onChange={(e, newValue) => {
-                  setAllFields({
-                    ...allFields,
-                    title: newValue.label
-                  });
+                onChange={(event, newValue) => {
+                  if (typeof newValue === "string") {
+                    setAllFields({ ...allFields, title: newValue });
+                  } else if (newValue && newValue.inputValue) {
+                    setAllFields({ ...allFields, title: newValue.inputValue });
+                  } else {
+                    setAllFields({ ...allFields, title: newValue.label });
+                  }
                 }}
+                filterOptions={(options, params) => {
+                  const filtered = filter(options, params);
+                  const { inputValue } = params;
+                  const isExisting = options.some(
+                    (option) => inputValue === option.title
+                  );
+                  if (inputValue !== "" && !isExisting) {
+                    filtered.push({
+                      inputValue,
+                      label: `Ajouter "${inputValue}"`
+                    });
+                  }
+                  return filtered;
+                }}
+                selectOnFocus
+                clearOnBlur
+                handleHomeEndKeys
+                options={PersonTitles}
+                getOptionLabel={(option) => {
+                  if (typeof option === "string") {
+                    return option;
+                  }
+                  if (option.inputValue) {
+                    return option.inputValue;
+                  }
+                  return option.label;
+                }}
+                renderOption={(props, option) => (
+                  <li {...props}>{option.label}</li>
+                )}
+                freeSolo
                 renderInput={(params) => (
                   <TextField {...params} label="Choisissez un titre*" />
                 )}

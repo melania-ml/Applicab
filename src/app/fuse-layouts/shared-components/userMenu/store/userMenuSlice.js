@@ -19,14 +19,13 @@ export const getProfileData = (userId) => async (dispatch) => {
 
 export const updateProfileData = (fields, userId) => async (dispatch) => {
   await axios
-    .patch(
-      `http://178.79.138.121:8080/api/common/updateRetrieve/user/User/${userId}/`,
-      fields
-    )
+    .patch(`http://178.79.138.121:8080/auth/user/updateUser/${userId}`, fields)
     .then((data) => {
       if (data.data.status === 200 && data.data.success) {
+        dispatch(setProfileData(data.data.data));
         dispatch(showMessage({ message: data.data.message }));
       }
+      return data;
     })
     .catch((errors) => {
       console.error(errors);

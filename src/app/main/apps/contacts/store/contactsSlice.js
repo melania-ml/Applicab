@@ -11,11 +11,13 @@ export const getContacts = createAsyncThunk(
   "contactsApp/contacts/getContacts",
   async (routeParams, { getState }) => {
     routeParams = routeParams || getState().contactsApp.contacts.routeParams;
-    const response = await axios.get("/api/contacts-app/contacts", {
-      params: routeParams
-    });
+    const response = await axios.post(
+      "http://178.79.138.121:8080/api/common/filterData/user/User",
+      {
+        query: {}
+      }
+    );
     const data = await response.data;
-
     return { data, routeParams };
   }
 );

@@ -119,9 +119,7 @@ function VerifyEmail() {
                 </h2>
               </div>
               <div className="mb-16 text-center">
-                <span>
-                  Saisissez le code que nous avons envoyé au melania@altata.tech
-                </span>
+                <span>Saisissez le code que nous avons envoyé par email</span>
               </div>
               <br />
               <OTPInput
