@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import Types from "../../../constants/Types";
 import Titles from "../../../constants/Titles";
 import {
@@ -8,6 +9,7 @@ import {
   MenuItem,
   TextField
 } from "@mui/material";
+import { getContacts } from "../store/contactsSlice";
 
 const status = [
   {
@@ -23,6 +25,7 @@ const status = [
 ];
 
 export default function Filters() {
+  const dispatch = useDispatch();
   const [selectedStatus, setSelectedStatus] = useState("");
   const [selectedType, setSelectedType] = useState("");
   const [selectedTitle, setSelectedTitle] = useState("");
@@ -37,6 +40,9 @@ export default function Filters() {
               value={selectedType}
               onChange={(e) => {
                 setSelectedType(e.target.value);
+                dispatch(
+                  getContacts({ type: e.target.value, status: selectedStatus })
+                );
               }}
               MenuProps={{ PaperProps: { sx: { maxHeight: 300 } } }}
             >
@@ -73,7 +79,12 @@ export default function Filters() {
             <Select
               label="Status"
               value={selectedStatus}
-              onChange={(e) => setSelectedStatus(e.target.value)}
+              onChange={(e) => {
+                setSelectedStatus(e.target.value);
+                dispatch(
+                  getContacts({ type: selectedType, status: e.target.value })
+                );
+              }}
             >
               {status.map((category) => (
                 <MenuItem value={category.value} key={category.id}>

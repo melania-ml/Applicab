@@ -14,7 +14,10 @@ export const getContacts = createAsyncThunk(
     const response = await axios.post(
       "http://178.79.138.121:8080/api/common/filterData/user/User",
       {
-        query: {}
+        query: {
+          user_type: routeParams.type,
+          status: routeParams.status
+        }
       }
     );
     const data = await response.data;
