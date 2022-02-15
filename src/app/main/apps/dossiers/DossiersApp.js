@@ -45,6 +45,11 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
   },
   '& .for-date label':{   
 	  paddingRight: "25px"
+  },
+  '& .search-bar-dossier':{
+    width:250,
+    borderRadius:"5px",
+  
   }
 }));
 

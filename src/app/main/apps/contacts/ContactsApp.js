@@ -45,7 +45,8 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
     }
   },
   '& .search-bar-contact':{
-    width:300,
+    width:250,
+    borderRadius:"5px",
     "@media (max-width: 767px)": {
       width:'100%'
     }

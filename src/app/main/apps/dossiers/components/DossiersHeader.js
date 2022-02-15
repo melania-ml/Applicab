@@ -25,7 +25,7 @@ function DossiersHeader(props) {
             component={motion.div}
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}
-            className="flex p-4 items-center max-w-300 h-48 px-16 py-4 shadow"
+              className="flex p-4 items-center max-w-300 h-48 px-16 py-4 shadow search-bar-dossier"
           >
             <Icon color="action">search</Icon>
 
