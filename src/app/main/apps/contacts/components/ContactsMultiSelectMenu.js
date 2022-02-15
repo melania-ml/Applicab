@@ -1,20 +1,25 @@
-import Icon from '@mui/material/Icon';
-import IconButton from '@mui/material/IconButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import MenuList from '@mui/material/MenuList';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { setContactsUnstarred, setContactsStarred, removeContacts } from '../store/contactsSlice';
+import Icon from "@mui/material/Icon";
+import IconButton from "@mui/material/IconButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import MenuList from "@mui/material/MenuList";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import {
+  setContactsUnstarred,
+  setContactsStarred,
+  removeContacts
+} from "../store/contactsSlice";
+import DeleteConfirmationDialog from "app/main/common/components/DeleteConfirmationDialog";
 
 function ContactsMultiSelectMenu(props) {
   const dispatch = useDispatch();
   const { selectedContactIds } = props;
 
   const [anchorEl, setAnchorEl] = useState(null);
-
+  const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   function openSelectedContactMenu(event) {
     setAnchorEl(event.currentTarget);
   }
@@ -22,12 +27,14 @@ function ContactsMultiSelectMenu(props) {
   function closeSelectedContactsMenu() {
     setAnchorEl(null);
   }
-
+  function handleClose() {
+    setDeleteConfirmation(false);
+  }
   return (
     <>
       <IconButton
         className="p-0"
-        aria-owns={anchorEl ? 'selectedContactsMenu' : null}
+        aria-owns={anchorEl ? "selectedContactsMenu" : null}
         aria-haspopup="true"
         onClick={openSelectedContactMenu}
         size="large"
@@ -43,8 +50,9 @@ function ContactsMultiSelectMenu(props) {
         <MenuList>
           <MenuItem
             onClick={() => {
-              dispatch(removeContacts(selectedContactIds));
+              //dispatch(removeContacts(selectedContactIds));
               closeSelectedContactsMenu();
+              setDeleteConfirmation(true);
             }}
           >
             <ListItemIcon className="min-w-40">
@@ -54,6 +62,11 @@ function ContactsMultiSelectMenu(props) {
           </MenuItem>
         </MenuList>
       </Menu>
+      <DeleteConfirmationDialog
+        open={deleteConfirmation}
+        onClose={handleClose}
+        subTitle={"Voulez-vous vraiment supprimer ce contact ?"}
+      />
     </>
   );
 }

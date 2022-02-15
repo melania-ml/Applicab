@@ -1,9 +1,6 @@
 import { motion } from "framer-motion";
 import FuseUtils from "@fuse/utils";
-import Avatar from "@mui/material/Avatar";
-import Icon from "@mui/material/Icon";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
+import { Typography, Badge } from "@mui/material";
 import { useMemo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ContactsMultiSelectMenu from "./ContactsMultiSelectMenu";
@@ -39,7 +36,6 @@ function ContactsList(props) {
         },
         accessor: "avatar",
         Cell: ({ row }) => {
-          debugger;
           return null;
           // <Avatar className="mx-8" alt={row.original.name} src={row.original.avatar} />;
         },
@@ -61,7 +57,7 @@ function ContactsList(props) {
       },
       {
         Header: "Nom",
-        accessor: "first_name",
+        accessor: "last_name",
         sortable: true
       },
       {
@@ -76,40 +72,27 @@ function ContactsList(props) {
       },
       {
         Header: "Status",
-        accessor: "is_active",
+        accessor: "status",
+        Cell: ({ row }) => {
+          return (
+            <div className="flex items-center">
+              <Badge
+                className="mr-3"
+                color="success"
+                variant="dot"
+                sx={{
+                  "& .MuiBadge-badge": {
+                    backgroundColor:
+                      row.original.status === "Actif" ? "#78C5A0" : "#C4C4C4"
+                  }
+                }}
+              />
+              <p>{row.original.status}</p>
+            </div>
+          );
+        },
         sortable: true
       }
-      // {
-      //   id: 'action',
-      //   width: 128,
-      //   sortable: false,
-      //   Cell: ({ row }) => (
-      //     <div className="flex items-center">
-      //       <IconButton
-      //         onClick={(ev) => {
-      //           ev.stopPropagation();
-      //           dispatch(toggleStarredContact(row.original.id));
-      //         }}
-      //         size="large"
-      //       >
-      //         {user.starred && user.starred.includes(row.original.id) ? (
-      //           <Icon className="text-yellow-700">star</Icon>
-      //         ) : (
-      //           <Icon>star_border</Icon>
-      //         )}
-      //       </IconButton>
-      //       <IconButton
-      //         onClick={(ev) => {
-      //           ev.stopPropagation();
-      //           dispatch(removeContact(row.original.id));
-      //         }}
-      //         size="large"
-      //       >
-      //         <Icon>delete</Icon>
-      //       </IconButton>
-      //     </div>
-      //   ),
-      // },
     ],
     [dispatch, user.starred]
   );

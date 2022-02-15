@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import _ from "@lodash";
 import {
@@ -76,6 +76,46 @@ function ContactDialog(props) {
     ({ contactsApp }) => contactsApp.contacts.contactDialog
   );
 
+  const initDialog = useCallback(() => {
+    if (contactDialog.type === "edit" && contactDialog.type) {
+      const data = contactDialog.data;
+      setAllFields({
+        ...allFields,
+        type: data.user_type,
+        legalStatus: data.legal_status,
+        title: data.title,
+        companyName: data.company_name,
+        country: data.country,
+        address: data.address,
+        city: data.city,
+        postalCode: data.postal_code,
+        capitalSocial: data.capital_social,
+        RCSCity: data.RCS_city,
+        number: data.number,
+        name: data.name,
+        firstName: data.first_name,
+        email: data.email,
+        mobile1: data.phone_number,
+        mobile2: data.fixe,
+        comments: data.comments,
+        tags: data.tags,
+        status: data.status,
+        dateValue: data.date_of_birth,
+        department: data.department,
+        nationality: data.nationality,
+        nativeCity: data.native_city,
+        profession: data.profession,
+        clientStatus: data.client_type
+      });
+    }
+  }, [contactDialog.data, contactDialog.type]);
+
+  useEffect(() => {
+    if (contactDialog.props.open) {
+      initDialog();
+    }
+  }, [contactDialog.props.open, initDialog]);
+
   useEffect(() => {
     if (allFields.type === "Client" && allFields.legalStatus === "Enterprise") {
       if (
@@ -126,9 +166,39 @@ function ContactDialog(props) {
   }, [allFields]);
 
   function closeComposeDialog() {
-    return contactDialog.type === "edit"
-      ? dispatch(closeEditContactDialog())
-      : dispatch(closeNewContactDialog());
+    if (contactDialog.type === "edit") {
+      dispatch(closeEditContactDialog());
+      setAllFields({
+        ...allFields,
+        type: "Client",
+        legalStatus: "Enterprise",
+        title: "",
+        companyName: "",
+        country: "",
+        address: "",
+        city: "",
+        postalCode: "",
+        capitalSocial: "",
+        RCSCity: "",
+        number: "",
+        name: "",
+        firstName: "",
+        email: "",
+        mobile1: "",
+        mobile2: "",
+        comments: "",
+        tags: [],
+        status: "Actif",
+        dateValue: null,
+        department: "",
+        nationality: "",
+        nativeCity: "",
+        profession: "",
+        clientStatus: ""
+      });
+    } else {
+      dispatch(closeNewContactDialog());
+    }
   }
 
   function onSubmit(param) {
