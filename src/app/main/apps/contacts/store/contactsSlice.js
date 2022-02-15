@@ -17,7 +17,7 @@ export const getContacts = createAsyncThunk(
         query: {}
       }
     );
-    const data = await response.data;
+    const data = [];
     return { data, routeParams };
   }
 );
