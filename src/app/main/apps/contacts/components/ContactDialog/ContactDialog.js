@@ -437,8 +437,8 @@ function ContactDialog(props) {
                   );
                   if (inputValue.trim() !== "" && !isExisting) {
                     filtered.push({
-                      inputValue,
-                      label: `Ajouter "${inputValue}"`
+                      inputValue: inputValue.trim(),
+                      label: `Ajouter "${inputValue.trim()}"`
                     });
                   }
                   return filtered;
@@ -787,10 +787,10 @@ function ContactDialog(props) {
                   const isExisting = options.some(
                     (option) => inputValue === option.title
                   );
-                  if (inputValue !== "" && !isExisting) {
+                  if (inputValue.trim() !== "" && !isExisting) {
                     filtered.push({
-                      inputValue,
-                      label: `Ajouter "${inputValue}"`
+                      inputValue: inputValue.trim(),
+                      label: `Ajouter "${inputValue.trim()}"`
                     });
                   }
                   return filtered;
