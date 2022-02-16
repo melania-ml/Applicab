@@ -118,6 +118,9 @@ function ContactDialog(props) {
 
   useEffect(() => {
     if (allFields.type === "Client" && allFields.legalStatus === "Enterprise") {
+      const isEmpty = Object.values(errors).every(
+        (x) => x === null || x === ""
+      );
       if (
         allFields.type &&
         allFields.title &&
@@ -125,7 +128,8 @@ function ContactDialog(props) {
         allFields.name &&
         allFields.firstName &&
         allFields.email &&
-        validateEmail(allFields.email)
+        validateEmail(allFields.email) &&
+        isEmpty
       ) {
         setIsValid(true);
       } else {
@@ -225,7 +229,43 @@ function ContactDialog(props) {
     }
   };
 
-  const checkIsDisable = (name, value) => {
+  const checkIsDisable = (name, val) => {
+    const value = val.trim();
+    if (name === "mobile1") {
+      const regex =
+        /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
+      if (value) {
+        if (regex.test(value) === false) {
+          setErrors({
+            ...errors,
+            mobile1: "Please enter valid Mobile number"
+          });
+        } else {
+          setErrors({ ...errors, mobile1: "" });
+        }
+      }
+    }
+    if (name === "mobile2") {
+      const regex =
+        /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
+      if (value) {
+        if (regex.test(value) === false) {
+          setErrors({
+            ...errors,
+            mobile2: "Please enter valid Mobile number"
+          });
+        } else {
+          setErrors({ ...errors, mobile2: "" });
+        }
+      }
+    }
+    if (name === "title") {
+      if (value) {
+        setErrors({ ...errors, title: "" });
+      } else {
+        setErrors({ ...errors, title: "Must enter a Proper Title" });
+      }
+    }
     if (name === "companyName") {
       if (value) {
         setErrors({ ...errors, companyName: "" });
@@ -271,6 +311,13 @@ function ContactDialog(props) {
           }
         } else {
           setErrors({ ...errors, email: "Must enter an Email" });
+        }
+      }
+      if (name === "number") {
+        if (value > 0) {
+          setErrors({ ...errors, number: "" });
+        } else {
+          setErrors({ ...errors, number: "Must enter Proper Number" });
         }
       }
     }
@@ -373,10 +420,13 @@ function ContactDialog(props) {
                 onChange={(event, newValue) => {
                   if (typeof newValue === "string") {
                     setAllFields({ ...allFields, title: newValue });
+                    checkIsDisable("title", newValue);
                   } else if (newValue && newValue.inputValue) {
                     setAllFields({ ...allFields, title: newValue.inputValue });
+                    checkIsDisable("title", newValue.inputValue);
                   } else {
                     setAllFields({ ...allFields, title: newValue.label });
+                    checkIsDisable("title", newValue.label);
                   }
                 }}
                 filterOptions={(options, params) => {
@@ -385,7 +435,7 @@ function ContactDialog(props) {
                   const isExisting = options.some(
                     (option) => inputValue === option.title
                   );
-                  if (inputValue !== "" && !isExisting) {
+                  if (inputValue.trim() !== "" && !isExisting) {
                     filtered.push({
                       inputValue,
                       label: `Ajouter "${inputValue}"`
@@ -395,6 +445,8 @@ function ContactDialog(props) {
                 }}
                 selectOnFocus
                 clearOnBlur
+                error={errors?.title}
+                helperText={errors?.title}
                 handleHomeEndKeys
                 options={EnterpriseTitles}
                 getOptionLabel={(option) => {
@@ -492,6 +544,12 @@ function ContactDialog(props) {
                 type="number"
                 variant="outlined"
                 fullWidth
+                onKeyPress={(event) => {
+                  if (!/[0-9]/.test(event.key)) {
+                    event.preventDefault();
+                  }
+                }}
+                //onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57"
                 value={allFields.postalCode}
                 onChange={(e) =>
                   setAllFields({
@@ -511,6 +569,11 @@ function ContactDialog(props) {
                 type="number"
                 variant="outlined"
                 fullWidth
+                onKeyPress={(event) => {
+                  if (!/[0-9]/.test(event.key)) {
+                    event.preventDefault();
+                  }
+                }}
                 value={allFields.capitalSocial}
                 onChange={(e) =>
                   setAllFields({
@@ -537,13 +600,17 @@ function ContactDialog(props) {
                 label="Numéro"
                 variant="outlined"
                 fullWidth
+                type="number"
+                error={errors?.number}
+                helperText={errors?.number}
                 value={allFields.number}
-                onChange={(e) =>
+                onChange={(e) => {
                   setAllFields({
                     ...allFields,
                     number: e.target.value
-                  })
-                }
+                  });
+                  checkIsDisable("number", e.target.value);
+                }}
               />
               <div className="flex mb-14 w-full justify-center">
                 <b>Premier contact</b>
@@ -603,13 +670,16 @@ function ContactDialog(props) {
                 type="number"
                 variant="outlined"
                 fullWidth
+                error={errors?.mobile1}
+                helperText={errors?.mobile1}
                 value={allFields.mobile1}
-                onChange={(e) =>
+                onChange={(e) => {
                   setAllFields({
                     ...allFields,
                     mobile1: e.target.value
-                  })
-                }
+                  });
+                  checkIsDisable("mobile1", e.target.value);
+                }}
               />
               <TextField
                 className="mb-12"
@@ -617,13 +687,16 @@ function ContactDialog(props) {
                 variant="outlined"
                 fullWidth
                 type="number"
+                error={errors?.mobile2}
+                helperText={errors?.mobile2}
                 value={allFields.mobile2}
-                onChange={(e) =>
+                onChange={(e) => {
                   setAllFields({
                     ...allFields,
                     mobile2: e.target.value
-                  })
-                }
+                  });
+                  checkIsDisable("mobile2", e.target.value);
+                }}
               />
               <TextField
                 className="mb-12"
@@ -799,12 +872,15 @@ function ContactDialog(props) {
                 variant="outlined"
                 fullWidth
                 value={allFields.mobile1}
-                onChange={(e) =>
+                error={errors?.mobile1}
+                helperText={errors?.mobile1}
+                onChange={(e) => {
                   setAllFields({
                     ...allFields,
                     mobile1: e.target.value
-                  })
-                }
+                  });
+                  setIsValid("mobile1", e.target.value);
+                }}
               />
               <TextField
                 className="mb-12"
@@ -812,13 +888,16 @@ function ContactDialog(props) {
                 variant="outlined"
                 type="number"
                 fullWidth
+                error={errors?.mobile2}
+                helperText={errors?.mobile2}
                 value={allFields.mobile2}
-                onChange={(e) =>
+                onChange={(e) => {
                   setAllFields({
                     ...allFields,
                     mobile2: e.target.value
-                  })
-                }
+                  });
+                  setIsValid("mobile2", e.target.value);
+                }}
               />
               <TextField
                 className="mb-12"
@@ -852,6 +931,11 @@ function ContactDialog(props) {
                 type="number"
                 variant="outlined"
                 fullWidth
+                onKeyPress={(event) => {
+                  if (!/[0-9]/.test(event.key)) {
+                    event.preventDefault();
+                  }
+                }}
                 value={allFields.postalCode}
                 onChange={(e) =>
                   setAllFields({
@@ -1045,7 +1129,8 @@ function ContactDialog(props) {
             color="secondary"
             type="submit"
             style={{ borderRadius: 0 }}
-            disabled={_.isEmpty(errors) || !isValid}
+            disabled={!isValid}
+            //disabled={_.isEmpty(errors) || !isValid}
             onClick={() => onSubmit("submit")}
           >
             Enregister

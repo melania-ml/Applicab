@@ -110,14 +110,16 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [isRememberMe, setIsRememberMe] = useState(true);
   useEffect(() => {
-    setValue("email", localStorage.getItem("email"), {
-      shouldDirty: true,
-      shouldValidate: true
-    });
-    setValue("password", localStorage.getItem("password"), {
-      shouldDirty: true,
-      shouldValidate: true
-    });
+    if (localStorage.getItem("email") && localStorage.getItem("password")) {
+      setValue("email", localStorage.getItem("email") || "", {
+        shouldDirty: true,
+        shouldValidate: true
+      });
+      setValue("password", localStorage.getItem("password") || "", {
+        shouldDirty: true,
+        shouldValidate: true
+      });
+    }
   }, [reset, setValue, trigger]);
 
   useEffect(() => {
