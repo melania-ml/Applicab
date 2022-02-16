@@ -425,13 +425,10 @@ function ContactDialog(props) {
                 onChange={(event, newValue) => {
                   if (typeof newValue === "string") {
                     setAllFields({ ...allFields, title: newValue });
-                    checkIsDisable("title", newValue);
                   } else if (newValue && newValue.inputValue) {
                     setAllFields({ ...allFields, title: newValue.inputValue });
-                    checkIsDisable("title", newValue.inputValue);
                   } else {
-                    setAllFields({ ...allFields, title: newValue.label });
-                    checkIsDisable("title", newValue.label);
+                    setAllFields({ ...allFields, title: newValue.title });
                   }
                 }}
                 filterOptions={(options, params) => {
@@ -443,7 +440,7 @@ function ContactDialog(props) {
                   if (inputValue.trim() !== "" && !isExisting) {
                     filtered.push({
                       inputValue: inputValue.trim(),
-                      label: `Ajouter "${inputValue.trim()}"`
+                      title: `Ajouter "${inputValue.trim()}"`
                     });
                   }
                   return filtered;
