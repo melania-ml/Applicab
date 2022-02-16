@@ -117,10 +117,11 @@ class validateEmailOtp(APIView):
             userData.save()
             stPasswordText = emailText.setPassword() | emailText.commonUrls()
             stPasswordText['otp'] = emailOtp
+            stPasswordText['text1'] = stPasswordText['text1'].format(userName=userData.first_name)
             stPasswordText['button_url'] = stPasswordText['button_url'] + str(userData.id)
-
+            print(stPasswordText)
             send_email([userData.email],
-                       'Password Set', 'email.html', stPasswordText)
+                       'Saisissez ' + str(emailOtp) + ' comme code de confirmation Applicab', 'email.html', stPasswordText)
             res = ResponseInfo({'otp_shared': True},
                                OTP_SHARED_SUCCESSFULLY, True, status.HTTP_200_OK)
             return Response(res.success_payload(), status=status.HTTP_200_OK)

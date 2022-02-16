@@ -161,6 +161,6 @@ EMAIL_PORT = 587
 ATA_UPLOAD_MAX_MEMORY_SIZE = 50000000
 
 # Static social media url's
-Linkedin_url = 'https://www.linkedin.com/company/applicab-avocats/',
-faceBook_url = 'https://www.facebook.com/AppliCabAvocats',
+Linkedin_url = 'https://www.linkedin.com/company/applicab-avocats/'
+faceBook_url = 'https://www.facebook.com/AppliCabAvocats'
 Instagram_url = 'https://www.instagram.com/applicab_avocats/'
