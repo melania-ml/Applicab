@@ -71,21 +71,19 @@ class GeneralGetUpdateViewSet(generics.RetrieveUpdateDestroyAPIView):
         return Response(res.success_payload())
 
 
-@authentication_classes([])
-@permission_classes([])
 class FilterViewSet(APIView):
 
     def post(self, request, app_label, model_name):
         try:
-            reqData = request.data
+            reqData = request.data['query']
             # Get Dynamic model from req
             model = apps.get_model(app_label=str(app_label), model_name=str(model_name))
             # add model to serializer
             GeneralDepthSerializer.Meta.model = model
+            kwargs = dict((k, v) for k, v in reqData.items() if v)  # Remove blank data from dictionary
 
-            kwargs = reqData['query']
             data = model.objects.filter(**kwargs)
-            serializer = GeneralDepthSerializer(data, many=True)
+            serializer = GeneralDepthSerializer(data, context={'request': request}, many=True)
             res = ResponseInfo(serializer.data, SUCCESS, True,
                                status.HTTP_200_OK)
             return Response(res.success_payload(), status=status.HTTP_200_OK)

@@ -12,3 +12,6 @@ class GeneralDepthSerializer(serializers.ModelSerializer):
         model = None
         fields = '__all__'
         depth = 1
+
+    def get_url(self, obj):
+        return self.context['request'].build_absolute_uri(obj.image.url)
