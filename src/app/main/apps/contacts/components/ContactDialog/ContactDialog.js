@@ -72,6 +72,7 @@ function ContactDialog(props) {
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
   const dispatch = useDispatch();
+  const titles = useSelector(({ contactsApp }) => contactsApp.contacts.titles);
   const contactDialog = useSelector(
     ({ contactsApp }) => contactsApp.contacts.contactDialog
   );
@@ -452,7 +453,7 @@ function ContactDialog(props) {
                 error={errors?.title}
                 helperText={errors?.title}
                 handleHomeEndKeys
-                options={EnterpriseTitles}
+                options={titles}
                 getOptionLabel={(option) => {
                   if (typeof option === "string") {
                     return option;
@@ -460,10 +461,10 @@ function ContactDialog(props) {
                   if (option.inputValue) {
                     return option.inputValue;
                   }
-                  return option.label;
+                  return option.title;
                 }}
                 renderOption={(props, option) => (
-                  <li {...props}>{option.label}</li>
+                  <li {...props}>{option.title}</li>
                 )}
                 freeSolo
                 renderInput={(params) => (
