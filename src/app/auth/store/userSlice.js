@@ -89,8 +89,16 @@ export const setUserData = (user) => async (dispatch, getState) => {
   Set User Settings
   */
   //dispatch(setDefaultSettings(user.data.settings));
-  console.log("user123", user);
-  dispatch(setUser(user));
+  let newUser;
+  if (!user.data.profile) {
+    newUser = {
+      ...user,
+      data: { ...user.data, profile: "assets/images/avatars/profile.jpg" }
+    };
+  } else {
+    newUser = user;
+  }
+  dispatch(setUser(newUser));
 };
 
 export const updateUserSettings = (settings) => async (dispatch, getState) => {

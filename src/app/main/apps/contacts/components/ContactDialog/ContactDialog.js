@@ -117,10 +117,8 @@ function ContactDialog(props) {
   }, [contactDialog.props.open, initDialog]);
 
   useEffect(() => {
+    const isEmpty = Object.values(errors).every((x) => x === null || x === "");
     if (allFields.type === "Client" && allFields.legalStatus === "Enterprise") {
-      const isEmpty = Object.values(errors).every(
-        (x) => x === null || x === ""
-      );
       if (
         allFields.type &&
         allFields.title &&
@@ -145,7 +143,8 @@ function ContactDialog(props) {
         allFields.name &&
         allFields.firstName &&
         allFields.email &&
-        validateEmail(allFields.email)
+        validateEmail(allFields.email) &&
+        isEmpty
       ) {
         setIsValid(true);
       } else {
@@ -155,13 +154,18 @@ function ContactDialog(props) {
       allFields.type !== "Client" &&
       allFields.legalStatus === "Particulier"
     ) {
-      if (allFields.type && allFields.title && allFields.name) {
+      if (allFields.type && allFields.title && allFields.name && isEmpty) {
         setIsValid(true);
       } else {
         setIsValid(false);
       }
     } else {
-      if (allFields.type && allFields.title && allFields.companyName) {
+      if (
+        allFields.type &&
+        allFields.title &&
+        allFields.companyName &&
+        isEmpty
+      ) {
         setIsValid(true);
       } else {
         setIsValid(false);
@@ -313,13 +317,13 @@ function ContactDialog(props) {
           setErrors({ ...errors, email: "Must enter an Email" });
         }
       }
-      if (name === "number") {
-        if (value > 0) {
-          setErrors({ ...errors, number: "" });
-        } else {
-          setErrors({ ...errors, number: "Must enter Proper Number" });
-        }
-      }
+      // if (name === "number") {
+      //   if (value > 0) {
+      //     setErrors({ ...errors, number: "" });
+      //   } else {
+      //     setErrors({ ...errors, number: "Must enter Proper Number" });
+      //   }
+      // }
     }
   };
 
@@ -601,15 +605,15 @@ function ContactDialog(props) {
                 variant="outlined"
                 fullWidth
                 type="number"
-                error={errors?.number}
-                helperText={errors?.number}
+                // error={errors?.number}
+                // helperText={errors?.number}
                 value={allFields.number}
                 onChange={(e) => {
                   setAllFields({
                     ...allFields,
                     number: e.target.value
                   });
-                  checkIsDisable("number", e.target.value);
+                  //checkIsDisable("number", e.target.value);
                 }}
               />
               <div className="flex mb-14 w-full justify-center">
@@ -1144,7 +1148,6 @@ function ContactDialog(props) {
             style={{ borderRadius: 0 }}
             onClick={() => onSubmit("invite")}
             disabled={
-              _.isEmpty(errors) ||
               !isValid ||
               allFields.status === "Inactif" ||
               allFields.type !== "Client"
