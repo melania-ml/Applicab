@@ -17,6 +17,8 @@ from static import staticModelChoiceFields
 
 class Client_title(CommonBase):
     title = models.CharField(max_length=100, blank=True, null=True)
+    legal_status = models.CharField(max_length=255, choices=staticModelChoiceFields.legalStatusChoiceFields(),
+                                    null=True, blank=True)
 
     def __str__(self):
         return '{}'.format(self.title)
@@ -106,7 +108,7 @@ class User(AbstractUser):
     legal_status = models.CharField(max_length=255, choices=staticModelChoiceFields.legalStatusChoiceFields(),
                                     null=True, blank=True)
     title = models.ForeignKey(Client_title, blank=True, null=True,
-                                on_delete=models.DO_NOTHING, db_column='title')
+                              on_delete=models.DO_NOTHING, db_column='title')
     company_name = models.CharField(max_length=255, null=True, blank=True)
     country = models.CharField(max_length=255, null=True, blank=True)
     nationality = models.CharField(max_length=255, null=True, blank=True)
@@ -127,9 +129,7 @@ class User(AbstractUser):
                               null=True, blank=True)
     department = models.CharField(max_length=255, choices=staticModelChoiceFields.departmentChoiceFields(),
                                   null=True, blank=True)
-    # Used for marital status of client
-    client_type = models.CharField(max_length=255, choices=staticModelChoiceFields.clientTypeChoiceFields(),
-                                   null=True, blank=True)
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 

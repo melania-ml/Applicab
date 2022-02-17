@@ -34,18 +34,6 @@ def statusChoiceFields():
     return STATUS_CHOICES
 
 
-def clientTypeChoiceFields():
-    STATUS_CHOICES = (
-        ("Célibataire", "Célibataire"),
-        ("Marié.e", "Marié.e"),
-        ("Pacsé.e", "Pacsé.e"),
-        ("Divorcé.e", "Divorcé.e"),
-        ("Veuf.ve", "Veuf.ve"),
-        ("Autre", "Autre")
-    )
-    return STATUS_CHOICES
-
-
 def departmentChoiceFields():
     DEPARTMENT_CHOICES = (
         ("Ain", "Ain"),
