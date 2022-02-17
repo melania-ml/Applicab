@@ -30,7 +30,7 @@ function DossiersList(props) {
 
   const [rowId, setRowId] = useState(null);
 
-  const CusstomTooltip = styled(({ className, ...props }) => (
+  const  CustomTooltip = styled(({ className, ...props }) => (
     <Tooltip {...props} arrow classes={{ popper: className }} />
   ))(({ theme }) => ({
     [`& .${tooltipClasses.arrow}`]: {
@@ -99,22 +99,22 @@ function DossiersList(props) {
         sortable: true,
         Cell: ({ row }) => (
           <div className="flex items-center">
-            <CusstomTooltip placement="top-end" title="Non lus et non envoyé">
+            < CustomTooltip placement="top-end" title="Non lus et non envoyé">
               <Fab variant="circular" disableRipple={true} size="small" sx={{ boxShadow: 0, backgroundColor: "#22d3ee", "&:hover": { backgroundColor: "#22d3ee" } }} aria-label="add">
                 <Typography variant="bold">1</Typography>
               </Fab>
-            </CusstomTooltip>
+            </ CustomTooltip>
           </div>
         ),
       },
       {
         id: 'action',
-        Header: 'Action',
+        Header: 'Actions',
         width: 128,
         sortable: false,
         Cell: ({ row }) => (
           <div className="flex items-center">
-            <CusstomTooltip placement="top-end" title="Liste des étapes">
+            < CustomTooltip placement="top-end" title="Liste des étapes">
               <IconButton
                 onClick={(ev) => {
                   ev.stopPropagation();
@@ -122,9 +122,9 @@ function DossiersList(props) {
                 }}
                 size="large"
               >
-                <Icon>call_made</Icon>
+                <Icon>view_agenda</Icon>
               </IconButton>
-            </CusstomTooltip>
+            </ CustomTooltip>
           </div>
         ),
       },

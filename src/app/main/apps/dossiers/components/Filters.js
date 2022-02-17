@@ -7,35 +7,72 @@ import {
   TextField
 } from "@mui/material";
 import DatePicker from "@mui/lab/DatePicker";
-
+// Tribunal judiciaire (TJ)
+// - Juge des contentieux de la protection(JCP)
+// - Tribunal de commerce (TCOM)
+// - Référé Tribunal judiciaire (REFTJ)
+// - Référé Tribunal de commerce (REFTC)
+// - Conseil des Prud'hommes (CPH)
+// - Juge aux affaires familiales (divorce hors consentement mutuel)(JAF )(divorce hors DCM)
+// - Cour d'appel (CA)
 const procedure = [
   {
     id: 1,
-    value: "tj",
-    label: "TJ"
+    value: "Tribunal judiciaire (TJ)",
+    label: "Tribunal judiciaire (TJ)"
   },
   {
     id: 2,
-    value: "jcp",
-    label: "JCP"
-  }
+    value: "Juge des contentieux de la protection(JCP)",
+    label: "Juge des contentieux de la protection(JCP)"
+  },
+  {
+    id: 3,
+    value: "Tribunal de commerce (TCOM)",
+    label: "Tribunal de commerce (TCOM)",
+  },
+  {
+    id: 4,
+    value: "Référé Tribunal judiciaire (REFTJ)",
+    label: "Référé Tribunal judiciaire (REFTJ)",
+  },
+  {
+    id: 5,
+    value: "Référé Tribunal de commerce (REFTC)",
+    label: "Référé Tribunal de commerce (REFTC)",
+  },
+  {
+    id: 6,
+    value: "Conseil des Prud'hommes (CPH)",
+    label: "Conseil des Prud'hommes (CPH)",
+  },
+  {
+    id: 7,
+    value: "Juge aux affaires familiales (divorce hors consentement mutuel)(JAF )(divorce hors DCM)",
+    label: "Juge aux affaires familiales (divorce hors consentement mutuel)(JAF )(divorce hors DCM)"
+  },
+  {
+    id: 8,
+    value: "Cour d'appel (CA)",
+    label: "Cour d'appel (CA)"
+  },
 ];
 
 const status = [
   {
     id: 1,
-    value: "A faire",
-    label: "A faire"
+    value: "A ouvrir",
+    label: "A ouvrir"
   },
   {
     id: 2,
-    value: "Archivé",
-    label: "Archivé"
+    value: "Ouvert",
+    label: "Ouvert"
   },
   {
     id: 3,
-    value: "A prévoir",
-    label: "A prévoir"
+    value: "Clôturé",
+    label: "Clôturé"
   }
 ];
 

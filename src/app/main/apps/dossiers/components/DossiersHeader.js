@@ -45,8 +45,8 @@ function DossiersHeader(props) {
       </div>
       <div className="flex items-center">
         <Button
-          // component={Link}
-          // to="/apps/dossiers/new"
+          component={Link}
+          to="/apps/dossiers/new"
           variant="contained"
           color="secondary"
           className="w-full rounded"

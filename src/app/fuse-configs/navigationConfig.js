@@ -33,6 +33,46 @@ const navigationConfig = [
     icon: 'view_column',
     url: 'apps/dossiers/all',
   },
+  // {
+  //   id: 'Étapes',
+  //   title: 'Étapes',
+  //   translate: 'Étapes',
+  //   type: 'item',
+  //   icon: 'view_agenda',
+  //   url: 'apps/etapes/all',
+  // },
+  // {
+  //   id: 'Email',
+  //   title: 'Email',
+  //   translate: 'Email',
+  //   type: 'item',
+  //   icon: 'email',
+  //   url: 'apps/email/all',
+  // },
+  // {
+  //   id: 'Agenda',
+  //   title: 'Agenda',
+  //   translate: 'Agenda',
+  //   type: 'item',
+  //   icon: 'event',
+  //   url: 'apps/natures/all',
+  // },
+  // {
+  //   id: 'faq',
+  //   title: 'Foire aux Questions',
+  //   translate:'Foire aux Questions',
+  //   type: 'item',
+  //   icon: 'help_outline',
+  //   url: 'pages/faq',
+  // },
+  // {
+  //   id: 'Applicab',
+  //   title: 'Applicab',
+  //   translate: 'Applicab',
+  //   type: 'item',
+  //   icon: 'Applicab',
+  //   url: 'apps/applicab/all',
+  // },
 ];
 
 // const navigationConfig = [

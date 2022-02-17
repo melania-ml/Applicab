@@ -1,6 +1,10 @@
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { useFormContext, Controller } from 'react-hook-form';
+import FusePageCarded from '@fuse/core/FusePageCarded';
+import { Avatar, Typography } from '@mui/material';
+import { motion } from 'framer-motion';
+
 
 function EmailTab(props) {
     // const methods = useFormContext();
@@ -8,9 +12,11 @@ function EmailTab(props) {
     // const { errors } = formState;
 
     return (
-        <div>
-            Email
-            {/* <Controller
+      <div>
+        // <ChatApp />
+        {/* <FusePageCarded className="items-center max-h-313 max-w-300 h-530 dossierEmailChat">
+        </FusePageCarded> */}
+        {/* <Controller
                 name="name"
                 control={control}
                 render={({ field }) => (
@@ -104,7 +110,7 @@ function EmailTab(props) {
                     />
                 )}
             /> */}
-        </div>
+      </div>
     );
 }
 

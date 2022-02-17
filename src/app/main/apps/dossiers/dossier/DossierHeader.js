@@ -62,13 +62,13 @@ function DossierHeader(props) {
               src="assets/images/ecommerce/product-image-placeholder.png"
             />
           </motion.div>
-          <div className="flex flex-col min-w-0 mx-8 sm:mc-16">
-            <motion.div initial={{ x: -20 }} animate={{ x: 0, transition: { delay: 0.3 } }}>
-              <Typography className="text-16 sm:text-20 truncate font-semibold">
-                {name || 'Ajouter un nouveau dossier'}
-              </Typography>
-            </motion.div>
-          </div>
+            <div className="flex flex-col min-w-0 mx-8 sm:mc-16">
+              <motion.div initial={{ x: -20 }} animate={{ x: 0, transition: { delay: 0.3 } }}>
+                <Typography className="text-16 sm:text-20 truncate font-semibold">
+                  {name || 'Ajouter un nouveau dossier'}
+                </Typography>
+              </motion.div>
+            </div>
         </div>
       </div>
       <motion.div
