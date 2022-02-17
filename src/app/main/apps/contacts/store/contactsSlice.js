@@ -7,6 +7,19 @@ import axios from "axios";
 import { getUserData } from "./userSlice";
 import { showMessage } from "app/store/fuse/messageSlice";
 
+export const getAllTitles = () => async (dispatch) => {
+  await axios
+    .get(`http://178.79.138.121:8080/api/common/listCreate/user/Client_title`)
+    .then((data) => {
+      if (data.data.status === 200 && data.data.success) {
+        dispatch(setAllTitles(data.data.data));
+      }
+    })
+    .catch((errors) => {
+      console.error(errors);
+    });
+};
+
 export const getContacts = createAsyncThunk(
   "contactsApp/contacts/getContacts",
   async (routeParams, { getState }) => {
@@ -160,9 +173,13 @@ const contactsSlice = createSlice({
         open: false
       },
       data: null
-    }
+    },
+    titles: []
   }),
   reducers: {
+    setAllTitles: (state, action) => {
+      state.titles = action.payload;
+    },
     addContactSuccess: (state, action) => {
       state.success = true;
       state.errors = [];
@@ -236,7 +253,8 @@ export const {
   closeNewContactDialog,
   openEditContactDialog,
   closeEditContactDialog,
-  addContactError
+  addContactError,
+  setAllTitles
 } = contactsSlice.actions;
 
 export default contactsSlice.reducer;

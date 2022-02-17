@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Types from "../../../constants/Types";
 import Titles from "../../../constants/Titles";
 import {
@@ -26,6 +26,7 @@ const status = [
 
 export default function Filters() {
   const dispatch = useDispatch();
+  const titles = useSelector(({ contactsApp }) => contactsApp.contacts.titles);
   const [selectedStatus, setSelectedStatus] = useState("");
   const [selectedType, setSelectedType] = useState("");
   const [selectedTitle, setSelectedTitle] = useState("");
@@ -65,9 +66,9 @@ export default function Filters() {
               }}
               MenuProps={{ PaperProps: { sx: { maxHeight: 300 } } }}
             >
-              {Titles.map((title) => (
-                <MenuItem value={title.value} key={title.id}>
-                  {title.label}
+              {titles.map((title) => (
+                <MenuItem value={title.title} key={title.id}>
+                  {title.title}
                 </MenuItem>
               ))}
             </Select>

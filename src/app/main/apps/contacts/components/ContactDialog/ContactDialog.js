@@ -72,6 +72,7 @@ function ContactDialog(props) {
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
   const dispatch = useDispatch();
+  const titles = useSelector(({ contactsApp }) => contactsApp.contacts.titles);
   const contactDialog = useSelector(
     ({ contactsApp }) => contactsApp.contacts.contactDialog
   );
@@ -117,10 +118,8 @@ function ContactDialog(props) {
   }, [contactDialog.props.open, initDialog]);
 
   useEffect(() => {
+    const isEmpty = Object.values(errors).every((x) => x === null || x === "");
     if (allFields.type === "Client" && allFields.legalStatus === "Enterprise") {
-      const isEmpty = Object.values(errors).every(
-        (x) => x === null || x === ""
-      );
       if (
         allFields.type &&
         allFields.title &&
@@ -145,7 +144,8 @@ function ContactDialog(props) {
         allFields.name &&
         allFields.firstName &&
         allFields.email &&
-        validateEmail(allFields.email)
+        validateEmail(allFields.email) &&
+        isEmpty
       ) {
         setIsValid(true);
       } else {
@@ -155,13 +155,18 @@ function ContactDialog(props) {
       allFields.type !== "Client" &&
       allFields.legalStatus === "Particulier"
     ) {
-      if (allFields.type && allFields.title && allFields.name) {
+      if (allFields.type && allFields.title && allFields.name && isEmpty) {
         setIsValid(true);
       } else {
         setIsValid(false);
       }
     } else {
-      if (allFields.type && allFields.title && allFields.companyName) {
+      if (
+        allFields.type &&
+        allFields.title &&
+        allFields.companyName &&
+        isEmpty
+      ) {
         setIsValid(true);
       } else {
         setIsValid(false);
@@ -313,13 +318,13 @@ function ContactDialog(props) {
           setErrors({ ...errors, email: "Must enter an Email" });
         }
       }
-      if (name === "number") {
-        if (value > 0) {
-          setErrors({ ...errors, number: "" });
-        } else {
-          setErrors({ ...errors, number: "Must enter Proper Number" });
-        }
-      }
+      // if (name === "number") {
+      //   if (value > 0) {
+      //     setErrors({ ...errors, number: "" });
+      //   } else {
+      //     setErrors({ ...errors, number: "Must enter Proper Number" });
+      //   }
+      // }
     }
   };
 
@@ -420,13 +425,10 @@ function ContactDialog(props) {
                 onChange={(event, newValue) => {
                   if (typeof newValue === "string") {
                     setAllFields({ ...allFields, title: newValue });
-                    checkIsDisable("title", newValue);
                   } else if (newValue && newValue.inputValue) {
                     setAllFields({ ...allFields, title: newValue.inputValue });
-                    checkIsDisable("title", newValue.inputValue);
                   } else {
-                    setAllFields({ ...allFields, title: newValue.label });
-                    checkIsDisable("title", newValue.label);
+                    setAllFields({ ...allFields, title: newValue.title });
                   }
                 }}
                 filterOptions={(options, params) => {
@@ -438,7 +440,7 @@ function ContactDialog(props) {
                   if (inputValue.trim() !== "" && !isExisting) {
                     filtered.push({
                       inputValue: inputValue.trim(),
-                      label: `Ajouter "${inputValue.trim()}"`
+                      title: `Ajouter "${inputValue.trim()}"`
                     });
                   }
                   return filtered;
@@ -448,7 +450,7 @@ function ContactDialog(props) {
                 error={errors?.title}
                 helperText={errors?.title}
                 handleHomeEndKeys
-                options={EnterpriseTitles}
+                options={titles}
                 getOptionLabel={(option) => {
                   if (typeof option === "string") {
                     return option;
@@ -456,10 +458,10 @@ function ContactDialog(props) {
                   if (option.inputValue) {
                     return option.inputValue;
                   }
-                  return option.label;
+                  return option.title;
                 }}
                 renderOption={(props, option) => (
-                  <li {...props}>{option.label}</li>
+                  <li {...props}>{option.title}</li>
                 )}
                 freeSolo
                 renderInput={(params) => (
@@ -601,15 +603,15 @@ function ContactDialog(props) {
                 variant="outlined"
                 fullWidth
                 type="number"
-                error={errors?.number}
-                helperText={errors?.number}
+                // error={errors?.number}
+                // helperText={errors?.number}
                 value={allFields.number}
                 onChange={(e) => {
                   setAllFields({
                     ...allFields,
                     number: e.target.value
                   });
-                  checkIsDisable("number", e.target.value);
+                  //checkIsDisable("number", e.target.value);
                 }}
               />
               <div className="flex mb-14 w-full justify-center">
@@ -1144,7 +1146,6 @@ function ContactDialog(props) {
             style={{ borderRadius: 0 }}
             onClick={() => onSubmit("invite")}
             disabled={
-              _.isEmpty(errors) ||
               !isValid ||
               allFields.status === "Inactif" ||
               allFields.type !== "Client"

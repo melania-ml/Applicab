@@ -49,21 +49,21 @@ const Root = styled("div")(({ theme }) => ({
       padding: "30px"
     }
   },
-    "& .Resetpass-responsive": {
-      "@media (max-width: 767px)": {
-        display: "block",
-        width: "100%"
-      }
-    },
-    "& .MuiCardContent-root": {
-      "@media (max-width: 767px)": {
-        marginLeft: "auto",
-        marginRight: "auto"
-      }
-    },
-    "& .MuiFormControl-root": {
+  "& .Resetpass-responsive": {
+    "@media (max-width: 767px)": {
+      display: "block",
       width: "100%"
     }
+  },
+  "& .MuiCardContent-root": {
+    "@media (max-width: 767px)": {
+      marginLeft: "auto",
+      marginRight: "auto"
+    }
+  },
+  "& .MuiFormControl-root": {
+    width: "100%"
+  }
 }));
 
 const defaultValues = {
@@ -119,15 +119,6 @@ function ResetPassword(props) {
   });
 
   const { isValid, dirtyFields, errors } = formState;
-
-  useEffect(() => {
-    authRegister.errors.forEach((error) => {
-      setError(error.type, {
-        type: "manual",
-        message: error.message
-      });
-    });
-  }, [authRegister.errors, setError]);
 
   function onSubmit(model) {
     dispatch(callResetPassword({ ...model, forgotPasswordToken: searchParam }));

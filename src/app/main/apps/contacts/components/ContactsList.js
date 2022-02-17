@@ -52,6 +52,9 @@ function ContactsList(props) {
       {
         Header: "Titre",
         accessor: "title",
+        Cell: ({ row }) => {
+          return <span>{row.original.title?.title}</span>;
+        },
         className: "font-medium",
         sortable: true
       },
