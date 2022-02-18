@@ -22,7 +22,7 @@ export const getAllTitles = () => async (dispatch) => {
 
 export const getContacts = createAsyncThunk(
   "contactsApp/contacts/getContacts",
-  async (routeParams, { getState }) => {
+  async (routeParams, { dispatch, getState }) => {
     routeParams = routeParams || getState().contactsApp.contacts.routeParams;
     const response = await axios.post(
       "http://178.79.138.121:8080/api/common/filterData/user/User",
@@ -34,6 +34,7 @@ export const getContacts = createAsyncThunk(
       }
     );
     const data = await response.data;
+    dispatch(setContatcs(data.data));
     return { data: data.data, routeParams };
   }
 );
@@ -174,9 +175,13 @@ const contactsSlice = createSlice({
       },
       data: null
     },
-    titles: []
+    titles: [],
+    contacts: []
   }),
   reducers: {
+    setContatcs: (state, action) => {
+      state.contacts = action.payload;
+    },
     setAllTitles: (state, action) => {
       state.titles = action.payload;
     },
@@ -254,7 +259,8 @@ export const {
   openEditContactDialog,
   closeEditContactDialog,
   addContactError,
-  setAllTitles
+  setAllTitles,
+  setContatcs
 } = contactsSlice.actions;
 
 export default contactsSlice.reducer;
