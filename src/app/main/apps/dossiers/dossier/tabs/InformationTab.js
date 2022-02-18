@@ -1,13 +1,15 @@
 import { useState } from "react";
 import {
-    TextField,
-    InputLabel,
-    FormControl,
-    Select,
-    MenuItem,
-    Autocomplete,
-    Chip,
-    Button,
+  TextField,
+  InputLabel,
+  FormControl,
+  Select,
+  MenuItem,
+  Autocomplete,
+  Chip,
+  Button,
+  IconButton,
+  Icon
 } from "@mui/material";
 import Natures from "../../../../constants/Natures";
 import CaseStatus from "../../../../constants/CaseStatus";
@@ -234,34 +236,39 @@ function InformationTab(props) {
       >
         Ajouter un nouveau contact
       </Button>
-       <FormControl className="flex w-full mb-12" variant="outlined">
-                <InputLabel>Choisissez une qualité</InputLabel>
-                <Select
-                    label="Choisissez une qualité"
-                    value={oppositeContactQuality}
-                    onChange={(e) => setOppositeContactQuality(e.target.value)}
-                >
-                    {Clients.map((client) => (
-                        <MenuItem value={client.value} key={client.id}>
-                            {client.label}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
-            <br/>
-            <Button
-          className="whitespace-nowrap mx-4"
-          variant="contained"
-          color="secondary"
-          style={{ borderRadius: 2 }}
+      <FormControl className="flex w-full mb-12" variant="outlined">
+        <InputLabel>Choisissez une qualité</InputLabel>
+        <Select
+          label="Choisissez une qualité"
+          value={oppositeContactQuality}
+          onChange={(e) => setOppositeContactQuality(e.target.value)}
+        >
+          {Clients.map((client) => (
+            <MenuItem value={client.value} key={client.id}>
+              {client.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      <br />
+      <Button
+        className="whitespace-nowrap mx-4"
+        variant="contained"
+        color="secondary"
+        style={{ borderRadius: 2 }}
         // disabled={_.isEmpty(dirtyFields) || !isValid}
         //onClick={handleSaveProduct}
-        >
-          Ajouter un nouveau contact
-        </Button>
-        <br/><b/><br/><br/><br/><br/>
-        </div>
-    );
+      >
+        Ajouter un nouveau contact
+      </Button>
+      <br />
+      <b />
+      <br />
+      <br />
+      <br />
+      <br />
+    </div>
+  );
 }
 
 export default InformationTab;
