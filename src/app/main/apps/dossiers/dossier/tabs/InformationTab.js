@@ -158,68 +158,88 @@ function InformationTab(props) {
       <div className="mb-10">
         <b>Ajouter un client au dossier</b>
       </div>
-      <FormControl className="flex w-full mb-12" variant="outlined">
-        <InputLabel>Choisissez un client</InputLabel>
-        <Select
-          label="Choisissez un client"
-          value={client}
-          onChange={(e) => setClient(e.target.value)}
-        >
-          {Clients.map((client) => (
-            <MenuItem value={client.value} key={client.id}>
-              {client.label}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <Autocomplete
+        className="w-full mb-12"
+        multiple
+        freeSolo
+        onChange={(event, newValue) => {
+          setTags([
+            ...tags,
+            ...newValue.filter((option) => tags.indexOf(option) === -1),
+          ]);
+        }}
+        options={tagsArr}
+        getOptionLabel={(option) => option.title}
+        renderTags={(tagValue, getTagProps) =>
+          tagValue.map((option, index) => (
+            <Chip
+              label={option}
+              {...getTagProps({ index })}
+              disabled={tagsArr.indexOf(option) !== -1}
+            />
+          ))
+        }
+        renderInput={(params) => (
+          <TextField {...params} label="Choisissez un client" />
+        )}
+      />
       <div className="mb-10">
         <b>Ajouter un contact client au dossier</b>
       </div>
-      <FormControl className="flex w-full mb-12" variant="outlined">
-        <InputLabel>Choisissez un contact</InputLabel>
-        <Select
-          label="Choisissez un contact"
-          value={contactName}
-          onChange={(e) => setContactName(e.target.value)}
-        >
-          {Clients.map((client) => (
-            <MenuItem value={client.value} key={client.id}>
-              {client.label}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      {/* <FormControl className="flex w-full mb-12" variant="outlined">
-                <InputLabel>Choisissez une qualité</InputLabel>
-                <Select
-                    label="Choisissez une qualité"
-                    value={contactQuality}
-                    onChange={(e) => setContactQuality(e.target.value)}
-                >
-                    {Clients.map((client) => (
-                        <MenuItem value={client.value} key={client.id}>
-                            {client.label}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl> */}
+      <Autocomplete
+        className="w-full mb-12"
+        multiple
+        freeSolo
+        onChange={(event, newValue) => {
+          setTags([
+            ...tags,
+            ...newValue.filter((option) => tags.indexOf(option) === -1),
+          ]);
+        }}
+        options={tagsArr}
+        getOptionLabel={(option) => option.title}
+        renderTags={(tagValue, getTagProps) =>
+          tagValue.map((option, index) => (
+            <Chip
+              label={option}
+              {...getTagProps({ index })}
+              disabled={tagsArr.indexOf(option) !== -1}
+            />
+          ))
+        }
+        renderInput={(params) => (
+          <TextField {...params} label="Choisissez un contact" />
+        )}
+      />
       <div className="mb-10">
         <b>Ajouter un contact adverse au dossier</b>
       </div>
-      <FormControl className="flex w-full mb-12" variant="outlined">
-        <InputLabel>Choisissez un contact</InputLabel>
-        <Select
-          label="Choisissez un contact"
-          value={oppositeContactName}
-          onChange={(e) => setOppositeContactName(e.target.value)}
-        >
-          {Clients.map((client) => (
-            <MenuItem value={client.value} key={client.id}>
-              {client.label}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <Autocomplete
+        className="w-full mb-12"
+        multiple
+        freeSolo
+        onChange={(event, newValue) => {
+          setTags([
+            ...tags,
+            ...newValue.filter((option) => tags.indexOf(option) === -1),
+          ]);
+        }}
+        options={tagsArr}
+        getOptionLabel={(option) => option.title}
+        renderTags={(tagValue, getTagProps) =>
+          tagValue.map((option, index) => (
+            <Chip
+              label={option}
+              {...getTagProps({ index })}
+              disabled={tagsArr.indexOf(option) !== -1}
+            />
+          ))
+        }
+        renderInput={(params) => (
+          <TextField {...params} label="Choisissez un contact" />
+        )}
+      />
+
       <Button
         className="whitespace-nowrap mx-1"
         variant="contained"
