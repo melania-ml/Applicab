@@ -56,9 +56,6 @@ function InformationTab(props) {
             </MenuItem>
           ))}
         </Select>
-        <IconButton>
-          <Icon>add_box</Icon>
-        </IconButton>
       </FormControl>
       <FormControl className="flex w-full mb-12" variant="outlined">
         <InputLabel>Statut</InputLabel>
@@ -103,10 +100,16 @@ function InformationTab(props) {
             </MenuItem>
           ))}
         </Select>
-        <IconButton>
-          <Icon>add_box</Icon>
-        </IconButton>
       </FormControl>
+      <TextField
+        className="mt-8 mb-16"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        label="Lieu"
+        autoFocus
+        variant="outlined"
+        fullWidth
+      />
       <Autocomplete
         className="w-full mb-12"
         multiple
@@ -114,7 +117,7 @@ function InformationTab(props) {
         onChange={(event, newValue) => {
           setTags([
             ...tags,
-            ...newValue.filter((option) => tags.indexOf(option) === -1)
+            ...newValue.filter((option) => tags.indexOf(option) === -1),
           ]);
         }}
         options={tagsArr}
@@ -168,9 +171,6 @@ function InformationTab(props) {
             </MenuItem>
           ))}
         </Select>
-        <IconButton>
-          <Icon>add_box</Icon>
-        </IconButton>
       </FormControl>
       <div className="mb-10">
         <b>Ajouter un contact client au dossier</b>
@@ -188,9 +188,6 @@ function InformationTab(props) {
             </MenuItem>
           ))}
         </Select>
-        <IconButton>
-          <Icon>add_box</Icon>
-        </IconButton>
       </FormControl>
       {/* <FormControl className="flex w-full mb-12" variant="outlined">
                 <InputLabel>Choisissez une qualité</InputLabel>
@@ -222,40 +219,12 @@ function InformationTab(props) {
             </MenuItem>
           ))}
         </Select>
-        <IconButton>
-          <Icon>add_box</Icon>
-        </IconButton>
       </FormControl>
       <Button
-        className="whitespace-nowrap mx-4"
+        className="whitespace-nowrap mx-1"
         variant="contained"
         color="secondary"
-        style={{ borderRadius: 0 }}
-        // disabled={_.isEmpty(dirtyFields) || !isValid}
-        //onClick={handleSaveProduct}
-      >
-        Ajouter un nouveau contact
-      </Button>
-      <FormControl className="flex w-full mb-12" variant="outlined">
-        <InputLabel>Choisissez une qualité</InputLabel>
-        <Select
-          label="Choisissez une qualité"
-          value={oppositeContactQuality}
-          onChange={(e) => setOppositeContactQuality(e.target.value)}
-        >
-          {Clients.map((client) => (
-            <MenuItem value={client.value} key={client.id}>
-              {client.label}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <br />
-      <Button
-        className="whitespace-nowrap mx-4"
-        variant="contained"
-        color="secondary"
-        style={{ borderRadius: 2 }}
+        style={{ borderRadius: 3 }}
         // disabled={_.isEmpty(dirtyFields) || !isValid}
         //onClick={handleSaveProduct}
       >
