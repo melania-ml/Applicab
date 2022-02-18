@@ -22,7 +22,7 @@ const Root = styled("div")(({ theme, config }) => ({
   }),
   ...(config.mode === "container" && {
     "& .container": {
-      maxWidth: `${config.containerWidth}px`,
+      maxWidth: `${config.containerWidth}`,
       width: "100%",
       margin: "0 auto"
     }

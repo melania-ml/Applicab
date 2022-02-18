@@ -173,8 +173,8 @@ export default function Filters() {
   const [selectedDateOfCreated, setSelectedDateOfCreated] = useState(null);
   const [selectedTags, setSelectedTags] = useState("");
   return (
-    <div className="bgm-10 for-res-flex-direction">
-      <div className="row">
+    <div className="bgm-10 for-res-flex-direction for-full-screen">
+      <div className="row items-center">
         <div className="col-md-4 col-lg-4 col-12 col-xl-2 mb-3 mb-xl-0">
           <FormControl className="w-full" variant="outlined">
             <InputLabel style={{ color: "#FFFFFF" }}>Procédure</InputLabel>
@@ -250,7 +250,7 @@ export default function Filters() {
               renderInput={(params) => (
                 <TextField
                   InputLabelProps={{ style: { color: "#FFFFFF" } }}
-                  className="w-full mb-12"
+                  className="w-full"
                   {...params}
                 />
               )}
@@ -263,7 +263,7 @@ export default function Filters() {
               // {...field}
               InputLabelProps={{ style: { color: "#FFFFFF" } }}
               style={{ color: "#FFFFFF" }}
-              className="mb-12"
+              className=""
               label="Tags"
               variant="outlined"
               fullWidth

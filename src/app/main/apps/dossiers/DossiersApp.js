@@ -49,8 +49,34 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
   '& .search-bar-dossier':{
     width:250,
     borderRadius:"5px",
-  
-  }
+    "@media (max-width: 767px)": {
+      width: "100%",
+      marginBottom:10
+    }
+  },
+  "& .for-full-screen": {
+    marginBottom: "15px",
+    "@media (min-width: 1920px)": {
+      width: "60%",
+      marginBottom: "0px"
+    }
+  },
+  "& .for-full-scren-flex": {
+    "@media (min-width: 1920px)": {
+      display: "flex"
+    }
+  },
+  "& .full-screen-secondwidth": {
+    "@media (min-width: 1920px)": {
+      width: "40%"
+    }
+  },
+  "& .full-screen-justify-end": {
+    "@media (min-width: 1920px)": {
+      justifyContent: "end",
+      marginRight:30
+    }
+  },
 }));
 
 function DossiersApp(props) {

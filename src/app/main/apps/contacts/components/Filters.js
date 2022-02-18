@@ -31,8 +31,8 @@ export default function Filters() {
   const [selectedType, setSelectedType] = useState("");
   const [selectedTitle, setSelectedTitle] = useState("");
   return (
-    <div className="bgm-10">
-      <div className="row">
+    <div className="bgm-10 for-full-screen">
+      <div className="row items-center">
         <div className="col-md-3 col-lg-3 col-12 col-xl-3 mb-3 mb-xl-0">
           <FormControl className="w-full" variant="outlined">
             <InputLabel style={{ color: "#FFFFFF" }}>Type</InputLabel>
@@ -101,7 +101,7 @@ export default function Filters() {
               // {...field}
               InputLabelProps={{ style: { color: "#FFFFFF" } }}
               style={{ color: "#FFFFFF" }}
-              className="mb-12"
+              className=""
               label="Tags"
               variant="outlined"
               fullWidth
