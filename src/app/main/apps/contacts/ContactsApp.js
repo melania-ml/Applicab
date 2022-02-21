@@ -9,7 +9,7 @@ import ContactDialog from "./components/ContactDialog/ContactDialog";
 import ContactsHeader from "./components/ContactsHeader";
 import ContactsList from "./components/ContactsList";
 import reducer from "./store";
-import { getContacts, getAllTitles } from "./store/contactsSlice";
+import { getContacts, getAllTitles, getAllTypes } from "./store/contactsSlice";
 import { getUserData } from "./store/userSlice";
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
@@ -52,7 +52,7 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
     }
   },
   "& .for-full-screen": {
-    marginBottom:"15px",
+    marginBottom: "15px",
     "@media (min-width: 1920px)": {
       width: "60%",
       marginBottom: "0px"
@@ -60,7 +60,7 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
   },
   "& .for-full-scren-flex": {
     "@media (min-width: 1920px)": {
-      display:"flex"
+      display: "flex"
     }
   },
   "& .full-screen-secondwidth": {
@@ -71,9 +71,9 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
   "& .full-screen-justify-end": {
     "@media (min-width: 1920px)": {
       justifyContent: "end",
-      marginRight:30
+      marginRight: 30
     }
-  },
+  }
 }));
 
 function ContactsApp(props) {
@@ -82,10 +82,11 @@ function ContactsApp(props) {
   const pageLayout = useRef(null);
   const routeParams = useParams();
 
-  useDeepCompareEffect(() => {
-    dispatch(getContacts(routeParams));
-    dispatch(getUserData());
-    dispatch(getAllTitles());
+  useDeepCompareEffect(async () => {
+    await dispatch(getContacts(routeParams));
+    await dispatch(getUserData());
+    await dispatch(getAllTitles());
+    await dispatch(getAllTypes());
   }, [dispatch, routeParams]);
 
   return (

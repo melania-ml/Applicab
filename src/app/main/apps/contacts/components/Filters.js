@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Types from "../../../constants/Types";
-import Titles from "../../../constants/Titles";
 import {
   FormControl,
   InputLabel,
@@ -27,9 +25,13 @@ const status = [
 export default function Filters() {
   const dispatch = useDispatch();
   const titles = useSelector(({ contactsApp }) => contactsApp.contacts.titles);
-  const [selectedStatus, setSelectedStatus] = useState("");
-  const [selectedType, setSelectedType] = useState("");
-  const [selectedTitle, setSelectedTitle] = useState("");
+  const types = useSelector(({ contactsApp }) => contactsApp.contacts.types);
+  const [allFields, setAllFields] = useState({
+    type: "",
+    title: "",
+    status: "",
+    tags: [""]
+  });
   return (
     <div className="bgm-10 for-full-screen">
       <div className="row items-center">
@@ -38,18 +40,18 @@ export default function Filters() {
             <InputLabel style={{ color: "#FFFFFF" }}>Type</InputLabel>
             <Select
               label="Type"
-              value={selectedType}
               onChange={(e) => {
-                setSelectedType(e.target.value);
-                dispatch(
-                  getContacts({ type: e.target.value, status: selectedStatus })
+                const typeObj = types.find(
+                  (type) => type.client_type === e.target.value
                 );
+                setAllFields({ ...allFields, type: typeObj.id });
+                dispatch(getContacts({ ...allFields, type: typeObj.id }));
               }}
               MenuProps={{ PaperProps: { sx: { maxHeight: 300 } } }}
             >
-              {Types.map((category) => (
-                <MenuItem value={category.value} key={category.id}>
-                  {category.label}
+              {types.map((type) => (
+                <MenuItem value={type.client_type} key={type.id}>
+                  {type.client_type}
                 </MenuItem>
               ))}
             </Select>
@@ -60,9 +62,13 @@ export default function Filters() {
             <InputLabel style={{ color: "#FFFFFF" }}>Titre</InputLabel>
             <Select
               label="Titre"
-              value={selectedTitle}
+              //value={allFields.title}
               onChange={(e) => {
-                setSelectedTitle(e.target.value);
+                const titleObj = titles.find(
+                  (title) => title.title === e.target.value
+                );
+                setAllFields({ ...allFields, title: titleObj.id });
+                dispatch(getContacts({ ...allFields, title: titleObj.id }));
               }}
               MenuProps={{ PaperProps: { sx: { maxHeight: 300 } } }}
             >
@@ -79,12 +85,10 @@ export default function Filters() {
             <InputLabel style={{ color: "#FFFFFF" }}>Status</InputLabel>
             <Select
               label="Status"
-              value={selectedStatus}
+              value={allFields.status}
               onChange={(e) => {
-                setSelectedStatus(e.target.value);
-                dispatch(
-                  getContacts({ type: selectedType, status: e.target.value })
-                );
+                setAllFields({ ...allFields, status: e.target.value });
+                dispatch(getContacts({ ...allFields, status: e.target.value }));
               }}
             >
               {status.map((category) => (
@@ -98,13 +102,22 @@ export default function Filters() {
         <div className="col-md-3 col-lg-3 col-12 col-xl-3 mb-3 mb-xl-0">
           <FormControl className="w-full" variant="outlined">
             <TextField
-              // {...field}
+              value={allFields.tags}
               InputLabelProps={{ style: { color: "#FFFFFF" } }}
               style={{ color: "#FFFFFF" }}
               className=""
               label="Tags"
               variant="outlined"
               fullWidth
+              onChange={(e) => {
+                setAllFields({ ...allFields, tags: [e.target.value] });
+                dispatch(
+                  getContacts({
+                    ...allFields,
+                    tags: e.target.value ? [e.target.value] : ""
+                  })
+                );
+              }}
             />
           </FormControl>
         </div>

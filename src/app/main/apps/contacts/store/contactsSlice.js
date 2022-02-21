@@ -20,6 +20,19 @@ export const getAllTitles = () => async (dispatch) => {
     });
 };
 
+export const getAllTypes = () => async (dispatch) => {
+  await axios
+    .get(`http://178.79.138.121:8080/api/common/listCreate/user/Client_type`)
+    .then((data) => {
+      if (data.data.status === 200 && data.data.success) {
+        dispatch(setAllTypes(data.data.data));
+      }
+    })
+    .catch((errors) => {
+      console.error(errors);
+    });
+};
+
 export const getContacts = createAsyncThunk(
   "contactsApp/contacts/getContacts",
   async (routeParams, { dispatch, getState }) => {
@@ -28,8 +41,10 @@ export const getContacts = createAsyncThunk(
       "http://178.79.138.121:8080/api/common/filterData/user/User",
       {
         query: {
-          user_type: routeParams.type,
-          status: routeParams.status
+          client_type: routeParams.type,
+          title: routeParams.title,
+          status: routeParams.status,
+          tags__contains: routeParams.tags
         }
       }
     );
@@ -47,6 +62,7 @@ export const addContact = createAsyncThunk(
       .then((data) => {
         if (data.data.status === 201 && data.data.success) {
           dispatch(showMessage({ message: data.data.message }));
+          dispatch(getContacts());
           return dispatch(addContactSuccess());
         }
       })
@@ -176,6 +192,7 @@ const contactsSlice = createSlice({
       data: null
     },
     titles: [],
+    types: [],
     contacts: []
   }),
   reducers: {
@@ -184,6 +201,9 @@ const contactsSlice = createSlice({
     },
     setAllTitles: (state, action) => {
       state.titles = action.payload;
+    },
+    setAllTypes: (state, action) => {
+      state.types = action.payload;
     },
     addContactSuccess: (state, action) => {
       state.success = true;
@@ -260,6 +280,7 @@ export const {
   closeEditContactDialog,
   addContactError,
   setAllTitles,
+  setAllTypes,
   setContatcs
 } = contactsSlice.actions;
 

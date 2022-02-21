@@ -26,7 +26,6 @@ import DatePicker from "@mui/lab/DatePicker";
 import Countries from "../../../../constants/Countries";
 import Nationalities from "../../../../constants/Nationalities";
 import Departments from "../../../../constants/Departments";
-import Types from "../../../../constants/Types";
 import EnterpriseTitles from "../../../../constants/EnterpriseTitles";
 import Status from "../../../../constants/Status";
 import ClientStatus from "../../../../constants/ClientStatus";
@@ -73,6 +72,7 @@ function ContactDialog(props) {
   const [isValid, setIsValid] = useState(false);
   const dispatch = useDispatch();
   const titles = useSelector(({ contactsApp }) => contactsApp.contacts.titles);
+  const types = useSelector(({ contactsApp }) => contactsApp.contacts.types);
   const contactDialog = useSelector(
     ({ contactsApp }) => contactsApp.contacts.contactDialog
   );
@@ -356,10 +356,11 @@ function ContactDialog(props) {
                 setAllFields({ ...allFields, type: e.target.value });
                 setErrors({});
               }}
+              MenuProps={{ PaperProps: { sx: { maxHeight: 300 } } }}
             >
-              {Types.map((category) => (
-                <MenuItem value={category.value} key={category.id}>
-                  {category.label}
+              {types.map((type) => (
+                <MenuItem value={type.client_type} key={type.id}>
+                  {type.client_type}
                 </MenuItem>
               ))}
             </Select>
