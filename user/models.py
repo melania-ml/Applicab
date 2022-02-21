@@ -36,6 +36,16 @@ def profile_upload_image_to(instance, filename):
     )
 
 
+class Client_type(CommonBase):
+    client_type = models.CharField(max_length=100, blank=True, null=True)
+
+    def __str__(self):
+        return '{}'.format(self.client_type)
+
+    class Meta:
+        db_table = 'client_type'
+
+
 # Create your models here.
 class UserManager(BaseUserManager):
     """
@@ -102,9 +112,8 @@ class User(AbstractUser):
     # token is used to reset pw
     token = models.CharField(max_length=10, null=True, blank=True)
 
-    user_type = models.CharField(max_length=255,
-                                 choices=staticModelChoiceFields.userTypeChoiceFields(),
-                                 null=True, blank=True)
+    client_type = models.ForeignKey(Client_type, blank=True, null=True,
+                                    on_delete=models.DO_NOTHING, db_column='client_type')
     legal_status = models.CharField(max_length=255, choices=staticModelChoiceFields.legalStatusChoiceFields(),
                                     null=True, blank=True)
     title = models.ForeignKey(Client_title, blank=True, null=True,

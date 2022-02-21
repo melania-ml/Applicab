@@ -1,23 +1,3 @@
-def userTypeChoiceFields():
-    USER_TYPE_CHOICES = (
-        ('Client', 'Client'),
-        ('Adversaire', 'Adversaire'),
-        ('Assistante juridique', 'Assistante juridique'),
-        ('Avocat', 'Avocat'),
-        ('Expert judiciaire', 'Expert judiciaire'),
-        ('Expert technique', 'Expert technique'),
-        ('Huissier', 'Huissier'),
-        ('Journaliste', 'Journaliste'),
-        ('Mandataire judiciaire', 'Mandataire judiciaire'),
-        ('Notaire', 'Notaire'),
-        ('Prospect', 'Prospect'),
-        ('Protection juridique', 'Protection juridique'),
-        ('Relation professionnelle', 'Relation professionnelle'),
-        ('Autre', 'Autre')
-    )
-    return USER_TYPE_CHOICES
-
-
 def legalStatusChoiceFields():
     LEGAL_STATUS_CHOICES = (
         ('Enterprice', 'Enterprice'),

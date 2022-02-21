@@ -39,6 +39,15 @@ class registerClient(APIView):
         request.data['email_token'] = setPasswordToken.lower()
 
         clientTitle = Client_title.objects.filter(title=request.data['title']).first()
+        clientType = Client_type.objects.filter(client_type=request.data['client_type']).first()
+
+        if clientType:
+            request.data['client_type'] = clientType.id
+        else:
+            clientType = Client_type(client_type=request.data['client_type'])
+            clientType.save()
+            request.data['client_type'] = clientType.id
+
         if clientTitle:
             request.data['title'] = clientTitle.id
         else:
