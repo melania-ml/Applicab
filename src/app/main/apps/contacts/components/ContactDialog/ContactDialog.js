@@ -347,24 +347,53 @@ function ContactDialog(props) {
       </AppBar>
       <DialogContent classes={{ root: "p-24" }}>
         <div className="row">
-          <FormControl className="flex w-full" variant="outlined">
-            <InputLabel>Type*</InputLabel>
-            <Select
-              label="Type*"
-              value={allFields.type}
-              onChange={(e) => {
-                setAllFields({ ...allFields, type: e.target.value });
-                setErrors({});
-              }}
-              MenuProps={{ PaperProps: { sx: { maxHeight: 300 } } }}
-            >
-              {types.map((type) => (
-                <MenuItem value={type.client_type} key={type.id}>
-                  {type.client_type}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <Autocomplete
+            className="flex w-full mb-12"
+            value={allFields.type}
+            onChange={(event, newValue) => {
+              if (typeof newValue === "string") {
+                setAllFields({ ...allFields, type: newValue });
+              } else if (newValue && newValue.inputValue) {
+                setAllFields({ ...allFields, type: newValue.inputValue });
+              } else {
+                setAllFields({ ...allFields, type: newValue.client_type });
+              }
+            }}
+            filterOptions={(options, params) => {
+              const filtered = filter(options, params);
+              const { inputValue } = params;
+              const isExisting = options.some(
+                (option) => inputValue === option.client_type
+              );
+              if (inputValue.trim() !== "" && !isExisting) {
+                filtered.push({
+                  inputValue: inputValue.trim(),
+                  title: `Ajouter "${inputValue.trim()}"`
+                });
+              }
+              return filtered;
+            }}
+            selectOnFocus
+            clearOnBlur
+            error={errors?.type}
+            helperText={errors?.type}
+            handleHomeEndKeys
+            options={types}
+            getOptionLabel={(option) => {
+              if (typeof option === "string") {
+                return option;
+              }
+              if (option.inputValue) {
+                return option.inputValue;
+              }
+              return option.client_type;
+            }}
+            renderOption={(props, option) => (
+              <li {...props}>{option.client_type}</li>
+            )}
+            freeSolo
+            renderInput={(params) => <TextField {...params} label="Type*" />}
+          />
           <div className="flex items-center mb-16">
             <b className="min-w-48 pt-20">Forme juridique*:</b>
             <FormControl>
