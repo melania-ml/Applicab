@@ -28,7 +28,7 @@ function DossiersHeader(props) {
   const mainTheme = useSelector(selectMainTheme);
 
   return (
-    <div className="flex-1 items-center justify-between p-4">
+    <div className="flex-1 items-center justify-between p-4 for-full-scren-flex">
       <Filters />
       <div className="flex for-res-flex-direction full-screen-secondwidth">
         <div className="flex flex-1 items-center full-screen-justify-end">
