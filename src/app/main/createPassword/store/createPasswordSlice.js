@@ -7,7 +7,7 @@ export const callCreatePassword =
   async (dispatch) => {
     debugger;
     await axios
-      .post(`http://178.79.138.121:8080/auth/user/setPassword/${token}`, {
+      .post(`auth/user/setPassword/${token}`, {
         password
       })
       .then((data) => {

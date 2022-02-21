@@ -25,7 +25,7 @@ class JwtService extends FuseUtils.EventEmitter {
   signInWithEmailAndPassword = (email, password) => {
     return new Promise((resolve, reject) => {
       axios
-        .post("http://178.79.138.121:8080/auth/user/loginClient", {
+        .post("auth/user/loginClient", {
           email,
           password
         })
@@ -43,7 +43,7 @@ class JwtService extends FuseUtils.EventEmitter {
   getForgotPasswordMail = ({ email }) => {
     return new Promise((resolve, reject) => {
       axios
-        .post("http://178.79.138.121:8080/auth/user/forgotPassword", {
+        .post("auth/user/forgotPassword", {
           email
         })
         .then((response) => {
@@ -60,7 +60,7 @@ class JwtService extends FuseUtils.EventEmitter {
     const { forgotPasswordToken, password } = params;
     return new Promise((resolve, reject) => {
       axios
-        .put("http://178.79.138.121:8080/auth/user/changePassword", {
+        .put("auth/user/changePassword", {
           forgotPasswordToken,
           password
         })
@@ -83,6 +83,7 @@ class JwtService extends FuseUtils.EventEmitter {
   setSession = (access_token) => {
     if (access_token) {
       localStorage.setItem("jwt_access_token", access_token);
+      console.log("axios.defaults", axios.defaults);
       axios.defaults.headers.common.Authorization = `Bearer ${access_token}`;
     } else {
       localStorage.removeItem("jwt_access_token");

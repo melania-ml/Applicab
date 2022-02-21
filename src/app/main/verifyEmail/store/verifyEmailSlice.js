@@ -4,7 +4,7 @@ import { showMessage } from "app/store/fuse/messageSlice";
 
 export const callVerifyEmail = (otp) => async (dispatch) => {
   await axios
-    .post("http://178.79.138.121:8080/auth/user/validateEmailOtp", {
+    .post("auth/user/validateEmailOtp", {
       emailOtp: otp
     })
     .then((data) => {
@@ -23,7 +23,7 @@ export const callResendOTP =
   ({ userId }) =>
   async (dispatch) => {
     await axios
-      .put("http://178.79.138.121:8080/auth/user/resendEmailOtp", { userId })
+      .put("auth/user/resendEmailOtp", { userId })
       .then((data) => {
         if (data.data.data.otp_shared && data.data.success) {
           dispatch(showMessage({ message: data.data.message }));

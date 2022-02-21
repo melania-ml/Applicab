@@ -9,7 +9,7 @@ import { showMessage } from "app/store/fuse/messageSlice";
 
 export const getAllTitles = () => async (dispatch) => {
   await axios
-    .get(`http://178.79.138.121:8080/api/common/listCreate/user/Client_title`)
+    .get(`api/common/listCreate/user/Client_title`)
     .then((data) => {
       if (data.data.status === 200 && data.data.success) {
         dispatch(setAllTitles(data.data.data));
@@ -22,7 +22,7 @@ export const getAllTitles = () => async (dispatch) => {
 
 export const getAllTypes = () => async (dispatch) => {
   await axios
-    .get(`http://178.79.138.121:8080/api/common/listCreate/user/Client_type`)
+    .get(`api/common/listCreate/user/Client_type`)
     .then((data) => {
       if (data.data.status === 200 && data.data.success) {
         dispatch(setAllTypes(data.data.data));
@@ -37,17 +37,14 @@ export const getContacts = createAsyncThunk(
   "contactsApp/contacts/getContacts",
   async (routeParams, { dispatch, getState }) => {
     routeParams = routeParams || getState().contactsApp.contacts.routeParams;
-    const response = await axios.post(
-      "http://178.79.138.121:8080/api/common/filterData/user/User",
-      {
-        query: {
-          client_type: routeParams.type,
-          title: routeParams.title,
-          status: routeParams.status,
-          tags__contains: routeParams.tags
-        }
+    const response = await axios.post("api/common/filterData/user/User", {
+      query: {
+        client_type: routeParams.type,
+        title: routeParams.title,
+        status: routeParams.status,
+        tags__contains: routeParams.tags
       }
-    );
+    });
     const data = await response.data;
     dispatch(setContatcs(data.data));
     return { data: data.data, routeParams };
@@ -58,7 +55,7 @@ export const addContact = createAsyncThunk(
   "contactsApp/contacts/addContact",
   async (contact, { dispatch, getState }) => {
     const response = await axios
-      .post("http://178.79.138.121:8080/auth/user/registerClient", contact)
+      .post("auth/user/registerClient", contact)
       .then((data) => {
         if (data.data.status === 201 && data.data.success) {
           dispatch(showMessage({ message: data.data.message }));
