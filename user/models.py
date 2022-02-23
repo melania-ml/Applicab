@@ -87,9 +87,6 @@ class User(AbstractUser):
     first_name = models.CharField(max_length=40,
                                   validators=[RegexValidator(r'^[a-zA-Z ]*$', 'Only characters are allowed.')],
                                   help_text='Enter name', blank=True, null=True)
-    name = models.CharField(max_length=40,
-                            validators=[RegexValidator(r'^[a-zA-Z ]*$', 'Only characters are allowed.')],
-                            help_text='Enter name', blank=True, null=True)
     last_name = models.CharField(max_length=40,
                                  validators=[RegexValidator(r'^[a-zA-Z ]*$', 'Only characters are allowed.')],
                                  help_text='Enter name', blank=True, null=True)
@@ -129,8 +126,9 @@ class User(AbstractUser):
     RCS_city = models.CharField(max_length=255, null=True, blank=True)
     native_city = models.CharField(max_length=255, null=True, blank=True)
     number = models.CharField(max_length=255, null=True, blank=True)
-    fixe = models.IntegerField(null=True, blank=True)
+    fixe = models.CharField(max_length=255,null=True, blank=True)
     comments = models.CharField(max_length=5000, null=True, blank=True)
+    civil_status = models.CharField(max_length=5000, null=True, blank=True)
     tags = ArrayField(models.CharField(max_length=200), null=True,
                       blank=True)  # models.CharField(max_length=255, null=True, blank=True)
     profession = models.CharField(max_length=255, null=True, blank=True)

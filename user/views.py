@@ -1,5 +1,6 @@
 import secrets
 import string
+import pandas
 
 # Create your views here.
 from datetime import datetime, timedelta
@@ -130,7 +131,8 @@ class validateEmailOtp(APIView):
             stPasswordText['button_url'] = stPasswordText['button_url'] + str(userData.id)
             print(stPasswordText)
             send_email([userData.email],
-                       'Saisissez ' + str(emailOtp) + ' comme code de confirmation Applicab', 'email.html', stPasswordText)
+                       'Saisissez ' + str(emailOtp) + ' comme code de confirmation Applicab', 'email.html',
+                       stPasswordText)
             res = ResponseInfo({'otp_shared': True},
                                OTP_SHARED_SUCCESSFULLY, True, status.HTTP_200_OK)
             return Response(res.success_payload(), status=status.HTTP_200_OK)
@@ -233,3 +235,81 @@ class userUpdateViewSet(generics.RetrieveUpdateDestroyAPIView):
         return Response(res.success_payload())
 
 
+class uploadUserCsvViewSet(APIView):
+    def post(self, request):
+        csvData = pandas.read_csv(request.data['csv'])
+        successCounter = 0
+        creatList = []
+        _dict = {"email": "",
+                 "first_name": "",
+                 "name": "",
+                 "phone_number": None,
+                 "number": None,
+                 "legal_status": "",
+                 "title": None,
+                 "company_name": "",
+                 "country": "",
+                 "address": "",
+                 "city": "",
+                 "native_city": "",
+                 "nationality": "",
+                 "RCS_city": "",
+                 "fixe": None,
+                 "comments": "",
+                 "profession": "",
+                 "department": "",
+                 "date_of_birth": None,
+                 "client_type": None,
+                 "capital_social": None}
+        for _, row in csvData.iterrows():
+            try:
+                if type(row["Email"]) is str:
+                    _dict['email'] = row["Email"]
+                    if type(row["Legal Status"]) is str: _dict['legal_status'] = row["Legal Status"]
+                    if type(row["Company Name"]) is str: _dict['company_name'] = row["Company Name"]
+                    if type(row["Country"]) is str: _dict['country'] = row["Country"]
+                    if type(row["Address"]) is str: _dict['address'] = row["Address"]
+                    if type(row["City"]) is str: _dict['city'] = row["City"]
+                    if type(row["RCS City"]) is str: _dict['RCS_city'] = row["RCS City"]
+                    if type(row["First Name"]) is str: _dict['first_name'] = row["First Name"]
+                    if type(row["DOB"]) is str: _dict['date_of_birth'] = datetime.strptime(row["DOB"], '%m/%d/%Y')
+                    if type(row["Nationality"]) is str: _dict['nationality'] = row["Nationality"]
+                    if type(row["Native City"]) is str: _dict['native_city'] = row["Native City"]
+                    if type(row["Department"]) is str: _dict['department'] = row["Department"]
+                    if type(row["Profession"]) is str: _dict['profession'] = row["Profession"]
+                    if type(row["Comments"]) is str: _dict['comments'] = row["Comments"]
+                    if type(row["Fixe"]) is str: _dict['fixe'] = int(row["Fixe"])
+                    try:
+                        _dict['capital_social'] = int(row["Capital Social"])
+                    except:
+                        _dict['capital_social'] = None
+                    try:
+                        _dict['phone_number'] = int(row["Number"])
+                    except:
+                        _dict['phone_number'] = None
+                    try:
+                        _dict['number'] = int(row["Mobile"])
+                    except:
+                        _dict['number'] = None
+                    if type(row["Title"]) is str:
+                        title = Client_title.objects.filter(title=row["Title"]).first()
+                        if title:
+                            _dict['title'] = title
+                        else:
+                            title = Client_title.objects.create(title=row["Title"],legal_status=row["Legal Status"])
+                            _dict['title'] = title
+
+                    if type(row["Type"]) is str:
+                        clientType = Client_type.objects.filter(client_type=row['Type']).first()
+                        if clientType:
+                            _dict['client_type'] = clientType
+                        else:
+                            clientType = Client_type.objects.create(client_type=row['Type'])
+                            _dict['client_type'] = clientType
+                    creatList.append(_dict)
+                    User.objects.create(**_dict)
+                    successCounter += 1
+            except Exception as e:
+                pass
+        res = ResponseInfo({"success": True, "data": str(successCounter) + " record imported out of " + str(len(csvData))}, USER_REGISTERED_SUCCESSFULLY, True, 200)
+        return Response(res.success_payload())

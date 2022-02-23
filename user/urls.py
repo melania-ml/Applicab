@@ -12,4 +12,5 @@ urlpatterns = [
     path('forgotPassword', forgotPassword.as_view(), name="forgotPassword"),
     path('changePassword', forgotPassword.as_view(), name="changePassword"),
     path('updateUser/<int:pk>', userUpdateViewSet.as_view(), name="changePassword"),
+    path('uploadUserCsv', uploadUserCsvViewSet.as_view(), name="uploadUserCsv"),
 ]
