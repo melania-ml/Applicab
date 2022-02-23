@@ -25,10 +25,10 @@ import DocumentsTab from './tabs/DocumentsTab';
 
 const Root = styled(FusePageCarded)(({ theme }) => ({
   '& .FusePageCarded-header': {
-    minHeight: 72,
-    height: 72,
+    minHeight: 145,
+    height: 145,
     alignItems: 'center',
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
       minHeight: 100,
       height: 100,
     },
@@ -70,10 +70,10 @@ function Dossier(props) {
             scrollButtons="auto"
             classes={{ root: 'w-full h-94 caseManagementTabs' }}
           >
-            <Tab className="h-64 w-1/4" label="Informations" />
-            <Tab className="h-64 w-1/4" label="Étapes" />
-            <Tab className="h-64 w-1/4" label="Messages" />
-            <Tab className="h-64 w-1/4" label="Documents" />
+            <Tab className="h-64 w-1/4 max-w-full" label="Informations" />
+            <Tab className="h-64 w-1/4 max-w-full" label="Étapes" />
+            <Tab className="h-64 w-1/4 max-w-full" label="Messages" />
+            <Tab className="h-64 w-1/4 max-w-full" label="Documents" />
           </Tabs>
         }
         content={

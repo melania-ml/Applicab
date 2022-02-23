@@ -240,9 +240,9 @@ function EtapeTab() {
     >
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={5}>
-          <Grid item xs={2}>
+          <Grid item xs={12} md={3}>
             <motion.div
-              className="mb-5 mb-md-0 ml-lg-5 ml-0 box-shadow-dash "
+              className="mb-5 mb-md-0 box-shadow-dash "
               initial={{ y: 50, opacity: 0.8 }}
               animate={{ y: 0, opacity: 1, transition: { delay: 0.3 } }}
               style={{ background: "#F8F8F8", padding: 15, borderRadius: 10 }}
@@ -347,7 +347,7 @@ function EtapeTab() {
               </TableRow>
             </motion.div>
           </Grid>
-          <Grid item xs={10} >
+          <Grid item xs={12} md={9}>
             <EtapesTable
               columns={columns}
               data={filteredData}

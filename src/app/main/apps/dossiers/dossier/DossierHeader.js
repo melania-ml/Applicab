@@ -31,7 +31,7 @@ function DossierHeader(props) {
   // }
 
   return (
-    <div className="flex flex-1 w-full items-center justify-between">
+    <div className="flex flex-1 w-full items-center justify-between res-flex-direction">
       <div className="flex flex-col items-start max-w-full min-w-0">
         <motion.div
           initial={{ x: 20, opacity: 0 }}
@@ -47,13 +47,13 @@ function DossierHeader(props) {
             <Icon className="text-20">
               {theme.direction === 'ltr' ? 'arrow_back' : 'arrow_forward'}
             </Icon>
-            <span className="hidden sm:flex mx-4 font-medium">Tous les dossier</span>
+            <span className="sm:flex mx-4 font-medium">Tous les dossier</span>
           </Typography>
         </motion.div>
 
         <div className="flex items-center max-w-full">
           <motion.div
-            className="hidden sm:flex"
+            className="sm:flex"
             initial={{ scale: 0 }}
             animate={{ scale: 1, transition: { delay: 0.3 } }}
           >
@@ -72,7 +72,7 @@ function DossierHeader(props) {
         </div>
       </div>
       <motion.div
-        className="flex"
+        className="flex mt-3 mt-md-0"
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
       >

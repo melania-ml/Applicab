@@ -97,3 +97,12 @@ table.simple.borderless tbody tr td{
 table.simple.borderless thead tr th{
     border: none;
 }
+
+@media screen and (max-width:767px) {
+.caseManagementTabs .MuiTabs-flexContainer.muiltr-heg063-MuiTabs-flexContainer {
+	justify-content: left;
+}
+.res-flex-direction{
+    flex-direction: column;
+}
+}
