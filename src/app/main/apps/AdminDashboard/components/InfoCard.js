@@ -22,7 +22,7 @@ export default function InfoCard() {
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={5} columns={12}>
           <Grid item xs={12} md={6}>
-            <Item className="h-full">
+            <Item className="h-full mt-5 mt-md-0">
               <h1 className="py-1 font-semibold text-sm text-black">Mon dossier</h1>
               <h4 className="pb-20 font-medium text-sm text-black">
                 SAA-BAH-20211217-0065 / Altata Juridiction : Tribunal Judiciaire
@@ -31,7 +31,7 @@ export default function InfoCard() {
             </Item>
           </Grid>
           <Grid item xs={12} md={6}>
-            <Item className="flex items-center res-flex-direction">
+            <Item className="flex items-center res-flex-direction mt-5 mt-md-0">
               <Avatar
                 className="avatar w-72 h-72 p-8 box-content mon-avocate"
                 alt="user photo"
