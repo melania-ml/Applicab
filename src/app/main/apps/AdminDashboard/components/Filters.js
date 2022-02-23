@@ -13,7 +13,7 @@ export default function Filters() {
         >
           <Typography
             color="inherit"
-            className="text-32 sm:text-56 font-bold tracking-tight"
+            className="text-32 font-bold tracking-tight"
           >
             Mon espace client
           </Typography>

@@ -17,10 +17,10 @@ import Grid from "@mui/material/Grid";
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
   "& .FusePageSimple-header": {
-    minHeight: 72,
-    height: 72,
+    minHeight: 88,
+    height: 96,
     [theme.breakpoints.up("lg")]: {
-      minHeight: 100,
+      minHeight: 92,
       height: 100,
     },
     "@media (max-width: 767px)": {
