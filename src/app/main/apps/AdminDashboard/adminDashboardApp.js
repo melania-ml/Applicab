@@ -54,9 +54,17 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
     boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
   },
   "& .for-width-todo": {
-    width: "50%",
+    width: "100%",
     "@media (max-width: 992px)": {
       width: "100%",
+    },
+  },
+  "& .mon-avocate img":{
+    borderRadius:"60px"
+  },
+  "& .res-flex-direction": {
+    "@media (max-width: 992px)": {
+      flexDirection:"column",
     },
   },
 
@@ -69,20 +77,20 @@ function MainDashboard() {
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
-        <Grid container>
-          <Grid item xs={3}>
+        <Grid container spacing={5}>
+          <Grid item xs={12} md={2}>
             <SidebarContent />
           </Grid>
-          <Grid item xs={9}>
+          <Grid item xs={12} md={10}>
             <InfoCard />
-            <Grid container spacing={1}>
-              <Grid item xs={4}>
+            <Grid container spacing={5} className="mt-2">
+              <Grid item xs={12} md={4}>
                 <MyDocuments />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={12} md={4}>
                 <Calendar />
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={12} md={4}>
                 <TodoList />
               </Grid>
             </Grid>

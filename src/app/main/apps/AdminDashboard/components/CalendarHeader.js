@@ -58,7 +58,7 @@ function CalendarHeader(props) {
             <div className="flex items-center sm:mb-0">
               <h1 style={{ padding: 8 }}><b>Calendar</b> </h1>
             </div>
-            <div className="flex items-center">
+            {/* <div className="flex items-center">
               <Tooltip title="Today">
                 <div>
                   <motion.div
@@ -95,7 +95,7 @@ function CalendarHeader(props) {
                   </div>
                 </Tooltip>
               ))}
-            </div>
+            </div> */}
           </div>
 
           <motion.div

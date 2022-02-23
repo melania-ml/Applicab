@@ -20,27 +20,30 @@ export default function InfoCard() {
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={2} columns={16}>
-          <Grid item xs={8}>
-            <Item>
-              <h1 className="py-16 font-semibold">Mon dossier</h1>
-              <h4 className="pb-20 font-medium">
+        <Grid container spacing={5} columns={12}>
+          <Grid item xs={12} md={6}>
+            <Item className="h-full">
+              <h1 className="py-1 font-semibold text-sm text-black">Mon dossier</h1>
+              <h4 className="pb-20 font-medium text-sm text-black">
                 SAA-BAH-20211217-0065 / Altata Juridiction : Tribunal Judiciaire
                 AGEN Gestionnaire : Melania Muñoz
               </h4>{" "}
             </Item>
           </Grid>
-          <Grid item xs={8}>
-            <Item>
+          <Grid item xs={12} md={6}>
+            <Item className="flex items-center res-flex-direction">
               <Avatar
-                className="avatar w-72 h-72 p-8 box-content"
+                className="avatar w-72 h-72 p-8 box-content mon-avocate"
                 alt="user photo"
                 src={user.data.profile}
               />
-              <h1 className="py-16 font-semibold">Mon Avocat</h1>
-              <h4 className="pb-12 font-medium">
+              <div>
+              <h1 className="py-1 font-semibold text-sm text-black">Mon Avocat</h1>
+              <h4 className="pb-12 font-medium text-sm text-black">
                 Altata Conseil Company Avocat - Melania Muñoz www.altata.tech
-              </h4>{" "}
+              </h4>
+              </div>
+              {" "}
               <Button
                 // onClick={() => {
                 //   dispatch(dispatch(openNewContactDialog()));

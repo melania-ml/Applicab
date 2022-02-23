@@ -63,15 +63,15 @@ export default function MyDocuments() {
       </Card> */}
       <div rowSpacing={1}>
         <motion.div
-          className="mb-5 mb-md-0 ml-lg-5 ml-0 box-shadow-dash"
+          className="mb-5 mb-md-0 box-shadow-dash p-5"
           initial={{ y: 50, opacity: 0.8 }}
           animate={{ y: 0, opacity: 1, transition: { delay: 0.3 } }}
           style={{ background: "#FFFFFF", padding: 5, borderRadius: 10 }}
         >
-          <h1 style={{ padding: 8}}>
+          <h1>
             <b>Commentire</b>
           </h1>
-          <textarea>
+          <textarea className="w-full" style={{ height:140 }}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Nibh
             mauris cursus mattis molestie. Ligula ullamcorper malesuada proin
@@ -80,7 +80,7 @@ export default function MyDocuments() {
         </motion.div>
 
         <motion.div
-          className="mb-5 mb-md-0 ml-lg-5 ml-0 box-shadow-dash dashBoardCard"
+          className="mt-5 mb-md-0 box-shadow-dash dashBoardCard"
           initial={{ y: 50, opacity: 0.8 }}
           animate={{ y: 0, opacity: 1, transition: { delay: 0.3 } }}
           style={{ background: "#FFFFFF", padding: 15, borderRadius: 10 }}
