@@ -20,6 +20,21 @@ export const getAllTitles = () => async (dispatch) => {
     });
 };
 
+export const getFormTitles = (legal_status) => async (dispatch) => {
+  await axios
+    .post(`api/common/filterData/user/Client_title`, {
+      query: { legal_status }
+    })
+    .then((data) => {
+      if (data.data.status === 200 && data.data.success) {
+        dispatch(setFormTitles(data.data.data));
+      }
+    })
+    .catch((errors) => {
+      console.error(errors);
+    });
+};
+
 export const getAllTypes = () => async (dispatch) => {
   await axios
     .get(`api/common/listCreate/user/Client_type`)
@@ -189,6 +204,7 @@ const contactsSlice = createSlice({
       data: null
     },
     titles: [],
+    formTitles: [],
     types: [],
     contacts: []
   }),
@@ -198,6 +214,9 @@ const contactsSlice = createSlice({
     },
     setAllTitles: (state, action) => {
       state.titles = action.payload;
+    },
+    setFormTitles: (state, action) => {
+      state.formTitles = action.payload;
     },
     setAllTypes: (state, action) => {
       state.types = action.payload;
@@ -277,6 +296,7 @@ export const {
   closeEditContactDialog,
   addContactError,
   setAllTitles,
+  setFormTitles,
   setAllTypes,
   setContatcs
 } = contactsSlice.actions;

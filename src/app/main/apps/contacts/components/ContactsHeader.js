@@ -45,7 +45,8 @@ function ContactsHeader(props) {
         "Nationality",
         "Native City",
         "Department",
-        "Profession"
+        "Profession",
+        "Civil Status"
       ]
     ];
     for (let i = 0; i < contacts.length; i++) {
@@ -71,6 +72,7 @@ function ContactsHeader(props) {
       _tempRow.push(contacts[i].native_city);
       _tempRow.push(contacts[i].department);
       _tempRow.push(contacts[i].profession);
+      _tempRow.push(contacts[i].civil_status);
       rows.push(_tempRow);
     }
     let csvContent = "data:text/csv;charset=utf-8,";
@@ -85,6 +87,10 @@ function ContactsHeader(props) {
     link.setAttribute("download", `contacts.csv`);
     document.body.appendChild(link); // Required for FF
     link.click();
+  };
+
+  const onFileUpload = (e) => {
+    console.log("data", e.target.files[0]);
   };
 
   return (
@@ -131,14 +137,16 @@ function ContactsHeader(props) {
             open={Boolean(moreMenuEl)}
             onClose={() => setMoreMenuEl(null)}
           >
-            <MenuItem onClick={() => setMoreMenuEl(null)}>
-              <img
-                className="mr-5"
-                src="assets/icons/custom-svgs/import.svg"
-                alt="import"
-              />
-              Importer contacts
-            </MenuItem>
+            <label htmlFor="raised-button-file">
+              <MenuItem onClick={() => setMoreMenuEl(null)}>
+                <img
+                  className="mr-3"
+                  src="assets/icons/custom-svgs/import.svg"
+                  alt="import"
+                />
+                Importer contacts
+              </MenuItem>
+            </label>
             <MenuItem
               onClick={() => {
                 setMoreMenuEl(null);
@@ -146,13 +154,20 @@ function ContactsHeader(props) {
               }}
             >
               <img
-                className="mr-5"
+                className="mr-3"
                 src="assets/icons/custom-svgs/export.svg"
                 alt="export"
               />
               Exporter contacts
             </MenuItem>
           </Menu>
+          <input
+            accept=".xlsx, .xls, .csv"
+            style={{ display: "none" }}
+            id="raised-button-file"
+            type="file"
+            onChange={onFileUpload}
+          />
         </div>
         <div className="flex items-center">
           <Button

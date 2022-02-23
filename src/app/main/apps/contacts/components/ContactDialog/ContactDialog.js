@@ -35,43 +35,46 @@ import {
   updateContact,
   addContact,
   closeNewContactDialog,
-  closeEditContactDialog
+  closeEditContactDialog,
+  getFormTitles
 } from "../../store/contactsSlice";
 
 const tags = [];
 const filter = createFilterOptions();
 function ContactDialog(props) {
   const [allFields, setAllFields] = useState({
-    type: "Client",
-    legalStatus: "Enterprise",
+    client_type: "Client",
+    legal_status: "Enterprise",
     title: "",
-    companyName: "",
+    company_name: "",
     country: "",
     address: "",
     city: "",
-    postalCode: "",
-    capitalSocial: "",
-    RCSCity: "",
+    postal_code: "",
+    capital_social: "",
+    RCS_city: "",
     number: "",
-    name: "",
-    firstName: "",
+    last_name: "",
+    first_name: "",
     email: "",
-    mobile1: "",
-    mobile2: "",
+    phone_number: "",
+    fixe: "",
     comments: "",
     tags: [],
     status: "Actif",
-    dateValue: null,
+    date_of_birth: null,
     department: "",
     nationality: "",
-    nativeCity: "",
+    native_city: "",
     profession: "",
-    clientStatus: ""
+    civil_status: ""
   });
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
   const dispatch = useDispatch();
-  const titles = useSelector(({ contactsApp }) => contactsApp.contacts.titles);
+  const formTitles = useSelector(
+    ({ contactsApp }) => contactsApp.contacts.formTitles
+  );
   const types = useSelector(({ contactsApp }) => contactsApp.contacts.types);
   const contactDialog = useSelector(
     ({ contactsApp }) => contactsApp.contacts.contactDialog
@@ -82,31 +85,31 @@ function ContactDialog(props) {
       const data = contactDialog.data;
       setAllFields({
         ...allFields,
-        type: data.user_type,
-        legalStatus: data.legal_status,
+        client_type: data.client_type,
+        legal_status: data.legal_status,
         title: data.title,
-        companyName: data.company_name,
+        company_name: data.company_name,
         country: data.country,
         address: data.address,
         city: data.city,
-        postalCode: data.postal_code,
-        capitalSocial: data.capital_social,
-        RCSCity: data.RCS_city,
+        postal_code: data.postal_code,
+        capital_social: data.capital_social,
+        RCS_city: data.RCS_city,
         number: data.number,
-        name: data.name,
-        firstName: data.first_name,
+        last_name: data.last_name,
+        first_name: data.first_name,
         email: data.email,
-        mobile1: data.phone_number,
-        mobile2: data.fixe,
+        phone_number: data.phone_number,
+        fixe: data.fixe,
         comments: data.comments,
         tags: data.tags,
         status: data.status,
-        dateValue: data.date_of_birth,
+        date_of_birth: data.date_of_birth,
         department: data.department,
         nationality: data.nationality,
-        nativeCity: data.native_city,
+        native_city: data.native_city,
         profession: data.profession,
-        clientStatus: data.client_type
+        civil_status: data.civil_status
       });
     }
   }, [contactDialog.data, contactDialog.type]);
@@ -118,14 +121,21 @@ function ContactDialog(props) {
   }, [contactDialog.props.open, initDialog]);
 
   useEffect(() => {
+    dispatch(getFormTitles(allFields.legal_status));
+  }, [allFields.legal_status]);
+
+  useEffect(() => {
     const isEmpty = Object.values(errors).every((x) => x === null || x === "");
-    if (allFields.type === "Client" && allFields.legalStatus === "Enterprise") {
+    if (
+      allFields.client_type === "Client" &&
+      allFields.legal_status === "Enterprise"
+    ) {
       if (
-        allFields.type &&
+        allFields.client_type &&
         allFields.title &&
-        allFields.companyName &&
-        allFields.name &&
-        allFields.firstName &&
+        allFields.company_name &&
+        allFields.last_name &&
+        allFields.first_name &&
         allFields.email &&
         validateEmail(allFields.email) &&
         isEmpty
@@ -135,14 +145,14 @@ function ContactDialog(props) {
         setIsValid(false);
       }
     } else if (
-      allFields.type === "Client" &&
-      allFields.legalStatus === "Particulier"
+      allFields.client_type === "Client" &&
+      allFields.legal_status === "Particulier"
     ) {
       if (
-        allFields.type &&
+        allFields.client_type &&
         allFields.title &&
-        allFields.name &&
-        allFields.firstName &&
+        allFields.last_name &&
+        allFields.first_name &&
         allFields.email &&
         validateEmail(allFields.email) &&
         isEmpty
@@ -152,19 +162,24 @@ function ContactDialog(props) {
         setIsValid(false);
       }
     } else if (
-      allFields.type !== "Client" &&
-      allFields.legalStatus === "Particulier"
+      allFields.client_type !== "Client" &&
+      allFields.legal_status === "Particulier"
     ) {
-      if (allFields.type && allFields.title && allFields.name && isEmpty) {
+      if (
+        allFields.client_type &&
+        allFields.title &&
+        allFields.last_name &&
+        isEmpty
+      ) {
         setIsValid(true);
       } else {
         setIsValid(false);
       }
     } else {
       if (
-        allFields.type &&
+        allFields.client_type &&
         allFields.title &&
-        allFields.companyName &&
+        allFields.company_name &&
         isEmpty
       ) {
         setIsValid(true);
@@ -179,31 +194,31 @@ function ContactDialog(props) {
       dispatch(closeEditContactDialog());
       setAllFields({
         ...allFields,
-        type: "Client",
-        legalStatus: "Enterprise",
+        client_type: "Client",
+        legal_status: "Enterprise",
         title: "",
-        companyName: "",
+        company_name: "",
         country: "",
         address: "",
         city: "",
-        postalCode: "",
-        capitalSocial: "",
-        RCSCity: "",
+        postal_code: "",
+        capital_social: "",
+        RCS_city: "",
         number: "",
-        name: "",
-        firstName: "",
+        last_name: "",
+        first_name: "",
         email: "",
-        mobile1: "",
-        mobile2: "",
+        phone_number: "",
+        fixe: "",
         comments: "",
         tags: [],
         status: "Actif",
-        dateValue: null,
+        date_of_birth: null,
         department: "",
         nationality: "",
-        nativeCity: "",
+        native_city: "",
         profession: "",
-        clientStatus: ""
+        civil_status: ""
       });
     } else {
       dispatch(closeNewContactDialog());
@@ -271,31 +286,31 @@ function ContactDialog(props) {
         setErrors({ ...errors, title: "Must enter a Proper Title" });
       }
     }
-    if (name === "companyName") {
+    if (name === "company_name") {
       if (value) {
-        setErrors({ ...errors, companyName: "" });
+        setErrors({ ...errors, company_name: "" });
       } else {
-        setErrors({ ...errors, companyName: "Must enter a Company name" });
+        setErrors({ ...errors, company_name: "Must enter a Company name" });
       }
     }
     if (
-      allFields.type !== "Client" &&
-      allFields.legalStatus === "Particulier"
+      allFields.client_type !== "Client" &&
+      allFields.legal_status === "Particulier"
     ) {
-      if (name === "name") {
+      if (name === "last_name") {
         if (value) {
-          setErrors({ ...errors, name: "" });
+          setErrors({ ...errors, last_name: "" });
         } else {
-          setErrors({ ...errors, name: "Must enter a Name" });
+          setErrors({ ...errors, last_name: "Must enter a Name" });
         }
       }
     }
-    if (allFields.type === "Client") {
-      if (name === "name") {
+    if (allFields.client_type === "Client") {
+      if (name === "last_name") {
         if (value) {
-          setErrors({ ...errors, name: "" });
+          setErrors({ ...errors, last_name: "" });
         } else {
-          setErrors({ ...errors, name: "Must enter a Name" });
+          setErrors({ ...errors, last_name: "Must enter a Name" });
         }
       }
       if (name === "firstName") {
@@ -349,14 +364,20 @@ function ContactDialog(props) {
         <div className="row">
           <Autocomplete
             className="flex w-full mb-12"
-            value={allFields.type}
+            value={allFields.client_type}
             onChange={(event, newValue) => {
               if (typeof newValue === "string") {
-                setAllFields({ ...allFields, type: newValue });
+                setAllFields({ ...allFields, client_type: newValue });
               } else if (newValue && newValue.inputValue) {
-                setAllFields({ ...allFields, type: newValue.inputValue });
+                setAllFields({
+                  ...allFields,
+                  client_type: newValue.inputValue
+                });
               } else {
-                setAllFields({ ...allFields, type: newValue.client_type });
+                setAllFields({
+                  ...allFields,
+                  client_type: newValue.client_type
+                });
               }
             }}
             filterOptions={(options, params) => {
@@ -375,8 +396,8 @@ function ContactDialog(props) {
             }}
             selectOnFocus
             clearOnBlur
-            error={errors?.type}
-            helperText={errors?.type}
+            error={errors?.client_type}
+            helperText={errors?.client_type}
             handleHomeEndKeys
             options={types}
             getOptionLabel={(option) => {
@@ -401,36 +422,36 @@ function ContactDialog(props) {
                 style={{ marginLeft: 20 }}
                 className="pt-20"
                 row
-                value={allFields.legalStatus}
+                value={allFields.legal_status}
                 aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue={allFields.legalStatus}
+                defaultValue={allFields.legal_status}
                 name="radio-buttons-group"
                 onChange={(e) => {
                   setAllFields({
                     ...allFields,
-                    legalStatus: e.target.value,
+                    legal_status: e.target.value,
                     title: "",
-                    companyName: "",
+                    company_name: "",
                     country: "",
                     address: "",
                     city: "",
-                    postalCode: "",
-                    capitalSocial: "",
-                    RCSCity: "",
+                    postal_code: "",
+                    capital_social: "",
+                    RCS_city: "",
                     number: "",
-                    name: "",
-                    firstName: "",
+                    last_name: "",
+                    first_name: "",
                     email: "",
-                    mobile1: "",
-                    mobile2: "",
+                    phone_number: "",
+                    fixe: "",
                     comments: "",
                     tags: [],
                     status: "Actif",
                     nationality: "",
-                    nativeCity: "",
+                    native_city: "",
                     department: "",
                     profession: "",
-                    clientStatus: ""
+                    civil_status: ""
                   });
                 }}
               >
@@ -447,7 +468,7 @@ function ContactDialog(props) {
               </RadioGroup>
             </FormControl>
           </div>
-          {allFields.legalStatus === "Enterprise" ? (
+          {allFields.legal_status === "Enterprise" ? (
             <>
               <Autocomplete
                 className="flex w-full mb-12"
@@ -480,7 +501,7 @@ function ContactDialog(props) {
                 error={errors?.title}
                 helperText={errors?.title}
                 handleHomeEndKeys
-                options={titles}
+                options={formTitles}
                 getOptionLabel={(option) => {
                   if (typeof option === "string") {
                     return option;
@@ -519,15 +540,15 @@ function ContactDialog(props) {
                 label="Nom de la compagnie*"
                 variant="outlined"
                 fullWidth
-                value={allFields.companyName}
-                error={errors?.companyName}
-                helperText={errors?.companyName}
+                value={allFields.company_name}
+                error={errors?.company_name}
+                helperText={errors?.company_name}
                 onChange={(e) => {
                   setAllFields({
                     ...allFields,
-                    companyName: e.target.value
+                    company_name: e.target.value
                   });
-                  checkIsDisable("companyName", e.target.value);
+                  checkIsDisable("company_name", e.target.value);
                 }}
               />
               <Autocomplete
@@ -582,11 +603,11 @@ function ContactDialog(props) {
                   }
                 }}
                 //onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57"
-                value={allFields.postalCode}
+                value={allFields.postal_code}
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    postalCode: e.target.value
+                    postal_code: e.target.value
                   })
                 }
               />
@@ -606,11 +627,11 @@ function ContactDialog(props) {
                     event.preventDefault();
                   }
                 }}
-                value={allFields.capitalSocial}
+                value={allFields.capital_social}
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    capitalSocial: e.target.value
+                    capital_social: e.target.value
                   })
                 }
               />
@@ -619,11 +640,11 @@ function ContactDialog(props) {
                 label="Immatriculé.e au RCS de"
                 variant="outlined"
                 fullWidth
-                value={allFields.RCSCity}
+                value={allFields.RCS_city}
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    RCSCity: e.target.value
+                    RCS_city: e.target.value
                   })
                 }
               />
@@ -650,38 +671,40 @@ function ContactDialog(props) {
               <TextField
                 className="mb-12"
                 name="Name"
-                label={allFields.type === "Client" ? "Nom*" : "Nom"}
+                label={allFields.client_type === "Client" ? "Nom*" : "Nom"}
                 variant="outlined"
                 fullWidth
-                value={allFields.name}
-                error={errors?.name}
-                helperText={errors?.name}
+                value={allFields.last_name}
+                error={errors?.last_name}
+                helperText={errors?.last_name}
                 onChange={(e) => {
                   setAllFields({
                     ...allFields,
-                    name: e.target.value
+                    last_name: e.target.value
                   });
-                  checkIsDisable("name", e.target.value);
+                  checkIsDisable("last_name", e.target.value);
                 }}
               />
               <TextField
                 className="mb-12"
-                label={allFields.type === "Client" ? "Prénom*" : "Prénom"}
+                label={
+                  allFields.client_type === "Client" ? "Prénom*" : "Prénom"
+                }
                 variant="outlined"
                 fullWidth
-                value={allFields.firstName}
+                value={allFields.first_name}
                 error={errors?.firstName}
                 helperText={errors?.firstName}
                 onChange={(e) => {
                   setAllFields({
                     ...allFields,
-                    firstName: e.target.value
+                    first_name: e.target.value
                   });
                   checkIsDisable("firstName", e.target.value);
                 }}
               />
               <TextField
-                label={allFields.type === "Client" ? "Email*" : "Email"}
+                label={allFields.client_type === "Client" ? "Email*" : "Email"}
                 className="mb-12"
                 variant="outlined"
                 fullWidth
@@ -704,11 +727,11 @@ function ContactDialog(props) {
                 fullWidth
                 error={errors?.mobile1}
                 helperText={errors?.mobile1}
-                value={allFields.mobile1}
+                value={allFields.phone_number}
                 onChange={(e) => {
                   setAllFields({
                     ...allFields,
-                    mobile1: e.target.value
+                    phone_number: e.target.value
                   });
                   checkIsDisable("mobile1", e.target.value);
                 }}
@@ -721,11 +744,11 @@ function ContactDialog(props) {
                 type="number"
                 error={errors?.mobile2}
                 helperText={errors?.mobile2}
-                value={allFields.mobile2}
+                value={allFields.fixe}
                 onChange={(e) => {
                   setAllFields({
                     ...allFields,
-                    mobile2: e.target.value
+                    fixe: e.target.value
                   });
                   checkIsDisable("mobile2", e.target.value);
                 }}
@@ -854,35 +877,37 @@ function ContactDialog(props) {
                 label="Nom*"
                 variant="outlined"
                 fullWidth
-                value={allFields.name}
-                error={errors?.name}
-                helperText={errors?.name}
+                value={allFields.last_name}
+                error={errors?.last_name}
+                helperText={errors?.last_name}
                 onChange={(e) => {
                   setAllFields({
                     ...allFields,
-                    name: e.target.value
+                    last_name: e.target.value
                   });
-                  checkIsDisable("name", e.target.value);
+                  checkIsDisable("last_name", e.target.value);
                 }}
               />
               <TextField
                 className="mb-12"
-                label={allFields.type === "Client" ? "Prénom*" : "Prénom"}
+                label={
+                  allFields.client_type === "Client" ? "Prénom*" : "Prénom"
+                }
                 variant="outlined"
                 fullWidth
-                value={allFields.firstName}
+                value={allFields.first_name}
                 error={errors?.firstName}
                 helperText={errors?.firstName}
                 onChange={(e) => {
                   setAllFields({
                     ...allFields,
-                    firstName: e.target.value
+                    first_name: e.target.value
                   });
                   checkIsDisable("firstName", e.target.value);
                 }}
               />
               <TextField
-                label={allFields.type === "Client" ? "Email*" : "Email"}
+                label={allFields.client_type === "Client" ? "Email*" : "Email"}
                 className="mb-12"
                 variant="outlined"
                 fullWidth
@@ -903,13 +928,13 @@ function ContactDialog(props) {
                 type="number"
                 variant="outlined"
                 fullWidth
-                value={allFields.mobile1}
+                value={allFields.phone_number}
                 error={errors?.mobile1}
                 helperText={errors?.mobile1}
                 onChange={(e) => {
                   setAllFields({
                     ...allFields,
-                    mobile1: e.target.value
+                    phone_number: e.target.value
                   });
                   setIsValid("mobile1", e.target.value);
                 }}
@@ -922,11 +947,11 @@ function ContactDialog(props) {
                 fullWidth
                 error={errors?.mobile2}
                 helperText={errors?.mobile2}
-                value={allFields.mobile2}
+                value={allFields.fixe}
                 onChange={(e) => {
                   setAllFields({
                     ...allFields,
-                    mobile2: e.target.value
+                    fixe: e.target.value
                   });
                   setIsValid("mobile2", e.target.value);
                 }}
@@ -968,11 +993,11 @@ function ContactDialog(props) {
                     event.preventDefault();
                   }
                 }}
-                value={allFields.postalCode}
+                value={allFields.postal_code}
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    postalCode: e.target.value
+                    postal_code: e.target.value
                   })
                 }
               />
@@ -981,10 +1006,10 @@ function ContactDialog(props) {
               </div>
               <DatePicker
                 label="Date de création"
-                value={allFields.dateValue}
+                value={allFields.date_of_birth}
                 maxDate={new Date()}
                 onChange={(newValue) => {
-                  setAllFields({ ...allFields, dateValue: newValue });
+                  setAllFields({ ...allFields, date_of_birth: newValue });
                 }}
                 renderInput={(params) => (
                   <TextField className="w-full mb-12" {...params} />
@@ -1024,11 +1049,11 @@ function ContactDialog(props) {
                 className="mb-12"
                 label="Ville de naissance"
                 variant="outlined"
-                value={allFields.nativeCity}
+                value={allFields.native_city}
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    nativeCity: e.target.value
+                    native_city: e.target.value
                   })
                 }
                 fullWidth
@@ -1063,14 +1088,14 @@ function ContactDialog(props) {
                 fullWidth
               />
               <FormControl className="flex w-full mb-12" variant="outlined">
-                <InputLabel>Statut</InputLabel>
+                <InputLabel>état civil</InputLabel>
                 <Select
-                  label="Statut"
-                  value={allFields.clientStatus}
+                  label="état civil"
+                  value={allFields.civil_status}
                   onChange={(e) =>
                     setAllFields({
                       ...allFields,
-                      clientStatus: e.target.value
+                      civil_status: e.target.value
                     })
                   }
                 >
@@ -1178,7 +1203,7 @@ function ContactDialog(props) {
             disabled={
               !isValid ||
               allFields.status === "Inactif" ||
-              allFields.type !== "Client"
+              allFields.client_type !== "Client"
             }
           >
             Envoyer invitation
