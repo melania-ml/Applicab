@@ -19,9 +19,9 @@ import { addContact, resetDossier, getContacts } from '../store/dossiersSlice';
 import reducer from '../store';
 import DossierHeader from './DossierHeader';
 import InformationTab from './tabs/InformationTab';
-import DocumentsTab from './tabs/DocumentsTab';
+import EtapesTab from './tabs/EtapesTab';
 import EmailTab from './tabs/EmailTab';
-import StepsTab from './tabs/StepsTab';
+import DocumentsTab from './tabs/DocumentsTab';
 
 const Root = styled(FusePageCarded)(({ theme }) => ({
   '& .FusePageCarded-header': {
@@ -68,27 +68,27 @@ function Dossier(props) {
             textColor="primary"
             variant="scrollable"
             scrollButtons="auto"
-            classes={{ root: 'w-full h-64' }}
+            classes={{ root: 'w-full h-94 caseManagementTabs' }}
           >
-            <Tab className="h-64" label="Informations dossier" />
-            <Tab className="h-64" label="Documents" />
-            <Tab className="h-64" label="Email" />
-            <Tab className="h-64" label="Étapes" />
+            <Tab className="h-64 w-1/4" label="Informations" />
+            <Tab className="h-64 w-1/4" label="Étapes" />
+            <Tab className="h-64 w-1/4" label="Messages" />
+            <Tab className="h-64 w-1/4" label="Documents" />
           </Tabs>
         }
         content={
-          <div className="p-16 sm:p-24 max-w-2xl">
+          <div className="p-16 sm:p-24">
             <div className={tabValue !== 0 ? 'hidden' : ''}>
               <InformationTab />
             </div>
             <div className={tabValue !== 1 ? 'hidden' : ''}>
-              <DocumentsTab />
+              <EtapesTab />
             </div>
             <div className={tabValue !== 2 ? 'hidden' : ''}>
               <EmailTab />
             </div>
             <div className={tabValue !== 3 ? 'hidden' : ''}>
-              <StepsTab />
+              <DocumentsTab />
             </div>
           </div>
         }
@@ -97,6 +97,7 @@ function Dossier(props) {
     </FormProvider>
   )
 }
+export default withReducer('eCommerceApp', reducer)(Dossier);
 
 // function Dossier(props) {
 //   const dispatch = useDispatch();
@@ -252,5 +253,3 @@ function Dossier(props) {
 //     </FormProvider>
 //   );
 // }
-
-export default withReducer('eCommerceApp', reducer)(Dossier);

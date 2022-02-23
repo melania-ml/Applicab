@@ -1,6 +1,36 @@
 /**
 Basic Table Styles
  */
+.emailSearch {
+    margin-left: 60rem;
+}
+
+/* .faqText{
+    text-align: start;
+} */
+.naturesEmailSearch{
+    margin-left: 110rem;
+
+}
+ .dropSelect fieldset {
+    border: 0;
+  }
+
+  .dashBoardCard{
+      height: min-content;
+  }
+
+  .cards{
+      width: 40rem;
+      height : min-content;
+  }
+  .box-shadow-dash .search-bar-dossier {
+      margin-bottom: 30px;
+  }
+
+  .caseManagementTabs .MuiTabs-flexContainer.muiltr-heg063-MuiTabs-flexContainer {
+    justify-content: center;
+}
 .table-responsive {
     display: block;
     width: 100%;
