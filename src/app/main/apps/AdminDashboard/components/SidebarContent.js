@@ -17,7 +17,7 @@ function SidebarContent() {
   return (
     <div className="h-full">
       <motion.div
-        className="mb-5 mb-md-0 box-shadow-dash h-full"
+        className="mb-5 mb-md-0 mt-5 mt-md-0 box-shadow-dash h-full"
         initial={{ y: 50, opacity: 0.8 }}
         animate={{ y: 0, opacity: 1, transition: { delay: 0.3 } }}
         style={{ background: "#FFFFFF", padding: 15, borderRadius: 10 }}
