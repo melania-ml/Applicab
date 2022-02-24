@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   TextField,
   InputLabel,
@@ -8,36 +8,50 @@ import {
   Autocomplete,
   Chip,
   Button,
-  IconButton,
-  Icon
 } from "@mui/material";
 import Natures from "../../../../constants/Natures";
-import CaseStatus from "../../../../constants/CaseStatus";
+import Statut from "../../../../constants/Statut";
 import Procedures from "../../../../constants/Procedures";
 import Types from "../../../../constants/Types";
-import Clients from "../../../../constants/Clients";
+import { useSelector } from "react-redux";
 
+const tags = [];
 function InformationTab(props) {
-  const [name, setName] = useState("");
-  const [nature, setNature] = useState("");
-  const [caseStatus, setCaseStatus] = useState("");
-  const [type, setType] = useState("");
-  const [procedure, setProcedure] = useState("");
-  const [tags, setTags] = useState([]);
-  const [internalComments, setInternalComments] = useState("");
-  const [sharedWithClientComments, setSharedWithClientComments] = useState("");
-  const [client, setClient] = useState("");
-  const [contactName, setContactName] = useState("");
-  const [contactQuality, setContactQuality] = useState("");
-  const [oppositeContactName, setOppositeContactName] = useState("");
-  const [oppositeContactQuality, setOppositeContactQuality] = useState("");
-  const tagsArr = [];
+  const { userData } = useSelector(({ userMenu }) => userMenu.userMenu);
+  console.log("userData: ", userData);
+  const [allFields, setAllFields] = useState({
+    name: "",
+    nature: "",
+    statut: "",
+    type: "",
+    tags: [],
+    internalComments: "",
+    sharedWithClientComments: "",
+  });
+  useEffect(() => {
+    setAllFields({
+      ...allFields,
+      name: userData.name,
+      nature: userData.nature,
+      statut: userData.statut,
+      type: userData.type,
+      tags: userData.tags,
+      internalComments: userData.internalComments,
+      sharedWithClientComments: userData.sharedWithClientComments,
+    });
+  }, [userData]);
+
   return (
     <div>
       <TextField
         className="mt-8 mb-16"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
+        value={allFields.name}
+        onChange={(e) => {
+          setAllFields({
+            ...allFields,
+            name: e.target.value,
+          });
+        }}
         label="Nom"
         autoFocus
         variant="outlined"
@@ -47,8 +61,13 @@ function InformationTab(props) {
         <InputLabel>Nature</InputLabel>
         <Select
           label="Nature"
-          value={nature}
-          onChange={(e) => setNature(e.target.value)}
+          value={allFields.nature}
+          onChange={(e) => {
+            setAllFields({
+              ...allFields,
+              nature: e.target.value,
+            });
+          }}
         >
           {Natures.map((nature) => (
             <MenuItem value={nature.value} key={nature.id}>
@@ -61,12 +80,17 @@ function InformationTab(props) {
         <InputLabel>Statut</InputLabel>
         <Select
           label="Statut"
-          value={caseStatus}
-          onChange={(e) => setCaseStatus(e.target.value)}
+          value={userData.statut}
+          onChange={(e) => {
+            setAllFields({
+              ...allFields,
+              statut: e.target.value,
+            });
+          }}
         >
-          {CaseStatus.map((status) => (
-            <MenuItem value={status.value} key={status.id}>
-              {status.label}
+          {Statut.map((statut) => (
+            <MenuItem value={statut.value} key={statut.id}>
+              {statut.label}
             </MenuItem>
           ))}
         </Select>
@@ -75,24 +99,32 @@ function InformationTab(props) {
         <InputLabel>Type</InputLabel>
         <Select
           label="Type"
-          value={type}
-          onChange={(e) => setType(e.target.value)}
+          value={allFields.type}
+          onChange={(e) => {
+            setAllFields({
+              ...allFields,
+              type: e.target.value,
+            });
+          }}
         >
-          <div style={{ height: 300, maxHeight: 300 }}>
-            {Types.map((type) => (
-              <MenuItem value={type.value} key={type.id}>
-                {type.label}
-              </MenuItem>
-            ))}
-          </div>
+          {Types.map((type) => (
+            <MenuItem value={type.value} key={type.id}>
+              {type.label}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
       <FormControl className="flex w-full mb-12" variant="outlined">
         <InputLabel>Procédure</InputLabel>
         <Select
           label="Procédure"
-          value={procedure}
-          onChange={(e) => setProcedure(e.target.value)}
+          value={allFields.procedure}
+          onChange={(e) => {
+            setAllFields({
+              ...allFields,
+              procedure: e.target.value,
+            });
+          }}
         >
           {Procedures.map((procedure) => (
             <MenuItem value={procedure.value} key={procedure.id}>
@@ -103,8 +135,6 @@ function InformationTab(props) {
       </FormControl>
       <TextField
         className="mt-8 mb-16"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
         label="Lieu"
         autoFocus
         variant="outlined"
@@ -114,20 +144,22 @@ function InformationTab(props) {
         className="w-full mb-12"
         multiple
         freeSolo
-        onChange={(event, newValue) => {
-          setTags([
+        onChange={(e, newValue) => {
+          setAllFields({
+            ...allFields,
             ...tags,
+            tags: e.target.value,
             ...newValue.filter((option) => tags.indexOf(option) === -1),
-          ]);
+          });
         }}
-        options={tagsArr}
+        options={tags}
         getOptionLabel={(option) => option.title}
         renderTags={(tagValue, getTagProps) =>
           tagValue.map((option, index) => (
             <Chip
               label={option}
               {...getTagProps({ index })}
-              disabled={tagsArr.indexOf(option) !== -1}
+              disabled={tags.indexOf(option) !== -1}
             />
           ))
         }
@@ -142,8 +174,13 @@ function InformationTab(props) {
         multiline
         rows={5}
         fullWidth
-        value={internalComments}
-        onChange={(e) => setInternalComments(e.target.value)}
+        value={allFields.internalComments}
+        onChange={(e) => {
+          setAllFields({
+            ...allFields,
+            internalComments: e.target.value,
+          });
+        }}
       />
       <TextField
         className="mb-12"
@@ -152,8 +189,13 @@ function InformationTab(props) {
         multiline
         rows={5}
         fullWidth
-        value={sharedWithClientComments}
-        onChange={(e) => setSharedWithClientComments(e.target.value)}
+        value={allFields.sharedWithClientComments}
+        onChange={(e) => {
+          setAllFields({
+            ...allFields,
+            sharedWithClientComments: e.target.value,
+          });
+        }}
       />
       <div className="mb-10">
         <b>Ajouter un client au dossier</b>
@@ -162,20 +204,22 @@ function InformationTab(props) {
         className="w-full mb-12"
         multiple
         freeSolo
-        onChange={(event, newValue) => {
-          setTags([
+        onChange={(e, newValue) => {
+          setAllFields({
+            ...allFields,
             ...tags,
+            tags: e.target.value,
             ...newValue.filter((option) => tags.indexOf(option) === -1),
-          ]);
+          });
         }}
-        options={tagsArr}
+        options={tags}
         getOptionLabel={(option) => option.title}
         renderTags={(tagValue, getTagProps) =>
           tagValue.map((option, index) => (
             <Chip
               label={option}
               {...getTagProps({ index })}
-              disabled={tagsArr.indexOf(option) !== -1}
+              disabled={tags.indexOf(option) !== -1}
             />
           ))
         }
@@ -190,20 +234,22 @@ function InformationTab(props) {
         className="w-full mb-12"
         multiple
         freeSolo
-        onChange={(event, newValue) => {
-          setTags([
+        onChange={(e, newValue) => {
+          setAllFields({
+            ...allFields,
             ...tags,
+            tags: e.target.value,
             ...newValue.filter((option) => tags.indexOf(option) === -1),
-          ]);
+          });
         }}
-        options={tagsArr}
+        options={tags}
         getOptionLabel={(option) => option.title}
         renderTags={(tagValue, getTagProps) =>
           tagValue.map((option, index) => (
             <Chip
               label={option}
               {...getTagProps({ index })}
-              disabled={tagsArr.indexOf(option) !== -1}
+              disabled={tags.indexOf(option) !== -1}
             />
           ))
         }
@@ -215,23 +261,25 @@ function InformationTab(props) {
         <b>Ajouter un contact adverse au dossier</b>
       </div>
       <Autocomplete
-        className="w-full mb-12"
+        className="w-full mb-10"
         multiple
         freeSolo
-        onChange={(event, newValue) => {
-          setTags([
+        onChange={(e, newValue) => {
+          setAllFields({
+            ...allFields,
             ...tags,
+            tags: e.target.value,
             ...newValue.filter((option) => tags.indexOf(option) === -1),
-          ]);
+          });
         }}
-        options={tagsArr}
+        options={tags}
         getOptionLabel={(option) => option.title}
         renderTags={(tagValue, getTagProps) =>
           tagValue.map((option, index) => (
             <Chip
               label={option}
               {...getTagProps({ index })}
-              disabled={tagsArr.indexOf(option) !== -1}
+              disabled={tags.indexOf(option) !== -1}
             />
           ))
         }
@@ -239,21 +287,19 @@ function InformationTab(props) {
           <TextField {...params} label="Choisissez un contact" />
         )}
       />
-
+      <br />
       <Button
         className="whitespace-nowrap mx-1"
         variant="contained"
         color="secondary"
-        style={{ borderRadius: 3 }}
+        style={{ borderRadius: 2 }}
         // disabled={_.isEmpty(dirtyFields) || !isValid}
-        //onClick={handleSaveProduct}
+        // onClick={handleSaveProduct}
       >
         Ajouter un nouveau contact
       </Button>
       <br />
       <b />
-      <br />
-      <br />
       <br />
       <br />
     </div>
