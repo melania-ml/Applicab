@@ -5,7 +5,10 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  TextField
+  Icon,
+  InputAdornment,
+  TextField,
+  Autocomplete
 } from "@mui/material";
 import { getContacts } from "../store/contactsSlice";
 
@@ -28,15 +31,64 @@ export default function Filters() {
   const types = useSelector(({ contactsApp }) => contactsApp.contacts.types);
   const [allFields, setAllFields] = useState({
     type: "",
+    inputType: "",
     title: "",
     status: "",
-    tags: [""]
+    tags: ""
   });
   return (
     <div className="bgm-10 for-full-screen">
       <div className="row items-center">
         <div className="col-md-3 col-lg-3 col-12 col-xl-3 mb-3 mb-xl-0">
-          <FormControl className="w-full" variant="outlined">
+          <Autocomplete
+            style={{ color: "#FFFFFF" }}
+            options={types}
+            getOptionLabel={(option) => {
+              if (typeof option === "string") {
+                return option;
+              }
+              if (option.inputValue) {
+                return option.inputValue;
+              }
+              return option.client_type;
+            }}
+            onChange={(event, newValue) => {
+              if (typeof newValue === "string") {
+                setAllFields({ ...allFields, client_type: newValue });
+              } else if (newValue && newValue.inputValue) {
+                setAllFields({
+                  ...allFields,
+                  client_type: newValue.inputValue
+                });
+              } else if (!newValue) {
+                setAllFields({
+                  ...allFields,
+                  client_type: ""
+                });
+              } else {
+                setAllFields({
+                  ...allFields,
+                  client_type: newValue.client_type
+                });
+              }
+              const typeObj = types.find(
+                (type) => type.client_type === newValue?.client_type
+              );
+              dispatch(getContacts({ ...allFields, type: typeObj?.id || "" }));
+            }}
+            inputValue={allFields.inputType}
+            onInputChange={(event, newInputValue) => {
+              setAllFields({ ...allFields, inputType: newInputValue });
+            }}
+            renderInput={(params) => (
+              <TextField
+                style={{ color: "#FFFFFF" }}
+                {...params}
+                label="Type"
+              />
+            )}
+          />
+          {/* <FormControl className="w-full" variant="outlined">
             <InputLabel style={{ color: "#FFFFFF" }}>Type</InputLabel>
             <Select
               label="Type"
@@ -47,6 +99,23 @@ export default function Filters() {
                 setAllFields({ ...allFields, type: typeObj.id });
                 dispatch(getContacts({ ...allFields, type: typeObj.id }));
               }}
+              endAdornment={
+                allFields.type && (
+                  <InputAdornment position="end">
+                    <Icon
+                      className="mr-10"
+                      style={{ color: "white", cursor: "pointer" }}
+                      size={20}
+                      onClick={() => {
+                        setAllFields({ ...allFields, type: "" });
+                        dispatch(getContacts({ ...allFields, type: "" }));
+                      }}
+                    >
+                      close
+                    </Icon>
+                  </InputAdornment>
+                )
+              }
               MenuProps={{ PaperProps: { sx: { maxHeight: 300 } } }}
             >
               {types.map((type) => (
@@ -55,7 +124,7 @@ export default function Filters() {
                 </MenuItem>
               ))}
             </Select>
-          </FormControl>
+          </FormControl> */}
         </div>
         <div className="col-md-3 col-lg-3 col-12 col-xl-3 mb-3 mb-xl-0">
           <FormControl className="w-full" variant="outlined">
