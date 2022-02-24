@@ -43,6 +43,7 @@ export default function Filters() {
       <div className="row items-center">
         <div className="col-md-3 col-lg-3 col-12 col-xl-3 mb-3 mb-xl-0">
           <Autocomplete
+            className="autocomplete"
             options={types}
             getOptionLabel={(option) => {
               if (typeof option === "string") {
@@ -86,6 +87,7 @@ export default function Filters() {
         </div>
         <div className="col-md-3 col-lg-3 col-12 col-xl-3 mb-3 mb-xl-0">
           <Autocomplete
+            className="autocomplete"
             options={titles}
             getOptionLabel={(option) => {
               if (typeof option === "string") {
@@ -131,6 +133,7 @@ export default function Filters() {
         </div>
         <div className="col-md-3 col-lg-3 col-12 col-xl-3 mb-3 mb-xl-0">
           <Autocomplete
+            className="autocomplete"
             options={status}
             getOptionLabel={(option) => {
               if (typeof option === "string") {
@@ -168,7 +171,13 @@ export default function Filters() {
             onInputChange={(event, newInputValue) => {
               setAllFields({ ...allFields, inputStatus: newInputValue });
             }}
-            renderInput={(params) => <TextField {...params} label="Status" />}
+            renderInput={(params) => (
+              <TextField
+                style={{ color: "white !important" }}
+                {...params}
+                label="Status"
+              />
+            )}
           />
         </div>
         <div className="col-md-3 col-lg-3 col-12 col-xl-3 mb-3 mb-xl-0">

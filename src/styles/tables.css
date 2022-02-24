@@ -106,8 +106,6 @@ table.simple.borderless thead tr th {
     flex-direction: column;
   }
 }
-#mui-3-label,
-#mui-5-label,
-#mui-7-label {
+.autocomplete label {
   color: #ffffff !important;
 }
