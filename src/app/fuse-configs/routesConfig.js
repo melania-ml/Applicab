@@ -9,7 +9,6 @@ import ForgotPasswordConfig from "app/main/forgotPassword/ForgotPasswordConfig";
 import ResetPasswordConfig from "app/main/resetPassword/ResetPasswordConfig";
 import VerifyEmailConfig from "app/main/verifyEmail/VerifyEmailConfig";
 import CreatePasswordConfig from "app/main/createPassword/CreatePasswordConfig";
-import UserInterfaceConfig from "app/main/user-interface/UserInterfaceConfig";
 import FuseLoading from "@fuse/core/FuseLoading";
 import { Navigate } from "react-router-dom";
 
@@ -17,7 +16,6 @@ const routeConfigs = [
   ...appsConfigs,
   ...pagesConfigs,
   ...authRoleExamplesConfigs,
-  UserInterfaceConfig,
   LogoutConfig,
   LoginConfig,
   ForgotPasswordConfig,
