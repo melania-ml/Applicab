@@ -1,6 +1,5 @@
 import FuseUtils from "@fuse/utils";
 import appsConfigs from "app/main/apps/appsConfigs";
-import authRoleExamplesConfigs from "app/main/auth/authRoleExamplesConfigs";
 import CallbackConfig from "app/main/callback/CallbackConfig";
 import LoginConfig from "app/main/login/LoginConfig";
 import LogoutConfig from "app/main/logout/LogoutConfig";
@@ -15,7 +14,6 @@ import { Navigate } from "react-router-dom";
 const routeConfigs = [
   ...appsConfigs,
   ...pagesConfigs,
-  ...authRoleExamplesConfigs,
   LogoutConfig,
   LoginConfig,
   ForgotPasswordConfig,
