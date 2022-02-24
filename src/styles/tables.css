@@ -2,107 +2,112 @@
 Basic Table Styles
  */
 .emailSearch {
-    margin-left: 60rem;
+  margin-left: 60rem;
 }
 
 /* .faqText{
     text-align: start;
 } */
-.naturesEmailSearch{
-    margin-left: 110rem;
-
+.naturesEmailSearch {
+  margin-left: 110rem;
 }
- .dropSelect fieldset {
-    border: 0;
-  }
+.dropSelect fieldset {
+  border: 0;
+}
 
-  .dashBoardCard{
-      height: min-content;
-  }
+.dashBoardCard {
+  height: min-content;
+}
 
-  .cards{
-      width: 40rem;
-      height : min-content;
-  }
-  .box-shadow-dash .search-bar-dossier {
-      margin-bottom: 30px;
-  }
+.cards {
+  width: 40rem;
+  height: min-content;
+}
+.box-shadow-dash .search-bar-dossier {
+  margin-bottom: 30px;
+}
 
-  .caseManagementTabs .MuiTabs-flexContainer.muiltr-heg063-MuiTabs-flexContainer {
-    justify-content: center;
+.caseManagementTabs .MuiTabs-flexContainer.muiltr-heg063-MuiTabs-flexContainer {
+  justify-content: center;
 }
 .table-responsive {
-    display: block;
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    -ms-overflow-style: -ms-autohiding-scrollbar;
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
 }
 
 table.simple {
-    width: 100%;
-    border: none;
-    border-spacing: 0;
-    text-align: left;
+  width: 100%;
+  border: none;
+  border-spacing: 0;
+  text-align: left;
 }
 
 table.simple thead tr th {
-    padding: 16px 8px;
-    font-weight: 500;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-    white-space: nowrap;
+  padding: 16px 8px;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  white-space: nowrap;
 }
 
 table.simple thead tr th:first-child {
-    padding-left: 24px;
+  padding-left: 24px;
 }
 
 table.simple thead tr th:last-child {
-    padding-right: 24px;
+  padding-right: 24px;
 }
 
 table.simple tbody tr td {
-    padding: 12px 8px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  padding: 12px 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 table.simple tbody tr td:first-child {
-    padding-left: 24px;
+  padding-left: 24px;
 }
 
 table.simple tbody tr td:last-child {
-    padding-right: 24px;
+  padding-right: 24px;
 }
 
 table.simple tbody tr:last-child td {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 table.simple.clickable tbody tr {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 table.simple.clickable tbody tr:hover {
-    background: rgba(0, 0, 0, 0.03);
+  background: rgba(0, 0, 0, 0.03);
 }
 
 table.simple.borderless {
-    border: none;
+  border: none;
 }
 
-table.simple.borderless tbody tr td{
-    border: none;
+table.simple.borderless tbody tr td {
+  border: none;
 }
 
-table.simple.borderless thead tr th{
-    border: none;
+table.simple.borderless thead tr th {
+  border: none;
 }
 
-@media screen and (max-width:767px) {
-.caseManagementTabs .MuiTabs-flexContainer.muiltr-heg063-MuiTabs-flexContainer {
-	justify-content: left;
-}
-.res-flex-direction{
+@media screen and (max-width: 767px) {
+  .caseManagementTabs
+    .MuiTabs-flexContainer.muiltr-heg063-MuiTabs-flexContainer {
+    justify-content: left;
+  }
+  .res-flex-direction {
     flex-direction: column;
+  }
 }
+#mui-3-label,
+#mui-5-label,
+#mui-7-label {
+  color: #ffffff !important;
 }

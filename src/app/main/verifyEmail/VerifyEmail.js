@@ -148,24 +148,15 @@ function VerifyEmail() {
               <div className="flex flex-col items-center justify-center">
                 <a
                   className="font-normal mt-8"
-                  //href="https://qbgcvoq4svu.typeform.com/to/ojDZd0pG"
                   onClick={onResentOTP}
                   style={{
                     background: "none",
                     color: "#22d3ee",
                     cursor: "pointer"
                   }}
-                  //target={"_blank"}
                 >
                   Renvoyer le code
                 </a>
-                {/* <Link
-                    className="font-normal align-center"
-                    to={"/"}
-                    //onClick={onResentOTP}
-                  >
-                    Renvoyer le code
-                  </Link> */}
               </div>
             </div>
           </CardContent>

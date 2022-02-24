@@ -48,6 +48,21 @@ export const getAllTypes = () => async (dispatch) => {
     });
 };
 
+export const importContacts = (contact) => async (dispatch) => {
+  await axios
+    .post(`auth/user/uploadUserCsv`, contact)
+    .then((data) => {
+      if (data.data.status === 200 && data.data.success) {
+        dispatch(showMessage({ message: data.data.message }));
+      } else {
+        dispatch(showMessage({ message: data.data.message }));
+      }
+    })
+    .catch((errors) => {
+      console.error(errors);
+    });
+};
+
 export const getContacts = createAsyncThunk(
   "contactsApp/contacts/getContacts",
   async (routeParams, { dispatch, getState }) => {

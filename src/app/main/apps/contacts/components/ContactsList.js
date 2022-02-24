@@ -45,7 +45,10 @@ function ContactsList(props) {
       },
       {
         Header: "Type",
-        accessor: "user_type",
+        accessor: "client_type",
+        Cell: ({ row }) => {
+          return <span>{row.original.client_type?.client_type}</span>;
+        },
         className: "font-medium",
         sortable: true
       },

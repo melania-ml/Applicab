@@ -33,7 +33,9 @@ export default function Filters() {
     type: "",
     inputType: "",
     title: "",
+    inputTitle: "",
     status: "",
+    inputStatus: "",
     tags: ""
   });
   return (
@@ -41,7 +43,6 @@ export default function Filters() {
       <div className="row items-center">
         <div className="col-md-3 col-lg-3 col-12 col-xl-3 mb-3 mb-xl-0">
           <Autocomplete
-            style={{ color: "#FFFFFF" }}
             options={types}
             getOptionLabel={(option) => {
               if (typeof option === "string") {
@@ -80,93 +81,95 @@ export default function Filters() {
             onInputChange={(event, newInputValue) => {
               setAllFields({ ...allFields, inputType: newInputValue });
             }}
-            renderInput={(params) => (
-              <TextField
-                style={{ color: "#FFFFFF" }}
-                {...params}
-                label="Type"
-              />
-            )}
+            renderInput={(params) => <TextField {...params} label="Type" />}
           />
-          {/* <FormControl className="w-full" variant="outlined">
-            <InputLabel style={{ color: "#FFFFFF" }}>Type</InputLabel>
-            <Select
-              label="Type"
-              onChange={(e) => {
-                const typeObj = types.find(
-                  (type) => type.client_type === e.target.value
-                );
-                setAllFields({ ...allFields, type: typeObj.id });
-                dispatch(getContacts({ ...allFields, type: typeObj.id }));
-              }}
-              endAdornment={
-                allFields.type && (
-                  <InputAdornment position="end">
-                    <Icon
-                      className="mr-10"
-                      style={{ color: "white", cursor: "pointer" }}
-                      size={20}
-                      onClick={() => {
-                        setAllFields({ ...allFields, type: "" });
-                        dispatch(getContacts({ ...allFields, type: "" }));
-                      }}
-                    >
-                      close
-                    </Icon>
-                  </InputAdornment>
-                )
+        </div>
+        <div className="col-md-3 col-lg-3 col-12 col-xl-3 mb-3 mb-xl-0">
+          <Autocomplete
+            options={titles}
+            getOptionLabel={(option) => {
+              if (typeof option === "string") {
+                return option;
               }
-              MenuProps={{ PaperProps: { sx: { maxHeight: 300 } } }}
-            >
-              {types.map((type) => (
-                <MenuItem value={type.client_type} key={type.id}>
-                  {type.client_type}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl> */}
+              if (option.inputValue) {
+                return option.inputValue;
+              }
+              return option.title;
+            }}
+            onChange={(event, newValue) => {
+              if (typeof newValue === "string") {
+                setAllFields({ ...allFields, title: newValue });
+              } else if (newValue && newValue.inputValue) {
+                setAllFields({
+                  ...allFields,
+                  title: newValue.inputValue
+                });
+              } else if (!newValue) {
+                setAllFields({
+                  ...allFields,
+                  title: ""
+                });
+              } else {
+                setAllFields({
+                  ...allFields,
+                  title: newValue.title
+                });
+              }
+              const titleObj = titles.find(
+                (type) => type.title === newValue?.title
+              );
+              dispatch(
+                getContacts({ ...allFields, title: titleObj?.id || "" })
+              );
+            }}
+            inputValue={allFields.inputTitle}
+            onInputChange={(event, newInputValue) => {
+              setAllFields({ ...allFields, inputTitle: newInputValue });
+            }}
+            renderInput={(params) => <TextField {...params} label="Titre" />}
+          />
         </div>
         <div className="col-md-3 col-lg-3 col-12 col-xl-3 mb-3 mb-xl-0">
-          <FormControl className="w-full" variant="outlined">
-            <InputLabel style={{ color: "#FFFFFF" }}>Titre</InputLabel>
-            <Select
-              label="Titre"
-              //value={allFields.title}
-              onChange={(e) => {
-                const titleObj = titles.find(
-                  (title) => title.title === e.target.value
-                );
-                setAllFields({ ...allFields, title: titleObj.id });
-                dispatch(getContacts({ ...allFields, title: titleObj.id }));
-              }}
-              MenuProps={{ PaperProps: { sx: { maxHeight: 300 } } }}
-            >
-              {titles.map((title) => (
-                <MenuItem value={title.title} key={title.id}>
-                  {title.title}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </div>
-        <div className="col-md-3 col-lg-3 col-12 col-xl-3 mb-3 mb-xl-0">
-          <FormControl className="w-full" variant="outlined">
-            <InputLabel style={{ color: "#FFFFFF" }}>Status</InputLabel>
-            <Select
-              label="Status"
-              value={allFields.status}
-              onChange={(e) => {
-                setAllFields({ ...allFields, status: e.target.value });
-                dispatch(getContacts({ ...allFields, status: e.target.value }));
-              }}
-            >
-              {status.map((category) => (
-                <MenuItem value={category.value} key={category.id}>
-                  {category.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <Autocomplete
+            options={status}
+            getOptionLabel={(option) => {
+              if (typeof option === "string") {
+                return option;
+              }
+              if (option.inputValue) {
+                return option.inputValue;
+              }
+              return option.value;
+            }}
+            onChange={(event, newValue) => {
+              if (typeof newValue === "string") {
+                setAllFields({ ...allFields, status: newValue });
+              } else if (newValue && newValue.inputValue) {
+                setAllFields({
+                  ...allFields,
+                  status: newValue.inputValue
+                });
+              } else if (!newValue) {
+                setAllFields({
+                  ...allFields,
+                  status: ""
+                });
+              } else {
+                setAllFields({
+                  ...allFields,
+                  status: newValue.value
+                });
+              }
+              dispatch(
+                getContacts({ ...allFields, status: newValue?.value || "" })
+              );
+            }}
+            inputValue={allFields.inputStatus}
+            onInputChange={(event, newInputValue) => {
+              setAllFields({ ...allFields, inputStatus: newInputValue });
+            }}
+            renderInput={(params) => <TextField {...params} label="Status" />}
+          />
         </div>
         <div className="col-md-3 col-lg-3 col-12 col-xl-3 mb-3 mb-xl-0">
           <FormControl className="w-full" variant="outlined">
@@ -179,7 +182,10 @@ export default function Filters() {
               variant="outlined"
               fullWidth
               onChange={(e) => {
-                setAllFields({ ...allFields, tags: [e.target.value] });
+                setAllFields({
+                  ...allFields,
+                  tags: e.target.value ? [e.target.value] : ""
+                });
                 dispatch(
                   getContacts({
                     ...allFields,

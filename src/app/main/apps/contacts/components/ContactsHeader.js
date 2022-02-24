@@ -7,7 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectMainTheme } from "app/store/fuse/settingsSlice";
 import {
   setContactsSearchText,
-  openNewContactDialog
+  openNewContactDialog,
+  importContacts
 } from "../store/contactsSlice";
 import Filters from "./Filters";
 
@@ -90,7 +91,9 @@ function ContactsHeader(props) {
   };
 
   const onFileUpload = (e) => {
-    console.log("data", e.target.files[0]);
+    const formData = new FormData();
+    formData.append("csv", e.target.files[0]);
+    dispatch(importContacts(formData));
   };
 
   return (
