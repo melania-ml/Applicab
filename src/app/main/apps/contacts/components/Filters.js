@@ -55,27 +55,27 @@ export default function Filters() {
               return option.client_type;
             }}
             onChange={(event, newValue) => {
+              const typeObj = types.find(
+                (type) => type.client_type === newValue?.client_type
+              );
               if (typeof newValue === "string") {
-                setAllFields({ ...allFields, client_type: newValue });
+                setAllFields({ ...allFields, type: newValue });
               } else if (newValue && newValue.inputValue) {
                 setAllFields({
                   ...allFields,
-                  client_type: newValue.inputValue
+                  type: newValue.inputValue
                 });
               } else if (!newValue) {
                 setAllFields({
                   ...allFields,
-                  client_type: ""
+                  type: ""
                 });
               } else {
                 setAllFields({
                   ...allFields,
-                  client_type: newValue.client_type
+                  type: typeObj?.id
                 });
               }
-              const typeObj = types.find(
-                (type) => type.client_type === newValue?.client_type
-              );
               dispatch(getContacts({ ...allFields, type: typeObj?.id || "" }));
             }}
             inputValue={allFields.inputType}
@@ -99,6 +99,9 @@ export default function Filters() {
               return option.title;
             }}
             onChange={(event, newValue) => {
+              const titleObj = titles.find(
+                (type) => type.title === newValue?.title
+              );
               if (typeof newValue === "string") {
                 setAllFields({ ...allFields, title: newValue });
               } else if (newValue && newValue.inputValue) {
@@ -114,12 +117,9 @@ export default function Filters() {
               } else {
                 setAllFields({
                   ...allFields,
-                  title: newValue.title
+                  title: titleObj?.id
                 });
               }
-              const titleObj = titles.find(
-                (type) => type.title === newValue?.title
-              );
               dispatch(
                 getContacts({ ...allFields, title: titleObj?.id || "" })
               );
