@@ -1,24 +1,19 @@
-import { lazy } from 'react';
-import { Navigate } from 'react-router-dom';
+import { lazy } from "react";
 
-const ContactsApp = lazy(() => import('./ContactsApp'));
+const ContactsApp = lazy(() => import("./ContactsApp"));
 
 const ContactsAppConfig = {
   settings: {
     layout: {
-      config: {},
-    },
+      config: {}
+    }
   },
   routes: [
     {
-      path: 'apps/contacts/:id',
-      element: <ContactsApp />,
-    },
-    {
-      path: 'apps/contacts',
-      element: <Navigate to="/apps/contacts/all" />,
-    },
-  ],
+      path: "apps/contacts/all",
+      element: <ContactsApp />
+    }
+  ]
 };
 
 export default ContactsAppConfig;

@@ -4,59 +4,14 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  TextField
+  TextField,
+  Autocomplete
 } from "@mui/material";
 import DatePicker from "@mui/lab/DatePicker";
-// Tribunal judiciaire (TJ)
-// - Juge des contentieux de la protection(JCP)
-// - Tribunal de commerce (TCOM)
-// - Référé Tribunal judiciaire (REFTJ)
-// - Référé Tribunal de commerce (REFTC)
-// - Conseil des Prud'hommes (CPH)
-// - Juge aux affaires familiales (divorce hors consentement mutuel)(JAF )(divorce hors DCM)
-// - Cour d'appel (CA)
-const procedure = [
-  {
-    id: 1,
-    value: "Tribunal judiciaire (TJ)",
-    label: "Tribunal judiciaire (TJ)"
-  },
-  {
-    id: 2,
-    value: "Juge des contentieux de la protection(JCP)",
-    label: "Juge des contentieux de la protection(JCP)"
-  },
-  {
-    id: 3,
-    value: "Tribunal de commerce (TCOM)",
-    label: "Tribunal de commerce (TCOM)",
-  },
-  {
-    id: 4,
-    value: "Référé Tribunal judiciaire (REFTJ)",
-    label: "Référé Tribunal judiciaire (REFTJ)",
-  },
-  {
-    id: 5,
-    value: "Référé Tribunal de commerce (REFTC)",
-    label: "Référé Tribunal de commerce (REFTC)",
-  },
-  {
-    id: 6,
-    value: "Conseil des Prud'hommes (CPH)",
-    label: "Conseil des Prud'hommes (CPH)",
-  },
-  {
-    id: 7,
-    value: "Juge aux affaires familiales (divorce hors consentement mutuel)(JAF )(divorce hors DCM)",
-    label: "Juge aux affaires familiales (divorce hors consentement mutuel)(JAF )(divorce hors DCM)"
-  },
-  {
-    id: 8,
-    value: "Cour d'appel (CA)",
-    label: "Cour d'appel (CA)"
-  },
-];
+
+import Natures from "app/main/constants/Natures";
+import Types from "app/main/constants/Types";
+import Procedures from "app/main/constants/Procedures";
 
 const status = [
   {
@@ -76,176 +31,203 @@ const status = [
   }
 ];
 
-const types = [
-  {
-    id: 1,
-    value: "Demande",
-    label: "Demande"
-  },
-  {
-    id: 2,
-    value: "Défense",
-    label: "Défense"
-  }
-];
-
-const nature = [
-  {
-    id: 1,
-    value: "Assurances",
-    label: "Assurances"
-  },
-  {
-    id: 2,
-    value: `Bail d'habitation`,
-    label: `Bail d'habitation`
-  },
-  {
-    id: 3,
-    value: "Civil",
-    label: "Civil"
-  },
-  {
-    id: 4,
-    value: "Copropriété",
-    label: "Copropriété"
-  },
-  {
-    id: 5,
-    value: "Droit bancaire",
-    label: "Droit bancaire"
-  },
-  {
-    id: 6,
-    value: "Forfait justice",
-    label: "Forfait justice"
-  },
-  {
-    id: 7,
-    value: "Immobilier",
-    label: "Immobilier"
-  },
-  {
-    id: 8,
-    value: "Prêt immobilier",
-    label: "Prêt immobilier"
-  },
-  {
-    id: 9,
-    value: "Responsabilité civile professionnelle",
-    label: "Responsabilité civile professionnelle"
-  },
-  {
-    id: 10,
-    value: "VEFA",
-    label: "VEFA"
-  }
-];
-
-const createdDate = [
-  {
-    id: 1,
-    value: "14-09-2017 16:19:56	",
-    label: "14-09-2017 16:19:56	"
-  },
-  {
-    id: 2,
-    value: "14-09-2017 16:19:56	",
-    label: "14-09-2017 16:19:56	"
-  },
-  {
-    id: 3,
-    value: "14-09-2017 16:19:56	",
-    label: "14-09-2017 16:19:56	"
-  },
-  {
-    id: 4,
-    value: "14-09-2017 16:19:56	",
-    label: "14-09-2017 16:19:56	"
-  }
-];
-
 export default function Filters() {
-  const [selectedProcedure, setSelectedProcedure] = useState("");
-  const [selectedType, setSelectedType] = useState("");
-  const [selectedStatus, setSelectedStatus] = useState("");
-  const [selectedNature, setSelectedNature] = useState("");
-  const [selectedDateOfCreated, setSelectedDateOfCreated] = useState(null);
-  const [selectedTags, setSelectedTags] = useState("");
+  const [allFields, setAllFields] = useState({
+    procedure: "",
+    inputProcedure: "",
+    type: "",
+    inputType: "",
+    status: "",
+    inputStatus: "",
+    nature: "",
+    inputNature: "",
+    dateOfCreation: null,
+    tags: ""
+  });
   return (
     <div className="bgm-10 for-res-flex-direction for-full-screen">
       <div className="row items-center">
         <div className="col-md-4 col-lg-4 col-12 col-xl-2 mb-3 mb-xl-0">
-          <FormControl className="w-full" variant="outlined">
-            <InputLabel style={{ color: "#FFFFFF" }}>Procédure</InputLabel>
-            <Select
-              label="Status"
-              value={selectedProcedure}
-              onChange={(e) => setSelectedProcedure(e.target.value)}
-            >
-              {procedure.map((category) => (
-                <MenuItem value={category.value} key={category.id}>
-                  {category.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <Autocomplete
+            className="autocomplete"
+            options={Procedures}
+            getOptionLabel={(option) => {
+              if (typeof option === "string") {
+                return option;
+              }
+              if (option.inputValue) {
+                return option.inputValue;
+              }
+              return option.value;
+            }}
+            onChange={(event, newValue) => {
+              const typeObj = Procedures.find(
+                (type) => type.value === newValue?.value
+              );
+              if (typeof newValue === "string") {
+                setAllFields({ ...allFields, procedure: newValue });
+              } else if (newValue && newValue.inputValue) {
+                setAllFields({
+                  ...allFields,
+                  procedure: newValue.inputValue
+                });
+              } else if (!newValue) {
+                setAllFields({
+                  ...allFields,
+                  procedure: ""
+                });
+              } else {
+                setAllFields({
+                  ...allFields,
+                  procedure: typeObj?.id
+                });
+              }
+            }}
+            inputValue={allFields.inputProcedure}
+            onInputChange={(event, newInputValue) => {
+              setAllFields({ ...allFields, inputProcedure: newInputValue });
+            }}
+            renderInput={(params) => (
+              <TextField {...params} label="Procédure" />
+            )}
+          />
         </div>
         <div className="col-md-4 col-lg-4 col-12 col-xl-2 mb-3 mb-xl-0">
-          <FormControl className="w-full" variant="outlined">
-            <InputLabel style={{ color: "#FFFFFF" }}>Type</InputLabel>
-            <Select
-              label="Status"
-              value={selectedType}
-              onChange={(e) => setSelectedType(e.target.value)}
-            >
-              {types.map((category) => (
-                <MenuItem value={category.value} key={category.id}>
-                  {category.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <Autocomplete
+            className="autocomplete"
+            options={Types}
+            getOptionLabel={(option) => {
+              if (typeof option === "string") {
+                return option;
+              }
+              if (option.inputValue) {
+                return option.inputValue;
+              }
+              return option.value;
+            }}
+            onChange={(event, newValue) => {
+              const typeObj = Types.find(
+                (type) => type.value === newValue?.value
+              );
+              if (typeof newValue === "string") {
+                setAllFields({ ...allFields, type: newValue });
+              } else if (newValue && newValue.inputValue) {
+                setAllFields({
+                  ...allFields,
+                  type: newValue.inputValue
+                });
+              } else if (!newValue) {
+                setAllFields({
+                  ...allFields,
+                  type: ""
+                });
+              } else {
+                setAllFields({
+                  ...allFields,
+                  type: typeObj?.id
+                });
+              }
+            }}
+            inputValue={allFields.inputType}
+            onInputChange={(event, newInputValue) => {
+              setAllFields({ ...allFields, inputType: newInputValue });
+            }}
+            renderInput={(params) => <TextField {...params} label="Type" />}
+          />
         </div>
         <div className="col-md-4 col-lg-4 col-12 col-xl-2 mb-3 mb-xl-0">
-          <FormControl className="w-full" variant="outlined">
-            <InputLabel style={{ color: "#FFFFFF" }}>Status</InputLabel>
-            <Select
-              label="Status"
-              value={selectedStatus}
-              onChange={(e) => setSelectedStatus(e.target.value)}
-            >
-              {status.map((category) => (
-                <MenuItem value={category.value} key={category.id}>
-                  {category.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <Autocomplete
+            className="autocomplete"
+            options={status}
+            getOptionLabel={(option) => {
+              if (typeof option === "string") {
+                return option;
+              }
+              if (option.inputValue) {
+                return option.inputValue;
+              }
+              return option.value;
+            }}
+            onChange={(event, newValue) => {
+              const typeObj = status.find(
+                (type) => type.value === newValue?.value
+              );
+              if (typeof newValue === "string") {
+                setAllFields({ ...allFields, status: newValue });
+              } else if (newValue && newValue.inputValue) {
+                setAllFields({
+                  ...allFields,
+                  status: newValue.inputValue
+                });
+              } else if (!newValue) {
+                setAllFields({
+                  ...allFields,
+                  status: ""
+                });
+              } else {
+                setAllFields({
+                  ...allFields,
+                  status: typeObj?.id
+                });
+              }
+            }}
+            inputValue={allFields.inputStatus}
+            onInputChange={(event, newInputValue) => {
+              setAllFields({ ...allFields, inputStatus: newInputValue });
+            }}
+            renderInput={(params) => <TextField {...params} label="Status" />}
+          />
         </div>
         <div className="col-md-4 col-lg-4 col-12 col-xl-2 mb-3 mb-xl-0">
-          <FormControl className="w-full" variant="outlined">
-            <InputLabel style={{ color: "#FFFFFF" }}>Nature</InputLabel>
-            <Select
-              label="Status"
-              value={selectedNature}
-              onChange={(e) => setSelectedNature(e.target.value)}
-            >
-              {nature.map((category) => (
-                <MenuItem value={category.value} key={category.id}>
-                  {category.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <Autocomplete
+            className="autocomplete"
+            options={Natures}
+            getOptionLabel={(option) => {
+              if (typeof option === "string") {
+                return option;
+              }
+              if (option.inputValue) {
+                return option.inputValue;
+              }
+              return option.value;
+            }}
+            onChange={(event, newValue) => {
+              const typeObj = Natures.find(
+                (type) => type.value === newValue?.value
+              );
+              if (typeof newValue === "string") {
+                setAllFields({ ...allFields, nature: newValue });
+              } else if (newValue && newValue.inputValue) {
+                setAllFields({
+                  ...allFields,
+                  nature: newValue.inputValue
+                });
+              } else if (!newValue) {
+                setAllFields({
+                  ...allFields,
+                  nature: ""
+                });
+              } else {
+                setAllFields({
+                  ...allFields,
+                  nature: typeObj?.id
+                });
+              }
+            }}
+            inputValue={allFields.inputNature}
+            onInputChange={(event, newInputValue) => {
+              setAllFields({ ...allFields, inputNature: newInputValue });
+            }}
+            renderInput={(params) => <TextField {...params} label="Nature" />}
+          />
         </div>
         <div className="col-md-4 col-lg-4 col-12 col-xl-2 mb-3 mb-xl-0">
           <FormControl className="w-full for-date" variant="outlined">
             <DatePicker
               label="Date de création"
-              value={selectedDateOfCreated}
+              value={allFields.dateOfCreation}
               onChange={(newValue) => {
-                setSelectedDateOfCreated(newValue);
+                setAllFields({ ...allFields, dateOfCreation: newValue });
               }}
               renderInput={(params) => (
                 <TextField
@@ -260,7 +242,10 @@ export default function Filters() {
         <div className="col-md-4 col-lg-4 col-12 col-xl-2 mb-3 mb-xl-0">
           <FormControl className="w-full" variant="outlined">
             <TextField
-              // {...field}
+              value={allFields.tags}
+              onChange={(e) =>
+                setAllFields({ ...allFields, tags: e.target.value })
+              }
               InputLabelProps={{ style: { color: "#FFFFFF" } }}
               style={{ color: "#FFFFFF" }}
               className=""

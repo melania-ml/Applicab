@@ -76,7 +76,7 @@ export const getContacts = createAsyncThunk(
       }
     });
     const data = await response.data;
-    dispatch(setContatcs(data.data));
+    dispatch(setContacts(data.data));
     return { data: data.data, routeParams };
   }
 );
@@ -224,7 +224,7 @@ const contactsSlice = createSlice({
     contacts: []
   }),
   reducers: {
-    setContatcs: (state, action) => {
+    setContacts: (state, action) => {
       state.contacts = action.payload;
     },
     setAllTitles: (state, action) => {
@@ -313,7 +313,7 @@ export const {
   setAllTitles,
   setFormTitles,
   setAllTypes,
-  setContatcs
+  setContacts
 } = contactsSlice.actions;
 
 export default contactsSlice.reducer;

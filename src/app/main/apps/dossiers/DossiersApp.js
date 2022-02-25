@@ -1,57 +1,57 @@
-import FusePageSimple from '@fuse/core/FusePageSimple';
-import withReducer from 'app/store/withReducer';
-import { useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { useDeepCompareEffect } from '@fuse/hooks';
-import { styled } from '@mui/material/styles';
-import DossiersHeader from './components/DossiersHeader';
-import DossiersList from './components/DossiersList';
-import reducer from './store';
-import { getContacts } from './store/dossiersSlice';
-import { getUserData } from './store/userSlice';
+import FusePageSimple from "@fuse/core/FusePageSimple";
+import withReducer from "app/store/withReducer";
+import { useRef } from "react";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { useDeepCompareEffect } from "@fuse/hooks";
+import { styled } from "@mui/material/styles";
+import DossiersHeader from "./components/DossiersHeader";
+import DossiersList from "./components/DossiersList";
+import reducer from "./store";
+import { getContacts } from "./store/dossiersSlice";
+import { getUserData } from "./store/userSlice";
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
-  '& .FusePageSimple-header': {
-    minHeight: 'auto',
-    height: 'auto',
-    [theme.breakpoints.up('lg')]: {     
-      height: 140,
-    },
-  },
-  '& .FusePageSimple-wrapper': {
-    minHeight: '70vh',
-  },
-  '& .FusePageSimple-contentWrapper': {
-    padding: 0,
-    [theme.breakpoints.up('sm')]: {
-      padding: 24,
-      height: '100%',
-    },
-  },
-  '& .FusePageSimple-content': {
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100%',
-  },
-  '& .FusePageSimple-sidebar': {
-    width: 256,
-    border: 0,
-  },
-  '& .for-res-flex-direction':{
-    "@media (max-width: 767px)": {
-      flexDirection: 'column',
+  "& .FusePageSimple-header": {
+    minHeight: "auto",
+    height: "auto",
+    [theme.breakpoints.up("lg")]: {
+      height: 140
     }
   },
-  '& .for-date label':{   
-	  paddingRight: "25px"
+  "& .FusePageSimple-wrapper": {
+    minHeight: "70vh"
   },
-  '& .search-bar-dossier':{
-    width:250,
-    borderRadius:"5px",
+  "& .FusePageSimple-contentWrapper": {
+    padding: 0,
+    [theme.breakpoints.up("sm")]: {
+      padding: 24,
+      height: "100%"
+    }
+  },
+  "& .FusePageSimple-content": {
+    display: "flex",
+    flexDirection: "column",
+    height: "100%"
+  },
+  "& .FusePageSimple-sidebar": {
+    width: 256,
+    border: 0
+  },
+  "& .for-res-flex-direction": {
+    "@media (max-width: 767px)": {
+      flexDirection: "column"
+    }
+  },
+  "& .for-date label": {
+    paddingRight: "25px"
+  },
+  "& .search-bar-dossier": {
+    width: 250,
+    borderRadius: "5px",
     "@media (max-width: 767px)": {
       width: "100%",
-      marginBottom:10
+      marginBottom: 10
     }
   },
   "& .for-full-screen": {
@@ -74,9 +74,9 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
   "& .full-screen-justify-end": {
     "@media (min-width: 1920px)": {
       justifyContent: "end",
-      marginRight:30
+      marginRight: 30
     }
-  },
+  }
 }));
 
 function DossiersApp(props) {
@@ -103,4 +103,4 @@ function DossiersApp(props) {
   );
 }
 
-export default withReducer('contactsApp', reducer)(DossiersApp);
+export default withReducer("contactsApp", reducer)(DossiersApp);
