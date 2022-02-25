@@ -1005,7 +1005,7 @@ function ContactDialog(props) {
                 <b>Information complémentaire</b>
               </div>
               <DatePicker
-                label="Date de création"
+                label="Date de naissance"
                 value={allFields.date_of_birth}
                 maxDate={new Date()}
                 onChange={(newValue) => {
