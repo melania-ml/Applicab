@@ -28,11 +28,15 @@ import { useDispatch, useSelector } from "react-redux";
 // import EtapesTable from "./EtapesTable";
 import { selectContacts } from "app/main/apps/Etapes/store/etapesSlice";
 // import { selectContacts } from "../store/etapesSlice";
-import { openEditContactDialog } from "../../store/dossiersSlice";
+import {
+  openEditContactDialog,
+  openNewContactDialog,
+} from "../../store/dossiersSlice";
 import EtapesTable from "app/main/apps/Etapes/components/EtapesTable";
 import EtapesMultiSelectMenu from "app/main/apps/Etapes/components/EtapesMultiSelectMenu";
 import SidebarContent from "app/main/apps/AdminDashboard/components/SidebarContent";
 import { selectMainTheme } from "app/store/fuse/settingsSlice";
+import EtapesDialog from "app/main/apps/Etapes/components/EtapesDialog/EtapesDialog";
 
 function EtapeTab() {
   function createData(icon, actionType) {
@@ -92,6 +96,9 @@ function EtapeTab() {
 
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
+
+  const [openEtape, setOpenEtape] = useState(false);
+
   const searchText = useSelector(
     ({ contactsApp }) => contactsApp.contacts.searchText
   );
@@ -270,8 +277,9 @@ function EtapeTab() {
                 </Paper>
               </ThemeProvider>
               <Button
-                // component={Link}
-                // to=""
+                onClick={() => {
+                  setOpenEtape(true);
+                }}
                 variant="contained"
                 color="secondary"
                 className="w-full rounded"
@@ -291,9 +299,7 @@ function EtapeTab() {
                     <TableRow>
                       <TableRow className="flex items-center">
                         {row.icon}{" "}
-                        <TableCell style={{ borderBottom: "none" }}
-                        onClick
-                        >
+                        <TableCell style={{ borderBottom: "none" }} onClick>
                           {row.actionType}
                         </TableCell>
                       </TableRow>
@@ -360,6 +366,7 @@ function EtapeTab() {
           </Grid>
         </Grid>
       </Box>
+      <EtapesDialog isOpen={openEtape} onCloseDialog={setOpenEtape} />
     </motion.div>
   );
 }
