@@ -82,7 +82,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractUser):
     username = None
-    email = CIEmailField(_('email address'), unique=True)
+    email = CIEmailField(_('email address'), unique=True, blank=True, null=True)
     password = models.CharField(max_length=256)
     first_name = models.CharField(max_length=40,
                                   validators=[RegexValidator(r'^[a-zA-Z ]*$', 'Only characters are allowed.')],
@@ -121,8 +121,8 @@ class User(AbstractUser):
     address = models.CharField(max_length=255, null=True, blank=True)
     website = models.CharField(max_length=255, null=True, blank=True)
     city = models.CharField(max_length=255, null=True, blank=True)
-    postal_code = models.IntegerField(null=True, blank=True)
-    capital_social = models.IntegerField(null=True, blank=True)
+    postal_code = models.CharField(max_length=255, null=True, blank=True)
+    capital_social = models.CharField(max_length=255, null=True, blank=True)
     RCS_city = models.CharField(max_length=255, null=True, blank=True)
     native_city = models.CharField(max_length=255, null=True, blank=True)
     number = models.CharField(max_length=255, null=True, blank=True)

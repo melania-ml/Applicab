@@ -215,8 +215,8 @@ class userUpdateViewSet(generics.RetrieveUpdateDestroyAPIView):
     def retrieve(self, request, *args, **kwargs):
         response = super(userUpdateViewSet, self).retrieve(request)
         # prepare response
-        res = ResponseInfo(response.data, SUCCESS, True, 200)
-        return Response(res.success_payload())
+        res = ResponseInfo(response.data, SUCCESS, True, status.HTTP_200_OK)
+        return Response(res.success_payload(), status=status.HTTP_200_OK)
 
     def partial_update(self, request, *args, **kwargs):
         title = request.data.get('title', None)
@@ -231,85 +231,70 @@ class userUpdateViewSet(generics.RetrieveUpdateDestroyAPIView):
 
         response = super(userUpdateViewSet, self).partial_update(request)
         # prepare response
-        res = ResponseInfo(response.data, PROFILE_UPDATE_SUCCESS, True, 200)
-        return Response(res.success_payload())
+        res = ResponseInfo(response.data, PROFILE_UPDATE_SUCCESS, True, status.HTTP_200_OK)
+        return Response(res.success_payload(), status=status.HTTP_200_OK)
 
 
 class uploadUserCsvViewSet(APIView):
     def post(self, request):
         csvData = pandas.read_csv(request.data['csv'])
+        if len(csvData) > 50:
+            res = ResponseInfo({}, "Cannot import more than 50 records", False, status.HTTP_200_OK)
+            return Response(res.success_payload(), status=status.HTTP_200_OK)
         successCounter = 0
-        creatList = []
-        _dict = {"email": "",
-                 "first_name": "",
-                 "name": "",
-                 "phone_number": None,
-                 "number": None,
-                 "legal_status": "",
-                 "title": None,
-                 "company_name": "",
-                 "country": "",
-                 "address": "",
-                 "city": "",
-                 "native_city": "",
-                 "nationality": "",
-                 "RCS_city": "",
-                 "fixe": None,
-                 "comments": "",
-                 "profession": "",
-                 "department": "",
-                 "date_of_birth": None,
-                 "client_type": None,
-                 "capital_social": None}
+        nullData = False
+        resString = "Empty row Please add proper data on row number: "
+        null = csvData.notnull()
+        for _, row in null.iterrows():
+            if not row['Type'] or not row['Title'] or not row['Capital Social'] or not row['Number'] \
+                    or not row['Mobile'] or not row['Comments'] or not row['Fixe'] or not row['Profession'] \
+                    or not row['Department'] or not row['DOB'] or not row['Nationality'] or not row['Native City'] \
+                    or not row['Legal Status'] or not row['Country'] or not row['Address'] or not row['City'] \
+                    or not row['First Name'] or not row['RCS City'] or not row['Company Name']:
+                resString += str(_) + ','
+                nullData = True
+        if nullData:
+            res = ResponseInfo({}, resString, False, status.HTTP_200_OK)
+            return Response(res.success_payload(), status=status.HTTP_200_OK)
+
         for _, row in csvData.iterrows():
             try:
-                if type(row["Email"]) is str:
-                    _dict['email'] = row["Email"]
-                    if type(row["Legal Status"]) is str: _dict['legal_status'] = row["Legal Status"]
-                    if type(row["Company Name"]) is str: _dict['company_name'] = row["Company Name"]
-                    if type(row["Country"]) is str: _dict['country'] = row["Country"]
-                    if type(row["Address"]) is str: _dict['address'] = row["Address"]
-                    if type(row["City"]) is str: _dict['city'] = row["City"]
-                    if type(row["RCS City"]) is str: _dict['RCS_city'] = row["RCS City"]
-                    if type(row["First Name"]) is str: _dict['first_name'] = row["First Name"]
-                    if type(row["DOB"]) is str: _dict['date_of_birth'] = datetime.strptime(row["DOB"], '%m/%d/%Y')
-                    if type(row["Nationality"]) is str: _dict['nationality'] = row["Nationality"]
-                    if type(row["Native City"]) is str: _dict['native_city'] = row["Native City"]
-                    if type(row["Department"]) is str: _dict['department'] = row["Department"]
-                    if type(row["Profession"]) is str: _dict['profession'] = row["Profession"]
-                    if type(row["Comments"]) is str: _dict['comments'] = row["Comments"]
-                    if type(row["Fixe"]) is str: _dict['fixe'] = int(row["Fixe"])
-                    try:
-                        _dict['capital_social'] = int(row["Capital Social"])
-                    except:
-                        _dict['capital_social'] = None
-                    try:
-                        _dict['phone_number'] = int(row["Number"])
-                    except:
-                        _dict['phone_number'] = None
-                    try:
-                        _dict['number'] = int(row["Mobile"])
-                    except:
-                        _dict['number'] = None
-                    if type(row["Title"]) is str:
-                        title = Client_title.objects.filter(title=row["Title"]).first()
-                        if title:
-                            _dict['title'] = title
-                        else:
-                            title = Client_title.objects.create(title=row["Title"],legal_status=row["Legal Status"])
-                            _dict['title'] = title
+                _dict = {'email': row["Email"], 'legal_status': row["Legal Status"],
+                         'company_name': row["Company Name"], 'country': row["Country"], 'address': row["Address"],
+                         'city': row["City"], 'RCS_city': row["RCS City"], 'first_name': row["First Name"],
+                         'date_of_birth': datetime.strptime(row["DOB"], '%m/%d/%Y'), 'nationality': row["Nationality"],
+                         'native_city': row["Native City"], 'department': row["Department"],
+                         'profession': row["Profession"], 'comments': row["Comments"], 'fixe': row["Fixe"]}
+                try:
+                    _dict['capital_social'] = int(row["Capital Social"])
+                except:
+                    _dict['capital_social'] = None
+                try:
+                    _dict['phone_number'] = int(row["Number"])
+                except:
+                    _dict['phone_number'] = None
+                try:
+                    _dict['number'] = int(row["Mobile"])
+                except:
+                    _dict['number'] = None
+                title = Client_title.objects.filter(title=row["Title"]).first()
+                if title:
+                    _dict['title'] = title
+                else:
+                    title = Client_title.objects.create(title=row["Title"], legal_status=row["Legal Status"])
+                    _dict['title'] = title
 
-                    if type(row["Type"]) is str:
-                        clientType = Client_type.objects.filter(client_type=row['Type']).first()
-                        if clientType:
-                            _dict['client_type'] = clientType
-                        else:
-                            clientType = Client_type.objects.create(client_type=row['Type'])
-                            _dict['client_type'] = clientType
-                    creatList.append(_dict)
-                    User.objects.create(**_dict)
-                    successCounter += 1
+                clientType = Client_type.objects.filter(client_type=row['Type']).first()
+                if clientType:
+                    _dict['client_type'] = clientType
+                else:
+                    clientType = Client_type.objects.create(client_type=row['Type'])
+                    _dict['client_type'] = clientType
+                User.objects.create(**_dict)
+                successCounter += 1
             except Exception as e:
                 pass
-        res = ResponseInfo({"success": True, "data": str(successCounter) + " record imported out of " + str(len(csvData))}, USER_REGISTERED_SUCCESSFULLY, True, 200)
+        res = ResponseInfo(
+            {"data": str(successCounter) + " record imported out of " + str(len(csvData))},
+            USER_REGISTERED_SUCCESSFULLY, True, 200)
         return Response(res.success_payload())
