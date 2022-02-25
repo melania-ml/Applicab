@@ -4,9 +4,6 @@ import _ from "@lodash";
 import {
   Typography,
   Toolbar,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
   DialogContent,
   DialogActions,
   Dialog,
@@ -17,20 +14,11 @@ import {
   InputLabel,
   Select,
   TextField,
-  Autocomplete,
-  InputAdornment,
-  Chip,
   Icon,
 } from "@mui/material";
 import DatePicker from "@mui/lab/DatePicker";
-import Countries from "../../../../constants/Countries";
-import Nationalities from "../../../../constants/Nationalities";
-import Departments from "../../../../constants/Departments";
-import Types from "../../../../constants/Types";
-import EnterpriseTitles from "../../../../constants/EnterpriseTitles";
-import Status from "../../../../constants/Status";
-import ClientStatus from "../../../../constants/ClientStatus";
-import PersonTitles from "../../../../constants/PersonTitles";
+import Statut from "app/main/constants/Statut";
+import Clients from "app/main/constants/Clients";
 
 import {
   updateContact,
@@ -43,7 +31,12 @@ const tags = [];
 
 function EtapesDialog(props) {
   const [allFields, setAllFields] = useState({
+    position: "",
+    clientStatus: "Case",
+    step: "Etapes that are fixed Value",
     type: "Client",
+    rename: "",
+    dateValue: null,
     legalStatus: "Enterprise",
     title: "",
     companyName: "",
@@ -61,13 +54,11 @@ function EtapesDialog(props) {
     mobile2: "",
     comments: "",
     tags: [],
-    status: "Actif",
-    dateValue: null,
+    status: "dossier that are fixed Value ",
     department: "",
     nationality: "",
     nativeCity: "",
     profession: "",
-    clientStatus: "",
   });
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
@@ -111,11 +102,7 @@ function EtapesDialog(props) {
       allFields.type !== "Client" &&
       allFields.legalStatus === "Personne"
     ) {
-      if (
-        allFields.type &&
-        allFields.title &&
-        allFields.name
-      ) {
+      if (allFields.type && allFields.title && allFields.name) {
         setIsValid(true);
       } else {
         setIsValid(false);
@@ -154,14 +141,14 @@ function EtapesDialog(props) {
       /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     if (value) {
       if (regex.test(value) === false) {
-        return false
+        return false;
       } else {
-        return true
+        return true;
       }
     } else {
-      return false
+      return false;
     }
-  }
+  };
 
   const checkIsDisable = (name, value) => {
     if (name === "companyName") {
@@ -171,7 +158,7 @@ function EtapesDialog(props) {
         setErrors({ ...errors, companyName: "Must enter a Company name" });
       }
     }
-    if (allFields.type !== 'Client' && allFields.legalStatus === 'Personne') {
+    if (allFields.type !== "Client" && allFields.legalStatus === "Personne") {
       if (name === "name") {
         if (value) {
           setErrors({ ...errors, name: "" });
@@ -180,7 +167,16 @@ function EtapesDialog(props) {
         }
       }
     }
-    if (allFields.type === 'Client') {
+    if (allFields.type !== "Position" && allFields.position === "Position") {
+      if (name === "Position") {
+        if (value) {
+          setErrors({ ...errors, name: "" });
+        } else {
+          setErrors({ ...errors, name: "Must enter a Position" });
+        }
+      }
+    }
+    if (allFields.type === "Client") {
       if (name === "name") {
         if (value) {
           setErrors({ ...errors, name: "" });
@@ -225,8 +221,8 @@ function EtapesDialog(props) {
         <Toolbar className="flex w-full">
           <Typography variant="subtitle1" color="inherit">
             {contactDialog.type === "new"
-              ? "Nouveau contact"
-              : "Modifier l’étape : Codes d'accès AppliCab envoi au(x) client(s) "}
+              ? "Nouveau Etapes"
+              : " Ajouter une nouvelle étape "}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -238,69 +234,63 @@ function EtapesDialog(props) {
       >
         <DialogContent classes={{ root: "p-24" }}>
           <div className="row">
-            <FormControl className="flex w-full mb-12" variant="outlined">
-              <InputLabel>Statut</InputLabel>
-              <Select
-                label="Statut"
-                value={allFields.clientStatus}
-                onChange={(e) =>
-                  setAllFields({
-                    ...allFields,
-                    clientStatus: e.target.value,
-                  })
-                }
-              >
-                {ClientStatus.map((category) => (
-                  <MenuItem value={category.value} key={category.id}>
-                    {category.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-
-            <FormControl className="flex w-full mb-12" variant="outlined">
-              <InputLabel>Dossier</InputLabel>
-              <Select
-                label="Dossier"
-                value={allFields.clientStatus}
-                onChange={(e) =>
-                  setAllFields({
-                    ...allFields,
-                    clientStatus: e.target.value,
-                  })
-                }
-              >
-                {ClientStatus.map((category) => (
-                  <MenuItem value={category.value} key={category.id}>
-                    {category.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-
-            <FormControl className="flex w-full mb-12" variant="outlined">
-              <InputLabel>Étape</InputLabel>
-              <Select
-                label="Étape"
-                value={allFields.clientStatus}
-                onChange={(e) =>
-                  setAllFields({
-                    ...allFields,
-                    clientStatus: e.target.value,
-                  })
-                }
-              >
-                {ClientStatus.map((category) => (
-                  <MenuItem value={category.value} key={category.id}>
-                    {category.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-
             <TextField
               className="mb-12"
-              name="Renommers"
+              name="Position"
+              label="Position"
+              variant="outlined"
+              fullWidth
+              value={allFields.position}
+              error={errors?.position}
+              helperText={errors?.position}
+              onChange={(e) => {
+                setAllFields({
+                  ...allFields,
+                  position: e.target.value,
+                });
+                checkIsDisable("name", e.target.value);
+              }}
+            />
+            <TextField
+              className="mb-12"
+              name="Dossier"
+              label="Dossier"
+              disabled
+              variant="outlined"
+              fullWidth
+              value={allFields.status}
+              error={errors?.status}
+              helperText={errors?.status}
+              onChange={(e) => {
+                setAllFields({
+                  ...allFields,
+                  status: e.target.value,
+                });
+                checkIsDisable("name", e.target.value);
+              }}
+            />
+            <TextField
+              className="mb-12"
+              name="Étape"
+              label="Étape"
+              disabled
+              variant="outlined"
+              fullWidth
+              value={allFields.step}
+              error={errors?.step}
+              helperText={errors?.step}
+              onChange={(e) => {
+                setAllFields({
+                  ...allFields,
+                  step: e.target.value,
+                });
+                checkIsDisable("name", e.target.value);
+              }}
+            />
+            <TextField
+              className="mb-12"
+              name="Renommer"
+              type="text"
               label="Renommer"
               variant="outlined"
               fullWidth
@@ -315,7 +305,26 @@ function EtapesDialog(props) {
                 checkIsDisable("name", e.target.value);
               }}
             />
-           
+            <FormControl className="flex w-full mb-12" variant="outlined">
+              <InputLabel>Statut</InputLabel>
+              <Select
+                label="Statut"
+                value={allFields.clientStatus}
+                onChange={(e) =>
+                  setAllFields({
+                    ...allFields,
+                    clientStatus: e.target.value,
+                  })
+                }
+              >
+                {Statut.map((category) => (
+                  <MenuItem value={category.value} key={category.id}>
+                    {category.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
             <DatePicker
               label="Date"
               value={allFields.dateValue}
@@ -327,25 +336,47 @@ function EtapesDialog(props) {
                 <TextField className="w-full mb-12" {...params} />
               )}
             />
-            <br></br><br></br>
-
-            <div className="mb-12">
-              <b>Message</b>
-            </div>
-
-            <FormControl className="flex w-full mb-12" variant="outlined">
-              <InputLabel>Choisissez un client</InputLabel>
-              <Select
-                label="Choisissez un client"
-                value={allFields.clientStatus}
-                onChange={(e) =>
-                  setAllFields({
-                    ...allFields,
-                    clientStatus: e.target.value,
-                  })
-                }
+            <br />
+            <br />
+            <br />
+            <div className="px-18">
+              <Button
+                variant="outlined"
+                style={{ borderRadius: 5 }}
+                color="secondary"
               >
-                {ClientStatus.map((category) => (
+                <Icon
+                  style={{
+                    color: "secondary",
+                    fontSize: "large",
+                    margin: "10px",
+                  }}
+                >
+                  notifications
+                </Icon>
+                Ajouter une notification
+              </Button>
+              <br />
+              <br />
+              <br />
+              <h2>
+                <b>Message</b>
+              </h2>
+              <br />
+            </div>
+            <FormControl className="flex w-full mb-12" variant="outlined">
+              <InputLabel>Choisissez un ou plusieurs clients</InputLabel>
+              <Select
+                label="Choisissez un ou plusieurs clients"
+                // value={allFields.name}
+                // onChange={(e) =>
+                //   setAllFields({
+                //     ...allFields,
+                //     name: e.target.value,
+                //   })
+                // }
+              >
+                {Clients.map((category) => (
                   <MenuItem value={category.value} key={category.id}>
                     {category.label}
                   </MenuItem>
@@ -355,42 +386,25 @@ function EtapesDialog(props) {
 
             <TextField
               className="mb-12"
-              name="Autres destinataires"
-              label="Autres destinataires"
+              name="Object"
+              label="Object"
               variant="outlined"
               fullWidth
-              value={allFields.name}
-              error={errors?.name}
-              helperText={errors?.name}
+              value={allFields.profession}
+              error={errors?.profession}
+              helperText={errors?.profession}
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  name: e.target.value,
-                });
-                checkIsDisable("name", e.target.value);
-              }}
-            />
-
-            <TextField
-              className="mb-12"
-              name="Subject"
-              label="Subject*"
-              variant="outlined"
-              fullWidth
-              value={allFields.name}
-              error={errors?.name}
-              helperText={errors?.name}
-              onChange={(e) => {
-                setAllFields({
-                  ...allFields,
-                  name: e.target.value,
+                  profession: e.target.value,
                 });
                 checkIsDisable("name", e.target.value);
               }}
             />
             <TextField
               className="mb-12"
-              label=""
+              label="Message"
+              type="text"
               variant="outlined"
               multiline
               rows={8}
@@ -403,15 +417,16 @@ function EtapesDialog(props) {
                 })
               }
             />
-
-            <div className="mb-12">
-              <b>Documents</b>
-            </div>
           </div>
-          <div className="px-16">
+          <div className="px-18">
+            <br />
+            <h2>
+              <b>Documents</b>
+            </h2>
+            <br />
             <Button
               variant="outlined"
-              style={{ borderRadius: 0 }}
+              style={{ borderRadius: 5, marginRight: 7 }}
               color="secondary"
             >
               <Icon
@@ -426,9 +441,11 @@ function EtapesDialog(props) {
               Ajouter un document
             </Button>
           </div>
-            <br></br><br></br> <br></br><br></br> <br></br><br></br> <br></br><br></br>
+          <br />
+          <br />
+          <br />
+          <br />
         </DialogContent>
- 
         <DialogActions className="justify-between p-4 pb-16">
           <div className="px-16">
             <Button
