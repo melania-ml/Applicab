@@ -125,6 +125,18 @@ function ContactDialog(props) {
   }, [allFields.legal_status]);
 
   useEffect(() => {
+    if (typeof allFields.client_type === "object") {
+      setAllFields({
+        ...allFields,
+        client_type: allFields.client_type.client_type
+      });
+    }
+    if (typeof allFields.title === "object") {
+      setAllFields({
+        ...allFields,
+        title: allFields.title.title
+      });
+    }
     const isEmpty = Object.values(errors).every((x) => x === null || x === "");
     if (
       allFields.client_type === "Client" &&
@@ -226,11 +238,25 @@ function ContactDialog(props) {
   }
 
   function onSubmit(param) {
+    const type = param === "invite" ? true : false;
     if (contactDialog.type === "new") {
-      const type = param === "invite" ? true : false;
       dispatch(addContact({ ...allFields, is_invite: type }));
     } else {
-      //dispatch(updateContact({ ...contactDialog.data, ...data }));
+      const typeObj = types.find(
+        (type) => type.client_type === allFields?.client_type
+      );
+      const titleObj = formTitles.find(
+        (type) => type.title === allFields?.title
+      );
+      dispatch(
+        updateContact({
+          ...allFields,
+          is_invite: type,
+          client_type: typeObj?.client_type,
+          title: titleObj?.title,
+          id: contactDialog.data.id
+        })
+      );
     }
     closeComposeDialog();
   }

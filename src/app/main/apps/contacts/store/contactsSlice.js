@@ -96,7 +96,6 @@ export const addContact = createAsyncThunk(
       .catch((errors) => {
         return dispatch(addContactError(errors));
       });
-    //dispatch(getContacts());
     return data;
   }
 );
@@ -104,13 +103,17 @@ export const addContact = createAsyncThunk(
 export const updateContact = createAsyncThunk(
   "contactsApp/contacts/updateContact",
   async (contact, { dispatch, getState }) => {
-    const response = await axios.post("/api/contacts-app/update-contact", {
-      contact
-    });
-    const data = await response.data;
-
-    dispatch(getContacts());
-
+    const response = await axios
+      .patch(`auth/user/updateUser/${contact.id}`, contact)
+      .then((data) => {
+        if (data.data.status === 200 && data.data.success) {
+          dispatch(showMessage({ message: data.data.message }));
+          dispatch(getContacts());
+        }
+      })
+      .catch((errors) => {
+        console.error(errors);
+      });
     return data;
   }
 );

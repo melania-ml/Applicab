@@ -24,12 +24,15 @@ function ContactsMultiSelectMenu(props) {
     setAnchorEl(event.currentTarget);
   }
 
-  function closeSelectedContactsMenu() {
+  const closeSelectedContactsMenu = () => {
     setAnchorEl(null);
-  }
-  function handleClose() {
+  };
+  const handleClose = () => {
     setDeleteConfirmation(false);
-  }
+  };
+  const deleteContact = () => {
+    dispatch(removeContacts(selectedContactIds));
+  };
   return (
     <>
       <IconButton
@@ -50,7 +53,6 @@ function ContactsMultiSelectMenu(props) {
         <MenuList>
           <MenuItem
             onClick={() => {
-              //dispatch(removeContacts(selectedContactIds));
               closeSelectedContactsMenu();
               setDeleteConfirmation(true);
             }}
@@ -65,6 +67,7 @@ function ContactsMultiSelectMenu(props) {
       <DeleteConfirmationDialog
         open={deleteConfirmation}
         onClose={handleClose}
+        onDelete={deleteContact}
         subTitle={"Voulez-vous vraiment supprimer ce contact ?"}
       />
     </>

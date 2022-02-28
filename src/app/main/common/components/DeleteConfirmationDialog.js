@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 
 function DeleteConfirmationDialog(props) {
-  const { open, onClose, title, subTitle } = props;
+  const { open, onClose, onDelete, title, subTitle } = props;
   return (
     <Dialog
       classes={{
@@ -54,6 +54,7 @@ function DeleteConfirmationDialog(props) {
               variant="contained"
               color="secondary"
               style={{ borderRadius: 5 }}
+              onClick={onDelete}
             >
               Supprimer
             </Button>

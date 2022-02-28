@@ -64,6 +64,13 @@ function ContactsList(props) {
       {
         Header: "Nom",
         accessor: "last_name",
+        Cell: ({ row }) => {
+          return (
+            <span>
+              {row.original.first_name} {row.original.last_name}
+            </span>
+          );
+        },
         sortable: true
       },
       {
