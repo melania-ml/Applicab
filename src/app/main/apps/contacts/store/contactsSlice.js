@@ -130,9 +130,18 @@ export const removeContact = createAsyncThunk(
 export const removeContacts = createAsyncThunk(
   "contactsApp/contacts/removeContacts",
   async (contactIds, { dispatch, getState }) => {
-    await axios.post("/api/contacts-app/remove-contacts", { contactIds });
-
-    return contactIds;
+    const response = await axios
+      .delete("auth/user/bulkDeleteUser", { data: { user_ids: contactIds } })
+      .then((data) => {
+        if (data.data.status === 200 && data.data.success) {
+          dispatch(showMessage({ message: data.data.message }));
+          dispatch(getContacts());
+        }
+      })
+      .catch((errors) => {
+        console.error(errors);
+      });
+    return data;
   }
 );
 
