@@ -5,6 +5,7 @@ from rest_framework import routers
 
 urlpatterns = [
     path('registerClient', registerClient.as_view(), name="registerClient"),
+    path('bulkDeleteUser', registerClient.as_view(), name="bulkDeleteUser"),
     path('loginClient', loginClient.as_view(), name="loginClient"),
     path('validateEmailOtp', validateEmailOtp.as_view(), name="validateEmailOtp"),
     path('resendEmailOtp', validateEmailOtp.as_view(), name="resendEmailOtp"),

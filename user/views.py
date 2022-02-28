@@ -35,7 +35,7 @@ class registerClient(APIView):
         emailOtp = secretsGenerator.randrange(100000, 999999)
         setPasswordToken = ''.join(secrets.choice(string.ascii_uppercase + string.digits)
                                    for i in range(16))
-        request.data['emil_otp'] = emailOtp
+        request.data['email_otp'] = emailOtp
         request.data['password'] = setPasswordToken
         request.data['email_token'] = setPasswordToken.lower()
 
@@ -73,6 +73,19 @@ class registerClient(APIView):
                            status.HTTP_401_UNAUTHORIZED)
         return Response(res.success_payload(), status.HTTP_401_UNAUTHORIZED)
 
+    def delete(self, request):
+        try:
+            ids = request.data.get('user_ids', None)
+            if ids:
+                User.objects.filter(id__in=ids).delete()
+                res = ResponseInfo({}, CONTACT_DELETED, False, status.HTTP_200_OK)
+                return Response(res.success_payload(), status=status.HTTP_200_OK)
+            res = ResponseInfo({}, USER_NOT_FOUND, False, status.HTTP_401_UNAUTHORIZED)
+            return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
+        except Exception as err:
+            res = ResponseInfo(err, "Something went wrong", False, status.HTTP_401_UNAUTHORIZED)
+            return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
 
 @authentication_classes([])
 @permission_classes([])
@@ -102,8 +115,8 @@ class validateEmailOtp(APIView):
     def post(self, request):
         emailOtp = request.data.get('emailOtp', None)
         try:
-            userData = User.objects.get(emil_otp=emailOtp)
-            userData.emil_otp = None
+            userData = User.objects.get(email_otp=emailOtp)
+            userData.email_otp = None
             userData.save()
             res = ResponseInfo({'validation': True, 'setPasswordToken': userData.email_token},
                                OTP_VALID_SUCCESSFULLY, True, status.HTTP_200_OK)
@@ -121,7 +134,7 @@ class validateEmailOtp(APIView):
             emailOtp = secretsGenerator.randrange(100000, 999999)
 
             userData = User.objects.get(id=userid)
-            userData.emil_otp = emailOtp
+            userData.emial_otp = emailOtp
             userData.email_token = setPasswordToken.lower()
             userData.email_otp_date = datetime.now()
             userData.save()
@@ -220,6 +233,9 @@ class userUpdateViewSet(generics.RetrieveUpdateDestroyAPIView):
 
     def partial_update(self, request, *args, **kwargs):
         title = request.data.get('title', None)
+        client_type = request.data.get('client_type', None)
+        is_invite = request.data.get('is_invite', False)
+        email = request.data.get('email', None)
         if title is not None:
             clientTitle = Client_title.objects.filter(title=request.data['title']).first()
             if clientTitle:
@@ -228,6 +244,35 @@ class userUpdateViewSet(generics.RetrieveUpdateDestroyAPIView):
                 createTitle = Client_title(title=request.data['title'])
                 createTitle.save()
                 request.data['title'] = createTitle.id
+
+        if client_type is not None:
+            clientType = Client_type.objects.filter(client_type=client_type).first()
+            if clientType:
+                request.data['client_type'] = clientType.id
+            else:
+                createType = Client_type(client_type=client_type)
+                createType.save()
+                request.data['client_type'] = createType.id
+
+        if is_invite:
+            first_name = request.data.get('first_name', None)
+            user_id = request.data.get('user_id', None)
+
+            secretsGenerator = secrets.SystemRandom()
+            emailOtp = secretsGenerator.randrange(100000, 999999)
+            setPasswordToken = ''.join(secrets.choice(string.ascii_uppercase + string.digits)
+                                       for i in range(16))
+            request.data['email_otp'] = emailOtp
+            request.data['email_token'] = setPasswordToken.lower()
+
+            stPasswordText = emailText.setPassword() | emailText.commonUrls()
+            stPasswordText['otp'] = emailOtp
+            stPasswordText['text1'] = stPasswordText['text1'].format(userName=first_name)
+            stPasswordText['button_url'] = stPasswordText['button_url'] + str(user_id)
+
+            send_email([email],
+                       'Saisissez ' + str(emailOtp) + ' comme code de confirmation Applicab', 'email.html',
+                       stPasswordText)
 
         response = super(userUpdateViewSet, self).partial_update(request)
         # prepare response

@@ -103,7 +103,7 @@ class User(AbstractUser):
     email_otp_date = models.DateTimeField(auto_now=False, default=django.utils.timezone.now)
 
     is_active = models.BooleanField(default=False)
-    emil_otp = models.IntegerField(default=None, blank=True, null=True)
+    email_otp = models.IntegerField(default=None, blank=True, null=True)
     email_token = models.CharField(max_length=40, blank=True, null=True)
     forgot_password_token = models.CharField(max_length=40, blank=True, null=True)
     # token is used to reset pw
