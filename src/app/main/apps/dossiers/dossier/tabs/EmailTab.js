@@ -17,7 +17,7 @@ import {
   Icon,
   Input,
 } from "@mui/material";
-import { setContactsSearchText } from "app/main/apps/Email/store/emailSlice";
+// import { setContactsSearchText } from "app/main/apps/Email/store/emailSlice";
 import { motion } from "framer-motion";
 import FuseMessage from "@fuse/core/FuseMessage";
 
