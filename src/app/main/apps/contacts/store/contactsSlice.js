@@ -90,6 +90,8 @@ export const addContact = createAsyncThunk(
         if (data.data.status === 201 && data.data.success) {
           dispatch(showMessage({ message: data.data.message }));
           dispatch(getContacts());
+          dispatch(getAllTitles());
+          dispatch(getAllTypes());
           return dispatch(addContactSuccess());
         }
       })

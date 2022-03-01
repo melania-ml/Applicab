@@ -26,10 +26,8 @@ import DatePicker from "@mui/lab/DatePicker";
 import Countries from "../../../../constants/Countries";
 import Nationalities from "../../../../constants/Nationalities";
 import Departments from "../../../../constants/Departments";
-import EnterpriseTitles from "../../../../constants/EnterpriseTitles";
 import Status from "../../../../constants/Status";
 import ClientStatus from "../../../../constants/ClientStatus";
-import PersonTitles from "../../../../constants/PersonTitles";
 
 import {
   updateContact,
@@ -545,22 +543,6 @@ function ContactDialog(props) {
                   <TextField {...params} label="Choisissez un titre*" />
                 )}
               />
-              {/* <Autocomplete
-                className="flex w-full mb-12"
-                disablePortal
-                style={{ color: "#FFFFFF" }}
-                options={EnterpriseTitles}
-                value={allFields.title}
-                onChange={(e, newValue) => {
-                  setAllFields({
-                    ...allFields,
-                    title: newValue.label
-                  });
-                }}
-                renderInput={(params) => (
-                  <TextField {...params} label="Choisissez un titre*" />
-                )}
-              /> */}
               <TextField
                 className="mb-12"
                 label="Nom de la compagnie*"
@@ -859,7 +841,7 @@ function ContactDialog(props) {
                   } else if (newValue && newValue.inputValue) {
                     setAllFields({ ...allFields, title: newValue.inputValue });
                   } else {
-                    setAllFields({ ...allFields, title: newValue.label });
+                    setAllFields({ ...allFields, title: newValue.title });
                   }
                 }}
                 filterOptions={(options, params) => {
@@ -871,7 +853,7 @@ function ContactDialog(props) {
                   if (inputValue.trim() !== "" && !isExisting) {
                     filtered.push({
                       inputValue: inputValue.trim(),
-                      label: `Ajouter "${inputValue.trim()}"`
+                      title: `Ajouter "${inputValue.trim()}"`
                     });
                   }
                   return filtered;
@@ -879,7 +861,7 @@ function ContactDialog(props) {
                 selectOnFocus
                 clearOnBlur
                 handleHomeEndKeys
-                options={PersonTitles}
+                options={formTitles}
                 getOptionLabel={(option) => {
                   if (typeof option === "string") {
                     return option;
@@ -887,10 +869,10 @@ function ContactDialog(props) {
                   if (option.inputValue) {
                     return option.inputValue;
                   }
-                  return option.label;
+                  return option.title;
                 }}
                 renderOption={(props, option) => (
-                  <li {...props}>{option.label}</li>
+                  <li {...props}>{option.title}</li>
                 )}
                 freeSolo
                 renderInput={(params) => (
