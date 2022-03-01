@@ -5,7 +5,6 @@ import AppBar from "@mui/material/AppBar";
 import Hidden from "@mui/material/Hidden";
 import Toolbar from "@mui/material/Toolbar";
 import NavbarToggleButton from "app/fuse-layouts/shared-components/NavbarToggleButton";
-import QuickPanelToggleButton from "app/fuse-layouts/shared-components/quickPanel/QuickPanelToggleButton";
 import UserMenu from "app/fuse-layouts/shared-components/userMenu/UserMenu";
 import clsx from "clsx";
 import { memo } from "react";
@@ -65,8 +64,7 @@ function ToolbarLayout1(props) {
 
             {/* <Hidden lgUp>
             </Hidden>
-
-            <QuickPanelToggleButton /> */}
+*/}
 
             <MessagePanelToggleButton />
 
