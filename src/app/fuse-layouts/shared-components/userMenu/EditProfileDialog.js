@@ -60,6 +60,9 @@ function EditProfileDialog(props) {
   }, [userData]);
 
   const saveProfile = () => {
+    if (!allFields.image) {
+      delete allFields["profile"];
+    }
     dispatch(updateProfileData(allFields, user.data.id));
     props.onClose();
   };
