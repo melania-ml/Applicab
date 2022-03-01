@@ -4,7 +4,6 @@ import FuseShortcuts from "@fuse/core/FuseShortcuts";
 import AppBar from "@mui/material/AppBar";
 import Hidden from "@mui/material/Hidden";
 import Toolbar from "@mui/material/Toolbar";
-import ChatPanelToggleButton from "app/fuse-layouts/shared-components/chatPanel/ChatPanelToggleButton";
 import NavbarToggleButton from "app/fuse-layouts/shared-components/NavbarToggleButton";
 import QuickPanelToggleButton from "app/fuse-layouts/shared-components/quickPanel/QuickPanelToggleButton";
 import UserMenu from "app/fuse-layouts/shared-components/userMenu/UserMenu";
@@ -12,9 +11,6 @@ import clsx from "clsx";
 import { memo } from "react";
 import { useSelector } from "react-redux";
 import { selectToolbarTheme } from "app/store/fuse/settingsSlice";
-// import AdjustFontSize from '../../shared-components/AdjustFontSize';
-// import FullScreenToggle from '../../shared-components/FullScreenToggle';
-// import LanguageSwitcher from '../../shared-components/LanguageSwitcher';
 import NotificationPanelToggleButton from "../../shared-components/notificationPanel/NotificationPanelToggleButton";
 import MessagePanelToggleButton from "../../shared-components/messagePanel/MessagePanelToggleButton";
 
@@ -68,7 +64,6 @@ function ToolbarLayout1(props) {
             <FuseSearch /> */}
 
             {/* <Hidden lgUp>
-              <ChatPanelToggleButton />
             </Hidden>
 
             <QuickPanelToggleButton /> */}
