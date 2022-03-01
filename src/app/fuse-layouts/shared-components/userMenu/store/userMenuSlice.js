@@ -20,6 +20,18 @@ export const updateProfileData = (fields, userId) => async (dispatch) => {
     .patch(`auth/user/updateUser/${userId}`, fields)
     .then((data) => {
       if (data.data.status === 200 && data.data.success) {
+        const localUser = window.localStorage.getItem("User");
+        if (data.data.data.profile) {
+          const parsedObj = JSON.parse(localUser);
+          const newLocalUser = {
+            ...parsedObj,
+            data: {
+              ...parsedObj.data,
+              profile: data.data.data.profile
+            }
+          };
+          window.localStorage.setItem("User", JSON.stringify(newLocalUser));
+        }
         dispatch(setProfileData(data.data.data));
         dispatch(showMessage({ message: data.data.message }));
       }
