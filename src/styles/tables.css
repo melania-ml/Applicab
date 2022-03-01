@@ -27,37 +27,37 @@ Basic Table Styles
   margin-bottom: 30px;
 }
 
-.messagesTab{
+/* .messagesTab{
   margin: -5rem 0rem 4rem 15rem;
-}
+} */
 
 .sendButton{
   margin: 0px 25px 0px 25px;
 }
 
 .senderName{
-  margin: -4.3rem 0rem 3rem 7rem;
+  /* margin: -4.3rem 0rem 3rem 7rem; */
     width: 180px;
     white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis;
 }
-.readMsgTime{
+/* .readMsgTime{
   margin: -5.5rem 0rem 0rem 26rem;
-}
+} */
 .reveiverName{
-  margin: -3.3rem 0rem 0rem 135.4rem;
+  /* margin: -3.3rem 0rem 0rem 135.4rem; */
     width: 120px;
     white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis;
 }
-.reveiveMsgTime{
+/* .reveiveMsgTime{
   margin: -2.5rem 0rem 0rem 148rem;
-}
-.receiverAvatar{
+} */
+/* .receiverAvatar{
   margin-right: 22rem;
-}
+} */
 .caseManagementTabs .MuiTabs-flexContainer.muiltr-heg063-MuiTabs-flexContainer {
   justify-content: center;
 }
@@ -127,6 +127,12 @@ table.simple.borderless tbody tr td {
 table.simple.borderless thead tr th {
   border: none;
 }
+.message-tab-header{
+  flex-direction: inherit;
+}
+.message-searchbar{
+  transform: inherit !important;
+}
 
 @media screen and (max-width: 767px) {
   .caseManagementTabs
@@ -135,6 +141,9 @@ table.simple.borderless thead tr th {
   }
   .res-flex-direction {
     flex-direction: column;
+  }
+  .message-tab-header{
+  flex-direction: column;
   }
 }
 .autocomplete label {

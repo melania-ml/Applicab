@@ -91,10 +91,11 @@ function EmailTab(props) {
         <AppBar
           position="static"
           elevation={0}
-          className="rounded-t-lg ... max-h-96"
+          className="rounded-t-lg ... p-4 flex items-center justify-between message-tab-header"
         >
+          <div className="flex items-center res-flex-direction">
           <Avatar
-            className="w-68 h-68 ml-60 mt-16"
+            className="w-68 h-68 md:ml-24"
             alt="user photo"
             src={
               (allFields.image && URL.createObjectURL(allFields.image)) ||
@@ -104,15 +105,17 @@ function EmailTab(props) {
           <Typography
             variant="subtitle1"
             color="inherit"
-            className="messagesTab"
+            className="messagesTab md:ml-24"
           >
             Altata - SAA-CIV-20210120-003
           </Typography>
+          </div>
+          <div className="md:mr-24 mt-3 mt-md-0">
           <Paper
             component={motion.div}
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 24, opacity: 1, transition: { delay: 0.2 } }}
-            className="flex p-4 items-center search-bar-contact h-48 absolute right-60 ... shadow m-auto"
+            className="flex p-4 search-bar-contact h-48 ... shadow m-auto message-searchbar"
           >
             <Icon color="action">search</Icon>
 
@@ -128,6 +131,7 @@ function EmailTab(props) {
               onChange={(ev) => dispatch(setContactsSearchText(ev))}
             />
           </Paper>
+          </div>
         </AppBar>
         <br />
         <br />
@@ -138,8 +142,9 @@ function EmailTab(props) {
             marginRight: "2rem",
           }}
         >
+          <div className="flex mb-10">
           <Avatar
-            className="w-24 h-24 ml-36 mb-20"
+            className="w-24 h-24 md:ml-36"
             alt="user photo"
             src={
               (allFields.image && URL.createObjectURL(allFields.image)) ||
@@ -149,7 +154,7 @@ function EmailTab(props) {
           <Typography
             variant="subtitle1"
             color="#192A3E"
-            className="senderName"
+            className="senderName ml-2"
           >
             Avocat - Melania Munoz
           </Typography>
@@ -160,7 +165,8 @@ function EmailTab(props) {
           >
             11:12
           </Typography>
-          <Card className="max-w-md ml-36">
+          </div>
+          <Card className="max-w-md md:ml-36">
             <CardContent>
               <Typography variant="body2">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -173,8 +179,9 @@ function EmailTab(props) {
             </CardContent>
           </Card>
           <br />
+          <div className="flex mb-10 justify-end">
           <Avatar
-            className="w-24 h-24 float-right -mt-32 receiverAvatar"
+            className="w-24 h-24 float-right receiverAvatar"
             alt="user photo"
             src={
               (allFields.image && URL.createObjectURL(allFields.image)) ||
@@ -184,18 +191,19 @@ function EmailTab(props) {
           <Typography
             variant="subtitle1"
             color="#192A3E"
-            className="reveiverName"
+            className="reveiverName ml-2"
           >
             Vous Shasha Andrie
           </Typography>
           <Typography
             variant="subtitle1"
             color="#BABABF"
-            className="reveiveMsgTime"
+            className="reveiveMsgTime md:mr-36 sm:mr-2"
           >
             11:20
           </Typography>
-          <Card className="max-w-md float-right mr-36">
+          </div>
+          <Card className="max-w-md float-right md:mr-36">
             <CardContent
               className="max-w-md"
               style={{
