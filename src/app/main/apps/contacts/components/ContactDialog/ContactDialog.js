@@ -402,7 +402,7 @@ function ContactDialog(props) {
               } else {
                 setAllFields({
                   ...allFields,
-                  client_type: newValue.client_type
+                  client_type: newValue?.client_type
                 });
               }
             }}
@@ -415,7 +415,7 @@ function ContactDialog(props) {
               if (inputValue.trim() !== "" && !isExisting) {
                 filtered.push({
                   inputValue: inputValue.trim(),
-                  title: `Ajouter "${inputValue.trim()}"`
+                  client_type: `Ajouter "${inputValue.trim()}"`
                 });
               }
               return filtered;

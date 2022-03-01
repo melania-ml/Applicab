@@ -10,7 +10,6 @@ import ContactsHeader from "./components/ContactsHeader";
 import ContactsList from "./components/ContactsList";
 import reducer from "./store";
 import { getContacts, getAllTitles, getAllTypes } from "./store/contactsSlice";
-import { getUserData } from "./store/userSlice";
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
   "& .FusePageSimple-header": {
@@ -84,7 +83,6 @@ function ContactsApp(props) {
 
   useDeepCompareEffect(async () => {
     await dispatch(getContacts(routeParams));
-    await dispatch(getUserData());
     await dispatch(getAllTitles());
     await dispatch(getAllTypes());
   }, [dispatch, routeParams]);
