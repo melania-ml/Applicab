@@ -29,9 +29,9 @@ function EditProfileDialog(props) {
     website: "",
     address: "",
     city: "",
-    postalCode: "",
-    mobile1: "",
-    mobile2: ""
+    postal_code: "",
+    phone_number: "",
+    fixe: ""
   });
   useEffect(() => {
     setAllFields({
@@ -42,9 +42,9 @@ function EditProfileDialog(props) {
       email: userData.email,
       address: userData.address,
       city: userData.city,
-      postalCode: userData.postal_code,
-      mobile1: userData.phone_number,
-      mobile2: userData.fixe,
+      postal_code: userData.postal_code,
+      phone_number: userData.phone_number,
+      fixe: userData.fixe,
       profile: userData.profile
     });
     const newUser = {
@@ -222,11 +222,11 @@ function EditProfileDialog(props) {
           label="CP"
           variant="outlined"
           fullWidth
-          value={allFields.postalCode}
+          value={allFields.postal_code}
           onChange={(e) => {
             setAllFields({
               ...allFields,
-              postalCode: e.target.value
+              postal_code: e.target.value
             });
           }}
         />
@@ -237,11 +237,11 @@ function EditProfileDialog(props) {
           type="number"
           variant="outlined"
           fullWidth
-          value={allFields.mobile1}
+          value={allFields.phone_number}
           onChange={(e) => {
             setAllFields({
               ...allFields,
-              mobile1: e.target.value
+              phone_number: e.target.value
             });
           }}
         />
@@ -252,11 +252,11 @@ function EditProfileDialog(props) {
           label="Fixe"
           variant="outlined"
           fullWidth
-          value={allFields.mobile2}
+          value={allFields.fixe}
           onChange={(e) => {
             setAllFields({
               ...allFields,
-              mobile2: e.target.value
+              fixe: e.target.value
             });
           }}
         />
