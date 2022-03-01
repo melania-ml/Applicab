@@ -34,30 +34,62 @@ Basic Table Styles
 .sendButton{
   margin: 0px 25px 0px 25px;
 }
+ /* Case management tab messages tab css */
 
 .senderName{
-  /* margin: -4.3rem 0rem 3rem 7rem; */
+  margin: -0.1rem 0rem 0rem 0rem;
     width: 180px;
     white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis;
 }
-/* .readMsgTime{
-  margin: -5.5rem 0rem 0rem 26rem;
-} */
+.readMsgTime{
+  margin: -0.3rem 0rem 0rem 3rem;
+}
 .reveiverName{
-  /* margin: -3.3rem 0rem 0rem 135.4rem; */
-    width: 120px;
+  margin-right: -142rem;
+    width: 180px;
     white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis;
 }
-/* .reveiveMsgTime{
-  margin: -2.5rem 0rem 0rem 148rem;
-} */
-/* .receiverAvatar{
-  margin-right: 22rem;
-} */
+.reveiveMsgTime{
+  margin: -0.2rem 0rem 0rem 146rem;
+}
+.receiverAvatar{
+  margin-right: 1rem;
+}
+
+ /* client interface messages tab css */
+
+ .userName{
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+}
+.msgCounter{
+  margin-left: -8rem;
+  margin-top: 3rem;
+}
+
+.clientAvatar{
+  margin: 0rem 28.4rem -3rem 20rem;
+}
+
+.clientName{
+  margin: -2.4rem 0rem -2rem 7rem
+}
+
+.msgTime{
+  margin: -2.5rem 0rem 1rem 28rem;
+}
+.senderClient{
+  margin: 0rem 0rem -2rem 94rem;
+}
+.senderTime{
+  margin: -2rem 0rem 0rem 113rem;
+}
 .caseManagementTabs .MuiTabs-flexContainer.muiltr-heg063-MuiTabs-flexContainer {
   justify-content: center;
 }

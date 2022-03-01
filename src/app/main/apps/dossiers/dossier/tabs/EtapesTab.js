@@ -15,28 +15,24 @@ import {
   TableBody,
   TableCell,
 } from "@mui/material";
-import { cloneElement, memo } from "react";
 import _ from "@lodash";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
 import { Paper, Input, Button } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { useMemo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import EtapesMultiSelectMenu from "./EtapesMultiSelectMenu";
-// import EtapesTable from "./EtapesTable";
-import { selectContacts } from "app/main/apps/Etapes/store/etapesSlice";
-// import { selectContacts } from "../store/etapesSlice";
+import {
+  selectContacts,
+  setContactsSearchText,
+} from "app/main/apps/Etapes/store/etapesSlice";
 import {
   openEditContactDialog,
   openNewContactDialog,
 } from "../../store/dossiersSlice";
 import EtapesTable from "app/main/apps/Etapes/components/EtapesTable";
 import EtapesMultiSelectMenu from "app/main/apps/Etapes/components/EtapesMultiSelectMenu";
-import SidebarContent from "app/main/apps/AdminDashboard/components/SidebarContent";
 import { selectMainTheme } from "app/store/fuse/settingsSlice";
 import EtapesDialog from "app/main/apps/Etapes/components/EtapesDialog/EtapesDialog";
+import { fontSize } from "@mui/system";
 
 function EtapeTab() {
   function createData(icon, actionType) {
@@ -44,6 +40,9 @@ function EtapeTab() {
   }
 
   const rows = [
+    createData(
+      <h5 style={{ margin: "0px 50px", fontSize: "medium" }}>Tous</h5>
+    ),
     createData(
       <Icon
         style={{
@@ -286,8 +285,7 @@ function EtapeTab() {
               >
                 Nouvelle étape
               </Button>
-              <h1 className="py-16 font-medium">Statut</h1>
-              <h1 className="py-16 font-small">Tous</h1>
+              <h1 className="py-16 text-base font-semibold">Statut</h1>
               <TableBody>
                 {rows.map((row) => (
                   <TableRow
@@ -372,100 +370,3 @@ function EtapeTab() {
 }
 
 export default withRouter(EtapeTab);
-
-{
-  /* <Controller
-                name="name"
-                control={control}
-                render={({ field }) => (
-                    <TextField
-                        {...field}
-                        className="mt-8 mb-16"
-                        //error={!!errors.name}
-                        required
-                        //helperText={errors?.name?.message}
-                        label="Name"
-                        autoFocus
-                        id="name"
-                        variant="outlined"
-                        fullWidth
-                    />
-                )}
-            />
-
-            <Controller
-                name="description"
-                control={control}
-                render={({ field }) => (
-                    <TextField
-                        {...field}
-                        className="mt-8 mb-16"
-                        id="description"
-                        label="Description"
-                        type="text"
-                        multiline
-                        rows={5}
-                        variant="outlined"
-                        fullWidth
-                    />
-                )}
-            />
-
-            <Controller
-                name="categories"
-                control={control}
-                defaultValue={[]}
-                render={({ field: { onChange, value } }) => (
-                    <Autocomplete
-                        className="mt-8 mb-16"
-                        multiple
-                        freeSolo
-                        options={[]}
-                        value={value}
-                        onChange={(event, newValue) => {
-                            onChange(newValue);
-                        }}
-                        renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                placeholder="Select multiple categories"
-                                label="Categories"
-                                variant="outlined"
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                            />
-                        )}
-                    />
-                )}
-            />
-
-            <Controller
-                name="tags"
-                control={control}
-                defaultValue={[]}
-                render={({ field: { onChange, value } }) => (
-                    <Autocomplete
-                        className="mt-8 mb-16"
-                        multiple
-                        freeSolo
-                        options={[]}
-                        value={value}
-                        onChange={(event, newValue) => {
-                            onChange(newValue);
-                        }}
-                        renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                placeholder="Select multiple tags"
-                                label="Tags"
-                                variant="outlined"
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                            />
-                        )}
-                    />
-                )}
-            /> */
-}
