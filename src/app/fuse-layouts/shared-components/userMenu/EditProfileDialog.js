@@ -39,6 +39,7 @@ function EditProfileDialog(props) {
       enterPriseName: userData.company_name,
       name: userData.last_name,
       firstName: userData.first_name,
+      function: userData.function,
       email: userData.email,
       address: userData.address,
       city: userData.city,
