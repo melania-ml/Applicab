@@ -78,12 +78,12 @@ class registerClient(APIView):
             ids = request.data.get('user_ids', None)
             if ids:
                 User.objects.filter(id__in=ids).delete()
-                res = ResponseInfo({}, CONTACT_DELETED, False, status.HTTP_200_OK)
+                res = ResponseInfo({}, CONTACT_DELETED, True, status.HTTP_200_OK)
                 return Response(res.success_payload(), status=status.HTTP_200_OK)
             res = ResponseInfo({}, USER_NOT_FOUND, False, status.HTTP_401_UNAUTHORIZED)
             return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
         except Exception as err:
-            res = ResponseInfo(err, "Something went wrong", False, status.HTTP_401_UNAUTHORIZED)
+            res = ResponseInfo(err, SOMETHING_WENT_WRONG, False, status.HTTP_401_UNAUTHORIZED)
             return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
 
 

@@ -8,9 +8,9 @@ from user.models import User
 def otpExpiration():
     try:
         currentTime = datetime.now() - timedelta(hours=24)
-        User.objects.filter(email_otp_date__lte=currentTime, emil_otp__isnull=False).update(emil_otp=None)
+        User.objects.filter(email_otp_date__lte=currentTime, email_otp__isnull=False).update(email_otp=None)
     except Exception as e:
-        print("oppsss errer")
+        print("Oppsss Crone error")
 
 
 def start():

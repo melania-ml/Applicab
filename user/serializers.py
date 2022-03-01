@@ -18,7 +18,10 @@ class UserSerializer(serializers.ModelSerializer):
                    ]
 
     def create(self, validated_data):
-        return User.objects.create_user(**validated_data)
+        if validated_data['email']:
+            return User.objects.create_user(**validated_data)
+        validated_data.pop('email')
+        return User.objects.create(**validated_data)
 
 
 class LoginSerializer(serializers.ModelSerializer):
