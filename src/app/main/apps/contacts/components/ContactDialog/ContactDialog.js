@@ -146,8 +146,12 @@ function ContactDialog(props) {
   }, [contactDialog.props.open, initDialog]);
 
   useEffect(() => {
-    dispatch(getFormTitles(allFields.legal_status));
-  }, [allFields.legal_status]);
+    if (contactDialog.props.open) {
+      if (allFields.legal_status) {
+        dispatch(getFormTitles(allFields.legal_status));
+      }
+    }
+  }, [contactDialog.props.open, allFields.legal_status]);
 
   useEffect(() => {
     if (typeof allFields.client_type === "object") {
