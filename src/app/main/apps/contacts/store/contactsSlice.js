@@ -235,7 +235,8 @@ const contactsSlice = createSlice({
     titles: [],
     formTitles: [],
     types: [],
-    contacts: []
+    contacts: [],
+    success: false
   }),
   reducers: {
     setContacts: (state, action) => {
@@ -252,11 +253,9 @@ const contactsSlice = createSlice({
     },
     addContactSuccess: (state, action) => {
       state.success = true;
-      state.errors = [];
     },
     addContactError: (state, action) => {
       state.success = false;
-      state.errors = action.payload;
     },
     setContactsSearchText: {
       reducer: (state, action) => {
@@ -323,6 +322,7 @@ export const {
   closeNewContactDialog,
   openEditContactDialog,
   closeEditContactDialog,
+  addContactSuccess,
   addContactError,
   setAllTitles,
   setFormTitles,

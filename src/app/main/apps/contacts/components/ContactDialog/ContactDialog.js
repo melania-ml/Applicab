@@ -70,14 +70,9 @@ function ContactDialog(props) {
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
   const dispatch = useDispatch();
-  const formTitles = useSelector(
-    ({ contactsApp }) => contactsApp.contacts.formTitles
+  const { success, contactDialog, types, formTitles } = useSelector(
+    ({ contactsApp }) => contactsApp.contacts
   );
-  const types = useSelector(({ contactsApp }) => contactsApp.contacts.types);
-  const contactDialog = useSelector(
-    ({ contactsApp }) => contactsApp.contacts.contactDialog
-  );
-
   const initDialog = useCallback(() => {
     if (contactDialog.type === "edit" && contactDialog.type) {
       const data = contactDialog.data;
@@ -111,6 +106,38 @@ function ContactDialog(props) {
       });
     }
   }, [contactDialog.data, contactDialog.type]);
+
+  useEffect(() => {
+    if (success) {
+      setAllFields({
+        client_type: "Client",
+        legal_status: "Enterprise",
+        title: "",
+        company_name: "",
+        country: "",
+        address: "",
+        city: "",
+        postal_code: "",
+        capital_social: "",
+        RCS_city: "",
+        number: "",
+        last_name: "",
+        first_name: "",
+        email: "",
+        phone_number: "",
+        fixe: "",
+        comments: "",
+        tags: [],
+        status: "Actif",
+        date_of_birth: null,
+        department: "",
+        nationality: "",
+        native_city: "",
+        profession: "",
+        civil_status: ""
+      });
+    }
+  }, [success]);
 
   useEffect(() => {
     if (contactDialog.props.open) {
