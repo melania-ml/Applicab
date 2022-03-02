@@ -1,29 +1,8 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Icon,
-  InputAdornment,
-  TextField,
-  Autocomplete
-} from "@mui/material";
+import { FormControl, TextField, Autocomplete } from "@mui/material";
 import { getContacts } from "../store/contactsSlice";
-
-const status = [
-  {
-    id: 1,
-    value: "Actif",
-    label: "Actif"
-  },
-  {
-    id: 2,
-    value: "Inactif",
-    label: "Inactif"
-  }
-];
+import Status from "app/main/constants/Status";
 
 export default function Filters() {
   const dispatch = useDispatch();
@@ -134,7 +113,7 @@ export default function Filters() {
         <div className="col-md-3 col-lg-3 col-12 col-xl-3 mb-3 mb-xl-0">
           <Autocomplete
             className="autocomplete"
-            options={status}
+            options={Status}
             getOptionLabel={(option) => {
               if (typeof option === "string") {
                 return option;

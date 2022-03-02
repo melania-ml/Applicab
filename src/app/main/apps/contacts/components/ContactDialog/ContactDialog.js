@@ -23,11 +23,11 @@ import {
 } from "@mui/material";
 import { createFilterOptions } from "@mui/material/Autocomplete";
 import DatePicker from "@mui/lab/DatePicker";
-import Countries from "../../../../constants/Countries";
-import Nationalities from "../../../../constants/Nationalities";
-import Departments from "../../../../constants/Departments";
-import Status from "../../../../constants/Status";
-import ClientStatus from "../../../../constants/ClientStatus";
+import Countries from "app/main/constants/Countries";
+import Nationalities from "app/main/constants/Nationalities";
+import Departments from "app/main/constants/Departments";
+import Status from "app/main/constants/Status";
+import ClientStatus from "app/main/constants/ClientStatus";
 
 import {
   updateContact,

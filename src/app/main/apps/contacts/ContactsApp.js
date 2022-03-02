@@ -81,10 +81,10 @@ function ContactsApp(props) {
   const pageLayout = useRef(null);
   const routeParams = useParams();
 
-  useDeepCompareEffect(async () => {
-    await dispatch(getContacts(routeParams));
-    await dispatch(getAllTitles());
-    await dispatch(getAllTypes());
+  useDeepCompareEffect(() => {
+    dispatch(getContacts(routeParams));
+    dispatch(getAllTitles());
+    dispatch(getAllTypes());
   }, [dispatch, routeParams]);
 
   return (
