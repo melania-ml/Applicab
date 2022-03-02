@@ -7,11 +7,7 @@ import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import {
-  setContactsUnstarred,
-  setContactsStarred,
-  removeContacts
-} from "../store/contactsSlice";
+import { removeContacts } from "../store/contactsSlice";
 import DeleteConfirmationDialog from "app/main/common/components/DeleteConfirmationDialog";
 
 function ContactsMultiSelectMenu(props) {

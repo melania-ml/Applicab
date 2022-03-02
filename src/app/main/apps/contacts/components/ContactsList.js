@@ -5,12 +5,7 @@ import { useMemo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ContactsMultiSelectMenu from "./ContactsMultiSelectMenu";
 import ContactsTable from "./ContactsTable";
-import {
-  openEditContactDialog,
-  removeContact,
-  toggleStarredContact,
-  selectContacts
-} from "../store/contactsSlice";
+import { openEditContactDialog, selectContacts } from "../store/contactsSlice";
 
 function ContactsList(props) {
   const dispatch = useDispatch();
@@ -107,7 +102,7 @@ function ContactsList(props) {
         sortable: true
       }
     ],
-    [dispatch, user.starred]
+    [dispatch]
   );
 
   useEffect(() => {

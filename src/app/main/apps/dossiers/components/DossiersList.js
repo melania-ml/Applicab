@@ -1,44 +1,53 @@
-import { motion } from 'framer-motion';
-import FuseUtils from '@fuse/utils';
-import withRouter from '@fuse/core/withRouter';
-import Fab from '@mui/material/Fab';
-import Icon from '@mui/material/Icon';
-import IconButton from '@mui/material/IconButton';
-import { ListItemIcon, ListItemText, Tooltip, styled, tooltipClasses, Typography } from '@mui/material';
-import { useMemo, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import DossiersMultiSelectMenu from './DossiersMultiSelectMenu';
-import DossiersTable from './DossiersTable';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import MenuList from '@mui/material/MenuList';
+import { motion } from "framer-motion";
+import FuseUtils from "@fuse/utils";
+import withRouter from "@fuse/core/withRouter";
+import Fab from "@mui/material/Fab";
+import Icon from "@mui/material/Icon";
+import IconButton from "@mui/material/IconButton";
+import {
+  ListItemIcon,
+  ListItemText,
+  Tooltip,
+  styled,
+  tooltipClasses,
+  Typography
+} from "@mui/material";
+import { useMemo, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import DossiersMultiSelectMenu from "./DossiersMultiSelectMenu";
+import DossiersTable from "./DossiersTable";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import MenuList from "@mui/material/MenuList";
 
 import {
   openEditContactDialog,
   removeContact,
   toggleStarredContact,
-  selectContacts,
-} from '../store/dossiersSlice';
+  selectContacts
+} from "../store/dossiersSlice";
 
 function DossiersList(props) {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
-  const searchText = useSelector(({ contactsApp }) => contactsApp.contacts.searchText);
+  const searchText = useSelector(
+    ({ contactsApp }) => contactsApp.contacts.searchText
+  );
   const user = useSelector(({ contactsApp }) => contactsApp.user);
 
   const [filteredData, setFilteredData] = useState(null);
 
   const [rowId, setRowId] = useState(null);
 
-  const  CustomTooltip = styled(({ className, ...props }) => (
+  const CustomTooltip = styled(({ className, ...props }) => (
     <Tooltip {...props} arrow classes={{ popper: className }} />
   ))(({ theme }) => ({
     [`& .${tooltipClasses.arrow}`]: {
-      color: '#252E3E',
+      color: "#252E3E"
     },
     [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: '#252E3E',
-    },
+      backgroundColor: "#252E3E"
+    }
   }));
 
   const columns = useMemo(
@@ -53,68 +62,78 @@ function DossiersList(props) {
             )
           );
         },
-        accessor: 'avatar',
+        accessor: "avatar",
         Cell: ({ row }) => {
           return null;
           // <Avatar className="mx-8" alt={row.original.name} src={row.original.avatar} />;
         },
-        className: 'justify-center',
+        className: "justify-center",
         width: 64,
-        sortable: false,
+        sortable: false
       },
       {
-        Header: 'Nom',
-        accessor: 'company',
-        sortable: true,
+        Header: "Nom",
+        accessor: "company",
+        sortable: true
       },
       {
-        Header: 'Procédure',
-        accessor: 'nickname',
-        sortable: true,
+        Header: "Procédure",
+        accessor: "nickname",
+        sortable: true
       },
       {
-        Header: 'Type',
-        accessor: 'name',
-        className: 'font-medium',
-        sortable: true,
+        Header: "Type",
+        accessor: "name",
+        className: "font-medium",
+        sortable: true
       },
       {
-        Header: 'Nature',
-        accessor: 'lastName',
-        sortable: true,
+        Header: "Nature",
+        accessor: "lastName",
+        sortable: true
       },
       {
-        Header: 'Date de création',
-        accessor: 'createddata',
-        sortable: true,
+        Header: "Date de création",
+        accessor: "createddata",
+        sortable: true
       },
       {
-        Header: 'Statut',
-        accessor: 'jobTitle',
-        sortable: true,
+        Header: "Statut",
+        accessor: "jobTitle",
+        sortable: true
       },
       {
-        Header: 'Msg',
-        className: 'font-medium',
+        Header: "Msg",
+        className: "font-medium",
         sortable: true,
         Cell: ({ row }) => (
           <div className="flex items-center">
-            < CustomTooltip placement="top-end" title="Non lus et non envoyé">
-              <Fab variant="circular" disableRipple={true} size="small" sx={{ boxShadow: 0, backgroundColor: "#22d3ee", "&:hover": { backgroundColor: "#22d3ee" } }} aria-label="add">
+            <CustomTooltip placement="top-end" title="Non lus et non envoyé">
+              <Fab
+                variant="circular"
+                disableRipple={true}
+                size="small"
+                sx={{
+                  boxShadow: 0,
+                  backgroundColor: "#22d3ee",
+                  "&:hover": { backgroundColor: "#22d3ee" }
+                }}
+                aria-label="add"
+              >
                 <Typography variant="bold">1</Typography>
               </Fab>
-            </ CustomTooltip>
+            </CustomTooltip>
           </div>
-        ),
+        )
       },
       {
-        id: 'action',
-        Header: 'Actions',
+        id: "action",
+        Header: "Actions",
         width: 128,
         sortable: false,
         Cell: ({ row }) => (
           <div className="flex items-center">
-            < CustomTooltip placement="top-end" title="Liste des étapes">
+            <CustomTooltip placement="top-end" title="Liste des étapes">
               <IconButton
                 onClick={(ev) => {
                   ev.stopPropagation();
@@ -124,12 +143,12 @@ function DossiersList(props) {
               >
                 <Icon>view_agenda</Icon>
               </IconButton>
-            </ CustomTooltip>
+            </CustomTooltip>
           </div>
-        ),
-      },
+        )
+      }
     ],
-    [dispatch, user.starred]
+    [dispatch]
   );
 
   useEffect(() => {

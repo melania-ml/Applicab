@@ -4,7 +4,6 @@ import {
   createEntityAdapter
 } from "@reduxjs/toolkit";
 import axios from "axios";
-import { getUserData } from "./userSlice";
 import { showMessage } from "app/store/fuse/messageSlice";
 
 export const getAllTitles = () => async (dispatch) => {
@@ -120,15 +119,6 @@ export const updateContact = createAsyncThunk(
   }
 );
 
-export const removeContact = createAsyncThunk(
-  "contactsApp/contacts/removeContact",
-  async (contactId, { dispatch, getState }) => {
-    await axios.post("/api/contacts-app/remove-contact", { contactId });
-
-    return contactId;
-  }
-);
-
 export const removeContacts = createAsyncThunk(
   "contactsApp/contacts/removeContacts",
   async (contactIds, { dispatch, getState }) => {
@@ -143,74 +133,6 @@ export const removeContacts = createAsyncThunk(
       .catch((errors) => {
         console.error(errors);
       });
-    return data;
-  }
-);
-
-export const toggleStarredContact = createAsyncThunk(
-  "contactsApp/contacts/toggleStarredContact",
-  async (contactId, { dispatch, getState }) => {
-    const response = await axios.post(
-      "/api/contacts-app/toggle-starred-contact",
-      { contactId }
-    );
-    const data = await response.data;
-
-    dispatch(getUserData());
-
-    dispatch(getContacts());
-
-    return data;
-  }
-);
-
-export const toggleStarredContacts = createAsyncThunk(
-  "contactsApp/contacts/toggleStarredContacts",
-  async (contactIds, { dispatch, getState }) => {
-    const response = await axios.post(
-      "/api/contacts-app/toggle-starred-contacts",
-      { contactIds }
-    );
-    const data = await response.data;
-
-    dispatch(getUserData());
-
-    dispatch(getContacts());
-
-    return data;
-  }
-);
-
-export const setContactsStarred = createAsyncThunk(
-  "contactsApp/contacts/setContactsStarred",
-  async (contactIds, { dispatch, getState }) => {
-    const response = await axios.post(
-      "/api/contacts-app/set-contacts-starred",
-      { contactIds }
-    );
-    const data = await response.data;
-
-    dispatch(getUserData());
-
-    dispatch(getContacts());
-
-    return data;
-  }
-);
-
-export const setContactsUnstarred = createAsyncThunk(
-  "contactsApp/contacts/setContactsUnstarred",
-  async (contactIds, { dispatch, getState }) => {
-    const response = await axios.post(
-      "/api/contacts-app/set-contacts-unstarred",
-      { contactIds }
-    );
-    const data = await response.data;
-
-    dispatch(getUserData());
-
-    dispatch(getContacts());
-
     return data;
   }
 );
@@ -305,8 +227,6 @@ const contactsSlice = createSlice({
     [addContact.fulfilled]: contactsAdapter.addOne,
     [removeContacts.fulfilled]: (state, action) =>
       contactsAdapter.removeMany(state, action.payload),
-    [removeContact.fulfilled]: (state, action) =>
-      contactsAdapter.removeOne(state, action.payload),
     [getContacts.fulfilled]: (state, action) => {
       const { data, routeParams } = action.payload;
       contactsAdapter.setAll(state, data);
