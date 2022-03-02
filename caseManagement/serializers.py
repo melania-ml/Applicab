@@ -13,3 +13,10 @@ class ProcedureSerializer(serializers.ModelSerializer):
     class Meta:
         model = Procedure
         fields = '__all__'
+
+
+class CaseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CaseManagement
+        fields = '__all__'
+        depth = 0

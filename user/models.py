@@ -117,6 +117,7 @@ class User(AbstractUser):
                               on_delete=models.DO_NOTHING, db_column='title')
     company_name = models.CharField(max_length=255, null=True, blank=True)
     country = models.CharField(max_length=255, null=True, blank=True)
+    function = models.CharField(max_length=255, null=True, blank=True)
     nationality = models.CharField(max_length=255, null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
     website = models.CharField(max_length=255, null=True, blank=True)

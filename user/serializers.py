@@ -11,11 +11,11 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'email', 'first_name',
+        fields = ['id', 'email', 'first_name','function',
                   'last_name', 'phone_number', 'password', 'email_otp', 'email_token', 'client_type', 'legal_status',
                   'title', 'company_name', 'country', 'nationality', 'address', 'city', 'postal_code', 'capital_social',
                   'RCS_city', 'native_city', 'number', 'fixe', 'comments', 'tags', 'profession', 'status', 'department',
-                   ]
+                  ]
 
     def create(self, validated_data):
         if validated_data['email']:
