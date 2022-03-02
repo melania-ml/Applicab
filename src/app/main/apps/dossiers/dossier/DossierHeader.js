@@ -1,35 +1,13 @@
-import Button from '@mui/material/Button';
-import Icon from '@mui/material/Icon';
-import { useTheme } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
-import { motion } from 'framer-motion';
-import { useFormContext } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
-import _ from '@lodash';
-import { addContact, removeContact } from '../store/dossiersSlice';
+import Button from "@mui/material/Button";
+import Icon from "@mui/material/Icon";
+import { useTheme } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import _ from "@lodash";
 
-function DossierHeader(props) {
-  // const dispatch = useDispatch();
-  // const methods = useFormContext();
-  // const { formState, watch, getValues } = methods;
-  // const { isValid, dirtyFields } = formState;
-  // const featuredImageId = watch('featuredImageId');
-  // const images = watch('name');
-  // const name = watch('name');
+function DossierHeader() {
   const theme = useTheme();
-  // const navigate = useNavigate();
-
-  // function handleSaveProduct() {
-  //   dispatch(addContact(getValues()));
-  // }
-
-  // function handleRemoveProduct() {
-  //   dispatch(removeContact()).then(() => {
-  //     navigate('apps/dossiers/all');
-  //   });
-  // }
-
   return (
     <div className="flex flex-1 w-full items-center justify-between res-flex-direction">
       <div className="flex flex-col items-start max-w-full min-w-0">
@@ -45,7 +23,7 @@ function DossierHeader(props) {
             color="inherit"
           >
             <Icon className="text-20">
-              {theme.direction === 'ltr' ? 'arrow_back' : 'arrow_forward'}
+              {theme.direction === "ltr" ? "arrow_back" : "arrow_forward"}
             </Icon>
             <span className="sm:flex mx-4 font-medium">Tous les dossier</span>
           </Typography>
@@ -62,13 +40,16 @@ function DossierHeader(props) {
               src="assets/images/ecommerce/product-image-placeholder.png"
             />
           </motion.div>
-            <div className="flex flex-col min-w-0 mx-8 sm:mc-16">
-              <motion.div initial={{ x: -20 }} animate={{ x: 0, transition: { delay: 0.3 } }}>
-                <Typography className="text-16 sm:text-20 truncate font-semibold">
-                  {name || 'Ajouter un nouveau dossier'}
-                </Typography>
-              </motion.div>
-            </div>
+          <div className="flex flex-col min-w-0 mx-8 sm:mc-16">
+            <motion.div
+              initial={{ x: -20 }}
+              animate={{ x: 0, transition: { delay: 0.3 } }}
+            >
+              <Typography className="text-16 sm:text-20 truncate font-semibold">
+                Ajouter un nouveau dossier
+              </Typography>
+            </motion.div>
+          </div>
         </div>
       </div>
       <motion.div
@@ -78,21 +59,9 @@ function DossierHeader(props) {
       >
         <Button
           className="whitespace-nowrap mx-4"
-          variant="outlined"
-          color="secondary"
-          style={{ borderRadius: 0, marginRight: 25 }}
-        //onClick={handleRemoveProduct}
-        //startIcon={<Icon className="hidden sm:flex">delete</Icon>}
-        >
-          Supprimer
-        </Button>
-        <Button
-          className="whitespace-nowrap mx-4"
           variant="contained"
           color="secondary"
           style={{ borderRadius: 0 }}
-        // disabled={_.isEmpty(dirtyFields) || !isValid}
-        //onClick={handleSaveProduct}
         >
           Enregistrer
         </Button>
