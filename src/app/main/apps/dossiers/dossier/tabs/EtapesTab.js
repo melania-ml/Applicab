@@ -228,16 +228,6 @@ function EtapeTab() {
     return null;
   }
 
-  if (filteredData.length === 0) {
-    return (
-      <div className="flex flex-1 items-center justify-center h-full">
-        <Typography color="textSecondary" variant="h5">
-          There are no Etapes!
-        </Typography>
-      </div>
-    );
-  }
-
   return (
     <motion.div
       initial={{ y: 20, opacity: 0 }}
@@ -352,15 +342,23 @@ function EtapeTab() {
             </motion.div>
           </Grid>
           <Grid item xs={12} md={9}>
-            <EtapesTable
-              columns={columns}
-              data={filteredData}
-              onRowClick={(ev, row) => {
-                if (row) {
-                  dispatch(openEditContactDialog(row.original));
-                }
-              }}
-            />
+            {filteredData.length ? (
+              <EtapesTable
+                columns={columns}
+                data={filteredData}
+                onRowClick={(ev, row) => {
+                  if (row) {
+                    dispatch(openNewContactDialog(row.original));
+                  }
+                }}
+              />
+            ) : (
+              <div className="flex flex-1 items-center justify-center h-full">
+                <Typography color="textSecondary" variant="h5">
+                  There are no contacts!
+                </Typography>
+              </div>
+            )}
           </Grid>
         </Grid>
       </Box>
