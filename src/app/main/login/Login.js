@@ -123,19 +123,12 @@ function Login() {
   }, [reset, setValue, trigger]);
 
   useEffect(() => {
-    login.errors.forEach((error) => {
-      setError(error.type, {
-        type: "manual",
-        message: error.message
-      });
-    });
-
     if (login.success) {
       history.push({
         pathname: "/apps/dashboard"
       });
     }
-  }, [login.errors, setError]);
+  }, [login.success]);
 
   function onSubmit(model) {
     const { email, password } = model;

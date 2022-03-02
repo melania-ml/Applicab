@@ -30,12 +30,13 @@ class JwtService extends FuseUtils.EventEmitter {
           password
         })
         .then((response) => {
-          if (response.data.data.email) {
+          if (response.data.status === 200 && response.data.success) {
             this.setSession(response.data.data.jwtoken);
             resolve(response.data);
-          } else {
-            reject(response.data.error);
           }
+        })
+        .catch((error) => {
+          reject(error.response.data);
         });
     });
   };
