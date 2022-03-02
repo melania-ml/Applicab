@@ -33,7 +33,6 @@ function DossiersList(props) {
   const searchText = useSelector(
     ({ contactsApp }) => contactsApp.contacts.searchText
   );
-  const user = useSelector(({ contactsApp }) => contactsApp.user);
 
   const [filteredData, setFilteredData] = useState(null);
 

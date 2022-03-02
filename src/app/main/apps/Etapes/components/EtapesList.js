@@ -8,7 +8,7 @@ import {
   styled,
   tooltipClasses,
   Typography,
-  Select,
+  Select
 } from "@mui/material";
 import { useMemo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,7 +24,6 @@ function EtapesList(props) {
   const searchText = useSelector(
     ({ contactsApp }) => contactsApp.contacts.searchText
   );
-  const user = useSelector(({ contactsApp }) => contactsApp.user);
 
   const [filteredData, setFilteredData] = useState(null);
 
@@ -34,11 +33,11 @@ function EtapesList(props) {
     <Tooltip {...props} arrow classes={{ popper: className }} />
   ))(({ theme }) => ({
     [`& .${tooltipClasses.arrow}`]: {
-      color: "#252E3E",
+      color: "#252E3E"
     },
     [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: "#252E3E",
-    },
+      backgroundColor: "#252E3E"
+    }
   }));
 
   const columns = useMemo(
@@ -60,28 +59,28 @@ function EtapesList(props) {
         },
         className: "justify-center",
         width: 64,
-        sortable: false,
+        sortable: false
       },
       {
         Header: "Num",
         accessor: "company",
-        sortable: true,
+        sortable: true
       },
       {
         Header: "Dossier",
         accessor: "name",
         className: "font-medium",
-        sortable: true,
+        sortable: true
       },
       {
         Header: "Etape",
         accessor: "lastName",
-        sortable: true,
+        sortable: true
       },
       {
         Header: "Date",
         accessor: "createddata",
-        sortable: true,
+        sortable: true
       },
       {
         Header: "Statut",
@@ -95,10 +94,10 @@ function EtapesList(props) {
                 sx={{
                   boxShadow: 0,
                   backgroundColor: "#22d3ee",
-                  height: '30px',
+                  height: "30px",
                   padding: "0px 0px 0px 30px",
                   margin: "-50px",
-                  "&:hover": { backgroundColor: "#89c2cb" },
+                  "&:hover": { backgroundColor: "#89c2cb" }
                 }}
               >
                 default text
@@ -111,7 +110,7 @@ function EtapesList(props) {
               </Fab>
             </CustomTooltip>
           </div>
-        ),
+        )
       },
       {
         Header: "Notifie",
@@ -127,11 +126,11 @@ function EtapesList(props) {
               </Icon>
             </CustomTooltip>
           </div>
-        ),
-      },
+        )
+      }
     ],
 
-    [dispatch, user.starred]
+    [dispatch]
   );
 
   useEffect(() => {
