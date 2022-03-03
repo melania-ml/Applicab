@@ -7,7 +7,7 @@ import {
   MenuItem,
   Autocomplete,
   Chip,
-  Button,
+  Button
 } from "@mui/material";
 import Natures from "../../../../constants/Natures";
 import Statut from "../../../../constants/Statut";
@@ -25,7 +25,7 @@ function InformationTab(props) {
     type: "",
     tags: [],
     internalComments: "",
-    sharedWithClientComments: "",
+    sharedWithClientComments: ""
   });
   useEffect(() => {
     setAllFields({
@@ -36,7 +36,7 @@ function InformationTab(props) {
       type: userData.type,
       tags: userData.tags,
       internalComments: userData.internalComments,
-      sharedWithClientComments: userData.sharedWithClientComments,
+      sharedWithClientComments: userData.sharedWithClientComments
     });
   }, [userData]);
 
@@ -48,7 +48,7 @@ function InformationTab(props) {
         onChange={(e) => {
           setAllFields({
             ...allFields,
-            name: e.target.value,
+            name: e.target.value
           });
         }}
         label="Nom"
@@ -56,7 +56,7 @@ function InformationTab(props) {
         variant="outlined"
         fullWidth
       />
-      <Autocomplete
+      {/* <Autocomplete
         className="flex w-full mb-12"
         value={allFields.nature}
         onChange={(event, newValue) => {
@@ -106,7 +106,7 @@ function InformationTab(props) {
         renderOption={(props, option) => <li {...props}>{option.nature}</li>}
         freeSolo
         renderInput={(params) => <TextField {...params} label="Type*" />}
-      />
+      /> */}
       {/* <FormControl className="flex w-full mb-12" variant="outlined">
         <InputLabel>Nature</InputLabel>
         <Select
@@ -134,7 +134,7 @@ function InformationTab(props) {
           onChange={(e) => {
             setAllFields({
               ...allFields,
-              statut: e.target.value,
+              statut: e.target.value
             });
           }}
         >
@@ -153,7 +153,7 @@ function InformationTab(props) {
           onChange={(e) => {
             setAllFields({
               ...allFields,
-              type: e.target.value,
+              type: e.target.value
             });
           }}
         >
@@ -172,7 +172,7 @@ function InformationTab(props) {
           onChange={(e) => {
             setAllFields({
               ...allFields,
-              procedure: e.target.value,
+              procedure: e.target.value
             });
           }}
         >
@@ -199,7 +199,7 @@ function InformationTab(props) {
             ...allFields,
             ...tags,
             tags: e.target.value,
-            ...newValue.filter((option) => tags.indexOf(option) === -1),
+            ...newValue.filter((option) => tags.indexOf(option) === -1)
           });
         }}
         options={tags}
@@ -228,7 +228,7 @@ function InformationTab(props) {
         onChange={(e) => {
           setAllFields({
             ...allFields,
-            internalComments: e.target.value,
+            internalComments: e.target.value
           });
         }}
       />
@@ -243,7 +243,7 @@ function InformationTab(props) {
         onChange={(e) => {
           setAllFields({
             ...allFields,
-            sharedWithClientComments: e.target.value,
+            sharedWithClientComments: e.target.value
           });
         }}
       />
@@ -259,7 +259,7 @@ function InformationTab(props) {
             ...allFields,
             ...tags,
             tags: e.target.value,
-            ...newValue.filter((option) => tags.indexOf(option) === -1),
+            ...newValue.filter((option) => tags.indexOf(option) === -1)
           });
         }}
         options={tags}
@@ -289,7 +289,7 @@ function InformationTab(props) {
             ...allFields,
             ...tags,
             tags: e.target.value,
-            ...newValue.filter((option) => tags.indexOf(option) === -1),
+            ...newValue.filter((option) => tags.indexOf(option) === -1)
           });
         }}
         options={tags}
@@ -319,7 +319,7 @@ function InformationTab(props) {
             ...allFields,
             ...tags,
             tags: e.target.value,
-            ...newValue.filter((option) => tags.indexOf(option) === -1),
+            ...newValue.filter((option) => tags.indexOf(option) === -1)
           });
         }}
         options={tags}

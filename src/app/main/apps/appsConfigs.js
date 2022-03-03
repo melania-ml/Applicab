@@ -12,7 +12,7 @@ import ContactsAppConfig from "./contacts/ContactsAppConfig";
 // import ScrumboardAppConfig from './scrumboard/ScrumboardAppConfig';
 // import TodoAppConfig from './todo/TodoAppConfig';
 import EtapesAppConfig from "./Etapes/EtapesAppConfig";
-import EmailAppConfig from "./Email/EmailAppConfig";
+//import EmailAppConfig from "./Email/EmailAppConfig";
 // import NaturesAppConfig from './Natures/NaturesAppConfig';
 // import FaqAppConfig from './FAQ/FaqPageConfig';
 import AdminDashboardAppConfig from "./AdminDashboard/DashboardAppConfig";
@@ -33,8 +33,8 @@ const appsConfigs = [
   // AcademyAppConfig,
   // NotesAppConfig,
   DossiersAppConfig,
-  EtapesAppConfig,
-  EmailAppConfig,
+  EtapesAppConfig
+  //EmailAppConfig,
   // NaturesAppConfig,
   // FaqAppConfig
   // ApplicabAppConfig
