@@ -58,25 +58,24 @@ function EtapesMultiSelectMenu(props) {
               setDeleteConfirmation(true);
             }}
           >
-            <div className="flex">
+            <div className="flex items-center w-full mb-2">
               <ListItemIcon className="min-w-40">
                 <Icon>delete</Icon>
               </ListItemIcon>
               <ListItemText primary="Supprimer" />
             </div>
-            <div className="flex">
+            <div className="flex items-center w-full mb-2">
               <ListItemIcon className="min-w-40">
                 <Icon>delete</Icon>
               </ListItemIcon>
               <ListItemText primary="Dupliquer" />
             </div>
-            <div className="flex">
+            <div className="flex items-center w-full mb-2 ml-2">
               <ListItemIcon className="min-w-40">
                 <Icon
                   style={{
                     color: "#C4C4C4",
                     fontSize: "large",
-                    margin: "10px",
                   }}
                 >
                   label
@@ -84,13 +83,12 @@ function EtapesMultiSelectMenu(props) {
               </ListItemIcon>
               <ListItemText primary="Marquer comme à prévoir" />
             </div>
-            <div className="flex">
+            <div className="flex items-center w-full mb-2 ml-2">
               <ListItemIcon className="min-w-40">
                 <Icon
                   style={{
                     color: "#1BD7EF",
-                    fontSize: "large",
-                    margin: "10px",
+                    fontSize: "large",                   
                   }}
                 >
                   label
@@ -98,13 +96,12 @@ function EtapesMultiSelectMenu(props) {
               </ListItemIcon>
               <ListItemText primary="Marquer comme a faire" />
             </div>
-            <div className="flex">
+            <div className="flex items-center w-full mb-2 ml-2">
               <ListItemIcon className="min-w-40">
                 <Icon
                   style={{
                     color: "#78C5A0",
-                    fontSize: "large",
-                    margin: "10px",
+                    fontSize: "large",                   
                   }}
                 >
                   label
@@ -112,13 +109,12 @@ function EtapesMultiSelectMenu(props) {
               </ListItemIcon>
               <ListItemText primary="Marquer comme fait" />
             </div>
-            <div className="flex">
+            <div className="flex items-center w-full mb-2 ml-2">
               <ListItemIcon className="min-w-40">
                 <Icon
                   style={{
                     color: "#E5E5E5",
-                    fontSize: "large",
-                    margin: "10px",
+                    fontSize: "large",                   
                   }}
                 >
                   label
