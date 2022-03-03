@@ -1,7 +1,7 @@
 import {
   createSlice,
   createAsyncThunk,
-  createEntityAdapter,
+  createEntityAdapter
 } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -18,6 +18,19 @@ export const getNatures = () => async (dispatch) => {
     });
 };
 
+export const getProcedures = () => async (dispatch) => {
+  await axios
+    .get(`api/caseManagement/getProcedureByUser`)
+    .then((data) => {
+      if (data.data.status === 200 && data.data.success) {
+        dispatch(setProcedures(data.data.data));
+      }
+    })
+    .catch((errors) => {
+      console.error(errors);
+    });
+};
+
 export const getDossiers = createAsyncThunk(
   "dossiersApp/dossiers/getDossiers",
   async (routeParams, { dispatch, getState }) => {
@@ -27,8 +40,8 @@ export const getDossiers = createAsyncThunk(
         client_type: routeParams.type,
         title: routeParams.title,
         status: routeParams.status,
-        tags__contains: routeParams.tags,
-      },
+        tags__contains: routeParams.tags
+      }
     });
     const data = await response.data;
     dispatch(setDossiers(data.data));
@@ -51,11 +64,12 @@ const dossiersSlice = createSlice({
     contactDialog: {
       type: "new",
       props: {
-        open: false,
+        open: false
       },
-      data: null,
+      data: null
     },
     natures: [],
+    procedures: []
   }),
   reducers: {
     setDossiers: (state, action) => {
@@ -64,49 +78,52 @@ const dossiersSlice = createSlice({
     setNatures: (state, action) => {
       state.natures = action.payload;
     },
+    setProcedures: (state, action) => {
+      state.procedures = action.payload;
+    },
     resetDossier: () => null,
     setDossiersSearchText: {
       reducer: (state, action) => {
         state.searchText = action.payload;
       },
-      prepare: (event) => ({ payload: event.target.value || "" }),
+      prepare: (event) => ({ payload: event.target.value || "" })
     },
     openNewContactDialog: (state, action) => {
       state.contactDialog = {
         type: "new",
         props: {
-          open: true,
+          open: true
         },
-        data: null,
+        data: null
       };
     },
     closeNewContactDialog: (state, action) => {
       state.contactDialog = {
         type: "new",
         props: {
-          open: false,
+          open: false
         },
-        data: null,
+        data: null
       };
     },
     openEditContactDialog: (state, action) => {
       state.contactDialog = {
         type: "edit",
         props: {
-          open: true,
+          open: true
         },
-        data: action.payload,
+        data: action.payload
       };
     },
     closeEditContactDialog: (state, action) => {
       state.contactDialog = {
         type: "edit",
         props: {
-          open: false,
+          open: false
         },
-        data: null,
+        data: null
       };
-    },
+    }
   },
   extraReducers: {
     [getDossiers.fulfilled]: (state, action) => {
@@ -114,8 +131,8 @@ const dossiersSlice = createSlice({
       dossiersAdapter.setAll(state, data);
       state.routeParams = routeParams;
       state.searchText = "";
-    },
-  },
+    }
+  }
 });
 
 export const {
@@ -126,6 +143,7 @@ export const {
   openEditContactDialog,
   closeEditContactDialog,
   setNatures,
+  setProcedures
 } = dossiersSlice.actions;
 
 export default dossiersSlice.reducer;

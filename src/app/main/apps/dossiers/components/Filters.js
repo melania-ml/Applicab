@@ -7,6 +7,7 @@ import {
   TextField,
   Autocomplete
 } from "@mui/material";
+import { useSelector } from "react-redux";
 import DatePicker from "@mui/lab/DatePicker";
 
 import Natures from "app/main/constants/Natures";
@@ -32,6 +33,7 @@ const status = [
 ];
 
 export default function Filters() {
+  const { natures } = useSelector(({ dossiersApp }) => dossiersApp.dossiers);
   const [allFields, setAllFields] = useState({
     procedure: "",
     inputProcedure: "",
@@ -181,7 +183,7 @@ export default function Filters() {
         <div className="col-md-4 col-lg-4 col-12 col-xl-2 mb-3 mb-xl-0">
           <Autocomplete
             className="autocomplete"
-            options={Natures}
+            options={natures}
             getOptionLabel={(option) => {
               if (typeof option === "string") {
                 return option;
@@ -189,10 +191,10 @@ export default function Filters() {
               if (option.inputValue) {
                 return option.inputValue;
               }
-              return option.value;
+              return option.nature_title;
             }}
             onChange={(event, newValue) => {
-              const typeObj = Natures.find(
+              const typeObj = natures.find(
                 (type) => type.value === newValue?.value
               );
               if (typeof newValue === "string") {

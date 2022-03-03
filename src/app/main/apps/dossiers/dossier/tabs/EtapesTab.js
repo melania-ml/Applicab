@@ -13,7 +13,7 @@ import {
   Select,
   TableRow,
   TableBody,
-  TableCell,
+  TableCell
 } from "@mui/material";
 import _ from "@lodash";
 import { Paper, Input, Button } from "@mui/material";
@@ -23,7 +23,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   openNewContactDialog,
   selectContacts,
-  setContactsSearchText,
+  setContactsSearchText
 } from "app/main/apps/Etapes/store/etapesSlice";
 import EtapesTable from "app/main/apps/Etapes/components/EtapesTable";
 import EtapesMultiSelectMenu from "app/main/apps/Etapes/components/EtapesMultiSelectMenu";
@@ -43,7 +43,7 @@ function EtapeTab() {
         style={{
           color: "#C4C4C4",
           fontSize: "large",
-          margin: "10px",
+          margin: "10px"
         }}
       >
         label
@@ -55,7 +55,7 @@ function EtapeTab() {
         style={{
           color: "#1BD7EF",
           fontSize: "large",
-          margin: "10px",
+          margin: "10px"
         }}
       >
         label
@@ -67,7 +67,7 @@ function EtapeTab() {
         style={{
           color: "#78C5A0",
           fontSize: "large",
-          margin: "10px",
+          margin: "10px"
         }}
       >
         label
@@ -79,13 +79,13 @@ function EtapeTab() {
         style={{
           color: "#E5E5E5",
           fontSize: "large",
-          margin: "10px",
+          margin: "10px"
         }}
       >
         label
       </Icon>,
       "Archivé"
-    ),
+    )
   ];
 
   const dispatch = useDispatch();
@@ -105,11 +105,11 @@ function EtapeTab() {
     <Tooltip {...props} arrow classes={{ popper: className }} />
   ))(({ theme }) => ({
     [`& .${tooltipClasses.arrow}`]: {
-      color: "#252E3E",
+      color: "#252E3E"
     },
     [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: "#252E3E",
-    },
+      backgroundColor: "#252E3E"
+    }
   }));
 
   const columns = useMemo(
@@ -131,22 +131,22 @@ function EtapeTab() {
         },
         className: "justify-center",
         width: 64,
-        sortable: false,
+        sortable: false
       },
       {
         Header: "Num",
         accessor: "company",
-        sortable: true,
+        sortable: true
       },
       {
         Header: "Étape",
         accessor: "lastName",
-        sortable: true,
+        sortable: true
       },
       {
         Header: "Date",
         accessor: "createddata",
-        sortable: true,
+        sortable: true
       },
       {
         Header: "Statut",
@@ -182,7 +182,7 @@ function EtapeTab() {
               </Fab>
             </CustomTooltip> */}
           </div>
-        ),
+        )
       },
       {
         Header: "Notifié",
@@ -198,8 +198,8 @@ function EtapeTab() {
               </Icon>
             </CustomTooltip>
           </div>
-        ),
-      },
+        )
+      }
     ],
 
     [dispatch]
@@ -253,7 +253,7 @@ function EtapeTab() {
                     fullWidth
                     value={searchText}
                     inputProps={{
-                      "aria-label": "Search",
+                      "aria-label": "Search"
                     }}
                     onChange={(ev) => dispatch(setContactsSearchText(ev))}
                   />
@@ -261,7 +261,7 @@ function EtapeTab() {
               </ThemeProvider>
               <Button
                 onClick={() => {
-                  openNewContactDialog;
+                  dispatch(openNewContactDialog());
                 }}
                 variant="contained"
                 color="secondary"
@@ -275,7 +275,7 @@ function EtapeTab() {
                   <TableRow
                     key={row.name}
                     sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
+                      "&:last-child td, &:last-child th": { border: 0 }
                     }}
                   >
                     <TableRow>
@@ -294,7 +294,7 @@ function EtapeTab() {
                 <Icon
                   style={{
                     color: "#BABABF",
-                    fontSize: "large",
+                    fontSize: "large"
                     // margin: "10px",
                   }}
                 >
@@ -308,7 +308,7 @@ function EtapeTab() {
                 <Icon
                   style={{
                     color: "#BABABF",
-                    fontSize: "large",
+                    fontSize: "large"
                     // margin: "10px",
                   }}
                 >
@@ -322,7 +322,7 @@ function EtapeTab() {
                 <Icon
                   style={{
                     color: "#BABABF",
-                    fontSize: "large",
+                    fontSize: "large"
                     // margin: "10px",
                   }}
                 >
@@ -337,7 +337,7 @@ function EtapeTab() {
                 <Icon
                   style={{
                     color: "#BABABF",
-                    fontSize: "large",
+                    fontSize: "large"
                     // margin: "10px",
                   }}
                 >

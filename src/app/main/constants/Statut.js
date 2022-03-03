@@ -1,24 +1,19 @@
 const Statut = [
   {
     id: 1,
-    value: "A prévoir",
-    label: "A prévoir",
+    value: "A ouvrir",
+    label: "A ouvrir"
   },
   {
     id: 2,
-    value: "A faire",
-    label: "A faire",
+    value: "Ouvert",
+    label: "Ouvert"
   },
   {
     id: 3,
-    value: "A fait",
-    label: "A fait",
-  },
-  {
-    id: 4,
-    value: "Archivé",
-    label: "Archivé",
-  },
+    value: "Clôturé",
+    label: "Clôturé"
+  }
 ];
 
 export default Statut;

@@ -175,7 +175,7 @@ function ContactsHeader(props) {
         <div className="flex items-center">
           <Button
             onClick={() => {
-              dispatch(dispatch(openNewContactDialog()));
+              dispatch(openNewContactDialog());
             }}
             variant="contained"
             color="secondary"

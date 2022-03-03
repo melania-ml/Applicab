@@ -9,15 +9,19 @@ import {
   Chip,
   Button
 } from "@mui/material";
-import Natures from "../../../../constants/Natures";
-import Statut from "../../../../constants/Statut";
-import Procedures from "../../../../constants/Procedures";
-import Types from "../../../../constants/Types";
+import Statut from "app/main/constants/Statut";
+import Types from "app/main/constants/Types";
 import { useSelector } from "react-redux";
+import { createFilterOptions } from "@mui/material/Autocomplete";
 
 const tags = [];
 function InformationTab(props) {
   const { userData } = useSelector(({ userMenu }) => userMenu.userMenu);
+  const { natures, procedures } = useSelector(
+    ({ dossiersApp }) => dossiersApp.dossiers
+  );
+  console.log("procedures", procedures);
+  const filter = createFilterOptions();
   const [allFields, setAllFields] = useState({
     name: "",
     nature: "",
@@ -56,7 +60,7 @@ function InformationTab(props) {
         variant="outlined"
         fullWidth
       />
-      {/* <Autocomplete
+      <Autocomplete
         className="flex w-full mb-12"
         value={allFields.nature}
         onChange={(event, newValue) => {
@@ -65,12 +69,12 @@ function InformationTab(props) {
           } else if (newValue && newValue.inputValue) {
             setAllFields({
               ...allFields,
-              nature: newValue.inputValue,
+              nature: newValue.inputValue
             });
           } else {
             setAllFields({
               ...allFields,
-              nature: newValue?.client_type,
+              nature: newValue?.nature_title
             });
           }
         }}
@@ -78,12 +82,12 @@ function InformationTab(props) {
           const filtered = filter(options, params);
           const { inputValue } = params;
           const isExisting = options.some(
-            (option) => inputValue === option.client_type
+            (option) => inputValue === option.nature_title
           );
           if (inputValue.trim() !== "" && !isExisting) {
             filtered.push({
               inputValue: inputValue.trim(),
-              nature: `Ajouter "${inputValue.trim()}"`,
+              nature_title: `Ajouter "${inputValue.trim()}"`
             });
           }
           return filtered;
@@ -101,31 +105,14 @@ function InformationTab(props) {
           if (option.inputValue) {
             return option.inputValue;
           }
-          return option.nature;
+          return option.nature_title;
         }}
-        renderOption={(props, option) => <li {...props}>{option.nature}</li>}
+        renderOption={(props, option) => (
+          <li {...props}>{option.nature_title}</li>
+        )}
         freeSolo
-        renderInput={(params) => <TextField {...params} label="Type*" />}
-      /> */}
-      {/* <FormControl className="flex w-full mb-12" variant="outlined">
-        <InputLabel>Nature</InputLabel>
-        <Select
-          label="Nature"
-          value={allFields.nature}
-          onChange={(e) => {
-            setAllFields({
-              ...allFields,
-              nature: e.target.value,
-            });
-          }}
-        >
-          {Natures.map((nature) => (
-            <MenuItem value={nature.value} key={nature.id}>
-              {nature.label}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl> */}
+        renderInput={(params) => <TextField {...params} label="Nature" />}
+      />
       <FormControl className="flex w-full mb-12" variant="outlined">
         <InputLabel>Statut</InputLabel>
         <Select
@@ -176,7 +163,7 @@ function InformationTab(props) {
             });
           }}
         >
-          {Procedures.map((procedure) => (
+          {procedures.map((procedure) => (
             <MenuItem value={procedure.value} key={procedure.id}>
               {procedure.label}
             </MenuItem>
@@ -186,7 +173,6 @@ function InformationTab(props) {
       <TextField
         className="mt-8 mb-16"
         label="Lieu"
-        autoFocus
         variant="outlined"
         fullWidth
       />

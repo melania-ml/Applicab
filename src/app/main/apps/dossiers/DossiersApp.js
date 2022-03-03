@@ -8,7 +8,7 @@ import { styled } from "@mui/material/styles";
 import DossiersHeader from "./components/DossiersHeader";
 import DossiersList from "./components/DossiersList";
 import reducer from "./store";
-import { getDossiers } from "./store/dossiersSlice";
+import { getDossiers, getNatures, getProcedures } from "./store/dossiersSlice";
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
   "& .FusePageSimple-header": {
@@ -84,8 +84,10 @@ function DossiersApp(props) {
   const pageLayout = useRef(null);
   const routeParams = useParams();
 
-  useDeepCompareEffect(() => {
-    dispatch(getDossiers(routeParams));
+  useDeepCompareEffect(async () => {
+    await dispatch(getDossiers(routeParams));
+    await dispatch(getNatures());
+    await dispatch(getProcedures());
   }, [dispatch, routeParams]);
 
   return (

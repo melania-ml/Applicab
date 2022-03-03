@@ -3,11 +3,7 @@ import Icon from "@mui/material/Icon";
 import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { motion } from "framer-motion";
-import { useFormContext } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import _ from "@lodash";
-import { addContact, removeContact } from "../store/dossiersSlice";
+import { Link } from "react-router-dom";
 
 function DossierHeader() {
   const theme = useTheme();
@@ -44,7 +40,7 @@ function DossierHeader() {
               animate={{ x: 0, transition: { delay: 0.3 } }}
             >
               <Typography className="text-16 sm:text-20 ml-24 truncate font-semibold">
-                {name || "Ajouter un nouveau dossier"}
+                Ajouter un nouveau dossier
               </Typography>
             </motion.div>
           </div>
@@ -57,21 +53,9 @@ function DossierHeader() {
       >
         <Button
           className="whitespace-nowrap mx-4"
-          variant="outlined"
-          color="secondary"
-          style={{ borderRadius: 0, marginRight: 25 }}
-          //onClick={handleRemoveProduct}
-          //startIcon={<Icon className="hidden sm:flex">delete</Icon>}
-        >
-          Supprimer
-        </Button>
-        <Button
-          className="whitespace-nowrap mx-4"
           variant="contained"
           color="secondary"
           style={{ borderRadius: 0 }}
-          // disabled={_.isEmpty(dirtyFields) || !isValid}
-          //onClick={handleSaveProduct}
         >
           Enregistrer
         </Button>
