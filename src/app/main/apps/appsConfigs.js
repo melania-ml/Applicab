@@ -33,7 +33,7 @@ const appsConfigs = [
   // AcademyAppConfig,
   // NotesAppConfig,
   DossiersAppConfig,
-  EtapesAppConfig
+  EtapesAppConfig,
   //EmailAppConfig,
   // NaturesAppConfig,
   // FaqAppConfig
