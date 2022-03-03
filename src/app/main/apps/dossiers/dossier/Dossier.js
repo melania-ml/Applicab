@@ -1,39 +1,44 @@
-import FuseLoading from '@fuse/core/FuseLoading';
-import FusePageCarded from '@fuse/core/FusePageCarded';
-import { useDeepCompareEffect } from '@fuse/hooks';
-import Button from '@mui/material/Button';
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
-import Typography from '@mui/material/Typography';
-import withReducer from 'app/store/withReducer';
-import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
-import _ from '@lodash';
-import { useForm, FormProvider } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { styled } from '@mui/material/styles';
-import { addContact, resetDossier, getContacts } from '../store/dossiersSlice';
-import reducer from '../store';
-import DossierHeader from './DossierHeader';
-import InformationTab from './tabs/InformationTab';
-import EtapesTab from './tabs/EtapesTab';
-import EmailTab from './tabs/EmailTab';
-import DocumentsTab from './tabs/DocumentsTab';
+import FuseLoading from "@fuse/core/FuseLoading";
+import FusePageCarded from "@fuse/core/FusePageCarded";
+import { useDeepCompareEffect } from "@fuse/hooks";
+import Button from "@mui/material/Button";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import Typography from "@mui/material/Typography";
+import withReducer from "app/store/withReducer";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import _ from "@lodash";
+import { useForm, FormProvider } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { styled } from "@mui/material/styles";
+import {
+  addContact,
+  resetDossier,
+  getContacts,
+  getNatures
+} from "../store/dossiersSlice";
+import reducer from "../store";
+import DossierHeader from "./DossierHeader";
+import InformationTab from "./tabs/InformationTab";
+import EtapesTab from "./tabs/EtapesTab";
+import EmailTab from "./tabs/EmailTab";
+import DocumentsTab from "./tabs/DocumentsTab";
 
 const Root = styled(FusePageCarded)(({ theme }) => ({
-  '& .FusePageCarded-header': {
+  "& .FusePageCarded-header": {
     minHeight: 145,
     height: 145,
-    alignItems: 'center',
-    [theme.breakpoints.up('md')]: {
+    alignItems: "center",
+    [theme.breakpoints.up("md")]: {
       minHeight: 100,
-      height: 100,
-    },
+      height: 100
+    }
   },
-  '& .FusePageCarded-contentWrapper': {
+  "& .FusePageCarded-contentWrapper": {
     padding: 0
   }
 }));
@@ -44,22 +49,26 @@ const Root = styled(FusePageCarded)(({ theme }) => ({
 const schema = yup.object().shape({
   name: yup
     .string()
-    .required('You must enter a product name')
-    .min(5, 'The product name must be at least 5 characters'),
+    .required("You must enter a product name")
+    .min(5, "The product name must be at least 5 characters")
 });
-
-
 
 function Dossier(props) {
   const [tabValue, setTabValue] = useState(0);
+  const routeParams = useParams();
+  const dispatch = useDispatch();
+  useDeepCompareEffect(async () => {
+    await dispatch(getNatures(routeParams));
+  }, [dispatch, routeParams]);
 
   const handleTabChange = (event, value) => {
     setTabValue(value);
-  }
+  };
 
   return (
     <FormProvider>
-      <Root header={<DossierHeader />}
+      <Root
+        header={<DossierHeader />}
         contentToolbar={
           <Tabs
             value={tabValue}
@@ -68,7 +77,7 @@ function Dossier(props) {
             textColor="primary"
             variant="scrollable"
             scrollButtons="auto"
-            classes={{ root: 'w-full h-94 caseManagementTabs' }}
+            classes={{ root: "w-full h-94 caseManagementTabs" }}
           >
             <Tab className="h-64 w-1/4 max-w-full" label="Informations" />
             <Tab className="h-64 w-1/4 max-w-full" label="Étapes" />
@@ -78,16 +87,16 @@ function Dossier(props) {
         }
         content={
           <div className="p-16 sm:p-24">
-            <div className={tabValue !== 0 ? 'hidden' : ''}>
+            <div className={tabValue !== 0 ? "hidden" : ""}>
               <InformationTab />
             </div>
-            <div className={tabValue !== 1 ? 'hidden' : ''}>
+            <div className={tabValue !== 1 ? "hidden" : ""}>
               <EtapesTab />
             </div>
-            <div className={tabValue !== 2 ? 'hidden' : ''}>
+            <div className={tabValue !== 2 ? "hidden" : ""}>
               <EmailTab />
             </div>
-            <div className={tabValue !== 3 ? 'hidden' : ''}>
+            <div className={tabValue !== 3 ? "hidden" : ""}>
               <DocumentsTab />
             </div>
           </div>
@@ -95,9 +104,9 @@ function Dossier(props) {
         innerScroll
       />
     </FormProvider>
-  )
+  );
 }
-export default withReducer('eCommerceApp', reducer)(Dossier);
+export default withReducer("dossiersApp", reducer)(Dossier);
 
 // function Dossier(props) {
 //   const dispatch = useDispatch();

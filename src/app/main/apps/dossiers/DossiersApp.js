@@ -9,7 +9,6 @@ import DossiersHeader from "./components/DossiersHeader";
 import DossiersList from "./components/DossiersList";
 import reducer from "./store";
 import { getContacts } from "./store/dossiersSlice";
-import { getUserData } from "./store/userSlice";
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
   "& .FusePageSimple-header": {
@@ -86,8 +85,7 @@ function DossiersApp(props) {
   const routeParams = useParams();
 
   useDeepCompareEffect(() => {
-    dispatch(getContacts(routeParams));
-    dispatch(getUserData());
+    //dispatch(getContacts(routeParams));
   }, [dispatch, routeParams]);
 
   return (

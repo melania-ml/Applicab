@@ -29,9 +29,9 @@ import {
 
 function DossiersList(props) {
   const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
+  const dossiers = useSelector(selectDossiers);
   const searchText = useSelector(
-    ({ contactsApp }) => contactsApp.contacts.searchText
+    ({ dossiersApp }) => dossiersApp.dossiers.searchText
   );
 
   const [filteredData, setFilteredData] = useState(null);
@@ -153,15 +153,15 @@ function DossiersList(props) {
   useEffect(() => {
     function getFilteredArray(entities, _searchText) {
       if (_searchText.length === 0) {
-        return contacts;
+        return dossiers;
       }
-      return FuseUtils.filterArrayByString(contacts, _searchText);
+      return FuseUtils.filterArrayByString(dossiers, _searchText);
     }
 
-    if (contacts) {
-      setFilteredData(getFilteredArray(contacts, searchText));
+    if (dossiers) {
+      setFilteredData(getFilteredArray(dossiers, searchText));
     }
-  }, [contacts, searchText]);
+  }, [dossiers, searchText]);
 
   if (!filteredData) {
     return null;
@@ -171,7 +171,7 @@ function DossiersList(props) {
     return (
       <div className="flex flex-1 items-center justify-center h-full">
         <Typography color="textSecondary" variant="h5">
-          There are no contacts!
+          There are no dossiers!
         </Typography>
       </div>
     );

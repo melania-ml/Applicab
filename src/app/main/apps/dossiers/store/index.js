@@ -1,10 +1,8 @@
-import { combineReducers } from '@reduxjs/toolkit';
-import contacts from './dossiersSlice';
-import user from './userSlice';
+import { combineReducers } from "@reduxjs/toolkit";
+import contacts from "./dossiersSlice";
 
 const reducer = combineReducers({
-  contacts,
-  user,
+  contacts
 });
 
 export default reducer;
