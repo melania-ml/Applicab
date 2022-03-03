@@ -53,15 +53,79 @@ function EtapesMultiSelectMenu(props) {
         <MenuList>
           <MenuItem
             onClick={() => {
-              dispatch(removeContacts(selectedContactIds));
+              // dispatch(removeContacts(selectedContactIds));
               closeSelectedContactsMenu();
               setDeleteConfirmation(true);
             }}
           >
-            <ListItemIcon className="min-w-40">
-              <Icon>delete</Icon>
-            </ListItemIcon>
-            <ListItemText primary="Supprimer" />
+            <div className="flex">
+              <ListItemIcon className="min-w-40">
+                <Icon>delete</Icon>
+              </ListItemIcon>
+              <ListItemText primary="Supprimer" />
+            </div>
+            <div className="flex">
+              <ListItemIcon className="min-w-40">
+                <Icon>delete</Icon>
+              </ListItemIcon>
+              <ListItemText primary="Dupliquer" />
+            </div>
+            <div className="flex">
+              <ListItemIcon className="min-w-40">
+                <Icon
+                  style={{
+                    color: "#C4C4C4",
+                    fontSize: "large",
+                    margin: "10px",
+                  }}
+                >
+                  label
+                </Icon>
+              </ListItemIcon>
+              <ListItemText primary="Marquer comme à prévoir" />
+            </div>
+            <div className="flex">
+              <ListItemIcon className="min-w-40">
+                <Icon
+                  style={{
+                    color: "#1BD7EF",
+                    fontSize: "large",
+                    margin: "10px",
+                  }}
+                >
+                  label
+                </Icon>
+              </ListItemIcon>
+              <ListItemText primary="Marquer comme a faire" />
+            </div>
+            <div className="flex">
+              <ListItemIcon className="min-w-40">
+                <Icon
+                  style={{
+                    color: "#78C5A0",
+                    fontSize: "large",
+                    margin: "10px",
+                  }}
+                >
+                  label
+                </Icon>
+              </ListItemIcon>
+              <ListItemText primary="Marquer comme fait" />
+            </div>
+            <div className="flex">
+              <ListItemIcon className="min-w-40">
+                <Icon
+                  style={{
+                    color: "#E5E5E5",
+                    fontSize: "large",
+                    margin: "10px",
+                  }}
+                >
+                  label
+                </Icon>
+              </ListItemIcon>
+              <ListItemText primary="Marquer comme archivé" />
+            </div>
           </MenuItem>
         </MenuList>
       </Menu>

@@ -37,9 +37,7 @@ function EtapeTab() {
   }
 
   const rows = [
-    createData(
-      <h5 style={{ margin: "0px 50px", fontSize: "medium" }}>Tous</h5>
-    ),
+    createData(<h5 style={{ margin: "0px 50px", fontSize: "small" }}>Tous</h5>),
     createData(
       <Icon
         style={{
@@ -281,7 +279,7 @@ function EtapeTab() {
                     }}
                   >
                     <TableRow>
-                      <TableRow className="flex items-center">
+                      <TableRow className="flex items-center truncate cursor-pointer">
                         {row.icon}{" "}
                         <TableCell style={{ borderBottom: "none" }} onClick>
                           {row.actionType}
@@ -292,12 +290,12 @@ function EtapeTab() {
                 ))}
               </TableBody>
               <hr />
-              <TableRow className="flex items-center">
+              <TableRow className="flex items-center truncate cursor-pointer">
                 <Icon
                   style={{
                     color: "#BABABF",
                     fontSize: "large",
-                    margin: "10px",
+                    // margin: "10px",
                   }}
                 >
                   near_me
@@ -306,12 +304,12 @@ function EtapeTab() {
                   Message envoyé
                 </TableCell>
               </TableRow>
-              <TableRow className="flex items-center">
+              <TableRow className="flex items-center truncate cursor-pointer">
                 <Icon
                   style={{
                     color: "#BABABF",
                     fontSize: "large",
-                    margin: "10px",
+                    // margin: "10px",
                   }}
                 >
                   access_time
@@ -320,12 +318,12 @@ function EtapeTab() {
                   En attente
                 </TableCell>
               </TableRow>
-              <TableRow className="flex items-center">
+              <TableRow className="flex items-center truncate cursor-pointer">
                 <Icon
                   style={{
                     color: "#BABABF",
                     fontSize: "large",
-                    margin: "10px",
+                    // margin: "10px",
                   }}
                 >
                   text_snippet
@@ -335,12 +333,12 @@ function EtapeTab() {
                 </TableCell>
               </TableRow>
               <hr />
-              <TableRow className="flex items-center">
+              <TableRow className="flex items-center truncate cursor-pointer">
                 <Icon
                   style={{
                     color: "#BABABF",
                     fontSize: "large",
-                    margin: "10px",
+                    // margin: "10px",
                   }}
                 >
                   delete
