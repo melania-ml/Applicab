@@ -10,7 +10,7 @@ import {
   Tooltip,
   styled,
   tooltipClasses,
-  Typography
+  Typography,
 } from "@mui/material";
 import { useMemo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,7 +24,7 @@ import {
   openEditContactDialog,
   removeContact,
   toggleStarredContact,
-  selectDossiers
+  selectDossiers,
 } from "../store/dossiersSlice";
 
 function DossiersList(props) {
@@ -42,11 +42,11 @@ function DossiersList(props) {
     <Tooltip {...props} arrow classes={{ popper: className }} />
   ))(({ theme }) => ({
     [`& .${tooltipClasses.arrow}`]: {
-      color: "#252E3E"
+      color: "#252E3E",
     },
     [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: "#252E3E"
-    }
+      backgroundColor: "#252E3E",
+    },
   }));
 
   const columns = useMemo(
@@ -68,38 +68,38 @@ function DossiersList(props) {
         },
         className: "justify-center",
         width: 64,
-        sortable: false
+        sortable: false,
       },
       {
         Header: "Nom",
         accessor: "company",
-        sortable: true
+        sortable: true,
       },
       {
         Header: "Procédure",
         accessor: "nickname",
-        sortable: true
+        sortable: true,
       },
       {
         Header: "Type",
         accessor: "name",
         className: "font-medium",
-        sortable: true
+        sortable: true,
       },
       {
         Header: "Nature",
         accessor: "lastName",
-        sortable: true
+        sortable: true,
       },
       {
         Header: "Date de création",
         accessor: "createddata",
-        sortable: true
+        sortable: true,
       },
       {
         Header: "Statut",
         accessor: "jobTitle",
-        sortable: true
+        sortable: true,
       },
       {
         Header: "Msg",
@@ -115,7 +115,7 @@ function DossiersList(props) {
                 sx={{
                   boxShadow: 0,
                   backgroundColor: "#22d3ee",
-                  "&:hover": { backgroundColor: "#22d3ee" }
+                  "&:hover": { backgroundColor: "#22d3ee" },
                 }}
                 aria-label="add"
               >
@@ -123,7 +123,7 @@ function DossiersList(props) {
               </Fab>
             </CustomTooltip>
           </div>
-        )
+        ),
       },
       {
         id: "action",
@@ -144,8 +144,8 @@ function DossiersList(props) {
               </IconButton>
             </CustomTooltip>
           </div>
-        )
-      }
+        ),
+      },
     ],
     [dispatch]
   );

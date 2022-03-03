@@ -207,15 +207,13 @@ function EtapesDialog(props) {
     }
   };
 
-  console.log("props.isOpen: ", props.isOpen);
   return (
     <Dialog
-      open={props.isOpen}
       classes={{
         paper: "m-24",
       }}
-      // {...contactDialog.props}
-      onClose={() => props.onCloseDialog(false)}
+      {...contactDialog.props}
+      onClose={closeComposeDialog}
       fullWidth
       maxWidth="sm"
     >

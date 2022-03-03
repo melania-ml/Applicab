@@ -7,11 +7,11 @@ import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import {
-  setContactsUnstarred,
-  setContactsStarred,
-  removeContacts
-} from "../store/dossiersSlice";
+// import {
+//   setContactsUnstarred,
+//   setContactsStarred,
+//   removeContacts
+// } from "../store/dossiersSlice";
 import DeleteConfirmationDialog from "app/main/common/components/DeleteConfirmationDialog";
 
 function DossiersMultiSelectMenu(props) {

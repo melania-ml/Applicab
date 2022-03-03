@@ -6,7 +6,7 @@ import history from "@history";
 import _ from "@lodash";
 import {
   setInitialSettings,
-  setDefaultSettings
+  setDefaultSettings,
 } from "app/store/fuse/settingsSlice";
 import { showMessage } from "app/store/fuse/messageSlice";
 import jwtService from "app/services/jwtService";
@@ -27,8 +27,8 @@ export const setUserDataAuth0 = (tokenData) => async (dispatch) => {
       shortcuts:
         tokenData.user_metadata && tokenData.user_metadata.shortcuts
           ? tokenData.user_metadata.shortcuts
-          : []
-    }
+          : [],
+    },
   };
 
   return dispatch(setUserData(user));
@@ -67,8 +67,8 @@ export const createUserSettingsFirebase =
       data: {
         displayName: authUser.displayName,
         email: authUser.email,
-        settings: { ...fuseDefaultSettings }
-      }
+        settings: { ...fuseDefaultSettings },
+      },
     });
     currentUser.updateProfile(user.data);
 
@@ -93,7 +93,7 @@ export const setUserData = (user) => async (dispatch, getState) => {
   if (!user.data.profile) {
     newUser = {
       ...user,
-      data: { ...user.data, profile: "assets/images/avatars/profile.jpg" }
+      data: { ...user.data, profile: "assets/images/avatars/profile.jpg" },
     };
   } else {
     newUser = user;
@@ -117,8 +117,8 @@ export const updateUserShortcuts =
       ...user,
       data: {
         ...user.data,
-        shortcuts
-      }
+        shortcuts,
+      },
     };
 
     dispatch(updateUserData(newUser));
@@ -135,7 +135,7 @@ export const logoutUser = () => async (dispatch, getState) => {
   }
 
   history.push({
-    pathname: "/"
+    pathname: "/",
   });
 
   switch (user.from) {
@@ -175,8 +175,8 @@ const initialState = {
     // displayName: 'Melania Munoz',
     profile: "assets/images/avatars/profile.jpg",
     // email: 'johndoe@withinpixels.comty',
-    shortcuts: ["calendar", "mail", "contacts", "todo"]
-  }
+    shortcuts: ["calendar", "mail", "contacts", "todo"],
+  },
 };
 
 const userSlice = createSlice({
@@ -184,9 +184,9 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => action.payload,
-    userLoggedOut: (state, action) => initialState
+    userLoggedOut: (state, action) => initialState,
   },
-  extraReducers: {}
+  extraReducers: {},
 });
 
 export const { setUser, userLoggedOut } = userSlice.actions;
