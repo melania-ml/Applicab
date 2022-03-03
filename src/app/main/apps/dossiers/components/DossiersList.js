@@ -24,7 +24,7 @@ import {
   openEditContactDialog,
   removeContact,
   toggleStarredContact,
-  selectContacts
+  selectDossiers
 } from "../store/dossiersSlice";
 
 function DossiersList(props) {

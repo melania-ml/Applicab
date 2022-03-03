@@ -13,7 +13,7 @@ import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { selectMainTheme } from "app/store/fuse/settingsSlice";
 import {
-  setContactsSearchText,
+  setDossiersSearchText,
   openNewContactDialog
 } from "../store/dossiersSlice";
 import Filters from "./Filters";
@@ -23,7 +23,7 @@ function DossiersHeader(props) {
   const [moreMenuEl, setMoreMenuEl] = useState(null);
   const dispatch = useDispatch();
   const searchText = useSelector(
-    ({ contactsApp }) => contactsApp.contacts.searchText
+    ({ dossiersApp }) => dossiersApp.dossiers.searchText
   );
   const mainTheme = useSelector(selectMainTheme);
 
@@ -50,7 +50,7 @@ function DossiersHeader(props) {
                 inputProps={{
                   "aria-label": "Search"
                 }}
-                onChange={(ev) => dispatch(setContactsSearchText(ev))}
+                onChange={(ev) => dispatch(setDossiersSearchText(ev))}
               />
             </Paper>
           </ThemeProvider>

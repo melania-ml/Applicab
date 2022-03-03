@@ -18,6 +18,24 @@ export const getNatures = () => async (dispatch) => {
     });
 };
 
+export const getDossiers = createAsyncThunk(
+  "dossiersApp/dossiers/getDossiers",
+  async (routeParams, { dispatch, getState }) => {
+    routeParams = routeParams || getState().dossiersApp.dossiers.routeParams;
+    const response = await axios.post("api/common/filterData/user/User", {
+      query: {
+        client_type: routeParams.type,
+        title: routeParams.title,
+        status: routeParams.status,
+        tags__contains: routeParams.tags
+      }
+    });
+    const data = await response.data;
+    dispatch(setDossiers(data.data));
+    return { data: data.data, routeParams };
+  }
+);
+
 const dossiersAdapter = createEntityAdapter({});
 
 export const { selectAll: selectDossiers } = dossiersAdapter.getSelectors(
@@ -27,6 +45,7 @@ export const { selectAll: selectDossiers } = dossiersAdapter.getSelectors(
 const dossiersSlice = createSlice({
   name: "dossiersApp/dossiers",
   initialState: dossiersAdapter.getInitialState({
+    dossiers: [],
     searchText: "",
     routeParams: {},
     contactDialog: {
@@ -39,11 +58,14 @@ const dossiersSlice = createSlice({
     natures: []
   }),
   reducers: {
+    setDossiers: (state, action) => {
+      state.dossiers = action.payload;
+    },
     setNatures: (state, action) => {
       state.natures = action.payload;
     },
     resetDossier: () => null,
-    setContactsSearchText: {
+    setDossiersSearchText: {
       reducer: (state, action) => {
         state.searchText = action.payload;
       },
@@ -87,18 +109,18 @@ const dossiersSlice = createSlice({
     }
   },
   extraReducers: {
-    // [getContacts.fulfilled]: (state, action) => {
-    //   const { data, routeParams } = action.payload;
-    //   contactsAdapter.setAll(state, data);
-    //   state.routeParams = routeParams;
-    //   state.searchText = "";
-    // }
+    [getDossiers.fulfilled]: (state, action) => {
+      const { data, routeParams } = action.payload;
+      dossiersAdapter.setAll(state, data);
+      state.routeParams = routeParams;
+      state.searchText = "";
+    }
   }
 });
 
 export const {
   resetDossier,
-  setContactsSearchText,
+  setDossiersSearchText,
   openNewContactDialog,
   closeNewContactDialog,
   openEditContactDialog,
