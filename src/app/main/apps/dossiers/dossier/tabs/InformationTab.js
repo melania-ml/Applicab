@@ -7,7 +7,7 @@ import {
   MenuItem,
   Autocomplete,
   Chip,
-  Button
+  Button,
 } from "@mui/material";
 import Natures from "../../../../constants/Natures";
 import Statut from "../../../../constants/Statut";
@@ -18,8 +18,6 @@ import { useSelector } from "react-redux";
 const tags = [];
 function InformationTab(props) {
   const { userData } = useSelector(({ userMenu }) => userMenu.userMenu);
-  const natures = useSelector(({ dossiersApp }) => dossiersApp.dossiers);
-  console.log("natures: ", natures);
   const [allFields, setAllFields] = useState({
     name: "",
     nature: "",
@@ -27,7 +25,7 @@ function InformationTab(props) {
     type: "",
     tags: [],
     internalComments: "",
-    sharedWithClientComments: ""
+    sharedWithClientComments: "",
   });
   useEffect(() => {
     setAllFields({
@@ -38,7 +36,7 @@ function InformationTab(props) {
       type: userData.type,
       tags: userData.tags,
       internalComments: userData.internalComments,
-      sharedWithClientComments: userData.sharedWithClientComments
+      sharedWithClientComments: userData.sharedWithClientComments,
     });
   }, [userData]);
 
@@ -50,7 +48,7 @@ function InformationTab(props) {
         onChange={(e) => {
           setAllFields({
             ...allFields,
-            name: e.target.value
+            name: e.target.value,
           });
         }}
         label="Nom"
@@ -67,12 +65,12 @@ function InformationTab(props) {
           } else if (newValue && newValue.inputValue) {
             setAllFields({
               ...allFields,
-              nature: newValue.inputValue
+              nature: newValue.inputValue,
             });
           } else {
             setAllFields({
               ...allFields,
-              nature: newValue?.client_type
+              nature: newValue?.client_type,
             });
           }
         }}
@@ -85,7 +83,7 @@ function InformationTab(props) {
           if (inputValue.trim() !== "" && !isExisting) {
             filtered.push({
               inputValue: inputValue.trim(),
-              nature: `Ajouter "${inputValue.trim()}"`
+              nature: `Ajouter "${inputValue.trim()}"`,
             });
           }
           return filtered;
@@ -136,7 +134,7 @@ function InformationTab(props) {
           onChange={(e) => {
             setAllFields({
               ...allFields,
-              statut: e.target.value
+              statut: e.target.value,
             });
           }}
         >
@@ -155,7 +153,7 @@ function InformationTab(props) {
           onChange={(e) => {
             setAllFields({
               ...allFields,
-              type: e.target.value
+              type: e.target.value,
             });
           }}
         >
@@ -174,7 +172,7 @@ function InformationTab(props) {
           onChange={(e) => {
             setAllFields({
               ...allFields,
-              procedure: e.target.value
+              procedure: e.target.value,
             });
           }}
         >
@@ -201,7 +199,7 @@ function InformationTab(props) {
             ...allFields,
             ...tags,
             tags: e.target.value,
-            ...newValue.filter((option) => tags.indexOf(option) === -1)
+            ...newValue.filter((option) => tags.indexOf(option) === -1),
           });
         }}
         options={tags}
@@ -230,7 +228,7 @@ function InformationTab(props) {
         onChange={(e) => {
           setAllFields({
             ...allFields,
-            internalComments: e.target.value
+            internalComments: e.target.value,
           });
         }}
       />
@@ -245,7 +243,7 @@ function InformationTab(props) {
         onChange={(e) => {
           setAllFields({
             ...allFields,
-            sharedWithClientComments: e.target.value
+            sharedWithClientComments: e.target.value,
           });
         }}
       />
@@ -261,7 +259,7 @@ function InformationTab(props) {
             ...allFields,
             ...tags,
             tags: e.target.value,
-            ...newValue.filter((option) => tags.indexOf(option) === -1)
+            ...newValue.filter((option) => tags.indexOf(option) === -1),
           });
         }}
         options={tags}
@@ -291,7 +289,7 @@ function InformationTab(props) {
             ...allFields,
             ...tags,
             tags: e.target.value,
-            ...newValue.filter((option) => tags.indexOf(option) === -1)
+            ...newValue.filter((option) => tags.indexOf(option) === -1),
           });
         }}
         options={tags}
@@ -321,7 +319,7 @@ function InformationTab(props) {
             ...allFields,
             ...tags,
             tags: e.target.value,
-            ...newValue.filter((option) => tags.indexOf(option) === -1)
+            ...newValue.filter((option) => tags.indexOf(option) === -1),
           });
         }}
         options={tags}

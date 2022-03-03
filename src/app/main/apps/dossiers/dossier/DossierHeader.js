@@ -3,8 +3,11 @@ import Icon from "@mui/material/Icon";
 import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { useFormContext } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import _ from "@lodash";
+import { addContact, removeContact } from "../store/dossiersSlice";
 
 function DossierHeader() {
   const theme = useTheme();
@@ -34,19 +37,14 @@ function DossierHeader() {
             className="sm:flex"
             initial={{ scale: 0 }}
             animate={{ scale: 1, transition: { delay: 0.3 } }}
-          >
-            <img
-              className="w-32 sm:w-48 rounded"
-              src="assets/images/ecommerce/product-image-placeholder.png"
-            />
-          </motion.div>
+          ></motion.div>
           <div className="flex flex-col min-w-0 mx-8 sm:mc-16">
             <motion.div
               initial={{ x: -20 }}
               animate={{ x: 0, transition: { delay: 0.3 } }}
             >
-              <Typography className="text-16 sm:text-20 truncate font-semibold">
-                Ajouter un nouveau dossier
+              <Typography className="text-16 sm:text-20 ml-24 truncate font-semibold">
+                {name || "Ajouter un nouveau dossier"}
               </Typography>
             </motion.div>
           </div>
@@ -59,9 +57,21 @@ function DossierHeader() {
       >
         <Button
           className="whitespace-nowrap mx-4"
+          variant="outlined"
+          color="secondary"
+          style={{ borderRadius: 0, marginRight: 25 }}
+          //onClick={handleRemoveProduct}
+          //startIcon={<Icon className="hidden sm:flex">delete</Icon>}
+        >
+          Supprimer
+        </Button>
+        <Button
+          className="whitespace-nowrap mx-4"
           variant="contained"
           color="secondary"
           style={{ borderRadius: 0 }}
+          // disabled={_.isEmpty(dirtyFields) || !isValid}
+          //onClick={handleSaveProduct}
         >
           Enregistrer
         </Button>
