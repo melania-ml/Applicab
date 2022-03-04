@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import _ from "@lodash";
+import DateTimePicker from "@mui/lab/DateTimePicker";
 import {
   Typography,
   Toolbar,
@@ -14,16 +15,15 @@ import {
   InputLabel,
   Select,
   TextField,
-  Icon
+  Icon,
 } from "@mui/material";
-import DatePicker from "@mui/lab/DatePicker";
 import Statut from "app/main/constants/Statut";
 import Clients from "app/main/constants/Clients";
 import {
   updateContact,
   addContact,
   closeNewContactDialog,
-  closeEditContactDialog
+  closeEditContactDialog,
 } from "../../../store/dossiersSlice";
 
 const tags = [];
@@ -57,7 +57,7 @@ function EtapesDialog(props) {
     department: "",
     nationality: "",
     nativeCity: "",
-    profession: ""
+    profession: "",
   });
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
@@ -209,7 +209,7 @@ function EtapesDialog(props) {
   return (
     <Dialog
       classes={{
-        paper: "m-24"
+        paper: "m-24",
       }}
       {...contactDialog.props}
       onClose={closeComposeDialog}
@@ -245,7 +245,7 @@ function EtapesDialog(props) {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  position: e.target.value
+                  position: e.target.value,
                 });
                 checkIsDisable("name", e.target.value);
               }}
@@ -263,7 +263,7 @@ function EtapesDialog(props) {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  status: e.target.value
+                  status: e.target.value,
                 });
                 checkIsDisable("name", e.target.value);
               }}
@@ -281,7 +281,7 @@ function EtapesDialog(props) {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  step: e.target.value
+                  step: e.target.value,
                 });
                 checkIsDisable("name", e.target.value);
               }}
@@ -299,7 +299,7 @@ function EtapesDialog(props) {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  name: e.target.value
+                  name: e.target.value,
                 });
                 checkIsDisable("name", e.target.value);
               }}
@@ -312,7 +312,7 @@ function EtapesDialog(props) {
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    clientStatus: e.target.value
+                    clientStatus: e.target.value,
                   })
                 }
               >
@@ -324,7 +324,7 @@ function EtapesDialog(props) {
               </Select>
             </FormControl>
 
-            <DatePicker
+            <DateTimePicker
               label="Date"
               value={allFields.dateValue}
               maxDate={new Date()}
@@ -348,7 +348,7 @@ function EtapesDialog(props) {
                   style={{
                     color: "secondary",
                     fontSize: "large",
-                    margin: "10px"
+                    margin: "10px",
                   }}
                 >
                   notifications
@@ -395,7 +395,7 @@ function EtapesDialog(props) {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  profession: e.target.value
+                  profession: e.target.value,
                 });
                 checkIsDisable("name", e.target.value);
               }}
@@ -412,7 +412,7 @@ function EtapesDialog(props) {
               onChange={(e) =>
                 setAllFields({
                   ...allFields,
-                  comments: e.target.value
+                  comments: e.target.value,
                 })
               }
             />
@@ -432,7 +432,7 @@ function EtapesDialog(props) {
                 style={{
                   color: "secondary",
                   fontSize: "large",
-                  margin: "10px"
+                  margin: "10px",
                 }}
               >
                 attach_file
