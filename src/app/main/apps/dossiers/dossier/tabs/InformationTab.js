@@ -15,7 +15,7 @@ import { useSelector } from "react-redux";
 import { createFilterOptions } from "@mui/material/Autocomplete";
 
 const tags = [];
-function InformationTab(props) {
+function InformationTab() {
   const { userData } = useSelector(({ userMenu }) => userMenu.userMenu);
   const { natures, procedures } = useSelector(
     ({ dossiersApp }) => dossiersApp.dossiers
@@ -94,8 +94,6 @@ function InformationTab(props) {
         }}
         selectOnFocus
         clearOnBlur
-        // error={errors?.nature}
-        // helperText={errors?.nature}
         handleHomeEndKeys
         options={natures}
         getOptionLabel={(option) => {
@@ -164,8 +162,8 @@ function InformationTab(props) {
           }}
         >
           {procedures.map((procedure) => (
-            <MenuItem value={procedure.value} key={procedure.id}>
-              {procedure.label}
+            <MenuItem value={procedure.procedure_type} key={procedure.id}>
+              {procedure.procedure_type}
             </MenuItem>
           ))}
         </Select>
