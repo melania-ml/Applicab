@@ -20,27 +20,31 @@ function InformationTab() {
   const { natures, procedures } = useSelector(
     ({ dossiersApp }) => dossiersApp.dossiers
   );
-  console.log("procedures", procedures);
   const filter = createFilterOptions();
   const [allFields, setAllFields] = useState({
-    name: "",
+    case_name: "",
     nature: "",
-    statut: "",
+    status: "",
     type: "",
+    procedure: "",
+    location: "",
     tags: [],
-    internalComments: "",
-    sharedWithClientComments: ""
+    internal_comment: "",
+    shared_comment: "",
+    client_id: "",
+    customer_contact_id: "",
+    opposing_contact_id: ""
   });
   useEffect(() => {
     setAllFields({
       ...allFields,
-      name: userData.name,
+      case_name: userData.case_name,
       nature: userData.nature,
-      statut: userData.statut,
+      status: userData.status,
       type: userData.type,
       tags: userData.tags,
-      internalComments: userData.internalComments,
-      sharedWithClientComments: userData.sharedWithClientComments
+      internal_comment: userData.internal_comment,
+      shared_comment: userData.shared_comment
     });
   }, [userData]);
 
@@ -48,11 +52,11 @@ function InformationTab() {
     <div>
       <TextField
         className="mt-8 mb-16"
-        value={allFields.name}
+        value={allFields.case_name}
         onChange={(e) => {
           setAllFields({
             ...allFields,
-            name: e.target.value
+            case_name: e.target.value
           });
         }}
         label="Nom"
@@ -115,17 +119,17 @@ function InformationTab() {
         <InputLabel>Statut</InputLabel>
         <Select
           label="Statut"
-          value={userData.statut}
+          value={allFields.status}
           onChange={(e) => {
             setAllFields({
               ...allFields,
-              statut: e.target.value
+              status: e.target.value
             });
           }}
         >
-          {Statut.map((statut) => (
-            <MenuItem value={statut.value} key={statut.id}>
-              {statut.label}
+          {Statut.map((status) => (
+            <MenuItem value={status.value} key={status.id}>
+              {status.label}
             </MenuItem>
           ))}
         </Select>
@@ -173,6 +177,12 @@ function InformationTab() {
         label="Lieu"
         variant="outlined"
         fullWidth
+        onChange={(e) => {
+          setAllFields({
+            ...allFields,
+            location: e.target.value
+          });
+        }}
       />
       <Autocomplete
         className="w-full mb-12"
@@ -208,11 +218,11 @@ function InformationTab() {
         multiline
         rows={5}
         fullWidth
-        value={allFields.internalComments}
+        value={allFields.internal_comment}
         onChange={(e) => {
           setAllFields({
             ...allFields,
-            internalComments: e.target.value
+            internal_comment: e.target.value
           });
         }}
       />
@@ -223,11 +233,11 @@ function InformationTab() {
         multiline
         rows={5}
         fullWidth
-        value={allFields.sharedWithClientComments}
+        value={allFields.shared_comment}
         onChange={(e) => {
           setAllFields({
             ...allFields,
-            sharedWithClientComments: e.target.value
+            shared_comment: e.target.value
           });
         }}
       />

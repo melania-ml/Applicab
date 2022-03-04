@@ -30,60 +30,60 @@ import {
 } from "../../store/dossiersSlice";
 
 function EtapeTab() {
-  function createData(icon, actionType) {
-    return { icon, actionType };
-  }
-
   const rows = [
-    createData(<h5 style={{ margin: "0px 50px", fontSize: "small" }}>Tous</h5>),
-    createData(
-      <Icon
-        style={{
-          color: "#C4C4C4",
-          fontSize: "large",
-          margin: "10px"
-        }}
-      >
-        label
-      </Icon>,
-      "A prévoir"
-    ),
-    createData(
-      <Icon
-        style={{
-          color: "#1BD7EF",
-          fontSize: "large",
-          margin: "10px"
-        }}
-      >
-        label
-      </Icon>,
-      "A faire"
-    ),
-    createData(
-      <Icon
-        style={{
-          color: "#78C5A0",
-          fontSize: "large",
-          margin: "10px"
-        }}
-      >
-        label
-      </Icon>,
-      "Fait"
-    ),
-    createData(
-      <Icon
-        style={{
-          color: "#E5E5E5",
-          fontSize: "large",
-          margin: "10px"
-        }}
-      >
-        label
-      </Icon>,
-      "Archivé"
-    )
+    {
+      icon: (
+        <Icon
+          style={{
+            color: "#C4C4C4",
+            fontSize: "large"
+          }}
+        >
+          label
+        </Icon>
+      ),
+      actionType: "A prévoir"
+    },
+    {
+      icon: (
+        <Icon
+          style={{
+            color: "#1BD7EF",
+            fontSize: "large"
+          }}
+        >
+          label
+        </Icon>
+      ),
+      actionType: "A faire"
+    },
+
+    {
+      icon: (
+        <Icon
+          style={{
+            color: "#78C5A0",
+            fontSize: "large"
+          }}
+        >
+          label
+        </Icon>
+      ),
+      actionType: "Fait"
+    },
+    {
+      icon: (
+        <Icon
+          style={{
+            color: "#E5E5E5",
+            fontSize: "large"
+          }}
+        >
+          label
+        </Icon>
+      ),
+      actionType: "Archivé"
+    }
   ];
 
   const dispatch = useDispatch();
@@ -154,33 +154,8 @@ function EtapeTab() {
         sortable: true,
         Cell: ({ row }) => (
           <div className="flex items-center dropSelect">
-            <Icon
-              style={{ color: "#1BD7EF", fontSize: "large", margin: "10px" }}
-            >
-              label
-            </Icon>
-            A prévoir
-            {/* <CustomTooltip placement="top-end" title="Custom tooltip">
-              <Fab
-                variant="extended"
-                sx={{
-                  boxShadow: 0,
-                  backgroundColor: "#22d3ee",
-                  height: '30px',
-                  padding: "0px 0px 0px 30px",
-                  margin: "-50px",
-                  "&:hover": { backgroundColor: "#89c2cb" },
-                }}
-              >
-                default text
-                <Select>
-                  <option value="volvo">Volvo</option>
-                  <option value="saab">Saab</option>
-                  <option value="mercedes">Mercedes</option>
-                  <option value="audi">Audi</option>
-                </Select>
-              </Fab>
-            </CustomTooltip> */}
+            <Icon style={{ color: "#1BD7EF", fontSize: "large" }}>label</Icon>A
+            prévoir
           </div>
         )
       },
@@ -191,9 +166,7 @@ function EtapeTab() {
         Cell: ({ row }) => (
           <div className="flex items-center">
             <CustomTooltip placement="top-end" title="add your tooltip text">
-              <Icon
-                style={{ color: "#BABABF", fontSize: "large", margin: "10px" }}
-              >
+              <Icon style={{ color: "#BABABF", fontSize: "large" }}>
                 near_me
               </Icon>
             </CustomTooltip>
@@ -270,6 +243,17 @@ function EtapeTab() {
                 Nouvelle étape
               </Button>
               <h1 className="py-16 text-base font-semibold">Statut</h1>
+              <div
+                style={{
+                  background: "#C4C4C4",
+                  borderRadius: 2,
+                  display: "flex",
+                  alignItems: "center",
+                  height: 34
+                }}
+              >
+                <h1 className="text-base ml-10">Tous</h1>
+              </div>
               <TableBody>
                 {rows.map((row) => (
                   <TableRow
@@ -290,63 +274,61 @@ function EtapeTab() {
                 ))}
               </TableBody>
               <hr />
-              <TableRow className="flex items-center truncate cursor-pointer">
-                <Icon
-                  style={{
-                    color: "#BABABF",
-                    fontSize: "large"
-                    // margin: "10px",
-                  }}
-                >
-                  near_me
-                </Icon>
-                <TableCell style={{ borderBottom: "none" }}>
-                  Message envoyé
-                </TableCell>
-              </TableRow>
-              <TableRow className="flex items-center truncate cursor-pointer">
-                <Icon
-                  style={{
-                    color: "#BABABF",
-                    fontSize: "large"
-                    // margin: "10px",
-                  }}
-                >
-                  access_time
-                </Icon>
-                <TableCell style={{ borderBottom: "none" }}>
-                  En attente
-                </TableCell>
-              </TableRow>
-              <TableRow className="flex items-center truncate cursor-pointer">
-                <Icon
-                  style={{
-                    color: "#BABABF",
-                    fontSize: "large"
-                    // margin: "10px",
-                  }}
-                >
-                  text_snippet
-                </Icon>
-                <TableCell style={{ borderBottom: "none" }}>
-                  Brouillon
-                </TableCell>
-              </TableRow>
-              <hr />
-              <TableRow className="flex items-center truncate cursor-pointer">
-                <Icon
-                  style={{
-                    color: "#BABABF",
-                    fontSize: "large"
-                    // margin: "10px",
-                  }}
-                >
-                  delete
-                </Icon>
-                <TableCell style={{ borderBottom: "none" }}>
-                  Corbeille
-                </TableCell>
-              </TableRow>
+              <TableBody>
+                <TableRow className="flex items-center truncate cursor-pointer">
+                  <Icon
+                    style={{
+                      color: "#BABABF",
+                      fontSize: "large"
+                    }}
+                  >
+                    near_me
+                  </Icon>
+                  <TableCell style={{ borderBottom: "none" }}>
+                    Message envoyé
+                  </TableCell>
+                </TableRow>
+                <TableRow className="flex items-center truncate cursor-pointer">
+                  <Icon
+                    style={{
+                      color: "#BABABF",
+                      fontSize: "large"
+                    }}
+                  >
+                    access_time
+                  </Icon>
+                  <TableCell style={{ borderBottom: "none" }}>
+                    En attente
+                  </TableCell>
+                </TableRow>
+                <TableRow className="flex items-center truncate cursor-pointer">
+                  <Icon
+                    style={{
+                      color: "#BABABF",
+                      fontSize: "large"
+                    }}
+                  >
+                    text_snippet
+                  </Icon>
+                  <TableCell style={{ borderBottom: "none" }}>
+                    Brouillon
+                  </TableCell>
+                </TableRow>
+                <hr />
+                <TableRow className="flex items-center truncate cursor-pointer">
+                  <Icon
+                    style={{
+                      color: "#BABABF",
+                      fontSize: "large"
+                    }}
+                  >
+                    delete
+                  </Icon>
+                  <TableCell style={{ borderBottom: "none" }}>
+                    Corbeille
+                  </TableCell>
+                </TableRow>
+              </TableBody>
             </motion.div>
           </Grid>
           <Grid item xs={12} md={9}>
