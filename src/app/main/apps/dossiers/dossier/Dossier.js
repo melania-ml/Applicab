@@ -41,6 +41,9 @@ const Root = styled(FusePageCarded)(({ theme }) => ({
   },
   "& .FusePageCarded-contentWrapper": {
     padding: 0
+  },
+  "& .search-bar-dossier" :{
+	borderRadius: 5
   }
 }));
 
