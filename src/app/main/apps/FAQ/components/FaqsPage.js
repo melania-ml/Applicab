@@ -69,30 +69,20 @@ function FaqsPage() {
 
   return (
     <Root className="w-full flex flex-col flex-auto">
-      <div className="FaqsPage-header flex flex-col shrink-0 items-center justify-center text-center p-16 sm:p-24 h-200 sm:h-360">
-        {/* <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 0.3 } }}>
-          <Typography
-            variant="subtitle1"
-            color="inherit"
-            className="opacity-75 mt-8 sm:mt-16 mx-auto max-w-512 font-bold"
-          >
-            Foire aux questions
-          </Typography>
-        </motion.div> */}
-
+      <div className="FaqsPage-header flex flex-col shrink-0 items-center justify-center text-center p-16 sm:p-24 h-auto sm:h-360">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0, transition: { delay: 0.1 } }}
         >
           <Typography
             color="inherit"
-            className="text-32 sm:text-56 font-bold tracking-tight"
+            className="text-32 sm:text-36 tracking-tight"
           >
             Foire aux questions
           </Typography>
         </motion.div>
 
-        <Paper className="flex shrink-0 items-center h-56 w-full max-w-md mt-16 sm:mt-32 rounded-16 shadow">
+        <Paper className="flex shrink-0 items-center h-52 w-full max-w-sm rounded-32 shadow">
           <Icon color="action" className="mx-16">
             search
           </Icon>
@@ -142,7 +132,7 @@ function FaqsPage() {
               >
                 <Typography
                   variant="subtitle1"
-                  color="blue"
+                  color="#1BD7EF"
                   className="opacity-75 text-32 mt-8 sm:mt-16 mx-auto max-w-912 font-bold "
                 >
                   Questions de Procedure
@@ -176,7 +166,7 @@ function FaqsPage() {
                 ))}
                 <Typography
                   // variant="subtitle1"
-                  color="blue"
+                  color="#1BD7EF"
                   className="opacity-75 text-32 mt-8 sm:mt-16 mx-auto max-w-912 font-bold"
                 >
                   Questions de Vocabulaire
