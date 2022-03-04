@@ -31,8 +31,8 @@ import DocumentsTab from "./tabs/DocumentsTab";
 
 const Root = styled(FusePageCarded)(({ theme }) => ({
   "& .FusePageCarded-header": {
-    minHeight: 145,
-    height: 145,
+    minHeight: 100,
+    height: 100,
     alignItems: "center",
     [theme.breakpoints.up("md")]: {
       minHeight: 100,

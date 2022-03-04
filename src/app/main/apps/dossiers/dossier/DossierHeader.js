@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 function DossierHeader() {
   const theme = useTheme();
   return (
-    <div className="flex flex-1 w-full items-center justify-between res-flex-direction">
+    <div className="flex flex-1 w-full items-center justify-between">
       <div className="flex flex-col items-start max-w-full min-w-0">
         <motion.div
           initial={{ x: 20, opacity: 0 }}
