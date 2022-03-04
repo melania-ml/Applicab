@@ -24,7 +24,7 @@ function InformationTab() {
   const [allFields, setAllFields] = useState({
     case_name: "",
     nature: "",
-    status: "",
+    status: "A ouvrir",
     type: "",
     procedure: "",
     location: "",
@@ -59,7 +59,7 @@ function InformationTab() {
             case_name: e.target.value
           });
         }}
-        label="Nom"
+        label="Nom*"
         autoFocus
         variant="outlined"
         fullWidth
@@ -113,12 +113,12 @@ function InformationTab() {
           <li {...props}>{option.nature_title}</li>
         )}
         freeSolo
-        renderInput={(params) => <TextField {...params} label="Nature" />}
+        renderInput={(params) => <TextField {...params} label="Nature*" />}
       />
       <FormControl className="flex w-full mb-12" variant="outlined">
-        <InputLabel>Statut</InputLabel>
+        <InputLabel>Statut*</InputLabel>
         <Select
-          label="Statut"
+          label="Statut*"
           value={allFields.status}
           onChange={(e) => {
             setAllFields({
@@ -135,9 +135,9 @@ function InformationTab() {
         </Select>
       </FormControl>
       <FormControl className="flex w-full mb-12" variant="outlined">
-        <InputLabel>Type</InputLabel>
+        <InputLabel>Type*</InputLabel>
         <Select
-          label="Type"
+          label="Type*"
           value={allFields.type}
           onChange={(e) => {
             setAllFields({
@@ -154,9 +154,9 @@ function InformationTab() {
         </Select>
       </FormControl>
       <FormControl className="flex w-full mb-12" variant="outlined">
-        <InputLabel>Procédure</InputLabel>
+        <InputLabel>Procédure*</InputLabel>
         <Select
-          label="Procédure"
+          label="Procédure*"
           value={allFields.procedure}
           onChange={(e) => {
             setAllFields({
@@ -268,7 +268,7 @@ function InformationTab() {
           ))
         }
         renderInput={(params) => (
-          <TextField {...params} label="Choisissez un client" />
+          <TextField {...params} label="Choisissez un client*" />
         )}
       />
       <div className="mb-10">

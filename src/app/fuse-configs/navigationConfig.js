@@ -5,6 +5,7 @@ const navigationConfig = [
     type: "item",
     icon: "dashboard",
     url: "apps/dashboard",
+    access: ["Lawyer"]
   },
   {
     id: "contacts",
@@ -12,6 +13,7 @@ const navigationConfig = [
     type: "item",
     icon: "account_box",
     url: "apps/contacts/all",
+    access: ["Lawyer"]
   },
   {
     id: "dossiers",
@@ -19,6 +21,7 @@ const navigationConfig = [
     type: "item",
     icon: "view_column",
     url: "apps/dossiers/all",
+    access: ["Lawyer"]
   },
   // {
   //   id: 'Étapes',
@@ -51,7 +54,8 @@ const navigationConfig = [
     type: "item",
     icon: "help_outline",
     url: "pages/faq",
-  },
+    access: ["Client"]
+  }
   // {
   //   id: 'Applicab',
   //   title: 'Applicab',
