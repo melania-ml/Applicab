@@ -26,9 +26,8 @@ import EtapesTable from "./EtapesComponent/EtapesTable";
 import EtapesMultiSelectMenu from "./EtapesComponent/EtapesMultiSelectMenu";
 import {
   openNewContactDialog,
-  selectContacts,
-  setContactsSearchText
-} from "./EtapesComponent/etapesSlice";
+  setDossiersSearchText
+} from "../../store/dossiersSlice";
 
 function EtapeTab() {
   function createData(icon, actionType) {
@@ -88,12 +87,14 @@ function EtapeTab() {
   ];
 
   const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
+  const etapes = useSelector(
+    ({ dossiersApp }) => dossiersApp.dossiers.dossiers
+  );
 
   const [openEtape, setOpenEtape] = useState(false);
 
   const searchText = useSelector(
-    ({ contactsApp }) => contactsApp.contacts.searchText
+    ({ dossiersApp }) => dossiersApp.dossiers.searchText
   );
 
   const [filteredData, setFilteredData] = useState(null);
@@ -207,15 +208,15 @@ function EtapeTab() {
   useEffect(() => {
     function getFilteredArray(entities, _searchText) {
       if (_searchText.length === 0) {
-        return contacts;
+        return etapes;
       }
-      return FuseUtils.filterArrayByString(contacts, _searchText);
+      return FuseUtils.filterArrayByString(etapes, _searchText);
     }
 
-    if (contacts) {
-      setFilteredData(getFilteredArray(contacts, searchText));
+    if (etapes) {
+      setFilteredData(getFilteredArray(etapes, searchText));
     }
-  }, [contacts, searchText]);
+  }, [etapes, searchText]);
 
   if (!filteredData) {
     return null;
@@ -254,7 +255,7 @@ function EtapeTab() {
                     inputProps={{
                       "aria-label": "Search"
                     }}
-                    onChange={(ev) => dispatch(setContactsSearchText(ev))}
+                    onChange={(ev) => dispatch(setDossiersSearchText(ev))}
                   />
                 </Paper>
               </ThemeProvider>
@@ -362,7 +363,7 @@ function EtapeTab() {
             ) : (
               <div className="flex flex-1 items-center justify-center h-full">
                 <Typography color="textSecondary" variant="h5">
-                  There are no contacts!
+                  There are no etapes!
                 </Typography>
               </div>
             )}

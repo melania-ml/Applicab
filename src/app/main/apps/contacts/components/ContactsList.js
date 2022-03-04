@@ -3,6 +3,7 @@ import FuseUtils from "@fuse/utils";
 import { Typography, Badge } from "@mui/material";
 import { useMemo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import FuseLoading from "@fuse/core/FuseLoading";
 import ContactsMultiSelectMenu from "./ContactsMultiSelectMenu";
 import ContactsTable from "./ContactsTable";
 import { openEditContactDialog, selectContacts } from "../store/contactsSlice";
@@ -10,6 +11,9 @@ import { openEditContactDialog, selectContacts } from "../store/contactsSlice";
 function ContactsList(props) {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
+  const isLoading = useSelector(
+    ({ contactsApp }) => contactsApp.contacts.isLoading
+  );
   const searchText = useSelector(
     ({ contactsApp }) => contactsApp.contacts.searchText
   );
@@ -120,7 +124,9 @@ function ContactsList(props) {
   if (!filteredData) {
     return null;
   }
-
+  if (isLoading) {
+    return <FuseLoading />;
+  }
   if (filteredData.length === 0) {
     return (
       <div className="flex flex-1 items-center justify-center h-full">

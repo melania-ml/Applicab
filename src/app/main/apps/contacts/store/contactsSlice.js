@@ -65,6 +65,7 @@ export const importContacts = (contact) => async (dispatch) => {
 export const getContacts = createAsyncThunk(
   "contactsApp/contacts/getContacts",
   async (routeParams, { dispatch, getState }) => {
+    dispatch(setIsLoading(true));
     routeParams = routeParams || getState().contactsApp.contacts.routeParams;
     const response = await axios.post("api/common/filterData/user/User", {
       query: {
@@ -76,6 +77,7 @@ export const getContacts = createAsyncThunk(
     });
     const data = await response.data;
     dispatch(setContacts(data.data));
+    dispatch(setIsLoading(false));
     return { data: data.data, routeParams };
   }
 );
@@ -145,6 +147,7 @@ export const { selectAll: selectContacts, selectById: selectContactsById } =
 const contactsSlice = createSlice({
   name: "contactsApp/contacts",
   initialState: contactsAdapter.getInitialState({
+    isLoading: false,
     searchText: "",
     routeParams: {},
     contactDialog: {
@@ -161,6 +164,9 @@ const contactsSlice = createSlice({
     success: false
   }),
   reducers: {
+    setIsLoading: (state, action) => {
+      state.isLoading = action.payload;
+    },
     setContacts: (state, action) => {
       state.contacts = action.payload;
     },
@@ -247,6 +253,7 @@ export const {
   setAllTitles,
   setFormTitles,
   setAllTypes,
+  setIsLoading,
   setContacts
 } = contactsSlice.actions;
 
