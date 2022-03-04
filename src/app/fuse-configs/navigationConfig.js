@@ -4,22 +4,22 @@ const navigationConfig = [
     title: "Dashboard",
     type: "item",
     icon: "dashboard",
-    url: "apps/dashboard"
+    url: "apps/dashboard",
   },
   {
     id: "contacts",
     title: "Contacts",
     type: "item",
     icon: "account_box",
-    url: "apps/contacts/all"
+    url: "apps/contacts/all",
   },
   {
     id: "dossiers",
     title: "Dossiers",
     type: "item",
     icon: "view_column",
-    url: "apps/dossiers/all"
-  }
+    url: "apps/dossiers/all",
+  },
   // {
   //   id: 'Étapes',
   //   title: 'Étapes',
@@ -44,14 +44,14 @@ const navigationConfig = [
   //   icon: 'event',
   //   url: 'apps/natures/all',
   // },
-  // {
-  //   id: 'faq',
-  //   title: 'Foire aux Questions',
-  //   translate:'Foire aux Questions',
-  //   type: 'item',
-  //   icon: 'help_outline',
-  //   url: 'pages/faq',
-  // },
+  {
+    id: "faq",
+    title: "Foire aux Questions",
+    // translate:'Foire aux Questions',
+    type: "item",
+    icon: "help_outline",
+    url: "pages/faq",
+  },
   // {
   //   id: 'Applicab',
   //   title: 'Applicab',

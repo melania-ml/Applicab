@@ -14,7 +14,7 @@ import ContactsAppConfig from "./contacts/ContactsAppConfig";
 import EtapesAppConfig from "./Etapes/EtapesAppConfig";
 //import EmailAppConfig from "./Email/EmailAppConfig";
 // import NaturesAppConfig from './Natures/NaturesAppConfig';
-// import FaqAppConfig from './FAQ/FaqPageConfig';
+import FaqAppConfig from "./FAQ/FaqPageConfig";
 import AdminDashboardAppConfig from "./AdminDashboard/DashboardAppConfig";
 // import ApplicabAppConfig from './Applicab/ApplicabAppConfig';
 
@@ -36,7 +36,7 @@ const appsConfigs = [
   EtapesAppConfig,
   //EmailAppConfig,
   // NaturesAppConfig,
-  // FaqAppConfig
+  FaqAppConfig,
   // ApplicabAppConfig
 ];
 
