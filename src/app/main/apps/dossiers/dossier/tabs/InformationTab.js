@@ -246,7 +246,26 @@ function InformationTab() {
       <div className="mb-10">
         <b>Ajouter un client au dossier</b>
       </div>
-      <Autocomplete
+      <FormControl className="flex w-full mb-12" variant="outlined">
+        <InputLabel>Choisissez un client*</InputLabel>
+        <Select
+          label="Choisissez un client*"
+          value={allFields.client_id}
+          onChange={(e) => {
+            setAllFields({
+              ...allFields,
+              client_id: e.target.value
+            });
+          }}
+        >
+          {procedures.map((procedure) => (
+            <MenuItem value={procedure.procedure_type} key={procedure.id}>
+              {procedure.procedure_type}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      {/* <Autocomplete
         className="w-full mb-12"
         multiple
         freeSolo
@@ -272,7 +291,7 @@ function InformationTab() {
         renderInput={(params) => (
           <TextField {...params} label="Choisissez un client*" />
         )}
-      />
+      /> */}
       <div className="mb-10">
         <b>Ajouter un contact client au dossier</b>
       </div>
