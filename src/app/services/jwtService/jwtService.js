@@ -84,7 +84,6 @@ class JwtService extends FuseUtils.EventEmitter {
   setSession = (access_token) => {
     if (access_token) {
       localStorage.setItem("jwt_access_token", access_token);
-      console.log("axios.defaults", axios.defaults);
       axios.defaults.headers.common.Authorization = `Bearer ${access_token}`;
     } else {
       localStorage.removeItem("jwt_access_token");

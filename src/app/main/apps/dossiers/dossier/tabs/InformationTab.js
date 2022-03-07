@@ -23,8 +23,6 @@ function InformationTab() {
   const { natures, procedures, contacts } = useSelector(
     ({ dossiers }) => dossiers
   );
-  const { contactDialog } = useSelector(({ contacts }) => contacts);
-
   const filter = createFilterOptions();
   const [allFields, setAllFields] = useState({
     case_name: "",
@@ -264,60 +262,28 @@ function InformationTab() {
         <b>Ajouter un contact client au dossier</b>
       </div>
       <Autocomplete
-        className="w-full mb-12"
         multiple
-        freeSolo
-        onChange={(e, newValue) => {
-          setAllFields({
-            ...allFields,
-            ...tags,
-            tags: e.target.value,
-            ...newValue.filter((option) => tags.indexOf(option) === -1)
-          });
+        className="flex w-full mb-12"
+        options={contacts}
+        getOptionLabel={(option) => {
+          return `${option.first_name + " " + option.last_name} `;
         }}
-        options={tags}
-        getOptionLabel={(option) => option.title}
-        renderTags={(tagValue, getTagProps) =>
-          tagValue.map((option, index) => (
-            <Chip
-              label={option}
-              {...getTagProps({ index })}
-              disabled={tags.indexOf(option) !== -1}
-            />
-          ))
-        }
         renderInput={(params) => (
-          <TextField {...params} label="Choisissez un contact" />
+          <TextField {...params} label="Choisissez un contact*" />
         )}
       />
       <div className="mb-10">
         <b>Ajouter un contact adverse au dossier</b>
       </div>
       <Autocomplete
-        className="w-full mb-10"
         multiple
-        freeSolo
-        onChange={(e, newValue) => {
-          setAllFields({
-            ...allFields,
-            ...tags,
-            tags: e.target.value,
-            ...newValue.filter((option) => tags.indexOf(option) === -1)
-          });
+        className="flex w-full mb-12"
+        options={contacts}
+        getOptionLabel={(option) => {
+          return `${option.first_name + " " + option.last_name} `;
         }}
-        options={tags}
-        getOptionLabel={(option) => option.title}
-        renderTags={(tagValue, getTagProps) =>
-          tagValue.map((option, index) => (
-            <Chip
-              label={option}
-              {...getTagProps({ index })}
-              disabled={tags.indexOf(option) !== -1}
-            />
-          ))
-        }
         renderInput={(params) => (
-          <TextField {...params} label="Choisissez un contact" />
+          <TextField {...params} label="Choisissez un contact*" />
         )}
       />
       <br />

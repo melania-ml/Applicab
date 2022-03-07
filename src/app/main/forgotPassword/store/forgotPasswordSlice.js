@@ -12,7 +12,6 @@ export const callForgotPassword =
         }
       })
       .catch((errors) => {
-        debugger;
         return dispatch(ForgotPasswordError(errors));
       });
   };

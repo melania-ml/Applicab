@@ -15,7 +15,7 @@ import Filters from "./Filters";
 function ContactsHeader(props) {
   const [moreMenuEl, setMoreMenuEl] = useState(null);
   const dispatch = useDispatch();
-  const searchText = useSelector(({ contacts }) => contacts);
+  const { searchText } = useSelector(({ contacts }) => contacts);
   const mainTheme = useSelector(selectMainTheme);
   const contacts = useSelector(({ contacts }) => contacts);
 

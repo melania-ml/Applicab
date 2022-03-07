@@ -5,7 +5,6 @@ import { showMessage } from "app/store/fuse/messageSlice";
 export const callCreatePassword =
   ({ password, token }) =>
   async (dispatch) => {
-    debugger;
     await axios
       .post(`auth/user/setPassword/${token}`, {
         password
