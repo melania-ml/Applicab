@@ -11,11 +11,13 @@ import {
 } from "@mui/material";
 import Statut from "app/main/constants/Statut";
 import Types from "app/main/constants/Types";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createFilterOptions } from "@mui/material/Autocomplete";
+import { openNewContactDialog } from "app/main/apps/contacts/store/contactsSlice";
 
 const tags = [];
 function InformationTab() {
+  const dispatch = useDispatch();
   const { userData } = useSelector(({ userMenu }) => userMenu.userMenu);
   const { natures, procedures } = useSelector(
     ({ dossiersApp }) => dossiersApp.dossiers
@@ -332,20 +334,25 @@ function InformationTab() {
         )}
       />
       <br />
-      <Button
-        className="whitespace-nowrap mx-1"
-        variant="contained"
-        color="secondary"
-        style={{ borderRadius: 2 }}
-        // disabled={_.isEmpty(dirtyFields) || !isValid}
-        // onClick={handleSaveProduct}
-      >
-        Ajouter un nouveau contact
-      </Button>
-      <br />
-      <b />
-      <br />
-      <br />
+      <div className="flex justify-between">
+        <Button
+          variant="contained"
+          color="secondary"
+          style={{ borderRadius: 0 }}
+        >
+          Enregistrer
+        </Button>
+        <Button
+          variant="contained"
+          color="secondary"
+          style={{ borderRadius: 2 }}
+          onClick={() => {
+            dispatch(openNewContactDialog());
+          }}
+        >
+          Ajouter un nouveau contact
+        </Button>
+      </div>
     </div>
   );
 }
