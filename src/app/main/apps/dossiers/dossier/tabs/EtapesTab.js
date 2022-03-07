@@ -1,20 +1,18 @@
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 import { motion } from "framer-motion";
 import FuseUtils from "@fuse/utils";
 import withRouter from "@fuse/core/withRouter";
-import Fab from "@mui/material/Fab";
 import Icon from "@mui/material/Icon";
-import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import {
-  Tooltip,
-  styled,
-  tooltipClasses,
-  Typography,
-  Select,
-  TableRow,
-  TableBody,
-  TableCell
-} from "@mui/material";
+import { tooltipClasses, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
+
 import _ from "@lodash";
 import { Paper, Input, Button } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
@@ -29,8 +27,21 @@ import {
   setDossiersSearchText
 } from "app/store/slices/dossiersSlice";
 
-function EtapeTab() {
-  const rows = [
+function EtapeTab(props) {
+  const { window } = props;
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
+
+  const rowsData1 = [
+    {
+      actionType: "Tous"
+    },
     {
       icon: (
         <Icon
@@ -85,6 +96,87 @@ function EtapeTab() {
       actionType: "Archivé"
     }
   ];
+
+  const rowsData2 = [
+    {
+      icon: (
+        <Icon
+          style={{
+            color: "#BABABF",
+            fontSize: "large"
+          }}
+        >
+          near_me
+        </Icon>
+      ),
+      actionType: "Message envoyé"
+    },
+    {
+      icon: (
+        <Icon
+          style={{
+            color: "#BABABF",
+            fontSize: "large"
+          }}
+        >
+          access_time
+        </Icon>
+      ),
+      actionType: "En attente"
+    },
+    {
+      icon: (
+        <Icon
+          style={{
+            color: "#BABABF",
+            fontSize: "large"
+          }}
+        >
+          text_snippet
+        </Icon>
+      ),
+      actionType: "Brouillon"
+    }
+  ];
+  const drawer = (
+    <div>
+      <List>
+        {rowsData1.map((index) => (
+          <ListItem button key={index}>
+            <ListItemIcon>{index.icon}</ListItemIcon>
+            <ListItemText primary={index.actionType} />
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+      <List>
+        {rowsData2.map((index) => (
+          <ListItem button key={index}>
+            <ListItemIcon>{index.icon}</ListItemIcon>
+            <ListItemText primary={index.actionType} />
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+      <List>
+        {["Corbeille"].map((text, index) => (
+          <ListItem button key={text}>
+            <ListItemIcon>
+              <Icon
+                style={{
+                  color: "#BABABF",
+                  fontSize: "large"
+                }}
+              >
+                delete
+              </Icon>
+            </ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
+      </List>
+    </div>
+  );
 
   const dispatch = useDispatch();
   const etapes = useSelector(({ dossiers }) => dossiers.dossiers);
@@ -239,92 +331,7 @@ function EtapeTab() {
                 Nouvelle étape
               </Button>
               <h1 className="py-16 text-base font-semibold">Statut</h1>
-              <div
-                style={{
-                  background: "#C4C4C4",
-                  borderRadius: 2,
-                  display: "flex",
-                  alignItems: "center",
-                  height: 34
-                }}
-              >
-                <h1 className="text-base ml-10">Tous</h1>
-              </div>
-              <TableBody>
-                {rows.map((row) => (
-                  <TableRow
-                    key={row.name}
-                    sx={{
-                      "&:last-child td, &:last-child th": { border: 0 }
-                    }}
-                  >
-                    <TableRow>
-                      <TableRow className="flex items-center truncate cursor-pointer">
-                        {row.icon}{" "}
-                        <TableCell style={{ borderBottom: "none" }} onClick>
-                          {row.actionType}
-                        </TableCell>
-                      </TableRow>
-                    </TableRow>
-                  </TableRow>
-                ))}
-              </TableBody>
-              <hr />
-              <TableBody>
-                <TableRow className="flex items-center truncate cursor-pointer">
-                  <Icon
-                    style={{
-                      color: "#BABABF",
-                      fontSize: "large"
-                    }}
-                  >
-                    near_me
-                  </Icon>
-                  <TableCell style={{ borderBottom: "none" }}>
-                    Message envoyé
-                  </TableCell>
-                </TableRow>
-                <TableRow className="flex items-center truncate cursor-pointer">
-                  <Icon
-                    style={{
-                      color: "#BABABF",
-                      fontSize: "large"
-                    }}
-                  >
-                    access_time
-                  </Icon>
-                  <TableCell style={{ borderBottom: "none" }}>
-                    En attente
-                  </TableCell>
-                </TableRow>
-                <TableRow className="flex items-center truncate cursor-pointer">
-                  <Icon
-                    style={{
-                      color: "#BABABF",
-                      fontSize: "large"
-                    }}
-                  >
-                    text_snippet
-                  </Icon>
-                  <TableCell style={{ borderBottom: "none" }}>
-                    Brouillon
-                  </TableCell>
-                </TableRow>
-                <hr />
-                <TableRow className="flex items-center truncate cursor-pointer">
-                  <Icon
-                    style={{
-                      color: "#BABABF",
-                      fontSize: "large"
-                    }}
-                  >
-                    delete
-                  </Icon>
-                  <TableCell style={{ borderBottom: "none" }}>
-                    Corbeille
-                  </TableCell>
-                </TableRow>
-              </TableBody>
+              {drawer}
             </motion.div>
           </Grid>
           <Grid item xs={12} md={9}>

@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import _ from "@lodash";
 import DateTimePicker from "@mui/lab/DateTimePicker";
 import {
@@ -218,7 +220,7 @@ function EtapesDialog(props) {
         <Toolbar className="flex w-full">
           <Typography variant="subtitle1" color="inherit">
             {contactDialog.type === "new"
-              ? "Nouveau Etapes"
+              ? "Ajouter une nouvelle étape"
               : " Ajouter une nouvelle étape "}
           </Typography>
         </Toolbar>
@@ -321,7 +323,6 @@ function EtapesDialog(props) {
                 ))}
               </Select>
             </FormControl>
-
             <DateTimePicker
               label="Date"
               value={allFields.dateValue}
@@ -380,7 +381,6 @@ function EtapesDialog(props) {
                 ))}
               </Select>
             </FormControl>
-
             <TextField
               className="mb-12"
               name="Object"
@@ -398,7 +398,7 @@ function EtapesDialog(props) {
                 checkIsDisable("name", e.target.value);
               }}
             />
-            <TextField
+            {/* <TextField
               className="mb-12"
               label="Message"
               type="text"
@@ -410,11 +410,19 @@ function EtapesDialog(props) {
               onChange={(e) =>
                 setAllFields({
                   ...allFields,
-                  comments: e.target.value
+                  comments: e.target.value,
                 })
               }
-            />
+            /> */}
           </div>
+          <Editor
+            // editorState={editorState}
+            toolbarClassName="toolbarClassName"
+            wrapperClassName="wrapperClassName"
+            editorClassName="editorClassName"
+            placeholder="Message"
+            // onEditorStateChange={this.onEditorStateChange}
+          />
           <div className="px-18">
             <br />
             <h2>
