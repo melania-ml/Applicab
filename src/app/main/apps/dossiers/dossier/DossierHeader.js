@@ -46,20 +46,6 @@ function DossierHeader() {
           </div>
         </div>
       </div>
-      <motion.div
-        className="flex mt-3 mt-md-0"
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
-      >
-        <Button
-          className="whitespace-nowrap mx-4"
-          variant="contained"
-          color="secondary"
-          style={{ borderRadius: 0 }}
-        >
-          Enregistrer
-        </Button>
-      </motion.div>
     </div>
   );
 }
