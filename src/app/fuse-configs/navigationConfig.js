@@ -5,7 +5,7 @@ const navigationConfig = [
     type: "item",
     icon: "dashboard",
     url: "apps/dashboard",
-    access: ["Lawyer"]
+    access: ["Lawyer"],
   },
   {
     id: "contacts",
@@ -13,7 +13,7 @@ const navigationConfig = [
     type: "item",
     icon: "account_box",
     url: "apps/contacts/all",
-    access: ["Lawyer"]
+    access: ["Lawyer"],
   },
   {
     id: "dossiers",
@@ -21,7 +21,7 @@ const navigationConfig = [
     type: "item",
     icon: "view_column",
     url: "apps/dossiers/all",
-    access: ["Lawyer"]
+    access: ["Lawyer"],
   },
   // {
   //   id: 'Étapes',
@@ -48,14 +48,29 @@ const navigationConfig = [
   //   url: 'apps/natures/all',
   // },
   {
+    id: "client_dashboard",
+    title: "Dashboard",
+    type: "item",
+    icon: "dashboard",
+    url: "apps/client_dashboard",
+    access: ["Client"],
+  },
+  {
+    id: "message",
+    title: "Messages",
+    type: "item",
+    icon: "mail",
+    url: "apps/messages",
+    access: ["Client"],
+  },
+  {
     id: "faq",
     title: "Foire aux Questions",
-    // translate:'Foire aux Questions',
     type: "item",
     icon: "help_outline",
-    url: "pages/faq",
-    access: ["Client"]
-  }
+    url: "apps/faq",
+    access: ["Client"],
+  },
   // {
   //   id: 'Applicab',
   //   title: 'Applicab',

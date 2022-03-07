@@ -165,7 +165,7 @@ table.simple.borderless thead tr th {
 .message-searchbar{
   transform: inherit !important;
 }
-#selectedContactsMenu ul li{
+.selectedContactsMenu ul li{
   flex-direction: column;
 }
 

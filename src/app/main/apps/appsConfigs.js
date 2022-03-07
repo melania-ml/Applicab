@@ -16,6 +16,7 @@ import EtapesAppConfig from "./Etapes/EtapesAppConfig";
 // import NaturesAppConfig from './Natures/NaturesAppConfig';
 import FaqAppConfig from "./FAQ/FaqPageConfig";
 import AdminDashboardAppConfig from "./AdminDashboard/DashboardAppConfig";
+import MessageAppConfig from "./Messages/MessageAppConfig";
 // import ApplicabAppConfig from './Applicab/ApplicabAppConfig';
 
 const appsConfigs = [
@@ -26,7 +27,6 @@ const appsConfigs = [
   // FileManagerAppConfig,
   ContactsAppConfig,
   // DashboardAppConfig,
-  AdminDashboardAppConfig,
   // ChatAppConfig,
   // ECommerceAppConfig,
   // ScrumboardAppConfig,
@@ -36,8 +36,12 @@ const appsConfigs = [
   EtapesAppConfig,
   //EmailAppConfig,
   // NaturesAppConfig,
-  FaqAppConfig,
   // ApplicabAppConfig
+
+  //*********client Dashboard*********
+  AdminDashboardAppConfig,
+  MessageAppConfig,
+  FaqAppConfig,
 ];
 
 export default appsConfigs;
