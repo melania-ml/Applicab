@@ -59,12 +59,12 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
       width: "100%",
     },
   },
-  "& .mon-avocate img":{
-    borderRadius:"60px"
+  "& .mon-avocate img": {
+    borderRadius: "60px",
   },
   "& .res-flex-direction": {
     "@media (max-width: 992px)": {
-      flexDirection:"column",
+      flexDirection: "column",
     },
   },
 
@@ -97,16 +97,11 @@ function MainDashboard() {
           </Grid>
         </Grid>
       </Box>
-
-      {/*       
-      <MyDocuments />
-      <Calendar />
-      <TodoList /> */}
     </>
   );
 }
 
-function DashboardApp() {
+function AdminDashboardApp() {
   const pageLayout = useRef(null);
   return (
     <>
@@ -121,4 +116,4 @@ function DashboardApp() {
   );
 }
 
-export default withReducer("calendarApp", reducer)(DashboardApp);
+export default withReducer("calendarApp", reducer)(AdminDashboardApp);
