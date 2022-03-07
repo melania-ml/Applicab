@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FormControl, TextField, Autocomplete } from "@mui/material";
-import { getContacts } from "../store/contactsSlice";
+import { getContacts } from "app/main/store/contactsSlice";
 import Status from "app/main/constants/Status";
 
 export default function Filters() {

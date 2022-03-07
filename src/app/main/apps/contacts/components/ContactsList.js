@@ -6,7 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import FuseLoading from "@fuse/core/FuseLoading";
 import ContactsMultiSelectMenu from "./ContactsMultiSelectMenu";
 import ContactsTable from "./ContactsTable";
-import { openEditContactDialog, selectContacts } from "../store/contactsSlice";
+import {
+  openEditContactDialog,
+  selectContacts
+} from "app/main/store/contactsSlice";
 
 function ContactsList(props) {
   const dispatch = useDispatch();

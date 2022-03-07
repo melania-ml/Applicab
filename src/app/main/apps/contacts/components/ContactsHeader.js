@@ -9,7 +9,7 @@ import {
   setContactsSearchText,
   openNewContactDialog,
   importContacts
-} from "../store/contactsSlice";
+} from "app/main/store/contactsSlice";
 import Filters from "./Filters";
 
 function ContactsHeader(props) {

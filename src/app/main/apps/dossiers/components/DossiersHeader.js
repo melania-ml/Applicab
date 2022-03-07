@@ -15,7 +15,7 @@ import { selectMainTheme } from "app/store/fuse/settingsSlice";
 import {
   setDossiersSearchText,
   openNewContactDialog
-} from "../store/dossiersSlice";
+} from "app/main/store/dossiersSlice";
 import Filters from "./Filters";
 import { Link } from "react-router-dom";
 

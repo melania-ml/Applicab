@@ -16,7 +16,7 @@ import EtapesMultiSelectMenu from "./EtapesMultiSelectMenu";
 import EtapesTable from "./EtapesTable";
 
 import { selectContacts } from "../store/etapesSlice";
-import { openEditContactDialog } from "../../dossiers/store/dossiersSlice";
+import { openEditContactDialog } from "app/main/store/dossiersSlice";
 
 function EtapesList(props) {
   const dispatch = useDispatch();

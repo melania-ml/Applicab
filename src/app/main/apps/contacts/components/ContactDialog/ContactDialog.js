@@ -35,7 +35,7 @@ import {
   closeNewContactDialog,
   closeEditContactDialog,
   getFormTitles
-} from "../../store/contactsSlice";
+} from "app/main/store/contactsSlice";
 
 const tags = [];
 const filter = createFilterOptions();

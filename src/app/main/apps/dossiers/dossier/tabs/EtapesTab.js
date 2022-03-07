@@ -27,7 +27,7 @@ import EtapesMultiSelectMenu from "./EtapesComponent/EtapesMultiSelectMenu";
 import {
   openNewContactDialog,
   setDossiersSearchText
-} from "../../store/dossiersSlice";
+} from "app/main/store/dossiersSlice";
 
 function EtapeTab() {
   const rows = [

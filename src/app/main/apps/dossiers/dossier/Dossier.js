@@ -21,8 +21,8 @@ import {
   getContacts,
   getNatures,
   getProcedures
-} from "../store/dossiersSlice";
-import reducer from "../store";
+} from "app/main/store/dossiersSlice";
+import reducer from "app/main/store";
 import DossierHeader from "./DossierHeader";
 import InformationTab from "./tabs/InformationTab";
 import EtapesTab from "./tabs/EtapesTab";
@@ -42,8 +42,8 @@ const Root = styled(FusePageCarded)(({ theme }) => ({
   "& .FusePageCarded-contentWrapper": {
     padding: 0
   },
-  "& .search-bar-dossier" :{
-	borderRadius: 5
+  "& .search-bar-dossier": {
+    borderRadius: 5
   }
 }));
 

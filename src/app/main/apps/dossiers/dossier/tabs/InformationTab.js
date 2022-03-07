@@ -13,7 +13,7 @@ import Statut from "app/main/constants/Statut";
 import Types from "app/main/constants/Types";
 import { useDispatch, useSelector } from "react-redux";
 import { createFilterOptions } from "@mui/material/Autocomplete";
-import { openNewContactDialog } from "app/main/apps/contacts/store/contactsSlice";
+import { openNewContactDialog } from "app/main/store/contactsSlice";
 
 const tags = [];
 function InformationTab() {
