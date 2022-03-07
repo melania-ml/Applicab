@@ -274,12 +274,12 @@ function Message() {
             <br />
             <hr />
             <br />
-            <Typography variant="h6">
+            <Typography variant="h6" className="pl-3">
               Subject : Codes d'accès AppliCab envoi au(x) client(s)
             </Typography>
-            <Typography variant="h6">Date : 15/12/2022 18:30:00</Typography>
+            <Typography variant="h6" className="pl-3">Date : 15/12/2022 18:30:00</Typography>
             <br />
-            <Typography variant="subtitle1" className="max-w-md">
+            <Typography variant="subtitle1" className="max-w-md pl-3">
               Chère Madame, Cher Monsieur, Je reviens vers vous dans le dossier
               visé en référence et fais suite à votre courriel. Je vous confirme
               que nous avons effectivement en notre possession le jugement
