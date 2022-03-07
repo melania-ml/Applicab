@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import _ from "@lodash";
 import DateTimePicker from "@mui/lab/DateTimePicker";
 import {
@@ -15,7 +17,7 @@ import {
   InputLabel,
   Select,
   TextField,
-  Icon
+  Icon,
 } from "@mui/material";
 import Statut from "app/main/constants/Statut";
 import Clients from "app/main/constants/Clients";
@@ -23,7 +25,7 @@ import {
   updateContact,
   addContact,
   closeNewContactDialog,
-  closeEditContactDialog
+  closeEditContactDialog,
 } from "app/main/store/dossiersSlice";
 
 const tags = [];
@@ -57,7 +59,7 @@ function EtapesDialog(props) {
     department: "",
     nationality: "",
     nativeCity: "",
-    profession: ""
+    profession: "",
   });
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
@@ -209,7 +211,7 @@ function EtapesDialog(props) {
   return (
     <Dialog
       classes={{
-        paper: "m-24"
+        paper: "m-24",
       }}
       {...contactDialog.props}
       onClose={closeComposeDialog}
@@ -220,7 +222,7 @@ function EtapesDialog(props) {
         <Toolbar className="flex w-full">
           <Typography variant="subtitle1" color="inherit">
             {contactDialog.type === "new"
-              ? "Nouveau Etapes"
+              ? "Ajouter une nouvelle étape"
               : " Ajouter une nouvelle étape "}
           </Typography>
         </Toolbar>
@@ -245,7 +247,7 @@ function EtapesDialog(props) {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  position: e.target.value
+                  position: e.target.value,
                 });
                 checkIsDisable("name", e.target.value);
               }}
@@ -263,7 +265,7 @@ function EtapesDialog(props) {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  status: e.target.value
+                  status: e.target.value,
                 });
                 checkIsDisable("name", e.target.value);
               }}
@@ -281,7 +283,7 @@ function EtapesDialog(props) {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  step: e.target.value
+                  step: e.target.value,
                 });
                 checkIsDisable("name", e.target.value);
               }}
@@ -299,7 +301,7 @@ function EtapesDialog(props) {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  name: e.target.value
+                  name: e.target.value,
                 });
                 checkIsDisable("name", e.target.value);
               }}
@@ -312,7 +314,7 @@ function EtapesDialog(props) {
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    clientStatus: e.target.value
+                    clientStatus: e.target.value,
                   })
                 }
               >
@@ -323,7 +325,6 @@ function EtapesDialog(props) {
                 ))}
               </Select>
             </FormControl>
-
             <DateTimePicker
               label="Date"
               value={allFields.dateValue}
@@ -348,7 +349,7 @@ function EtapesDialog(props) {
                   style={{
                     color: "secondary",
                     fontSize: "large",
-                    margin: "10px"
+                    margin: "10px",
                   }}
                 >
                   notifications
@@ -382,7 +383,6 @@ function EtapesDialog(props) {
                 ))}
               </Select>
             </FormControl>
-
             <TextField
               className="mb-12"
               name="Object"
@@ -395,12 +395,12 @@ function EtapesDialog(props) {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  profession: e.target.value
+                  profession: e.target.value,
                 });
                 checkIsDisable("name", e.target.value);
               }}
             />
-            <TextField
+            {/* <TextField
               className="mb-12"
               label="Message"
               type="text"
@@ -412,11 +412,19 @@ function EtapesDialog(props) {
               onChange={(e) =>
                 setAllFields({
                   ...allFields,
-                  comments: e.target.value
+                  comments: e.target.value,
                 })
               }
-            />
+            /> */}
           </div>
+          <Editor
+            // editorState={editorState}
+            toolbarClassName="toolbarClassName"
+            wrapperClassName="wrapperClassName"
+            editorClassName="editorClassName"
+            placeholder="Message"
+            // onEditorStateChange={this.onEditorStateChange}
+          />
           <div className="px-18">
             <br />
             <h2>
@@ -432,7 +440,7 @@ function EtapesDialog(props) {
                 style={{
                   color: "secondary",
                   fontSize: "large",
-                  margin: "10px"
+                  margin: "10px",
                 }}
               >
                 attach_file
