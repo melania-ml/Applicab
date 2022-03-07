@@ -18,9 +18,9 @@ import ContactsAppConfig from "./contacts/ContactsAppConfig";
 // import ApplicabAppConfig from './Applicab/ApplicabAppConfig';
 
 // *********************** CLIENT DASHBOARD *****************************************
-import AdminDashboardAppConfig from "./AdminDashboard/DashboardAppConfig";
 import MessageAppConfig from "./Messages/MessageAppConfig";
 import FaqAppConfig from "./FAQ/FaqPageConfig";
+import ClientDashboardAppConfig from "./ClientDashboard/ClientDashboardAppConfig";
 
 const appsConfigs = [
   DashboardAppConfig,
@@ -42,7 +42,7 @@ const appsConfigs = [
   // ApplicabAppConfig
 
   //*********client Dashboard*********
-  AdminDashboardAppConfig,
+  ClientDashboardAppConfig,
   MessageAppConfig,
   FaqAppConfig,
 ];
