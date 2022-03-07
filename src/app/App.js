@@ -1,4 +1,3 @@
-import "@fake-db";
 import BrowserRouter from "@fuse/core/BrowserRouter";
 import FuseAuthorization from "@fuse/core/FuseAuthorization";
 import FuseLayout from "@fuse/core/FuseLayout";
