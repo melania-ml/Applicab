@@ -34,7 +34,8 @@ import {
   addContact,
   closeNewContactDialog,
   closeEditContactDialog,
-  getFormTitles
+  getFormTitles,
+  getAllTypes
 } from "app/store/slices/contactsSlice";
 
 const tags = [];
@@ -147,6 +148,7 @@ function ContactDialog(props) {
 
   useEffect(() => {
     if (contactDialog.props.open) {
+      dispatch(getAllTypes());
       if (allFields.legal_status) {
         dispatch(getFormTitles(allFields.legal_status));
       }
