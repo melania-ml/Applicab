@@ -215,7 +215,7 @@ function Message() {
               >
                 11:12
               </Typography>
-              <Card className="max-w-md ml-36">
+              <Card className="max-w-md ml-36 mr-3">
                 <CardContent>
                   <Typography variant="body2">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
@@ -250,7 +250,7 @@ function Message() {
               >
                 11:20
               </Typography>
-              <Card className="max-w-md float-right mr-36">
+              <Card className="max-w-md float-right mr-36 ml-3">
                 <CardContent
                   className="max-w-md"
                   style={{
