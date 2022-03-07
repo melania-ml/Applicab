@@ -65,6 +65,11 @@ class CaseManagement(CommonBase):
                                             blank=True, null=True,
                                             on_delete=models.DO_NOTHING, related_name='related_type_opposing_contact_id',
                                             db_column='opposing_contact_id')
+    customer_contact_id = models.ForeignKey(User,
+                                            blank=True, null=True,
+                                            on_delete=models.DO_NOTHING,
+                                            related_name='related_type_customer_contact_id',
+                                            db_column='customer_contact_id')
 
     def __str__(self):
         return '{}'.format(self.case_name)

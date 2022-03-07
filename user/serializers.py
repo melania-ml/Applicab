@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'email', 'first_name','function',
+        fields = ['id', 'email', 'first_name', 'function',
                   'last_name', 'phone_number', 'password', 'email_otp', 'email_token', 'client_type', 'legal_status',
                   'title', 'company_name', 'country', 'nationality', 'address', 'city', 'postal_code', 'capital_social',
                   'RCS_city', 'native_city', 'number', 'fixe', 'comments', 'tags', 'profession', 'status', 'department',
@@ -29,8 +29,10 @@ class LoginSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['password', 'email', 'jwtoken', 'id', 'first_name', 'last_name', 'profile', 'last_login']
+        fields = ['password', 'email', 'jwtoken', 'id', 'client_type', 'first_name', 'last_name', 'profile',
+                  'last_login']
         read_only_fields = ['jwtoken']
+        depth = 1
 
     def get_profile(self, obj):
         return self.context['request'].build_absolute_uri(obj.image.url)
