@@ -27,7 +27,7 @@ import EtapesMultiSelectMenu from "./EtapesComponent/EtapesMultiSelectMenu";
 import {
   openNewContactDialog,
   setDossiersSearchText
-} from "app/main/store/dossiersSlice";
+} from "app/store/slices/dossiersSlice";
 
 function EtapeTab() {
   const rows = [
@@ -87,15 +87,11 @@ function EtapeTab() {
   ];
 
   const dispatch = useDispatch();
-  const etapes = useSelector(
-    ({ dossiersApp }) => dossiersApp.dossiers.dossiers
-  );
+  const etapes = useSelector(({ dossiers }) => dossiers.dossiers);
 
   const [openEtape, setOpenEtape] = useState(false);
 
-  const searchText = useSelector(
-    ({ dossiersApp }) => dossiersApp.dossiers.searchText
-  );
+  const searchText = useSelector(({ dossiers }) => dossiers.searchText);
 
   const [filteredData, setFilteredData] = useState(null);
   const mainTheme = useSelector(selectMainTheme);

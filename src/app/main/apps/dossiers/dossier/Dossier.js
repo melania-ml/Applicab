@@ -21,8 +21,8 @@ import {
   getContacts,
   getNatures,
   getProcedures
-} from "app/main/store/dossiersSlice";
-import reducer from "app/main/store";
+} from "app/store/slices/dossiersSlice";
+import reducer from "app/store";
 import DossierHeader from "./DossierHeader";
 import InformationTab from "./tabs/InformationTab";
 import EtapesTab from "./tabs/EtapesTab";
@@ -54,6 +54,7 @@ function Dossier(props) {
   useDeepCompareEffect(async () => {
     await dispatch(getNatures());
     await dispatch(getProcedures());
+    await dispatch(getContacts());
   }, [dispatch, routeParams]);
 
   const handleTabChange = (event, value) => {

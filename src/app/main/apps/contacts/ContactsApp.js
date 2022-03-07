@@ -8,12 +8,12 @@ import { styled } from "@mui/material/styles";
 import ContactDialog from "./components/ContactDialog/ContactDialog";
 import ContactsHeader from "./components/ContactsHeader";
 import ContactsList from "./components/ContactsList";
-import reducer from "app/main/store";
+import reducer from "app/store";
 import {
   getContacts,
   getAllTitles,
   getAllTypes
-} from "app/main/store/contactsSlice";
+} from "app/store/slices/contactsSlice";
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
   "& .FusePageSimple-header": {

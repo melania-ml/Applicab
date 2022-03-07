@@ -1,7 +1,7 @@
 import {
   createSlice,
   createAsyncThunk,
-  createEntityAdapter,
+  createEntityAdapter
 } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -10,7 +10,7 @@ export const getContacts = createAsyncThunk(
   async (routeParams, { getState }) => {
     routeParams = routeParams || getState().contactsApp.contacts.routeParams;
     const response = await axios.get("/api/contacts-app/contacts", {
-      params: routeParams,
+      params: routeParams
     });
     const data = await response.data;
 
@@ -22,7 +22,7 @@ export const addContact = createAsyncThunk(
   "contactsApp/contacts/addContact",
   async (contact, { dispatch, getState }) => {
     const response = await axios.post("/api/contacts-app/add-contact", {
-      contact,
+      contact
     });
     const data = await response.data;
 
@@ -36,7 +36,7 @@ export const updateContact = createAsyncThunk(
   "contactsApp/contacts/updateContact",
   async (contact, { dispatch, getState }) => {
     const response = await axios.post("/api/contacts-app/update-contact", {
-      contact,
+      contact
     });
     const data = await response.data;
 
@@ -127,7 +127,7 @@ export const setContactsUnstarred = createAsyncThunk(
 const contactsAdapter = createEntityAdapter({});
 
 export const { selectAll: selectContacts, selectById: selectContactsById } =
-  contactsAdapter.getSelectors((state) => state.contactsApp.contacts);
+  contactsAdapter.getSelectors((state) => state.contacts);
 
 const emailSlice = createSlice({
   name: "contactsApp/contacts",
@@ -137,10 +137,10 @@ const emailSlice = createSlice({
     contactDialog: {
       type: "new",
       props: {
-        open: false,
+        open: false
       },
-      data: null,
-    },
+      data: null
+    }
   }),
   reducers: {
     resetDossier: () => null,
@@ -148,44 +148,44 @@ const emailSlice = createSlice({
       reducer: (state, action) => {
         state.searchText = action.payload;
       },
-      prepare: (event) => ({ payload: event.target.value || "" }),
+      prepare: (event) => ({ payload: event.target.value || "" })
     },
     openNewContactDialog: (state, action) => {
       state.contactDialog = {
         type: "new",
         props: {
-          open: true,
+          open: true
         },
-        data: null,
+        data: null
       };
     },
     closeNewContactDialog: (state, action) => {
       state.contactDialog = {
         type: "new",
         props: {
-          open: false,
+          open: false
         },
-        data: null,
+        data: null
       };
     },
     openEditContactDialog: (state, action) => {
       state.contactDialog = {
         type: "edit",
         props: {
-          open: true,
+          open: true
         },
-        data: action.payload,
+        data: action.payload
       };
     },
     closeEditContactDialog: (state, action) => {
       state.contactDialog = {
         type: "edit",
         props: {
-          open: false,
+          open: false
         },
-        data: null,
+        data: null
       };
-    },
+    }
   },
   extraReducers: {
     [updateContact.fulfilled]: contactsAdapter.upsertOne,
@@ -199,8 +199,8 @@ const emailSlice = createSlice({
       contactsAdapter.setAll(state, data);
       state.routeParams = routeParams;
       state.searchText = "";
-    },
-  },
+    }
+  }
 });
 
 export const {
@@ -209,7 +209,7 @@ export const {
   openNewContactDialog,
   closeNewContactDialog,
   openEditContactDialog,
-  closeEditContactDialog,
+  closeEditContactDialog
 } = emailSlice.actions;
 
 export default emailSlice.reducer;

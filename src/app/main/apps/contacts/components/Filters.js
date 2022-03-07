@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FormControl, TextField, Autocomplete } from "@mui/material";
-import { getContacts } from "app/main/store/contactsSlice";
+import { getContacts } from "app/store/slices/contactsSlice";
 import Status from "app/main/constants/Status";
 
 export default function Filters() {
   const dispatch = useDispatch();
-  const titles = useSelector(({ contactsApp }) => contactsApp.contacts.titles);
-  const types = useSelector(({ contactsApp }) => contactsApp.contacts.types);
+  const titles = useSelector(({ contacts }) => contacts.titles);
+  const types = useSelector(({ contacts }) => contacts.types);
   const [allFields, setAllFields] = useState({
     type: "",
     inputType: "",

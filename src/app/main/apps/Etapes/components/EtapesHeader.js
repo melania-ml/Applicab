@@ -1,18 +1,28 @@
-import { useState } from 'react'
-import Icon from '@mui/material/Icon';
-import { Button, Input, Paper, IconButton, Menu, MenuItem } from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
-import { motion } from 'framer-motion';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectMainTheme } from 'app/store/fuse/settingsSlice';
-import { setContactsSearchText, openNewContactDialog } from '../store/etapesSlice';
-import Filters from './Filters';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import Icon from "@mui/material/Icon";
+import {
+  Button,
+  Input,
+  Paper,
+  IconButton,
+  Menu,
+  MenuItem
+} from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
+import { motion } from "framer-motion";
+import { useDispatch, useSelector } from "react-redux";
+import { selectMainTheme } from "app/store/fuse/settingsSlice";
+import {
+  setContactsSearchText,
+  openNewContactDialog
+} from "../store/etapesSlice";
+import Filters from "./Filters";
+import { Link } from "react-router-dom";
 
 function EtapessHeader(props) {
   const [moreMenuEl, setMoreMenuEl] = useState(null);
   const dispatch = useDispatch();
-  const searchText = useSelector(({ contactsApp }) => contactsApp.contacts.searchText);
+  const searchText = useSelector(({ contacts }) => contacts.searchText);
   const mainTheme = useSelector(selectMainTheme);
 
   return (
@@ -35,15 +45,14 @@ function EtapessHeader(props) {
               fullWidth
               value={searchText}
               inputProps={{
-                'aria-label': 'Search',
+                "aria-label": "Search"
               }}
               onChange={(ev) => dispatch(setContactsSearchText(ev))}
             />
           </Paper>
         </ThemeProvider>
       </div>
-      <div>
-      </div>
+      <div></div>
     </div>
   );
 }

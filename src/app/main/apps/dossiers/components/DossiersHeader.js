@@ -15,16 +15,14 @@ import { selectMainTheme } from "app/store/fuse/settingsSlice";
 import {
   setDossiersSearchText,
   openNewContactDialog
-} from "app/main/store/dossiersSlice";
+} from "app/store/slices/dossiersSlice";
 import Filters from "./Filters";
 import { Link } from "react-router-dom";
 
 function DossiersHeader(props) {
   const [moreMenuEl, setMoreMenuEl] = useState(null);
   const dispatch = useDispatch();
-  const searchText = useSelector(
-    ({ dossiersApp }) => dossiersApp.dossiers.searchText
-  );
+  const searchText = useSelector(({ dossiers }) => dossiers.searchText);
   const mainTheme = useSelector(selectMainTheme);
 
   return (

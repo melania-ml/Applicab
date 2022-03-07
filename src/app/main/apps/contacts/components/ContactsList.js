@@ -9,17 +9,13 @@ import ContactsTable from "./ContactsTable";
 import {
   openEditContactDialog,
   selectContacts
-} from "app/main/store/contactsSlice";
+} from "app/store/slices/contactsSlice";
 
 function ContactsList(props) {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
-  const isLoading = useSelector(
-    ({ contactsApp }) => contactsApp.contacts.isLoading
-  );
-  const searchText = useSelector(
-    ({ contactsApp }) => contactsApp.contacts.searchText
-  );
+  const isLoading = useSelector(({ contacts }) => contacts.isLoading);
+  const searchText = useSelector(({ contacts }) => contacts.searchText);
 
   const [filteredData, setFilteredData] = useState(null);
 

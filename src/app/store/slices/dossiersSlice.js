@@ -31,6 +31,19 @@ export const getProcedures = () => async (dispatch) => {
     });
 };
 
+export const getContacts = () => async (dispatch) => {
+  await axios
+    .post(`api/common/filterData/user/User`, { query: { client_type: 1 } })
+    .then((data) => {
+      if (data.data.status === 200 && data.data.success) {
+        dispatch(setContacts(data.data.data));
+      }
+    })
+    .catch((errors) => {
+      console.error(errors);
+    });
+};
+
 export const getDossiers = createAsyncThunk(
   "dossiersApp/dossiers/getDossiers",
   async (routeParams, { dispatch, getState }) => {
@@ -52,7 +65,7 @@ export const getDossiers = createAsyncThunk(
 const dossiersAdapter = createEntityAdapter({});
 
 export const { selectAll: selectDossiers } = dossiersAdapter.getSelectors(
-  (state) => state.dossiersApp.dossiers
+  (state) => state.dossiers
 );
 
 const dossiersSlice = createSlice({
@@ -69,7 +82,8 @@ const dossiersSlice = createSlice({
       data: null
     },
     natures: [],
-    procedures: []
+    procedures: [],
+    contacts: []
   }),
   reducers: {
     setDossiers: (state, action) => {
@@ -80,6 +94,9 @@ const dossiersSlice = createSlice({
     },
     setProcedures: (state, action) => {
       state.procedures = action.payload;
+    },
+    setContacts: (state, action) => {
+      state.contacts = action.payload;
     },
     resetDossier: () => null,
     setDossiersSearchText: {
@@ -143,7 +160,8 @@ export const {
   openEditContactDialog,
   closeEditContactDialog,
   setNatures,
-  setProcedures
+  setProcedures,
+  setContacts
 } = dossiersSlice.actions;
 
 export default dossiersSlice.reducer;

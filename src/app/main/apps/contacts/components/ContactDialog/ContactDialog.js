@@ -35,7 +35,7 @@ import {
   closeNewContactDialog,
   closeEditContactDialog,
   getFormTitles
-} from "app/main/store/contactsSlice";
+} from "app/store/slices/contactsSlice";
 
 const tags = [];
 const filter = createFilterOptions();
@@ -71,7 +71,7 @@ function ContactDialog(props) {
   const [isValid, setIsValid] = useState(false);
   const dispatch = useDispatch();
   const { success, contactDialog, types, formTitles } = useSelector(
-    ({ contactsApp }) => contactsApp.contacts
+    ({ contacts }) => contacts
   );
   const initDialog = useCallback(() => {
     if (contactDialog.type === "edit" && contactDialog.type) {

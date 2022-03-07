@@ -33,9 +33,7 @@ const status = [
 ];
 
 export default function Filters() {
-  const { natures, procedures } = useSelector(
-    ({ dossiersApp }) => dossiersApp.dossiers
-  );
+  const { natures, procedures } = useSelector(({ dossiers }) => dossiers);
   const [allFields, setAllFields] = useState({
     procedure: "",
     inputProcedure: "",

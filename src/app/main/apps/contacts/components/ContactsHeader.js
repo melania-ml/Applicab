@@ -9,19 +9,15 @@ import {
   setContactsSearchText,
   openNewContactDialog,
   importContacts
-} from "app/main/store/contactsSlice";
+} from "app/store/slices/contactsSlice";
 import Filters from "./Filters";
 
 function ContactsHeader(props) {
   const [moreMenuEl, setMoreMenuEl] = useState(null);
   const dispatch = useDispatch();
-  const searchText = useSelector(
-    ({ contactsApp }) => contactsApp.contacts.searchText
-  );
+  const searchText = useSelector(({ contacts }) => contacts);
   const mainTheme = useSelector(selectMainTheme);
-  const contacts = useSelector(
-    ({ contactsApp }) => contactsApp.contacts.contacts
-  );
+  const contacts = useSelector(({ contacts }) => contacts);
 
   const exportContacts = () => {
     let rows = [

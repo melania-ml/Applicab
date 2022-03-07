@@ -142,7 +142,7 @@ export const removeContacts = createAsyncThunk(
 const contactsAdapter = createEntityAdapter({});
 
 export const { selectAll: selectContacts, selectById: selectContactsById } =
-  contactsAdapter.getSelectors((state) => state.contactsApp.contacts);
+  contactsAdapter.getSelectors((state) => state.contacts);
 
 const contactsSlice = createSlice({
   name: "contactsApp/contacts",

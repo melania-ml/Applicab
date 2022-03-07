@@ -7,12 +7,12 @@ import { useDeepCompareEffect } from "@fuse/hooks";
 import { styled } from "@mui/material/styles";
 import DossiersHeader from "./components/DossiersHeader";
 import DossiersList from "./components/DossiersList";
-import reducer from "app/main/store";
+import reducer from "app/store";
 import {
   getDossiers,
   getNatures,
   getProcedures
-} from "app/main/store/dossiersSlice";
+} from "app/store/slices/dossiersSlice";
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
   "& .FusePageSimple-header": {

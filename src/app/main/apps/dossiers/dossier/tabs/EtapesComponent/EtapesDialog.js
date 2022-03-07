@@ -24,7 +24,7 @@ import {
   addContact,
   closeNewContactDialog,
   closeEditContactDialog
-} from "app/main/store/dossiersSlice";
+} from "app/store/slices/dossiersSlice";
 
 const tags = [];
 
@@ -62,9 +62,7 @@ function EtapesDialog(props) {
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
   const dispatch = useDispatch();
-  const contactDialog = useSelector(
-    ({ dossiersApp }) => dossiersApp.dossiers.contactDialog
-  );
+  const contactDialog = useSelector(({ dossiers }) => dossiers.contactDialog);
 
   useEffect(() => {
     if (allFields.type === "Client" && allFields.legalStatus === "Enterprise") {

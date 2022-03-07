@@ -21,9 +21,7 @@ import { openEditContactDialog } from "app/main/store/dossiersSlice";
 function EtapesList(props) {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
-  const searchText = useSelector(
-    ({ contactsApp }) => contactsApp.contacts.searchText
-  );
+  const searchText = useSelector(({ contacts }) => contacts.searchText);
 
   const [filteredData, setFilteredData] = useState(null);
 

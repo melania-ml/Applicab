@@ -25,14 +25,12 @@ import {
   removeContact,
   toggleStarredContact,
   selectDossiers
-} from "app/main/store/dossiersSlice";
+} from "app/store/slices/dossiersSlice";
 
 function DossiersList(props) {
   const dispatch = useDispatch();
   const dossiers = useSelector(selectDossiers);
-  const searchText = useSelector(
-    ({ dossiersApp }) => dossiersApp.dossiers.searchText
-  );
+  const searchText = useSelector(({ dossiers }) => dossiers.searchText);
 
   const [filteredData, setFilteredData] = useState(null);
 
