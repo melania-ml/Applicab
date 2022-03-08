@@ -3,34 +3,21 @@ import FuseUtils from "@fuse/utils";
 import withRouter from "@fuse/core/withRouter";
 import Fab from "@mui/material/Fab";
 import Icon from "@mui/material/Icon";
+import FuseLoading from "@fuse/core/FuseLoading";
 import IconButton from "@mui/material/IconButton";
-import {
-  ListItemIcon,
-  ListItemText,
-  Tooltip,
-  styled,
-  tooltipClasses,
-  Typography
-} from "@mui/material";
+import { Tooltip, styled, tooltipClasses, Typography } from "@mui/material";
 import { useMemo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DossiersMultiSelectMenu from "./DossiersMultiSelectMenu";
 import DossiersTable from "./DossiersTable";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import MenuList from "@mui/material/MenuList";
 
-import {
-  openEditContactDialog,
-  removeContact,
-  toggleStarredContact,
-  selectDossiers
-} from "app/store/slices/dossiersSlice";
+import { selectDossiers } from "app/store/slices/dossiersSlice";
 
 function DossiersList(props) {
   const dispatch = useDispatch();
   const dossiers = useSelector(selectDossiers);
   const searchText = useSelector(({ dossiers }) => dossiers.searchText);
+  const isLoading = useSelector(({ dossiers }) => dossiers.isLoading);
 
   const [filteredData, setFilteredData] = useState(null);
 
@@ -164,7 +151,9 @@ function DossiersList(props) {
   if (!filteredData) {
     return null;
   }
-
+  if (isLoading) {
+    return <FuseLoading />;
+  }
   if (filteredData.length === 0) {
     return (
       <div className="flex flex-1 items-center justify-center h-full">

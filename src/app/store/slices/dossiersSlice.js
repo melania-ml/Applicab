@@ -65,17 +65,19 @@ export const addCase = createAsyncThunk(
 export const getDossiers = createAsyncThunk(
   "dossiersApp/dossiers/getDossiers",
   async (routeParams, { dispatch, getState }) => {
+    dispatch(setIsLoading(true));
     routeParams = routeParams || getState().dossiersApp.dossiers.routeParams;
-    const response = await axios.post("api/common/filterData/user/User", {
+    const response = await axios.post("api/caseManagement/getCasesByLawyer", {
       query: {
-        client_type: routeParams.type,
-        title: routeParams.title,
-        status: routeParams.status,
-        tags__contains: routeParams.tags
+        // client_type: routeParams.type,
+        // title: routeParams.title,
+        // status: routeParams.status,
+        // tags__contains: routeParams.tags
       }
     });
     const data = await response.data;
     dispatch(setDossiers(data.data));
+    dispatch(setIsLoading(false));
     return { data: data.data, routeParams };
   }
 );
@@ -89,6 +91,7 @@ export const { selectAll: selectDossiers } = dossiersAdapter.getSelectors(
 const dossiersSlice = createSlice({
   name: "dossiersApp/dossiers",
   initialState: dossiersAdapter.getInitialState({
+    isLoading: false,
     dossiers: [],
     searchText: "",
     routeParams: {},
@@ -105,6 +108,9 @@ const dossiersSlice = createSlice({
     isCaseAdded: false
   }),
   reducers: {
+    setIsLoading: (state, action) => {
+      state.isLoading = action.payload;
+    },
     setIsCaseAdded: (state, action) => {
       state.isCaseAdded = true;
     },
@@ -175,6 +181,8 @@ const dossiersSlice = createSlice({
 });
 
 export const {
+  setIsLoading,
+  setDossiers,
   resetDossier,
   setDossiersSearchText,
   openNewContactDialog,
