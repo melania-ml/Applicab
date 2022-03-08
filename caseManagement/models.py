@@ -57,19 +57,18 @@ class CaseManagement(CommonBase):
                                   blank=True, null=True,
                                   on_delete=models.DO_NOTHING, related_name='related_type_lawyer_id',
                                   db_column='lawyer_id')
-    client_id = models.ForeignKey(User,
-                                  blank=True, null=True,
-                                  on_delete=models.DO_NOTHING, related_name='related_type_client_id',
-                                  db_column='client_id')
-    opposing_contact_id = models.ForeignKey(User,
-                                            blank=True, null=True,
-                                            on_delete=models.DO_NOTHING, related_name='related_type_opposing_contact_id',
-                                            db_column='opposing_contact_id')
-    customer_contact_id = models.ForeignKey(User,
-                                            blank=True, null=True,
-                                            on_delete=models.DO_NOTHING,
-                                            related_name='related_type_customer_contact_id',
-                                            db_column='customer_contact_id')
+    client_id = models.ManyToManyField(User,
+                                       blank=True,
+                                       related_name='related_type_client_id',
+                                       db_column='client_id')
+    opposing_contact_id = models.ManyToManyField(User,
+                                                 blank=True,
+                                                 related_name='related_type_opposing_contact_id',
+                                                 db_column='opposing_contact_id')
+    customer_contact_id = models.ManyToManyField(User,
+                                                 blank=True,
+                                                 related_name='related_type_customer_contact_id',
+                                                 db_column='customer_contact_id')
 
     def __str__(self):
         return '{}'.format(self.case_name)

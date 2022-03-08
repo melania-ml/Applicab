@@ -142,7 +142,6 @@ class validateEmailOtp(APIView):
             stPasswordText['otp'] = emailOtp
             stPasswordText['text1'] = stPasswordText['text1'].format(userName=userData.first_name)
             stPasswordText['button_url'] = stPasswordText['button_url'] + str(userData.id)
-            print(stPasswordText)
             send_email([userData.email],
                        'Saisissez ' + str(emailOtp) + ' comme code de confirmation Applicab', 'email.html',
                        stPasswordText)
