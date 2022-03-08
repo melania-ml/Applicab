@@ -77,7 +77,7 @@ class caseManagement(APIView):
             serializer = self.serializers_class(data=reqData)
             if serializer.is_valid():
                 serializer.save()
-                res = ResponseInfo(serializer.data, SUCCESS, True,
+                res = ResponseInfo(serializer.data, CASE_INFORMATION_ADDED, True,
                                    status.HTTP_201_CREATED)
                 return Response(res.success_payload(), status=status.HTTP_201_CREATED)
 
