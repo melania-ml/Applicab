@@ -14,16 +14,18 @@ import Types from "app/main/constants/Types";
 import { useDispatch, useSelector } from "react-redux";
 import { createFilterOptions } from "@mui/material/Autocomplete";
 import { openNewContactDialog } from "app/store/slices/contactsSlice";
+import { addCase } from "app/store/slices/dossiersSlice";
 import ContactDialog from "app/main/apps/contacts/components/ContactDialog/ContactDialog";
 
 const tags = [];
 function InformationTab() {
   const dispatch = useDispatch();
-  const { userData } = useSelector(({ userMenu }) => userMenu.userMenu);
   const { natures, procedures, contacts } = useSelector(
     ({ dossiers }) => dossiers
   );
   const filter = createFilterOptions();
+  const [isValid, setIsValid] = useState(false);
+  const [errors, setErrors] = useState({});
   const [allFields, setAllFields] = useState({
     case_name: "",
     nature: "",
@@ -34,33 +36,56 @@ function InformationTab() {
     tags: [],
     internal_comment: "",
     shared_comment: "",
-    client_id: "",
-    customer_contact_id: "",
-    opposing_contact_id: ""
+    client_id: [],
+    customer_contact_id: [],
+    opposing_contact_id: []
   });
+
   useEffect(() => {
-    setAllFields({
-      ...allFields,
-      case_name: userData.case_name,
-      nature: userData.nature,
-      status: userData.status,
-      type: userData.type,
-      tags: userData.tags,
-      internal_comment: userData.internal_comment,
-      shared_comment: userData.shared_comment
-    });
-  }, [userData]);
+    const isEmpty = Object.values(errors).every((x) => x === null || x === "");
+    if (
+      allFields.case_name &&
+      allFields.nature &&
+      allFields.status &&
+      allFields.type &&
+      allFields.procedure &&
+      allFields.client_id?.length &&
+      isEmpty
+    ) {
+      setIsValid(true);
+    } else {
+      setIsValid(false);
+    }
+  }, [allFields]);
+
+  const checkIsDisable = (name, val) => {
+    const value = typeof val === "string" ? val.trim() : val;
+    if (name === "case_name") {
+      if (value) {
+        setErrors({ ...errors, case_name: "" });
+      } else {
+        setErrors({ ...errors, case_name: "Must enter a Proper Case name" });
+      }
+    }
+  };
+
+  function onSubmit(param) {
+    dispatch(addCase({ ...allFields }));
+  }
 
   return (
     <div>
       <TextField
         className="mt-8 mb-16"
         value={allFields.case_name}
+        error={errors?.case_name}
+        helperText={errors?.case_name}
         onChange={(e) => {
           setAllFields({
             ...allFields,
             case_name: e.target.value
           });
+          checkIsDisable("case_name", e.target.value);
         }}
         label="Nom*"
         autoFocus
@@ -169,7 +194,7 @@ function InformationTab() {
           }}
         >
           {procedures.map((procedure) => (
-            <MenuItem value={procedure.procedure_type} key={procedure.id}>
+            <MenuItem value={procedure.id} key={procedure.id}>
               {procedure.procedure_type}
             </MenuItem>
           ))}
@@ -191,12 +216,15 @@ function InformationTab() {
         className="w-full mb-12"
         multiple
         freeSolo
-        onChange={(e, newValue) => {
+        onChange={(event, newValue) => {
           setAllFields({
             ...allFields,
-            ...tags,
-            tags: e.target.value,
-            ...newValue.filter((option) => tags.indexOf(option) === -1)
+            tags: [
+              ...allFields.tags,
+              ...newValue.filter(
+                (option) => allFields.tags.indexOf(option) === -1
+              )
+            ]
           });
         }}
         options={tags}
@@ -254,6 +282,13 @@ function InformationTab() {
         getOptionLabel={(option) => {
           return `${option.first_name + " " + option.last_name} `;
         }}
+        onChange={(event, newValue) => {
+          const array = newValue.map((val) => val.id);
+          setAllFields({
+            ...allFields,
+            client_id: array
+          });
+        }}
         renderInput={(params) => (
           <TextField {...params} label="Choisissez un client*" />
         )}
@@ -268,8 +303,15 @@ function InformationTab() {
         getOptionLabel={(option) => {
           return `${option.first_name + " " + option.last_name} `;
         }}
+        onChange={(event, newValue) => {
+          const array = newValue.map((val) => val.id);
+          setAllFields({
+            ...allFields,
+            customer_contact_id: array
+          });
+        }}
         renderInput={(params) => (
-          <TextField {...params} label="Choisissez un contact*" />
+          <TextField {...params} label="Choisissez un contact" />
         )}
       />
       <div className="mb-10">
@@ -282,8 +324,15 @@ function InformationTab() {
         getOptionLabel={(option) => {
           return `${option.first_name + " " + option.last_name} `;
         }}
+        onChange={(event, newValue) => {
+          const array = newValue.map((val) => val.id);
+          setAllFields({
+            ...allFields,
+            opposing_contact_id: array
+          });
+        }}
         renderInput={(params) => (
-          <TextField {...params} label="Choisissez un contact*" />
+          <TextField {...params} label="Choisissez un contact" />
         )}
       />
       <br />
@@ -292,6 +341,8 @@ function InformationTab() {
           variant="contained"
           color="secondary"
           style={{ borderRadius: 0 }}
+          disabled={!isValid}
+          onClick={() => onSubmit("submit")}
         >
           Enregistrer
         </Button>

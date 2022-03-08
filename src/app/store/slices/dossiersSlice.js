@@ -4,6 +4,7 @@ import {
   createEntityAdapter
 } from "@reduxjs/toolkit";
 import axios from "axios";
+import { showMessage } from "app/store/fuse/messageSlice";
 
 export const getNatures = () => async (dispatch) => {
   await axios
@@ -44,6 +45,23 @@ export const getContacts = () => async (dispatch) => {
     });
 };
 
+export const addCase = createAsyncThunk(
+  "dossiersApp/dossiers/addCase",
+  async (dossier, { dispatch, getState }) => {
+    await axios
+      .post("api/caseManagement/addCases", dossier)
+      .then((data) => {
+        if (data.data.status === 201 && data.data.success) {
+          dispatch(showMessage({ message: data.data.message }));
+          dispatch(setIsCaseAdded());
+        }
+      })
+      .catch((error) => {
+        dispatch(showMessage({ message: error.response.message }));
+      });
+  }
+);
+
 export const getDossiers = createAsyncThunk(
   "dossiersApp/dossiers/getDossiers",
   async (routeParams, { dispatch, getState }) => {
@@ -83,9 +101,13 @@ const dossiersSlice = createSlice({
     },
     natures: [],
     procedures: [],
-    contacts: []
+    contacts: [],
+    isCaseAdded: false
   }),
   reducers: {
+    setIsCaseAdded: (state, action) => {
+      state.isCaseAdded = true;
+    },
     setDossiers: (state, action) => {
       state.dossiers = action.payload;
     },
@@ -161,7 +183,8 @@ export const {
   closeEditContactDialog,
   setNatures,
   setProcedures,
-  setContacts
+  setContacts,
+  setIsCaseAdded
 } = dossiersSlice.actions;
 
 export default dossiersSlice.reducer;

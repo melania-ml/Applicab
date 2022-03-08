@@ -51,6 +51,15 @@ function Dossier(props) {
   const [tabValue, setTabValue] = useState(0);
   const routeParams = useParams();
   const dispatch = useDispatch();
+
+  const { isCaseAdded } = useSelector(({ dossiers }) => dossiers);
+
+  useEffect(() => {
+    if (isCaseAdded) {
+      setTabValue(1);
+    }
+  }, [isCaseAdded]);
+
   useDeepCompareEffect(async () => {
     await dispatch(getNatures());
     await dispatch(getProcedures());
@@ -75,10 +84,26 @@ function Dossier(props) {
             scrollButtons="auto"
             classes={{ root: "w-full h-94 caseManagementTabs" }}
           >
-            <Tab className="h-64 w-1/4 max-w-full" label="Informations" />
-            <Tab className="h-64 w-1/4 max-w-full" label="Étapes" />
-            <Tab className="h-64 w-1/4 max-w-full" label="Messages" />
-            <Tab className="h-64 w-1/4 max-w-full" label="Documents" />
+            <Tab
+              className="h-64 w-1/4 max-w-full"
+              label="Informations"
+              disabled={isCaseAdded}
+            />
+            <Tab
+              className="h-64 w-1/4 max-w-full"
+              label="Étapes"
+              disabled={!isCaseAdded}
+            />
+            <Tab
+              className="h-64 w-1/4 max-w-full"
+              label="Messages"
+              disabled={!isCaseAdded}
+            />
+            <Tab
+              className="h-64 w-1/4 max-w-full"
+              label="Documents"
+              disabled={!isCaseAdded}
+            />
           </Tabs>
         }
         content={
