@@ -763,7 +763,6 @@ function ContactDialog(props) {
               <TextField
                 className="mb-12"
                 label="Mobile"
-                type="number"
                 variant="outlined"
                 fullWidth
                 error={errors?.mobile1}
@@ -782,7 +781,6 @@ function ContactDialog(props) {
                 label="Fixe"
                 variant="outlined"
                 fullWidth
-                type="number"
                 error={errors?.mobile2}
                 helperText={errors?.mobile2}
                 value={allFields.fixe}
@@ -966,7 +964,6 @@ function ContactDialog(props) {
               <TextField
                 className="mb-12"
                 label="Mobile"
-                type="number"
                 variant="outlined"
                 fullWidth
                 value={allFields.phone_number}
@@ -984,7 +981,6 @@ function ContactDialog(props) {
                 className="mb-12"
                 label="Fixe"
                 variant="outlined"
-                type="number"
                 fullWidth
                 error={errors?.mobile2}
                 helperText={errors?.mobile2}

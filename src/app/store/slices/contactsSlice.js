@@ -57,8 +57,8 @@ export const importContacts = (contact) => async (dispatch) => {
         dispatch(showMessage({ message: data.data.message }));
       }
     })
-    .catch((errors) => {
-      console.error(errors);
+    .catch((error) => {
+      dispatch(showMessage({ message: error.response.message }));
     });
 };
 
@@ -66,7 +66,7 @@ export const getContacts = createAsyncThunk(
   "contactsApp/contacts/getContacts",
   async (routeParams, { dispatch, getState }) => {
     dispatch(setIsLoading(true));
-    routeParams = routeParams || getState().contactsApp.contacts.routeParams;
+    routeParams = routeParams || getState().contacts.routeParams;
     const response = await axios.post("api/common/filterData/user/User", {
       query: {
         client_type: routeParams.type,
