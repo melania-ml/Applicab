@@ -1,3 +1,6 @@
+import * as React from "react";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+
 import { motion } from "framer-motion";
 import FuseUtils from "@fuse/utils";
 import withRouter from "@fuse/core/withRouter";
@@ -116,7 +119,139 @@ function Message() {
                 />
               </Paper>
             </AppBar>
-            <TableBody>
+
+            <List
+              sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+            >
+              <ListItem alignItems="flex-start">
+                <ListItemAvatar>
+                  <Avatar
+                    alt="Remy Sharp"
+                    src="/material-ui-static/images/avatar/1.jpg"
+                  />
+                </ListItemAvatar>
+                <ListItemText
+                  primary="Brunch this weekend?"
+                  secondary={
+                    <React.Fragment>
+                      <Typography
+                        sx={{ display: "inline" }}
+                        component="span"
+                        variant="body2"
+                        color="text.primary"
+                      >
+                        Ali Connors
+                      </Typography>
+                      {" — I'll be in your neighborhood doing errands this…"}
+                    </React.Fragment>
+                  }
+                />
+                <Typography className="mr-32 font-semibold border-none whitespace-pre">
+                  Il y a 2 jours
+                </Typography>
+                <Fab
+                  // align="right"
+                  variant="circular"
+                  className="h-0 w-38 msgCounter"
+                  disableRipple={true}
+                  // size="small"
+                  sx={{
+                    boxShadow: 0,
+                    backgroundColor: "#22d3ee",
+                    "&:hover": { backgroundColor: "#22d3ee" },
+                  }}
+                  aria-label="add"
+                >
+                  2
+                </Fab>
+              </ListItem>
+              <ListItem alignItems="flex-start">
+                <ListItemAvatar>
+                  <Avatar
+                    alt="Travis Howard"
+                    src="/material-ui-static/images/avatar/2.jpg"
+                  />
+                </ListItemAvatar>
+                <ListItemText
+                  primary="Summer BBQ"
+                  secondary={
+                    <React.Fragment>
+                      <Typography
+                        sx={{ display: "inline" }}
+                        component="span"
+                        variant="body2"
+                        color="text.primary"
+                      >
+                        to Scott, Alex, Jennifer
+                      </Typography>
+                      {" — Wish I could come, but I'm out of town this…"}
+                    </React.Fragment>
+                  }
+                />
+                <Typography className="mr-32 font-semibold border-none whitespace-pre">
+                  Il y a 3 jours
+                </Typography>
+                <Fab
+                  // align="right"
+                  variant="circular"
+                  className="h-0 w-38 msgCounter"
+                  disableRipple={true}
+                  // size="small"
+                  sx={{
+                    boxShadow: 0,
+                    backgroundColor: "#22d3ee",
+                    "&:hover": { backgroundColor: "#22d3ee" },
+                  }}
+                  aria-label="add"
+                >
+                  1
+                </Fab>
+              </ListItem>
+              <ListItem alignItems="flex-start">
+                <ListItemAvatar>
+                  <Avatar
+                    alt="Cindy Baker"
+                    src="/material-ui-static/images/avatar/3.jpg"
+                  />
+                </ListItemAvatar>
+                <ListItemText
+                  primary="Oui Oui"
+                  secondary={
+                    <React.Fragment>
+                      <Typography
+                        sx={{ display: "inline" }}
+                        component="span"
+                        variant="body2"
+                        color="text.primary"
+                      >
+                        Sandra Adams
+                      </Typography>
+                      {" — Do you have Paris recommendations? Have you ever…"}
+                    </React.Fragment>
+                  }
+                />
+                <Typography className="mr-32 font-semibold border-none whitespace-pre">
+                  Il y a 2 jours
+                </Typography>
+                <Fab
+                  // align="right"
+                  variant="circular"
+                  className="h-0 w-38 msgCounter"
+                  disableRipple={true}
+                  // size="small"
+                  sx={{
+                    boxShadow: 0,
+                    backgroundColor: "#22d3ee",
+                    "&:hover": { backgroundColor: "#22d3ee" },
+                  }}
+                  aria-label="add"
+                >
+                  3
+                </Fab>
+              </ListItem>
+            </List>
+
+            {/* <TableBody>
               {rows.map((row) => (
                 <TableRow
                   key={row.name}
@@ -159,7 +294,7 @@ function Message() {
                   </TableCell>
                 </TableRow>
               ))}
-            </TableBody>
+            </TableBody> */}
           </Grid>
 
           <Grid item xs={12} md={9}>
@@ -277,7 +412,9 @@ function Message() {
             <Typography variant="h6" className="pl-3">
               Subject : Codes d'accès AppliCab envoi au(x) client(s)
             </Typography>
-            <Typography variant="h6" className="pl-3">Date : 15/12/2022 18:30:00</Typography>
+            <Typography variant="h6" className="pl-3">
+              Date : 15/12/2022 18:30:00
+            </Typography>
             <br />
             <Typography variant="subtitle1" className="max-w-md pl-3">
               Chère Madame, Cher Monsieur, Je reviens vers vous dans le dossier
