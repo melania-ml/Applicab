@@ -120,9 +120,7 @@ function Message() {
               </Paper>
             </AppBar>
 
-            <List
-              sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-            >
+            <List>
               <ListItem alignItems="flex-start">
                 <ListItemAvatar>
                   <Avatar
