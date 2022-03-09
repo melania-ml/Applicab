@@ -1,51 +1,60 @@
-import FuseUtils from "@fuse/utils";
-import { styled } from "@mui/material/styles";
-import Accordion from "@mui/material/Accordion";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import Icon from "@mui/material/Icon";
-import Input from "@mui/material/Input";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import axios from "axios";
-import { motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
+import FuseUtils from "@fuse/utils";
+import { motion } from "framer-motion";
+import ProcedureFAQs from "app/main/constants/ProcedureFAQs";
+import VocabularyFAQs from "app/main/constants/VocabularyFAQs";
+
+//material-ui
+import { styled } from "@mui/material/styles";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Icon,
+  Input,
+  Paper,
+  Typography
+} from "@mui/material";
 
 const Root = styled("div")(({ theme }) => ({
-  "& .FaqsPage-header": {
+  "& .FaqPage-header": {
     background: `linear-gradient(to right, ${theme.palette.primary.dark} 0%, ${theme.palette.primary.main} 100%)`,
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.primary.contrastText
   },
 
-  "& .FaqsPage-panel": {
+  "& .FaqPage-panel": {
     margin: 0,
     border: "none",
     "&:before": {
-      display: "none",
+      display: "none"
     },
     "&:first-of-type": {
-      borderRadius: "20px 20px 0 0",
+      borderRadius: "20px 20px 0 0"
     },
     "&:last-of-type": {
-      borderRadius: "0 0 20px 20px",
+      borderRadius: "0 0 20px 20px"
     },
 
     "&.Mui-expanded": {
-      margin: "auto",
-    },
-  },
+      margin: "auto"
+    }
+  }
 }));
 
-function FaqsPage() {
-  const [data, setData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
+function FaqApp() {
+  const [data, setData] = useState({
+    procedureFAQ: [],
+    vocabularyFAQ: []
+  });
+  const [filteredData, setFilteredData] = useState({
+    procedureFAQ: [],
+    vocabularyFAQ: []
+  });
   const [expanded, setExpanded] = useState(null);
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-    axios.get("/api/faq").then((res) => {
-      setData(res.data);
-    });
+    setData({ procedureFAQ: ProcedureFAQs, vocabularyFAQ: VocabularyFAQs });
   }, []);
 
   useEffect(() => {
@@ -53,9 +62,17 @@ function FaqsPage() {
       if (_searchText.length === 0) {
         return arr;
       }
-      return FuseUtils.filterArrayByString(arr, _searchText);
+      return {
+        procedureFAQ: FuseUtils.filterArrayByString(
+          arr.procedureFAQ,
+          _searchText
+        ),
+        vocabularyFAQ: FuseUtils.filterArrayByString(
+          arr.vocabularyFAQ,
+          _searchText
+        )
+      };
     }
-
     setFilteredData(getFilteredArray(data, searchText));
   }, [data, searchText]);
 
@@ -69,30 +86,30 @@ function FaqsPage() {
 
   return (
     <Root className="w-full flex flex-col flex-auto">
-      <div className="FaqsPage-header flex flex-col shrink-0 items-center justify-center text-center p-16 sm:p-24 h-auto sm:h-360">
+      <div className="FaqPage-header flex flex-col shrink-0 items-center justify-center text-center p-16 sm:p-24 h-200 sm:h-360">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0, transition: { delay: 0.1 } }}
         >
           <Typography
             color="inherit"
-            className="text-32 sm:text-36 tracking-tight"
+            className="text-26 sm:text-40 font-bold tracking-tight"
           >
             Foire aux questions
           </Typography>
         </motion.div>
 
-        <Paper className="flex shrink-0 items-center h-52 w-full max-w-sm rounded-32 shadow">
+        <Paper className="flex shrink-0 items-center h-56 w-full max-w-md mt-16 sm:mt-32 rounded-16 shadow">
           <Icon color="action" className="mx-16">
             search
           </Icon>
           <Input
-            placeholder="Reserche"
+            placeholder="Recherche"
             className=""
             disableUnderline
             fullWidth
             inputProps={{
-              "aria-label": "Search",
+              "aria-label": "Search"
             }}
             value={searchText}
             onChange={handleSearch}
@@ -101,29 +118,29 @@ function FaqsPage() {
       </div>
 
       <div className="flex flex-col flex-1 shrink-0 max-w-xl w-full mx-auto px-16 sm:px-24 py-24 sm:py-32">
-        {filteredData.length === 0 && (
-          <div className="flex flex-auto items-center justify-center w-full h-full">
-            <Typography color="textSecondary" variant="h5">
-              There are no faqs!
-            </Typography>
-          </div>
-        )}
+        {filteredData.procedureFAQ.length === 0 &&
+          filteredData.vocabularyFAQ.length === 0 && (
+            <div className="flex flex-auto items-center justify-center w-full h-full">
+              <Typography color="textSecondary" variant="h5">
+                There are no faqs!
+              </Typography>
+            </div>
+          )}
         {useMemo(() => {
           const container = {
             show: {
               transition: {
-                staggerChildren: 0.05,
-              },
-            },
+                staggerChildren: 0.05
+              }
+            }
           };
 
           const item = {
             hidden: { opacity: 0, y: 20 },
-            show: { opacity: 1, y: 0 },
+            show: { opacity: 1, y: 0 }
           };
-
           return (
-            filteredData.length > 0 && (
+            filteredData.procedureFAQ.length > 0 && (
               <motion.div
                 variants={container}
                 initial="hidden"
@@ -131,19 +148,24 @@ function FaqsPage() {
                 className="shadow rounded-20"
               >
                 <Typography
+                  style={{
+                    backgroundColor: "#1b2330",
+                    borderTopLeftRadius: 20,
+                    borderTopRightRadius: 20
+                  }}
                   variant="subtitle1"
-                  color="#1BD7EF"
-                  className="opacity-75 text-32 mt-8 sm:mt-16 mx-auto max-w-912 font-bold "
+                  color="#ffffff"
+                  className="mt-0 pl-24 text-24 sm:mt-16 mx-auto max-w-912 font-semibold"
                 >
-                  Questions de Procedure
+                  Questions de procédure
                 </Typography>
-                {filteredData.map((faq) => (
+                {filteredData.procedureFAQ.map((faq) => (
                   <Accordion
                     component={motion.div}
                     variants={item}
                     key={faq.id}
                     classes={{
-                      root: "FaqsPage-panel shadow-0",
+                      root: "FaqPage-panel shadow-0"
                     }}
                     expanded={expanded === faq.id}
                     onChange={toggleAccordion(faq.id)}
@@ -164,20 +186,51 @@ function FaqsPage() {
                     </AccordionDetails>
                   </Accordion>
                 ))}
+              </motion.div>
+            )
+          );
+        }, [filteredData.procedureFAQ, expanded])}
+        <br />
+        {useMemo(() => {
+          const container = {
+            show: {
+              transition: {
+                staggerChildren: 0.05
+              }
+            }
+          };
+
+          const item = {
+            hidden: { opacity: 0, y: 20 },
+            show: { opacity: 1, y: 0 }
+          };
+          return (
+            filteredData.vocabularyFAQ.length > 0 && (
+              <motion.div
+                variants={container}
+                initial="hidden"
+                animate="show"
+                className="shadow rounded-20"
+              >
                 <Typography
-                  // variant="subtitle1"
-                  color="#1BD7EF"
-                  className="opacity-75 text-32 mt-8 sm:mt-16 mx-auto max-w-912 font-bold"
+                  style={{
+                    backgroundColor: "#1b2330",
+                    borderTopLeftRadius: 20,
+                    borderTopRightRadius: 20
+                  }}
+                  variant="subtitle1"
+                  color="#ffffff"
+                  className="mt-0 pl-24 text-24 sm:mt-16 mx-auto max-w-912 font-semibold"
                 >
-                  Questions de Vocabulaire
+                  Questions de vocabulaire
                 </Typography>
-                {filteredData.map((faq) => (
+                {filteredData.vocabularyFAQ.map((faq) => (
                   <Accordion
                     component={motion.div}
                     variants={item}
                     key={faq.id}
                     classes={{
-                      root: "FaqsPage-panel shadow-0",
+                      root: "FaqPage-panel shadow-0"
                     }}
                     expanded={expanded === faq.id}
                     onChange={toggleAccordion(faq.id)}
@@ -197,14 +250,14 @@ function FaqsPage() {
                       </Typography>
                     </AccordionDetails>
                   </Accordion>
-                ))}{" "}
+                ))}
               </motion.div>
             )
           );
-        }, [filteredData, expanded])}
+        }, [filteredData.vocabularyFAQ, expanded])}
       </div>
     </Root>
   );
 }
 
-export default FaqsPage;
+export default FaqApp;

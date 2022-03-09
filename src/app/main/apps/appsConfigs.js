@@ -19,7 +19,7 @@ import ContactsAppConfig from "./contacts/ContactsAppConfig";
 
 // *********************** CLIENT DASHBOARD *****************************************
 import MessageAppConfig from "./Messages/MessageAppConfig";
-import FaqAppConfig from "./FAQ/FaqPageConfig";
+import FaqAppConfig from "./FAQ/FaqAppConfig";
 import ClientDashboardAppConfig from "./ClientDashboard/ClientDashboardAppConfig";
 
 const appsConfigs = [
@@ -44,7 +44,7 @@ const appsConfigs = [
   //*********client Dashboard*********
   ClientDashboardAppConfig,
   MessageAppConfig,
-  FaqAppConfig,
+  FaqAppConfig
 ];
 
 export default appsConfigs;
