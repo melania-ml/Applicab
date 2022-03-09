@@ -86,7 +86,7 @@ function FaqApp() {
 
   return (
     <Root className="w-full flex flex-col flex-auto">
-      <div className="FaqPage-header flex flex-col shrink-0 items-center justify-center text-center p-16 sm:p-24 h-200 sm:h-360">
+      <div className="FaqPage-header flex flex-col shrink-0 items-center justify-center text-center p-16 sm:p-60 h-200 sm:h-auto">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0, transition: { delay: 0.1 } }}
@@ -99,7 +99,7 @@ function FaqApp() {
           </Typography>
         </motion.div>
 
-        <Paper className="flex shrink-0 items-center h-56 w-full max-w-md mt-16 sm:mt-32 rounded-16 shadow">
+        <Paper className="flex shrink-0 items-center h-56 mt-16 sm:mt-32 rounded-full shadow faq-search">
           <Icon color="action" className="mx-16">
             search
           </Icon>
@@ -145,7 +145,7 @@ function FaqApp() {
                 variants={container}
                 initial="hidden"
                 animate="show"
-                className="shadow rounded-20"
+                className="shadow rounded-20 mb-5"
               >
                 <Typography
                   style={{
@@ -171,7 +171,7 @@ function FaqApp() {
                     onChange={toggleAccordion(faq.id)}
                   >
                     <AccordionSummary expandIcon={<Icon>expand_more</Icon>}>
-                      <div className="flex items-center py-4">
+                      <div className="flex items-center">
                         <Icon color="action">help_outline</Icon>
                         <Typography className="px-12 font-medium">
                           {faq.question}
@@ -190,7 +190,7 @@ function FaqApp() {
             )
           );
         }, [filteredData.procedureFAQ, expanded])}
-        <br />
+        
         {useMemo(() => {
           const container = {
             show: {
@@ -236,7 +236,7 @@ function FaqApp() {
                     onChange={toggleAccordion(faq.id)}
                   >
                     <AccordionSummary expandIcon={<Icon>expand_more</Icon>}>
-                      <div className="flex items-center py-4">
+                      <div className="flex items-center">
                         <Icon color="action">help_outline</Icon>
                         <Typography className="px-12 font-medium">
                           {faq.question}
