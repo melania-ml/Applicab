@@ -187,6 +187,9 @@ table.simple.borderless thead tr th {
 	margin: -2rem 0rem 0rem 28rem;
   }
 }
+.MuiAutocomplete-popper {
+
+}
 .autocomplete label {
   color: #ffffff !important;
 }
