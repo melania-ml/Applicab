@@ -1,6 +1,6 @@
 import { lazy } from "react";
 
-const FaqsPage = lazy(() => import("./components/FaqsPage"));
+const FaqsPage = lazy(() => import("./FaqsPage"));
 
 const FaqPageConfig = {
   settings: {
