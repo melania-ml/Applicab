@@ -19,7 +19,7 @@ import {
   TextField,
   Autocomplete,
   InputAdornment,
-  Chip
+  Chip,
 } from "@mui/material";
 import { createFilterOptions } from "@mui/material/Autocomplete";
 import DatePicker from "@mui/lab/DatePicker";
@@ -35,7 +35,7 @@ import {
   closeNewContactDialog,
   closeEditContactDialog,
   getFormTitles,
-  getAllTypes
+  getAllTypes,
 } from "app/store/slices/contactsSlice";
 
 const tags = [];
@@ -66,7 +66,7 @@ function ContactDialog(props) {
     nationality: "",
     native_city: "",
     profession: "",
-    civil_status: ""
+    civil_status: "",
   });
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
@@ -103,7 +103,7 @@ function ContactDialog(props) {
         nationality: data.nationality,
         native_city: data.native_city,
         profession: data.profession,
-        civil_status: data.civil_status
+        civil_status: data.civil_status,
       });
     }
   }, [contactDialog.data, contactDialog.type]);
@@ -135,7 +135,7 @@ function ContactDialog(props) {
         nationality: "",
         native_city: "",
         profession: "",
-        civil_status: ""
+        civil_status: "",
       });
     }
   }, [success]);
@@ -159,13 +159,13 @@ function ContactDialog(props) {
     if (typeof allFields.client_type === "object") {
       setAllFields({
         ...allFields,
-        client_type: allFields.client_type.client_type
+        client_type: allFields.client_type.client_type,
       });
     }
     if (typeof allFields.title === "object") {
       setAllFields({
         ...allFields,
-        title: allFields.title.title
+        title: allFields.title.title,
       });
     }
     const isEmpty = Object.values(errors).every((x) => x === null || x === "");
@@ -261,7 +261,7 @@ function ContactDialog(props) {
         nationality: "",
         native_city: "",
         profession: "",
-        civil_status: ""
+        civil_status: "",
       });
     } else {
       dispatch(closeNewContactDialog());
@@ -285,7 +285,7 @@ function ContactDialog(props) {
           is_invite: type,
           client_type: typeObj?.client_type,
           title: titleObj?.title,
-          id: contactDialog.data.id
+          id: contactDialog.data.id,
         })
       );
     }
@@ -315,7 +315,7 @@ function ContactDialog(props) {
         if (regex.test(value) === false) {
           setErrors({
             ...errors,
-            mobile1: "Please enter valid Mobile number"
+            mobile1: "Please enter valid Mobile number",
           });
         } else {
           setErrors({ ...errors, mobile1: "" });
@@ -329,7 +329,7 @@ function ContactDialog(props) {
         if (regex.test(value) === false) {
           setErrors({
             ...errors,
-            mobile2: "Please enter valid Mobile number"
+            mobile2: "Please enter valid Mobile number",
           });
         } else {
           setErrors({ ...errors, mobile2: "" });
@@ -403,7 +403,7 @@ function ContactDialog(props) {
   return (
     <Dialog
       classes={{
-        paper: "m-24"
+        paper: "m-24",
       }}
       {...contactDialog.props}
       onClose={closeComposeDialog}
@@ -428,12 +428,12 @@ function ContactDialog(props) {
               } else if (newValue && newValue.inputValue) {
                 setAllFields({
                   ...allFields,
-                  client_type: newValue.inputValue
+                  client_type: newValue.inputValue,
                 });
               } else {
                 setAllFields({
                   ...allFields,
-                  client_type: newValue?.client_type
+                  client_type: newValue?.client_type,
                 });
               }
             }}
@@ -446,7 +446,7 @@ function ContactDialog(props) {
               if (inputValue.trim() !== "" && !isExisting) {
                 filtered.push({
                   inputValue: inputValue.trim(),
-                  client_type: `Ajouter "${inputValue.trim()}"`
+                  client_type: `Ajouter "${inputValue.trim()}"`,
                 });
               }
               return filtered;
@@ -508,7 +508,7 @@ function ContactDialog(props) {
                     native_city: "",
                     department: "",
                     profession: "",
-                    civil_status: ""
+                    civil_status: "",
                   });
                 }}
               >
@@ -548,7 +548,7 @@ function ContactDialog(props) {
                   if (inputValue.trim() !== "" && !isExisting) {
                     filtered.push({
                       inputValue: inputValue.trim(),
-                      title: `Ajouter "${inputValue.trim()}"`
+                      title: `Ajouter "${inputValue.trim()}"`,
                     });
                   }
                   return filtered;
@@ -587,7 +587,7 @@ function ContactDialog(props) {
                 onChange={(e) => {
                   setAllFields({
                     ...allFields,
-                    company_name: e.target.value
+                    company_name: e.target.value,
                   });
                   checkIsDisable("company_name", e.target.value);
                 }}
@@ -601,7 +601,7 @@ function ContactDialog(props) {
                 onChange={(e, newValue) =>
                   setAllFields({
                     ...allFields,
-                    country: newValue.label
+                    country: newValue.label,
                   })
                 }
                 renderInput={(params) => <TextField {...params} label="Pays" />}
@@ -615,7 +615,7 @@ function ContactDialog(props) {
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    address: e.target.value
+                    address: e.target.value,
                   })
                 }
               />
@@ -628,7 +628,7 @@ function ContactDialog(props) {
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    city: e.target.value
+                    city: e.target.value,
                   })
                 }
               />
@@ -648,7 +648,7 @@ function ContactDialog(props) {
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    postal_code: e.target.value
+                    postal_code: e.target.value,
                   })
                 }
               />
@@ -658,7 +658,7 @@ function ContactDialog(props) {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">€</InputAdornment>
-                  )
+                  ),
                 }}
                 type="number"
                 variant="outlined"
@@ -672,7 +672,7 @@ function ContactDialog(props) {
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    capital_social: e.target.value
+                    capital_social: e.target.value,
                   })
                 }
               />
@@ -685,7 +685,7 @@ function ContactDialog(props) {
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    RCS_city: e.target.value
+                    RCS_city: e.target.value,
                   })
                 }
               />
@@ -701,7 +701,7 @@ function ContactDialog(props) {
                 onChange={(e) => {
                   setAllFields({
                     ...allFields,
-                    number: e.target.value
+                    number: e.target.value,
                   });
                   //checkIsDisable("number", e.target.value);
                 }}
@@ -721,7 +721,7 @@ function ContactDialog(props) {
                 onChange={(e) => {
                   setAllFields({
                     ...allFields,
-                    last_name: e.target.value
+                    last_name: e.target.value,
                   });
                   checkIsDisable("last_name", e.target.value);
                 }}
@@ -739,7 +739,7 @@ function ContactDialog(props) {
                 onChange={(e) => {
                   setAllFields({
                     ...allFields,
-                    first_name: e.target.value
+                    first_name: e.target.value,
                   });
                   checkIsDisable("firstName", e.target.value);
                 }}
@@ -755,7 +755,7 @@ function ContactDialog(props) {
                 onChange={(e) => {
                   setAllFields({
                     ...allFields,
-                    email: e.target.value
+                    email: e.target.value,
                   });
                   checkIsDisable("email", e.target.value);
                 }}
@@ -771,7 +771,7 @@ function ContactDialog(props) {
                 onChange={(e) => {
                   setAllFields({
                     ...allFields,
-                    phone_number: e.target.value
+                    phone_number: e.target.value,
                   });
                   checkIsDisable("mobile1", e.target.value);
                 }}
@@ -787,7 +787,7 @@ function ContactDialog(props) {
                 onChange={(e) => {
                   setAllFields({
                     ...allFields,
-                    fixe: e.target.value
+                    fixe: e.target.value,
                   });
                   checkIsDisable("mobile2", e.target.value);
                 }}
@@ -803,7 +803,7 @@ function ContactDialog(props) {
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    comments: e.target.value
+                    comments: e.target.value,
                   })
                 }
               />
@@ -818,8 +818,8 @@ function ContactDialog(props) {
                       ...allFields.tags,
                       ...newValue.filter(
                         (option) => allFields.tags.indexOf(option) === -1
-                      )
-                    ]
+                      ),
+                    ],
                   });
                 }}
                 options={tags}
@@ -849,7 +849,7 @@ function ContactDialog(props) {
                   onChange={(e) =>
                     setAllFields({
                       ...allFields,
-                      status: e.target.value
+                      status: e.target.value,
                     })
                   }
                 >
@@ -884,7 +884,7 @@ function ContactDialog(props) {
                   if (inputValue.trim() !== "" && !isExisting) {
                     filtered.push({
                       inputValue: inputValue.trim(),
-                      title: `Ajouter "${inputValue.trim()}"`
+                      title: `Ajouter "${inputValue.trim()}"`,
                     });
                   }
                   return filtered;
@@ -922,7 +922,7 @@ function ContactDialog(props) {
                 onChange={(e) => {
                   setAllFields({
                     ...allFields,
-                    last_name: e.target.value
+                    last_name: e.target.value,
                   });
                   checkIsDisable("last_name", e.target.value);
                 }}
@@ -940,7 +940,7 @@ function ContactDialog(props) {
                 onChange={(e) => {
                   setAllFields({
                     ...allFields,
-                    first_name: e.target.value
+                    first_name: e.target.value,
                   });
                   checkIsDisable("firstName", e.target.value);
                 }}
@@ -956,7 +956,7 @@ function ContactDialog(props) {
                 onChange={(e) => {
                   setAllFields({
                     ...allFields,
-                    email: e.target.value
+                    email: e.target.value,
                   });
                   checkIsDisable("email", e.target.value);
                 }}
@@ -972,7 +972,7 @@ function ContactDialog(props) {
                 onChange={(e) => {
                   setAllFields({
                     ...allFields,
-                    phone_number: e.target.value
+                    phone_number: e.target.value,
                   });
                   setIsValid("mobile1", e.target.value);
                 }}
@@ -988,7 +988,7 @@ function ContactDialog(props) {
                 onChange={(e) => {
                   setAllFields({
                     ...allFields,
-                    fixe: e.target.value
+                    fixe: e.target.value,
                   });
                   setIsValid("mobile2", e.target.value);
                 }}
@@ -1002,7 +1002,7 @@ function ContactDialog(props) {
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    address: e.target.value
+                    address: e.target.value,
                   })
                 }
               />
@@ -1015,7 +1015,7 @@ function ContactDialog(props) {
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    city: e.target.value
+                    city: e.target.value,
                   })
                 }
               />
@@ -1034,7 +1034,7 @@ function ContactDialog(props) {
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    postal_code: e.target.value
+                    postal_code: e.target.value,
                   })
                 }
               />
@@ -1061,7 +1061,7 @@ function ContactDialog(props) {
                 onChange={(e, newValue) => {
                   setAllFields({
                     ...allFields,
-                    nationality: newValue.label
+                    nationality: newValue.label,
                   });
                 }}
                 renderInput={(params) => (
@@ -1077,7 +1077,7 @@ function ContactDialog(props) {
                 onChange={(e, newValue) =>
                   setAllFields({
                     ...allFields,
-                    country: newValue.label
+                    country: newValue.label,
                   })
                 }
                 renderInput={(params) => <TextField {...params} label="Pays" />}
@@ -1090,7 +1090,7 @@ function ContactDialog(props) {
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    native_city: e.target.value
+                    native_city: e.target.value,
                   })
                 }
                 fullWidth
@@ -1104,7 +1104,7 @@ function ContactDialog(props) {
                 onChange={(e, newValue) =>
                   setAllFields({
                     ...allFields,
-                    department: newValue.label
+                    department: newValue.label,
                   })
                 }
                 renderInput={(params) => (
@@ -1119,7 +1119,7 @@ function ContactDialog(props) {
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    profession: e.target.value
+                    profession: e.target.value,
                   })
                 }
                 fullWidth
@@ -1132,7 +1132,7 @@ function ContactDialog(props) {
                   onChange={(e) =>
                     setAllFields({
                       ...allFields,
-                      civil_status: e.target.value
+                      civil_status: e.target.value,
                     })
                   }
                 >
@@ -1154,7 +1154,7 @@ function ContactDialog(props) {
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    comments: e.target.value
+                    comments: e.target.value,
                   })
                 }
               />
@@ -1169,8 +1169,8 @@ function ContactDialog(props) {
                       ...allFields.tags,
                       ...newValue.filter(
                         (option) => allFields.tags.indexOf(option) === -1
-                      )
-                    ]
+                      ),
+                    ],
                   });
                 }}
                 options={tags}
@@ -1200,7 +1200,7 @@ function ContactDialog(props) {
                   onChange={(e) =>
                     setAllFields({
                       ...allFields,
-                      status: e.target.value
+                      status: e.target.value,
                     })
                   }
                 >

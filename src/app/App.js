@@ -23,13 +23,13 @@ const emotionCacheOptions = {
   rtl: {
     key: "muirtl",
     stylisPlugins: [rtlPlugin],
-    insertionPoint: document.getElementById("emotion-insertion-point")
+    insertionPoint: document.getElementById("emotion-insertion-point"),
   },
   ltr: {
     key: "muiltr",
     stylisPlugins: [],
-    insertionPoint: document.getElementById("emotion-insertion-point")
-  }
+    insertionPoint: document.getElementById("emotion-insertion-point"),
+  },
 };
 
 const App = () => {
@@ -45,11 +45,11 @@ const App = () => {
                 maxSnack={5}
                 anchorOrigin={{
                   vertical: "bottom",
-                  horizontal: "right"
+                  horizontal: "right",
                 }}
                 classes={{
                   containerRoot:
-                    "bottom-0 right-0 mb-52 md:mb-68 mr-8 lg:mr-80 z-99"
+                    "bottom-0 right-0 mb-52 md:mb-68 mr-8 lg:mr-80 z-99",
                 }}
               >
                 <FuseLayout />

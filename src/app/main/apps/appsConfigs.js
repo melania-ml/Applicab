@@ -3,7 +3,6 @@
 import DashboardAppConfig from "./dashboard/DashboardAppConfig";
 import DossiersAppConfig from "./dossiers/DossiersAppConfig";
 import ContactsAppConfig from "./contacts/ContactsAppConfig";
-// import ChatAppConfig from './chat/ChatAppConfig';
 // import AnalyticsDashboardAppConfig from './dashboards/analytics/AnalyticsDashboardAppConfig';
 // import ProjectDashboardAppConfig from './dashboards/project/ProjectDashboardAppConfig';
 // import ECommerceAppConfig from './e-commerce/ECommerceAppConfig';
@@ -18,9 +17,10 @@ import ContactsAppConfig from "./contacts/ContactsAppConfig";
 // import ApplicabAppConfig from './Applicab/ApplicabAppConfig';
 
 // *********************** CLIENT DASHBOARD *****************************************
-import MessageAppConfig from "./Messages/MessageAppConfig";
-import FaqAppConfig from "./FAQ/FaqAppConfig";
+// import MessageAppConfig from "./Messages/MessageAppConfig";
 import ClientDashboardAppConfig from "./ClientDashboard/ClientDashboardAppConfig";
+import ChatAppConfig from "./chat/ChatAppConfig";
+import FaqAppConfig from "./FAQ/FaqAppConfig";
 
 const appsConfigs = [
   DashboardAppConfig,
@@ -31,7 +31,6 @@ const appsConfigs = [
   // MailAppConfig,
   // TodoAppConfig,
   // FileManagerAppConfig,
-  // ChatAppConfig,
   // ECommerceAppConfig,
   // ScrumboardAppConfig,
   // AcademyAppConfig,
@@ -43,8 +42,9 @@ const appsConfigs = [
 
   //*********client Dashboard*********
   ClientDashboardAppConfig,
-  MessageAppConfig,
-  FaqAppConfig
+  // MessageAppConfig,
+  ChatAppConfig,
+  FaqAppConfig,
 ];
 
 export default appsConfigs;

@@ -24,7 +24,7 @@ import EtapesTable from "./EtapesComponent/EtapesTable";
 import EtapesMultiSelectMenu from "./EtapesComponent/EtapesMultiSelectMenu";
 import {
   openNewContactDialog,
-  setDossiersSearchText
+  setDossiersSearchText,
 } from "app/store/slices/dossiersSlice";
 
 function EtapeTab(props) {
@@ -40,33 +40,33 @@ function EtapeTab(props) {
 
   const rowsData1 = [
     {
-      actionType: "Tous"
+      actionType: "Tous",
     },
     {
       icon: (
         <Icon
           style={{
             color: "#C4C4C4",
-            fontSize: "large"
+            fontSize: "large",
           }}
         >
           label
         </Icon>
       ),
-      actionType: "A prévoir"
+      actionType: "A prévoir",
     },
     {
       icon: (
         <Icon
           style={{
             color: "#1BD7EF",
-            fontSize: "large"
+            fontSize: "large",
           }}
         >
           label
         </Icon>
       ),
-      actionType: "A faire"
+      actionType: "A faire",
     },
 
     {
@@ -74,27 +74,27 @@ function EtapeTab(props) {
         <Icon
           style={{
             color: "#78C5A0",
-            fontSize: "large"
+            fontSize: "large",
           }}
         >
           label
         </Icon>
       ),
-      actionType: "Fait"
+      actionType: "Fait",
     },
     {
       icon: (
         <Icon
           style={{
             color: "#E5E5E5",
-            fontSize: "large"
+            fontSize: "large",
           }}
         >
           label
         </Icon>
       ),
-      actionType: "Archivé"
-    }
+      actionType: "Archivé",
+    },
   ];
 
   const rowsData2 = [
@@ -103,40 +103,40 @@ function EtapeTab(props) {
         <Icon
           style={{
             color: "#BABABF",
-            fontSize: "large"
+            fontSize: "large",
           }}
         >
           near_me
         </Icon>
       ),
-      actionType: "Message envoyé"
+      actionType: "Message envoyé",
     },
     {
       icon: (
         <Icon
           style={{
             color: "#BABABF",
-            fontSize: "large"
+            fontSize: "large",
           }}
         >
           access_time
         </Icon>
       ),
-      actionType: "En attente"
+      actionType: "En attente",
     },
     {
       icon: (
         <Icon
           style={{
             color: "#BABABF",
-            fontSize: "large"
+            fontSize: "large",
           }}
         >
           text_snippet
         </Icon>
       ),
-      actionType: "Brouillon"
-    }
+      actionType: "Brouillon",
+    },
   ];
   const drawer = (
     <div>
@@ -165,7 +165,7 @@ function EtapeTab(props) {
               <Icon
                 style={{
                   color: "#BABABF",
-                  fontSize: "large"
+                  fontSize: "large",
                 }}
               >
                 delete
@@ -187,17 +187,16 @@ function EtapeTab(props) {
 
   const [filteredData, setFilteredData] = useState(null);
   const mainTheme = useSelector(selectMainTheme);
-  const [rowId, setRowId] = useState(null);
 
   const CustomTooltip = styled(({ className, ...props }) => (
     <Tooltip {...props} arrow classes={{ popper: className }} />
   ))(({ theme }) => ({
     [`& .${tooltipClasses.arrow}`]: {
-      color: "#252E3E"
+      color: "#252E3E",
     },
     [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: "#252E3E"
-    }
+      backgroundColor: "#252E3E",
+    },
   }));
 
   const columns = useMemo(
@@ -219,22 +218,22 @@ function EtapeTab(props) {
         },
         className: "justify-center",
         width: 64,
-        sortable: false
+        sortable: false,
       },
       {
         Header: "Num",
         accessor: "company",
-        sortable: true
+        sortable: true,
       },
       {
         Header: "Étape",
         accessor: "lastName",
-        sortable: true
+        sortable: true,
       },
       {
         Header: "Date",
         accessor: "createddata",
-        sortable: true
+        sortable: true,
       },
       {
         Header: "Statut",
@@ -245,7 +244,7 @@ function EtapeTab(props) {
             <Icon style={{ color: "#1BD7EF", fontSize: "large" }}>label</Icon>A
             prévoir
           </div>
-        )
+        ),
       },
       {
         Header: "Notifié",
@@ -259,8 +258,8 @@ function EtapeTab(props) {
               </Icon>
             </CustomTooltip>
           </div>
-        )
-      }
+        ),
+      },
     ],
 
     [dispatch]
@@ -314,7 +313,7 @@ function EtapeTab(props) {
                     fullWidth
                     value={searchText}
                     inputProps={{
-                      "aria-label": "Search"
+                      "aria-label": "Search",
                     }}
                     onChange={(ev) => dispatch(setDossiersSearchText(ev))}
                   />
