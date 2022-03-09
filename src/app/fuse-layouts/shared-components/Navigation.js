@@ -12,7 +12,7 @@ function Navigation(props) {
     data: { client_type }
   } = useSelector(({ auth }) => auth.user);
   const navigation = navigationConfig.filter((config) =>
-    config.access.includes(client_type.client_type)
+    config.access.includes(client_type?.client_type)
   );
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down("lg"));
