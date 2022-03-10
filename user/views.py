@@ -279,8 +279,16 @@ class userUpdateViewSet(generics.RetrieveUpdateDestroyAPIView):
         return Response(res.success_payload(), status=status.HTTP_200_OK)
 
 
+import os
+
+
 class uploadUserCsvViewSet(APIView):
     def post(self, request):
+
+        if str(request.data['csv'])[-3:] != 'csv':
+            res = ResponseInfo({}, "Please use csv file for importing contacts", False, status.HTTP_204_NO_CONTENT)
+            return Response(res.success_payload(), status=status.HTTP_204_NO_CONTENT)
+
         csvData = pandas.read_csv(request.data['csv'])
         if len(csvData) > 50:
             res = ResponseInfo({}, "Cannot import more than 50 records", False, status.HTTP_200_OK)

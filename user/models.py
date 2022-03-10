@@ -85,10 +85,8 @@ class User(AbstractUser):
     email = CIEmailField(_('email address'), unique=True, blank=True, null=True)
     password = models.CharField(max_length=256)
     first_name = models.CharField(max_length=40,
-                                  validators=[RegexValidator(r'^[a-zA-Z ]*$', 'Only characters are allowed.')],
                                   help_text='Enter name', blank=True, null=True)
     last_name = models.CharField(max_length=40,
-                                 validators=[RegexValidator(r'^[a-zA-Z ]*$', 'Only characters are allowed.')],
                                  help_text='Enter name', blank=True, null=True)
     phone_number = models.CharField(max_length=40,
                                     validators=[RegexValidator(r'^[0-9 ]*$', 'Only numbers are allowed.')],
