@@ -11,25 +11,8 @@ import { useSelector, useDispatch } from "react-redux";
 import DatePicker from "@mui/lab/DatePicker";
 
 import Types from "app/main/constants/Types";
+import Statut from "app/main/constants/Statut";
 import { getDossiers } from "app/store/slices/dossiersSlice";
-
-const status = [
-  {
-    id: 1,
-    value: "A ouvrir",
-    label: "A ouvrir"
-  },
-  {
-    id: 2,
-    value: "Ouvert",
-    label: "Ouvert"
-  },
-  {
-    id: 3,
-    value: "Clôturé",
-    label: "Clôturé"
-  }
-];
 
 export default function Filters() {
   const dispatch = useDispatch();
@@ -131,7 +114,7 @@ export default function Filters() {
         <div className="col-md-4 col-lg-4 col-12 col-xl-2 mb-3 mb-xl-0">
           <Autocomplete
             className="autocomplete"
-            options={status}
+            options={Statut}
             getOptionLabel={(option) => {
               return option.value;
             }}
