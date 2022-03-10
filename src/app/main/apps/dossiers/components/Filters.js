@@ -231,8 +231,16 @@ export default function Filters() {
             <TextField
               value={allFields.tags}
               onChange={(e) => {
-                setAllFields({ ...allFields, tags: e.target.value });
-                dispatch(getDossiers({ ...allFields, tags: e.target.value }));
+                setAllFields({
+                  ...allFields,
+                  tags: e.target.value ? [e.target.value] : ""
+                });
+                dispatch(
+                  getDossiers({
+                    ...allFields,
+                    tags: e.target.value ? [e.target.value] : ""
+                  })
+                );
               }}
               InputLabelProps={{ style: { color: "#FFFFFF" } }}
               style={{ color: "#FFFFFF" }}
