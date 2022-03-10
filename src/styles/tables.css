@@ -171,6 +171,9 @@ table.simple.borderless thead tr th {
 .faq-search{
   width: 400px;
 }
+.autocomplete label {
+  color: #ffffff !important;
+}
 
 @media screen and (max-width: 767px) {
   .caseManagementTabs
@@ -189,10 +192,14 @@ table.simple.borderless thead tr th {
   .senderTime {
 	margin: -2rem 0rem 0rem 28rem;
   }
+  .faq-search{
+  width: auto;
+  }
+  .faqcard1-txt{
+    text-align: center;
+  }
+  .faqcard2-txt{
+    text-align: center;
+  }
 }
-.MuiAutocomplete-popper {
 
-}
-.autocomplete label {
-  color: #ffffff !important;
-}

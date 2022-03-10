@@ -86,20 +86,20 @@ function FaqApp() {
 
   return (
     <Root className="w-full flex flex-col flex-auto">
-      <div className="FaqPage-header flex flex-col shrink-0 items-center justify-center text-center p-16 sm:p-60 h-200 sm:h-auto">
+      <div className="FaqPage-header flex flex-col shrink-0 items-center justify-center text-center">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0, transition: { delay: 0.1 } }}
         >
           <Typography
             color="inherit"
-            className="text-26 sm:text-40 font-bold tracking-tight"
+            className="text-32 sm:text-40 font-bold tracking-tight"
           >
             Foire aux questions
           </Typography>
         </motion.div>
 
-        <Paper className="flex shrink-0 items-center h-56 mt-16 sm:mt-32 rounded-full shadow faq-search">
+        <Paper className="flex shrink-0 items-center h-56 my-4 rounded-full shadow faq-search">
           <Icon color="action" className="mx-16">
             search
           </Icon>
@@ -155,7 +155,7 @@ function FaqApp() {
                   }}
                   variant="subtitle1"
                   color="#ffffff"
-                  className="mt-0 pl-24 text-24 sm:mt-16 mx-auto max-w-912 font-semibold"
+                  className="mt-0 sm:pl-24 text-20 sm:text-24 sm:mt-16 mx-auto max-w-912 font-semibold faqcard1-txt"
                 >
                   Questions de procédure
                 </Typography>
@@ -220,7 +220,7 @@ function FaqApp() {
                   }}
                   variant="subtitle1"
                   color="#ffffff"
-                  className="mt-0 pl-24 text-24 sm:mt-16 mx-auto max-w-912 font-semibold"
+                  className="mt-0 sm:pl-24 text-20 sm:text-24 sm:mt-16 mx-auto max-w-912 font-semibold faqcard2-txt"
                 >
                   Questions de vocabulaire
                 </Typography>
