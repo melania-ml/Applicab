@@ -57,33 +57,36 @@ function DossiersList(props) {
       },
       {
         Header: "Nom",
-        accessor: "company",
+        accessor: "case_name",
         sortable: true
       },
       {
         Header: "Procédure",
-        accessor: "nickname",
+        accessor: "procedure",
         sortable: true
       },
       {
         Header: "Type",
-        accessor: "name",
+        accessor: "type",
         className: "font-medium",
         sortable: true
       },
       {
         Header: "Nature",
-        accessor: "lastName",
+        accessor: "nature",
+        Cell: ({ row }) => {
+          return <span>{row.original.nature?.nature_title}</span>;
+        },
         sortable: true
       },
       {
         Header: "Date de création",
-        accessor: "createddata",
+        accessor: "created_date",
         sortable: true
       },
       {
         Header: "Statut",
-        accessor: "jobTitle",
+        accessor: "status",
         sortable: true
       },
       {

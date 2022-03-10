@@ -66,18 +66,25 @@ export const getDossiers = createAsyncThunk(
   "dossiersApp/dossiers/getDossiers",
   async (routeParams, { dispatch, getState }) => {
     dispatch(setIsLoading(true));
-    routeParams = routeParams || getState().dossiersApp.dossiers.routeParams;
-    const response = await axios.post("api/caseManagement/getCasesByLawyer", {
-      query: {
-        // client_type: routeParams.type,
-        // title: routeParams.title,
-        // status: routeParams.status,
-        // tags__contains: routeParams.tags
+    const id = getState().auth.user.data.id;
+    routeParams = routeParams || getState().dossiers.routeParams;
+    const response = await axios.post(
+      "api/common/filterData/caseManagement/caseManagement",
+      {
+        query: {
+          lawyer_id: id,
+          procedure: routeParams.procedure,
+          type: routeParams.type,
+          status: routeParams.status,
+          nature: routeParams.nature,
+          created_date: routeParams.dateOfCreation,
+          tags__contains: routeParams.tags
+        }
       }
-    });
+    );
     const data = await response.data;
-    dispatch(setDossiers(data.data));
-    dispatch(setIsLoading(false));
+    await dispatch(setDossiers(data.data));
+    await dispatch(setIsLoading(false));
     return { data: data.data, routeParams };
   }
 );

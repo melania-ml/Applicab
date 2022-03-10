@@ -7,12 +7,11 @@ import {
   TextField,
   Autocomplete
 } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import DatePicker from "@mui/lab/DatePicker";
 
-import Natures from "app/main/constants/Natures";
 import Types from "app/main/constants/Types";
-import Procedures from "app/main/constants/Procedures";
+import { getDossiers } from "app/store/slices/dossiersSlice";
 
 const status = [
   {
@@ -33,6 +32,7 @@ const status = [
 ];
 
 export default function Filters() {
+  const dispatch = useDispatch();
   const { natures, procedures } = useSelector(({ dossiers }) => dossiers);
   const [allFields, setAllFields] = useState({
     procedure: "",
@@ -54,17 +54,11 @@ export default function Filters() {
             className="autocomplete"
             options={procedures}
             getOptionLabel={(option) => {
-              if (typeof option === "string") {
-                return option;
-              }
-              if (option.inputValue) {
-                return option.inputValue;
-              }
               return option.procedure_type;
             }}
             onChange={(event, newValue) => {
               const typeObj = procedures.find(
-                (type) => type.value === newValue?.value
+                (type) => type.id === newValue?.id
               );
               if (typeof newValue === "string") {
                 setAllFields({ ...allFields, procedure: newValue });
@@ -84,6 +78,9 @@ export default function Filters() {
                   procedure: typeObj?.id
                 });
               }
+              dispatch(
+                getDossiers({ ...allFields, procedure: typeObj?.id || "" })
+              );
             }}
             inputValue={allFields.inputProcedure}
             onInputChange={(event, newInputValue) => {
@@ -99,18 +96,9 @@ export default function Filters() {
             className="autocomplete"
             options={Types}
             getOptionLabel={(option) => {
-              if (typeof option === "string") {
-                return option;
-              }
-              if (option.inputValue) {
-                return option.inputValue;
-              }
               return option.value;
             }}
             onChange={(event, newValue) => {
-              const typeObj = Types.find(
-                (type) => type.value === newValue?.value
-              );
               if (typeof newValue === "string") {
                 setAllFields({ ...allFields, type: newValue });
               } else if (newValue && newValue.inputValue) {
@@ -126,9 +114,12 @@ export default function Filters() {
               } else {
                 setAllFields({
                   ...allFields,
-                  type: typeObj?.id
+                  type: newValue?.value
                 });
               }
+              dispatch(
+                getDossiers({ ...allFields, type: newValue?.value || "" })
+              );
             }}
             inputValue={allFields.inputType}
             onInputChange={(event, newInputValue) => {
@@ -142,18 +133,9 @@ export default function Filters() {
             className="autocomplete"
             options={status}
             getOptionLabel={(option) => {
-              if (typeof option === "string") {
-                return option;
-              }
-              if (option.inputValue) {
-                return option.inputValue;
-              }
               return option.value;
             }}
             onChange={(event, newValue) => {
-              const typeObj = status.find(
-                (type) => type.value === newValue?.value
-              );
               if (typeof newValue === "string") {
                 setAllFields({ ...allFields, status: newValue });
               } else if (newValue && newValue.inputValue) {
@@ -169,9 +151,12 @@ export default function Filters() {
               } else {
                 setAllFields({
                   ...allFields,
-                  status: typeObj?.id
+                  status: newValue.value
                 });
               }
+              dispatch(
+                getDossiers({ ...allFields, status: newValue?.value || "" })
+              );
             }}
             inputValue={allFields.inputStatus}
             onInputChange={(event, newInputValue) => {
@@ -185,17 +170,11 @@ export default function Filters() {
             className="autocomplete"
             options={natures}
             getOptionLabel={(option) => {
-              if (typeof option === "string") {
-                return option;
-              }
-              if (option.inputValue) {
-                return option.inputValue;
-              }
               return option.nature_title;
             }}
             onChange={(event, newValue) => {
-              const typeObj = natures.find(
-                (type) => type.value === newValue?.value
+              const natureObj = natures.find(
+                (type) => type.id === newValue?.id
               );
               if (typeof newValue === "string") {
                 setAllFields({ ...allFields, nature: newValue });
@@ -212,9 +191,12 @@ export default function Filters() {
               } else {
                 setAllFields({
                   ...allFields,
-                  nature: typeObj?.id
+                  nature: natureObj?.id
                 });
               }
+              dispatch(
+                getDossiers({ ...allFields, nature: natureObj?.id || "" })
+              );
             }}
             inputValue={allFields.inputNature}
             onInputChange={(event, newInputValue) => {
@@ -230,6 +212,9 @@ export default function Filters() {
               value={allFields.dateOfCreation}
               onChange={(newValue) => {
                 setAllFields({ ...allFields, dateOfCreation: newValue });
+                dispatch(
+                  getDossiers({ ...allFields, dateOfCreation: newValue })
+                );
               }}
               renderInput={(params) => (
                 <TextField
@@ -245,9 +230,10 @@ export default function Filters() {
           <FormControl className="w-full" variant="outlined">
             <TextField
               value={allFields.tags}
-              onChange={(e) =>
-                setAllFields({ ...allFields, tags: e.target.value })
-              }
+              onChange={(e) => {
+                setAllFields({ ...allFields, tags: e.target.value });
+                dispatch(getDossiers({ ...allFields, tags: e.target.value }));
+              }}
               InputLabelProps={{ style: { color: "#FFFFFF" } }}
               style={{ color: "#FFFFFF" }}
               className=""
