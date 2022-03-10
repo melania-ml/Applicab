@@ -1,18 +1,13 @@
 import { useState } from "react";
-import {
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  TextField,
-  Autocomplete
-} from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import DatePicker from "@mui/lab/DatePicker";
 
 import Types from "app/main/constants/Types";
 import Statut from "app/main/constants/Statut";
 import { getDossiers } from "app/store/slices/dossiersSlice";
+
+//material-ui
+import { FormControl, TextField, Autocomplete } from "@mui/material";
+import DatePicker from "@mui/lab/DatePicker";
 
 export default function Filters() {
   const dispatch = useDispatch();
