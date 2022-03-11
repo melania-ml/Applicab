@@ -4,15 +4,23 @@ import fuse from "./fuse";
 import i18n from "./i18nSlice";
 import contacts from "./slices/contactsSlice";
 import dossiers from "./slices/dossiersSlice";
+import verifyEmail from "./slices/verifyEmailSlice";
+import resetPassword from "./slices/resetPasswordSlice";
+import forgotPassword from "./slices/forgotPasswordSlice";
+import createPassword from "./slices/createPasswordSlice";
 
 const createReducer = (asyncReducers) => (state, action) => {
   const combinedReducer = combineReducers({
+    ...asyncReducers,
     auth,
     fuse,
     i18n,
-    ...asyncReducers,
     contacts,
-    dossiers
+    dossiers,
+    verifyEmail,
+    resetPassword,
+    forgotPassword,
+    createPassword
   });
 
   /*

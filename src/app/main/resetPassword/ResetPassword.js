@@ -19,8 +19,8 @@ import * as yup from "yup";
 import history from "@history";
 import { yupResolver } from "@hookform/resolvers/yup";
 import _ from "@lodash";
-import reducer from "./store";
-import { callResetPassword } from "./store/resetPasswordSlice";
+import reducer from "app/store";
+import { callResetPassword } from "app/store/slices/resetPasswordSlice";
 
 const Root = styled("div")(({ theme }) => ({
   background: `linear-gradient(to right, ${

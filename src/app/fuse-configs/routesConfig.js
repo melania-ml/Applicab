@@ -1,7 +1,6 @@
 import FuseUtils from "@fuse/utils";
 import appsConfigs from "app/main/apps/appsConfigs";
 import LoginConfig from "app/main/login/LoginConfig";
-import LogoutConfig from "app/main/logout/LogoutConfig";
 import ForgotPasswordConfig from "app/main/forgotPassword/ForgotPasswordConfig";
 import ResetPasswordConfig from "app/main/resetPassword/ResetPasswordConfig";
 import VerifyEmailConfig from "app/main/verifyEmail/VerifyEmailConfig";
@@ -11,13 +10,11 @@ import { Navigate } from "react-router-dom";
 
 const routeConfigs = [
   ...appsConfigs,
-  LogoutConfig,
   LoginConfig,
   ForgotPasswordConfig,
   ResetPasswordConfig,
   VerifyEmailConfig,
-  CreatePasswordConfig,
-  LogoutConfig
+  CreatePasswordConfig
 ];
 
 const routes = [

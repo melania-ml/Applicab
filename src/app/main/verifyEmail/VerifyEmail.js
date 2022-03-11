@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import withReducer from "app/store/withReducer";
-import reducer from "./store";
+import reducer from "app/store";
 import history from "@history";
 import OTPInput from "otp-input-react";
 
@@ -11,7 +10,10 @@ import { styled, darken } from "@mui/material/styles";
 import { Typography, Button, Card, CardContent } from "@mui/material";
 import { motion } from "framer-motion";
 
-import { callVerifyEmail, callResendOTP } from "./store/verifyEmailSlice";
+import {
+  callVerifyEmail,
+  callResendOTP
+} from "app/store/slices/verifyEmailSlice";
 
 const Root = styled("div")(({ theme }) => ({
   background: `linear-gradient(to right, ${

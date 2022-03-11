@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import _ from "@lodash";
 import history from "@history";
 import withReducer from "app/store/withReducer";
-import reducer from "./store";
+import reducer from "app/store";
 
 //material-ui
 import { styled, darken } from "@mui/material/styles";
@@ -22,7 +22,7 @@ import {
 } from "@mui/material";
 import { motion } from "framer-motion";
 
-import { callCreatePassword } from "./store/createPasswordSlice";
+import { callCreatePassword } from "../../store/slices/createPasswordSlice";
 
 const Root = styled("div")(({ theme }) => ({
   background: `linear-gradient(to right, ${
