@@ -64,7 +64,8 @@ function DossiersList(props) {
         Header: "Procédure",
         accessor: "procedure",
         Cell: ({ row }) => {
-          return <span>{row.original.procedure?.procedure_type}</span>;
+          const procedure = row.original.procedure?.procedure_type;
+          return <span>{procedure.split("(").pop().split(")")[0]}</span>;
         },
         sortable: true
       },
@@ -78,7 +79,6 @@ function DossiersList(props) {
         Header: "Nature",
         accessor: "nature",
         Cell: ({ row }) => {
-          debugger;
           return <span>{row.original.nature?.nature_title}</span>;
         },
         sortable: true

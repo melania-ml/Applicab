@@ -1,5 +1,7 @@
 import { useSelector } from "react-redux";
-import moment from "moment";
+import { getFormattedDateTime } from "app/main/common/functions/getFormattedDateTime";
+
+//material-ui
 import { AppBar, Avatar, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
@@ -44,7 +46,10 @@ function UserNavbarHeader(props) {
         color="inherit"
       >
         Dernière connexion : <br />
-        {moment(user.data.last_login).utc().format("DD-MM-YYYY HH:mm:ss")}
+        {getFormattedDateTime({
+          date: user.data.last_login,
+          format: "DD-MM-YYYY HH:mm:ss"
+        })}
       </Typography>
       <div className="flex items-center justify-center absolute bottom-0 -mb-44">
         <Avatar
