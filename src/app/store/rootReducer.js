@@ -7,6 +7,7 @@ import verifyEmail from "./slices/verifyEmailSlice";
 import resetPassword from "./slices/resetPasswordSlice";
 import forgotPassword from "./slices/forgotPasswordSlice";
 import createPassword from "./slices/createPasswordSlice";
+import etapes from "./slices/etapesSlice";
 
 const createReducer = (asyncReducers) => (state, action) => {
   const combinedReducer = combineReducers({
@@ -18,7 +19,8 @@ const createReducer = (asyncReducers) => (state, action) => {
     verifyEmail,
     resetPassword,
     forgotPassword,
-    createPassword
+    createPassword,
+    etapes
   });
   return combinedReducer(state, action);
 };

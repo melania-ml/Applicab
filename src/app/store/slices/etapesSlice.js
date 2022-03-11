@@ -1,17 +1,16 @@
 import {
   createSlice,
   createAsyncThunk,
-  createEntityAdapter,
+  createEntityAdapter
 } from "@reduxjs/toolkit";
 import axios from "axios";
-import { getUserData } from "./userSlice";
 
 export const getContacts = createAsyncThunk(
   "contactsApp/contacts/getContacts",
   async (routeParams, { getState }) => {
     routeParams = routeParams || getState().contactsApp.contacts.routeParams;
     const response = await axios.get("/api/contacts-app/contacts", {
-      params: routeParams,
+      params: routeParams
     });
     const data = await response.data;
 
@@ -23,7 +22,7 @@ export const addContact = createAsyncThunk(
   "contactsApp/contacts/addContact",
   async (contact, { dispatch, getState }) => {
     const response = await axios.post("/api/contacts-app/add-contact", {
-      contact,
+      contact
     });
     const data = await response.data;
 
@@ -37,7 +36,7 @@ export const updateContact = createAsyncThunk(
   "contactsApp/contacts/updateContact",
   async (contact, { dispatch, getState }) => {
     const response = await axios.post("/api/contacts-app/update-contact", {
-      contact,
+      contact
     });
     const data = await response.data;
 
@@ -74,8 +73,6 @@ export const toggleStarredContact = createAsyncThunk(
     );
     const data = await response.data;
 
-    dispatch(getUserData());
-
     dispatch(getContacts());
 
     return data;
@@ -90,8 +87,6 @@ export const toggleStarredContacts = createAsyncThunk(
       { contactIds }
     );
     const data = await response.data;
-
-    dispatch(getUserData());
 
     dispatch(getContacts());
 
@@ -108,8 +103,6 @@ export const setContactsStarred = createAsyncThunk(
     );
     const data = await response.data;
 
-    dispatch(getUserData());
-
     dispatch(getContacts());
 
     return data;
@@ -124,8 +117,6 @@ export const setContactsUnstarred = createAsyncThunk(
       { contactIds }
     );
     const data = await response.data;
-
-    dispatch(getUserData());
 
     dispatch(getContacts());
 
@@ -146,10 +137,10 @@ const EtapesSlice = createSlice({
     contactDialog: {
       type: "new",
       props: {
-        open: false,
+        open: false
       },
-      data: null,
-    },
+      data: null
+    }
   }),
   reducers: {
     resetDossier: () => null,
@@ -157,44 +148,44 @@ const EtapesSlice = createSlice({
       reducer: (state, action) => {
         state.searchText = action.payload;
       },
-      prepare: (event) => ({ payload: event.target.value || "" }),
+      prepare: (event) => ({ payload: event.target.value || "" })
     },
     openNewContactDialog: (state, action) => {
       state.contactDialog = {
         type: "new",
         props: {
-          open: true,
+          open: true
         },
-        data: null,
+        data: null
       };
     },
     closeNewContactDialog: (state, action) => {
       state.contactDialog = {
         type: "new",
         props: {
-          open: false,
+          open: false
         },
-        data: null,
+        data: null
       };
     },
     openEditContactDialog: (state, action) => {
       state.contactDialog = {
         type: "edit",
         props: {
-          open: true,
+          open: true
         },
-        data: action.payload,
+        data: action.payload
       };
     },
     closeEditContactDialog: (state, action) => {
       state.contactDialog = {
         type: "edit",
         props: {
-          open: false,
+          open: false
         },
-        data: null,
+        data: null
       };
-    },
+    }
   },
   extraReducers: {
     [updateContact.fulfilled]: contactsAdapter.upsertOne,
@@ -208,8 +199,8 @@ const EtapesSlice = createSlice({
       contactsAdapter.setAll(state, data);
       state.routeParams = routeParams;
       state.searchText = "";
-    },
-  },
+    }
+  }
 });
 
 export const {
@@ -218,7 +209,7 @@ export const {
   openNewContactDialog,
   closeNewContactDialog,
   openEditContactDialog,
-  closeEditContactDialog,
+  closeEditContactDialog
 } = EtapesSlice.actions;
 
 export default EtapesSlice.reducer;

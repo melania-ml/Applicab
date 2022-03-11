@@ -25,7 +25,7 @@ import {
   addContact,
   closeNewContactDialog,
   closeEditContactDialog
-} from "../../store/etapesSlice";
+} from "app/store/slices/etapesSlice";
 
 const tags = [];
 

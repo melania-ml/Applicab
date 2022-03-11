@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import EtapesMultiSelectMenu from "./EtapesMultiSelectMenu";
 import EtapesTable from "./EtapesTable";
 
-import { selectContacts } from "../store/etapesSlice";
+import { selectContacts } from "app/store/slices/etapesSlice";
 import { openEditContactDialog } from "app/main/store/dossiersSlice";
 
 function EtapesList(props) {

@@ -15,7 +15,7 @@ import { selectMainTheme } from "app/store/fuse/settingsSlice";
 import {
   setContactsSearchText,
   openNewContactDialog
-} from "../store/etapesSlice";
+} from "app/store/slices/etapesSlice";
 import Filters from "./Filters";
 import { Link } from "react-router-dom";
 
