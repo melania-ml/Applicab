@@ -66,7 +66,7 @@ function DossiersList(props) {
         accessor: "procedure",
         Cell: ({ row }) => {
           const procedure = row.original.procedure?.procedure_type;
-          return <span>{procedure.split("(").pop().split(")")[0]}</span>;
+          return <span>{procedure?.split("(").pop().split(")")[0]}</span>;
         },
         sortable: true
       },
