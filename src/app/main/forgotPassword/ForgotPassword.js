@@ -6,6 +6,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import _ from "@lodash";
 import withReducer from "app/store/withReducer";
+import { motion } from "framer-motion";
 import reducer from "app/store";
 
 //material-ui
@@ -19,9 +20,8 @@ import {
   Card,
   CardContent
 } from "@mui/material";
-import { motion } from "framer-motion";
 
-import { callForgotPassword } from "../../store/slices/forgotPasswordSlice";
+import { callForgotPassword } from "app/store/slices/forgotPasswordSlice";
 
 const Root = styled("div")(({ theme }) => ({
   background: `linear-gradient(to right, ${
@@ -87,16 +87,14 @@ function ForgotPassword() {
     resolver: yupResolver(schema)
   });
   const dispatch = useDispatch();
-  const forgotPasswordState = useSelector(
-    ({ forgotPassword }) => forgotPassword.forgotPassword
-  );
+  const { success } = useSelector(({ forgotPassword }) => forgotPassword);
   const { isValid, dirtyFields, errors } = formState;
 
   useEffect(() => {
-    if (forgotPasswordState.success) {
+    if (success) {
       setIsConfirmationMessage(true);
     }
-  }, [forgotPasswordState]);
+  }, [success]);
 
   function onSubmit(model) {
     dispatch(callForgotPassword(model));

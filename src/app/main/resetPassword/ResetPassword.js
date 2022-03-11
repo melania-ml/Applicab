@@ -100,17 +100,15 @@ function ResetPassword(props) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const resetPasswordState = useSelector(
-    ({ resetPassword }) => resetPassword.resetPassword
-  );
+  const { success } = useSelector(({ resetPassword }) => resetPassword);
 
   useEffect(() => {
-    if (resetPasswordState.success) {
+    if (success) {
       history.push({
         pathname: "/login"
       });
     }
-  }, [resetPasswordState]);
+  }, [success]);
 
   const { control, formState, handleSubmit, reset, setError } = useForm({
     mode: "onChange",
