@@ -66,9 +66,7 @@ function VerifyEmail() {
   const searchParam = window.location.pathname.split("/")[2];
   const [isValid, setIsValid] = useState(false);
   const dispatch = useDispatch();
-  const verifyEmailState = useSelector(
-    ({ verifyEmail }) => verifyEmail.verifyEmail
-  );
+  const { success } = useSelector(({ verifyEmail }) => verifyEmail);
   function onSubmit() {
     dispatch(callVerifyEmail(otp));
   }
@@ -78,12 +76,12 @@ function VerifyEmail() {
   }
 
   useEffect(() => {
-    if (verifyEmailState.success) {
+    if (success) {
       history.push({
         pathname: "/createPassword"
       });
     }
-  }, [verifyEmailState]);
+  }, [success]);
 
   useEffect(() => {
     if (otp.length === 6) {
