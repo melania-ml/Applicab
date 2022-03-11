@@ -10,6 +10,7 @@ import { useMemo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DossiersMultiSelectMenu from "./DossiersMultiSelectMenu";
 import DossiersTable from "./DossiersTable";
+import { getFormattedDateTime } from "app/main/common/functions/getFormattedDateTime";
 
 import { selectDossiers } from "app/store/slices/dossiersSlice";
 
@@ -86,6 +87,16 @@ function DossiersList(props) {
       {
         Header: "Date de création",
         accessor: "created_date",
+        Cell: ({ row }) => {
+          return (
+            <span>
+              {getFormattedDateTime({
+                date: row.original.created_date,
+                format: "DD-MM-YYYY HH:mm:ss"
+              })}
+            </span>
+          );
+        },
         sortable: true
       },
       {
