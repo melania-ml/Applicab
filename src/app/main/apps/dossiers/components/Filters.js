@@ -8,6 +8,7 @@ import { getDossiers } from "app/store/slices/dossiersSlice";
 //material-ui
 import { FormControl, TextField, Autocomplete } from "@mui/material";
 import DatePicker from "@mui/lab/DatePicker";
+import { DesktopDatePicker, MobileDatePicker } from "@mui/lab";
 
 export default function Filters() {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ export default function Filters() {
     nature: "",
     inputNature: "",
     dateOfCreation: null,
-    tags: ""
+    tags: "",
   });
   return (
     <div className="bgm-10 for-res-flex-direction for-full-screen">
@@ -43,17 +44,17 @@ export default function Filters() {
               } else if (newValue && newValue.inputValue) {
                 setAllFields({
                   ...allFields,
-                  procedure: newValue.inputValue
+                  procedure: newValue.inputValue,
                 });
               } else if (!newValue) {
                 setAllFields({
                   ...allFields,
-                  procedure: ""
+                  procedure: "",
                 });
               } else {
                 setAllFields({
                   ...allFields,
-                  procedure: typeObj?.id
+                  procedure: typeObj?.id,
                 });
               }
               dispatch(
@@ -82,17 +83,17 @@ export default function Filters() {
               } else if (newValue && newValue.inputValue) {
                 setAllFields({
                   ...allFields,
-                  type: newValue.inputValue
+                  type: newValue.inputValue,
                 });
               } else if (!newValue) {
                 setAllFields({
                   ...allFields,
-                  type: ""
+                  type: "",
                 });
               } else {
                 setAllFields({
                   ...allFields,
-                  type: newValue?.value
+                  type: newValue?.value,
                 });
               }
               dispatch(
@@ -119,17 +120,17 @@ export default function Filters() {
               } else if (newValue && newValue.inputValue) {
                 setAllFields({
                   ...allFields,
-                  status: newValue.inputValue
+                  status: newValue.inputValue,
                 });
               } else if (!newValue) {
                 setAllFields({
                   ...allFields,
-                  status: ""
+                  status: "",
                 });
               } else {
                 setAllFields({
                   ...allFields,
-                  status: newValue.value
+                  status: newValue.value,
                 });
               }
               dispatch(
@@ -159,17 +160,17 @@ export default function Filters() {
               } else if (newValue && newValue.inputValue) {
                 setAllFields({
                   ...allFields,
-                  nature: newValue.inputValue
+                  nature: newValue.inputValue,
                 });
               } else if (!newValue) {
                 setAllFields({
                   ...allFields,
-                  nature: ""
+                  nature: "",
                 });
               } else {
                 setAllFields({
                   ...allFields,
-                  nature: natureObj?.id
+                  nature: natureObj?.id,
                 });
               }
               dispatch(
@@ -185,8 +186,10 @@ export default function Filters() {
         </div>
         <div className="col-md-4 col-lg-4 col-12 col-xl-2 mb-3 mb-xl-0">
           <FormControl className="w-full for-date" variant="outlined">
-            <DatePicker
+            <MobileDatePicker
               label="Date de création"
+              showToolbar={false}
+              clearable={true}
               value={allFields.dateOfCreation}
               onChange={(newValue) => {
                 setAllFields({ ...allFields, dateOfCreation: newValue });
@@ -211,12 +214,12 @@ export default function Filters() {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  tags: e.target.value ? [e.target.value] : ""
+                  tags: e.target.value ? [e.target.value] : "",
                 });
                 dispatch(
                   getDossiers({
                     ...allFields,
-                    tags: e.target.value ? [e.target.value] : ""
+                    tags: e.target.value ? [e.target.value] : "",
                   })
                 );
               }}

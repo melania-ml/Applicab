@@ -5,15 +5,15 @@ const FaqApp = lazy(() => import("./FaqApp"));
 const FaqAppConfig = {
   settings: {
     layout: {
-      config: {}
-    }
+      config: {},
+    },
   },
   routes: [
     {
       path: "apps/faq",
-      element: <FaqApp />
-    }
-  ]
+      element: <FaqApp />,
+    },
+  ],
 };
 
 export default FaqAppConfig;

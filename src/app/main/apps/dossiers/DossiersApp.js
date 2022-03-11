@@ -11,7 +11,7 @@ import reducer from "app/store";
 import {
   getDossiers,
   getNatures,
-  getProcedures
+  getProcedures,
 } from "app/store/slices/dossiersSlice";
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
@@ -19,67 +19,67 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
     minHeight: "auto",
     height: "auto",
     [theme.breakpoints.up("lg")]: {
-      height: 140
-    }
+      height: 140,
+    },
   },
   "& .FusePageSimple-wrapper": {
-    minHeight: "70vh"
+    minHeight: "70vh",
   },
   "& .FusePageSimple-contentWrapper": {
     padding: 0,
     [theme.breakpoints.up("sm")]: {
       padding: 24,
-      height: "100%"
-    }
+      height: "100%",
+    },
   },
   "& .FusePageSimple-content": {
     display: "flex",
     flexDirection: "column",
-    height: "100%"
+    height: "100%",
   },
   "& .FusePageSimple-sidebar": {
     width: 256,
-    border: 0
+    border: 0,
   },
   "& .for-res-flex-direction": {
     "@media (max-width: 767px)": {
-      flexDirection: "column"
-    }
+      flexDirection: "column",
+    },
   },
-  "& .for-date label": {
-    paddingRight: "25px"
-  },
+  // "& .for-date label": {
+  //   paddingRight: "25px"
+  // },
   "& .search-bar-dossier": {
     width: 250,
     borderRadius: "5px",
     "@media (max-width: 767px)": {
       width: "100%",
-      marginBottom: 10
-    }
+      marginBottom: 10,
+    },
   },
   "& .for-full-screen": {
     marginBottom: "15px",
     "@media (min-width: 1920px)": {
       width: "60%",
-      marginBottom: "0px"
-    }
+      marginBottom: "0px",
+    },
   },
   "& .for-full-scren-flex": {
     "@media (min-width: 1920px)": {
-      display: "flex"
-    }
+      display: "flex",
+    },
   },
   "& .full-screen-secondwidth": {
     "@media (min-width: 1920px)": {
-      width: "40%"
-    }
+      width: "40%",
+    },
   },
   "& .full-screen-justify-end": {
     "@media (min-width: 1920px)": {
       justifyContent: "end",
-      marginRight: 30
-    }
-  }
+      marginRight: 30,
+    },
+  },
 }));
 
 function DossiersApp(props) {
