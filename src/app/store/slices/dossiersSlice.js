@@ -5,6 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 import { showMessage } from "app/store/fuse/messageSlice";
+import { getFormattedDateTime } from "app/main/common/functions/getFormattedDateTime";
 
 export const getNatures = () => async (dispatch) => {
   await axios
@@ -77,7 +78,12 @@ export const getDossiers = createAsyncThunk(
           type: routeParams.type,
           status: routeParams.status,
           nature: routeParams.nature,
-          created_date: routeParams.dateOfCreation,
+          created_date__date:
+            routeParams.dateOfCreation &&
+            getFormattedDateTime({
+              date: routeParams.dateOfCreation,
+              format: "YYYY-MM-DD"
+            }),
           tags__contains: routeParams.tags
         }
       }
