@@ -1,3 +1,4 @@
+import pandas
 from django.db.models import Q
 from django.shortcuts import render
 
@@ -56,18 +57,22 @@ class procedure(APIView):
             return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
 
 
-class caseManagement(APIView):
+class casesManagement(APIView):
     serializers_class = CaseSerializer
 
     def post(self, request):
         try:
+            if not request.data or "query" in request.data:
+                res = ResponseInfo([], SOMETHING_WENT_WRONG, False,
+                                   status.HTTP_204_NO_CONTENT)
+                return Response(res.errors_payload(), status=status.HTTP_204_NO_CONTENT)
             userId = request.user.id
             reqData = request.data
             reqData['lawyer_id'] = userId
 
             # Find Nature if exist add id if not create new.
-            natureData = Nature.objects.filter().first()
-            if nature:
+            natureData = Nature.objects.filter(nature_title=reqData['nature']).first()
+            if natureData:
                 reqData['nature'] = natureData.id
             else:
                 natureData = Nature.objects.create(nature_title=reqData['nature'], is_default=False, user_id=userId)
@@ -101,6 +106,27 @@ class caseManagement(APIView):
             self.serializers_class.Meta.depth = 1  # Adding depth value for ManyToMany fields
             serializer = self.serializers_class(caseInformation, many=True)
 
+            # preparing response
+            res = ResponseInfo(serializer.data, SUCCESS, True,
+                               status.HTTP_200_OK)
+            return Response(res.success_payload(), status=status.HTTP_200_OK)
+        except Exception as err:
+            res = ResponseInfo(err, SOMETHING_WENT_WRONG, False,
+                               status.HTTP_401_UNAUTHORIZED)
+            return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
+
+class filterCaseTask(APIView):
+    serializers_class = CaseTasSerializer
+
+    def post(self, request):
+        try:
+            reqData = request.data
+            # Remove blank data from dictionary
+            kwargs = dict((k, v) for k, v in reqData.items() if v)
+            taskList = caseManagementTask.objects.filter(**kwargs)
+
+            serializer = self.serializers_class(taskList, many=True)
             # preparing response
             res = ResponseInfo(serializer.data, SUCCESS, True,
                                status.HTTP_200_OK)

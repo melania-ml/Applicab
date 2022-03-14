@@ -75,3 +75,26 @@ class CaseManagement(CommonBase):
 
     class Meta:
         db_table = 'case_management'
+
+
+class caseManagementTask(CommonBase):
+    name = models.CharField(max_length=525, blank=True, null=True)
+    procedure_title = models.CharField(max_length=100, blank=True, null=True)
+    TJ = models.BooleanField(default=False)
+    JCP = models.BooleanField(default=False)
+    TCOM = models.BooleanField(default=False)
+    REFTJ = models.BooleanField(default=False)
+    REFTC = models.BooleanField(default=False)
+    CPH = models.BooleanField(default=False)
+    JAF = models.BooleanField(default=False)
+    CA = models.BooleanField(default=False)
+    is_default = models.BooleanField(default=False)
+    case_management_id = models.ForeignKey(CaseManagement,
+                                           blank=True, null=True,
+                                           on_delete=models.DO_NOTHING, db_column='case_management_id')
+
+    def __str__(self):
+        return '{}'.format(self.name)
+
+    class Meta:
+        db_table = 'case_management_task'

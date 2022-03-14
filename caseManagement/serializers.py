@@ -20,3 +20,10 @@ class CaseSerializer(serializers.ModelSerializer):
         model = CaseManagement
         fields = '__all__'
         depth = 0
+
+
+class CaseTasSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = caseManagementTask
+        fields = '__all__'
+        depth = 1
