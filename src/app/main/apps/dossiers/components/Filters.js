@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
+import "antd/dist/antd.css";
 import Types from "app/main/constants/Types";
 import Statut from "app/main/constants/Statut";
 import { getDossiers } from "app/store/slices/dossiersSlice";
 
 //material-ui
 import { FormControl, TextField, Autocomplete } from "@mui/material";
-import DatePicker from "@mui/lab/DatePicker";
-import { DesktopDatePicker, MobileDatePicker } from "@mui/lab";
+import { DatePicker } from "antd";
+// import DatePicker from "@mui/lab/DatePicker";
+// import { DesktopDatePicker, MobileDatePicker } from "@mui/lab";
 
 export default function Filters() {
   const dispatch = useDispatch();
@@ -186,8 +187,12 @@ export default function Filters() {
         </div>
         <div className="col-md-4 col-lg-4 col-12 col-xl-2 mb-3 mb-xl-0">
           <FormControl className="w-full for-date" variant="outlined">
-            <MobileDatePicker
-              label="Date de création"
+            <DatePicker
+              style={{ height: 48, borderRadius: 3 }}
+              size="large"
+              className="datepicker"
+              placeholder="Date de création"
+              // label="Date de création"
               showToolbar={false}
               clearable={true}
               value={allFields.dateOfCreation}

@@ -21,6 +21,7 @@
         "@mui/utils": "5.2.3",
         "@mui/x-data-grid": "5.2.0",
         "@reduxjs/toolkit": "1.7.0",
+        "antd": "^4.19.1",
         "apexcharts": "3.32.0",
         "auth0-lock": "11.31.1",
         "autosuggest-highlight": "3.2.0",

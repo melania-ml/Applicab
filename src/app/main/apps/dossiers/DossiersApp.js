@@ -46,9 +46,9 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
       flexDirection: "column",
     },
   },
-  // "& .for-date label": {
-  //   paddingRight: "25px"
-  // },
+  "& .for-date label": {
+    paddingRight: "25px",
+  },
   "& .search-bar-dossier": {
     width: 250,
     borderRadius: "5px",

@@ -201,5 +201,54 @@ table.simple.borderless thead tr th {
   .faqcard2-txt{
     text-align: center;
   }
+ }
+
+ .ant-picker-focused {
+  border-color: #e90505;
+  box-shadow: 0 0 0 2px rgb(21 21 21 / 20%);
+  border-right-width: 1px;
+  outline: 0;
+}
+.datepicker{
+  background: initial;
+  border-color: #b9b9b954;
+  height: 5rem;
 }
 
+.ant-picker.ant-picker-large.datepicker {
+  background-color: #202937;
+  border-color: #b9b9b954;
+}
+.ant-picker-suffix .anticon svg {
+  color: #fff;
+}
+.ant-picker-clear .anticon svg {
+  color: #fff;
+}
+.ant-picker-input > input {
+  color: #fff !important;
+}
+.ant-picker-clear {
+  background-color: #202937 !important;
+}
+.MuiFormControl-root .ant-picker {
+  border-color: rgba(255, 255, 255, 0.23);
+}
+.MuiFormControl-root .ant-picker:hover {
+  border-color: rgba(255, 255, 255, 1);
+}
+.MuiFormControl-root .ant-picker input::placeholder {
+  color: #fff;
+  font-size: 14px;
+  opacity: 1;
+}
+
+.MuiFormControl-root .ant-picker input:-ms-input-placeholder {
+  color: #fff;
+  font-size: 14px;
+}
+
+.MuiFormControl-root .ant-picker input::-ms-input-placeholder {
+  color: #fff;
+  font-size: 14px;
+}
