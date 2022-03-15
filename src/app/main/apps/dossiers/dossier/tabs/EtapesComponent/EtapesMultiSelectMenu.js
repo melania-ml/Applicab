@@ -51,26 +51,28 @@ function EtapesMultiSelectMenu(props) {
         onClose={closeSelectedContactsMenu}
       >
         <MenuList>
-          <MenuItem
+          <MenuItem style={{
+            flexDirection:"column"
+          }}
             onClick={() => {
               // dispatch(removeContacts(selectedContactIds));
               closeSelectedContactsMenu();
               setDeleteConfirmation(true);
             }}
           >
-            <div className="flex items-center w-full mb-2">
+            <div className="flex items-center w-full mb-3">
               <ListItemIcon className="min-w-40">
                 <Icon>delete</Icon>
               </ListItemIcon>
               <ListItemText primary="Supprimer" />
             </div>
-            <div className="flex items-center w-full mb-2">
+            <div className="flex items-center w-full mb-3">
               <ListItemIcon className="min-w-40">
                 <Icon>delete</Icon>
               </ListItemIcon>
               <ListItemText primary="Dupliquer" />
             </div>
-            <div className="flex items-center w-full mb-2 ml-2">
+            <div className="flex items-center w-full mb-3 ml-2">
               <ListItemIcon className="min-w-40">
                 <Icon
                   style={{
@@ -83,7 +85,7 @@ function EtapesMultiSelectMenu(props) {
               </ListItemIcon>
               <ListItemText primary="Marquer comme à prévoir" />
             </div>
-            <div className="flex items-center w-full mb-2 ml-2">
+            <div className="flex items-center w-full mb-3 ml-2">
               <ListItemIcon className="min-w-40">
                 <Icon
                   style={{
@@ -96,7 +98,7 @@ function EtapesMultiSelectMenu(props) {
               </ListItemIcon>
               <ListItemText primary="Marquer comme a faire" />
             </div>
-            <div className="flex items-center w-full mb-2 ml-2">
+            <div className="flex items-center w-full mb-3 ml-2">
               <ListItemIcon className="min-w-40">
                 <Icon
                   style={{
@@ -109,7 +111,7 @@ function EtapesMultiSelectMenu(props) {
               </ListItemIcon>
               <ListItemText primary="Marquer comme fait" />
             </div>
-            <div className="flex items-center w-full mb-2 ml-2">
+            <div className="flex items-center w-full mb-3 ml-2">
               <ListItemIcon className="min-w-40">
                 <Icon
                   style={{
