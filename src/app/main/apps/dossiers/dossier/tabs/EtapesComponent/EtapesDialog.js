@@ -17,7 +17,8 @@ import {
   InputLabel,
   Select,
   TextField,
-  Icon
+  Icon,
+  Stack,
 } from "@mui/material";
 import Statut from "app/main/constants/Statut";
 import Clients from "app/main/constants/Clients";
@@ -25,7 +26,7 @@ import {
   updateContact,
   addContact,
   closeNewContactDialog,
-  closeEditContactDialog
+  closeEditContactDialog,
 } from "app/store/slices/dossiersSlice";
 
 const tags = [];
@@ -59,12 +60,16 @@ function EtapesDialog(props) {
     department: "",
     nationality: "",
     nativeCity: "",
-    profession: ""
+    profession: "",
   });
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
   const dispatch = useDispatch();
   const contactDialog = useSelector(({ dossiers }) => dossiers.contactDialog);
+
+  const onImageChange = (event) => {
+    const file = event.target.files[0];
+  };
 
   useEffect(() => {
     if (allFields.type === "Client" && allFields.legalStatus === "Enterprise") {
@@ -209,7 +214,7 @@ function EtapesDialog(props) {
   return (
     <Dialog
       classes={{
-        paper: "m-24"
+        paper: "m-24",
       }}
       {...contactDialog.props}
       onClose={closeComposeDialog}
@@ -245,7 +250,7 @@ function EtapesDialog(props) {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  position: e.target.value
+                  position: e.target.value,
                 });
                 checkIsDisable("name", e.target.value);
               }}
@@ -263,7 +268,7 @@ function EtapesDialog(props) {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  status: e.target.value
+                  status: e.target.value,
                 });
                 checkIsDisable("name", e.target.value);
               }}
@@ -281,7 +286,7 @@ function EtapesDialog(props) {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  step: e.target.value
+                  step: e.target.value,
                 });
                 checkIsDisable("name", e.target.value);
               }}
@@ -299,7 +304,7 @@ function EtapesDialog(props) {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  name: e.target.value
+                  name: e.target.value,
                 });
                 checkIsDisable("name", e.target.value);
               }}
@@ -312,7 +317,7 @@ function EtapesDialog(props) {
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    clientStatus: e.target.value
+                    clientStatus: e.target.value,
                   })
                 }
               >
@@ -347,7 +352,7 @@ function EtapesDialog(props) {
                   style={{
                     color: "secondary",
                     fontSize: "large",
-                    margin: "10px"
+                    margin: "10px",
                   }}
                 >
                   notifications
@@ -393,27 +398,11 @@ function EtapesDialog(props) {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  profession: e.target.value
+                  profession: e.target.value,
                 });
                 checkIsDisable("name", e.target.value);
               }}
             />
-            {/* <TextField
-              className="mb-12"
-              label="Message"
-              type="text"
-              variant="outlined"
-              multiline
-              rows={8}
-              fullWidth
-              value={allFields.comments}
-              onChange={(e) =>
-                setAllFields({
-                  ...allFields,
-                  comments: e.target.value,
-                })
-              }
-            /> */}
           </div>
           <Editor
             // editorState={editorState}
@@ -431,6 +420,7 @@ function EtapesDialog(props) {
             <br />
             <Button
               variant="outlined"
+              component="span"
               style={{ borderRadius: 5, marginRight: 7 }}
               color="secondary"
             >
@@ -438,12 +428,21 @@ function EtapesDialog(props) {
                 style={{
                   color: "secondary",
                   fontSize: "large",
-                  margin: "10px"
+                  margin: "10px",
                 }}
               >
                 attach_file
               </Icon>
-              Ajouter un document
+              <label htmlFor="icon-button-file">Ajouter un document</label>
+              <input
+                name="Ajouter un document"
+                color="blue"
+                type="file"
+                multiple="multiple"
+                id="icon-button-file"
+                onChange={onImageChange}
+                className="filetype"
+              />
             </Button>
           </div>
           <br />
