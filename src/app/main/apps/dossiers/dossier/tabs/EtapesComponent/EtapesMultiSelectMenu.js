@@ -51,9 +51,11 @@ function EtapesMultiSelectMenu(props) {
         onClose={closeSelectedContactsMenu}
       >
         <MenuList>
-          <MenuItem style={{
-            flexDirection:"column"
-          }}
+          <MenuItem
+            className="etapesListItem"
+            style={{
+              flexDirection: "column",
+            }}
             onClick={() => {
               // dispatch(removeContacts(selectedContactIds));
               closeSelectedContactsMenu();

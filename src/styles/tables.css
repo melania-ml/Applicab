@@ -175,32 +175,11 @@ table.simple.borderless thead tr th {
   color: #ffffff !important;
 }
 
-@media screen and (max-width: 767px) {
-  .caseManagementTabs
-    .MuiTabs-flexContainer.muiltr-heg063-MuiTabs-flexContainer {
-    justify-content: left;
-  }
-  .res-flex-direction {
-    flex-direction: column;
-  }
-  .message-tab-header{
-  flex-direction: column;
-  }
-  .senderClient {
-	margin: 0rem 0rem -2rem 5rem;
-  }
-  .senderTime {
-	margin: -2rem 0rem 0rem 28rem;
-  }
-  .faq-search{
-  width: auto;
-  }
-  .faqcard1-txt{
-    text-align: center;
-  }
-  .faqcard2-txt{
-    text-align: center;
-  }
+.etapesListItem:hover{
+ background-color: transparent;
+}
+.etapesListItem div:hover{
+  background-color: rgba(0, 0, 0, 0.04);
  }
 
  .ant-picker-focused {
@@ -260,3 +239,33 @@ input#icon-button-file {
 input[type=file]::-webkit-file-upload-button {
   visibility: hidden;
 }
+
+@media screen and (max-width: 767px) {
+  .caseManagementTabs
+    .MuiTabs-flexContainer.muiltr-heg063-MuiTabs-flexContainer {
+    justify-content: left;
+  }
+  .res-flex-direction {
+    flex-direction: column;
+  }
+  .message-tab-header{
+  flex-direction: column;
+  }
+  .senderClient {
+	margin: 0rem 0rem -2rem 5rem;
+  }
+  .senderTime {
+	margin: -2rem 0rem 0rem 28rem;
+  }
+  .faq-search{
+  width: auto;
+  }
+  .faqcard1-txt{
+    text-align: center;
+  }
+  .faqcard2-txt{
+    text-align: center;
+  }
+ }
+
+ 
