@@ -122,9 +122,15 @@ class filterCaseTask(APIView):
     def post(self, request):
         try:
             reqData = request.data
-            # Remove blank data from dictionary
+            # Remove blank data from dictionary  Q(user_id=userId) | Q(is_default=True)
             kwargs = dict((k, v) for k, v in reqData.items() if v)
-            taskList = caseManagementTask.objects.filter(**kwargs)
+            query = Q(**kwargs)
+
+            if 'case_management_id' in kwargs:
+                del kwargs['case_management_id']
+                query = Q(case_management_id=reqData['case_management_id']) | Q(**kwargs)
+
+            taskList = caseManagementTask.objects.filter(query)
 
             serializer = self.serializers_class(taskList, many=True)
             # preparing response

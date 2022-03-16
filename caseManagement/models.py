@@ -79,7 +79,7 @@ class CaseManagement(CommonBase):
 
 class caseManagementTask(CommonBase):
     name = models.CharField(max_length=525, blank=True, null=True)
-    procedure_title = models.CharField(max_length=100, blank=True, null=True)
+    type = models.CharField(max_length=100, blank=True, null=True)
     TJ = models.BooleanField(default=False)
     JCP = models.BooleanField(default=False)
     TCOM = models.BooleanField(default=False)
