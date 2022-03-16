@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.fields import Field
 
 from caseManagement.models import *
 
@@ -23,7 +24,14 @@ class CaseSerializer(serializers.ModelSerializer):
 
 
 class CaseTasSerializer(serializers.ModelSerializer):
+    indexNum = serializers.SerializerMethodField()
+    index = 0
+
     class Meta:
         model = caseManagementTask
-        fields = '__all__'
+        fields = "__all__"
         depth = 1
+
+    def get_indexNum(self, obj):
+        self.index += 1
+        return self.index
