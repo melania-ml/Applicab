@@ -24,8 +24,10 @@ import EtapesTable from "./EtapesComponent/EtapesTable";
 import EtapesMultiSelectMenu from "./EtapesComponent/EtapesMultiSelectMenu";
 import {
   openNewContactDialog,
-  setDossiersSearchText
+  setDossiersSearchText,
+  getEtapes
 } from "app/store/slices/dossiersSlice";
+import { getFormattedDateTime } from "app/main/common/functions";
 
 function EtapeTab(props) {
   const { window } = props;
@@ -179,7 +181,7 @@ function EtapeTab(props) {
   );
 
   const dispatch = useDispatch();
-  const etapes = useSelector(({ dossiers }) => dossiers.dossiers);
+  const { etapes, etapeObj } = useSelector(({ dossiers }) => dossiers);
 
   const [openEtape, setOpenEtape] = useState(false);
 
@@ -223,21 +225,34 @@ function EtapeTab(props) {
       {
         Header: "Num",
         accessor: "company",
+        Cell: ({ row }) => {
+          return <span>{row.index + 1}</span>;
+        },
         sortable: true
       },
       {
         Header: "Étape",
-        accessor: "lastName",
+        accessor: "name",
         sortable: true
       },
       {
         Header: "Date",
-        accessor: "createddata",
+        accessor: "created_date",
+        Cell: ({ row }) => {
+          return (
+            <span>
+              {getFormattedDateTime({
+                date: row.original.created_date,
+                format: "DD-MM-YYYY HH:mm:ss"
+              })}
+            </span>
+          );
+        },
         sortable: true
       },
       {
         Header: "Statut",
-        accessor: "jobTitle",
+        accessor: "type",
         sortable: true,
         Cell: ({ row }) => (
           <div className="flex items-center dropSelect">
@@ -264,6 +279,12 @@ function EtapeTab(props) {
 
     [dispatch]
   );
+
+  useEffect(() => {
+    if (etapeObj.case_management_id) {
+      dispatch(getEtapes(etapeObj));
+    }
+  }, [etapeObj]);
 
   useEffect(() => {
     function getFilteredArray(entities, _searchText) {

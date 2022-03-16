@@ -10,7 +10,10 @@ import { useMemo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DossiersMultiSelectMenu from "./DossiersMultiSelectMenu";
 import DossiersTable from "./DossiersTable";
-import { getFormattedDateTime } from "app/main/common/functions/getFormattedDateTime";
+import {
+  getFormattedDateTime,
+  getProcedureCode
+} from "app/main/common/functions";
 
 import { selectDossiers } from "app/store/slices/dossiersSlice";
 
@@ -28,11 +31,11 @@ function DossiersList(props) {
     <Tooltip {...props} arrow classes={{ popper: className }} />
   ))(({ theme }) => ({
     [`& .${tooltipClasses.arrow}`]: {
-      color: "#252E3E",
+      color: "#252E3E"
     },
     [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: "#252E3E",
-    },
+      backgroundColor: "#252E3E"
+    }
   }));
 
   const columns = useMemo(
@@ -54,27 +57,27 @@ function DossiersList(props) {
         },
         className: "justify-center",
         width: 64,
-        sortable: false,
+        sortable: false
       },
       {
         Header: "Nom",
         accessor: "case_name",
-        sortable: true,
+        sortable: true
       },
       {
         Header: "Procédure",
         accessor: "procedure",
         Cell: ({ row }) => {
           const procedure = row.original.procedure?.procedure_type;
-          return <span>{procedure?.split("(").pop().split(")")[0]}</span>;
+          return <span>{getProcedureCode(procedure)}</span>;
         },
-        sortable: true,
+        sortable: true
       },
       {
         Header: "Type",
         accessor: "type",
         className: "font-medium",
-        sortable: true,
+        sortable: true
       },
       {
         Header: "Nature",
@@ -82,7 +85,7 @@ function DossiersList(props) {
         Cell: ({ row }) => {
           return <span>{row.original.nature?.nature_title}</span>;
         },
-        sortable: true,
+        sortable: true
       },
       {
         Header: "Date de création",
@@ -92,17 +95,17 @@ function DossiersList(props) {
             <span>
               {getFormattedDateTime({
                 date: row.original.created_date,
-                format: "DD-MM-YYYY HH:mm:ss",
+                format: "DD-MM-YYYY HH:mm:ss"
               })}
             </span>
           );
         },
-        sortable: true,
+        sortable: true
       },
       {
         Header: "Statut",
         accessor: "status",
-        sortable: true,
+        sortable: true
       },
       {
         Header: "Msg",
@@ -118,7 +121,7 @@ function DossiersList(props) {
                 sx={{
                   boxShadow: 0,
                   backgroundColor: "#22d3ee",
-                  "&:hover": { backgroundColor: "#22d3ee" },
+                  "&:hover": { backgroundColor: "#22d3ee" }
                 }}
                 aria-label="add"
               >
@@ -126,7 +129,7 @@ function DossiersList(props) {
               </Fab>
             </CustomTooltip>
           </div>
-        ),
+        )
       },
       {
         id: "action",
@@ -147,8 +150,8 @@ function DossiersList(props) {
               </IconButton>
             </CustomTooltip>
           </div>
-        ),
-      },
+        )
+      }
     ],
     [dispatch]
   );

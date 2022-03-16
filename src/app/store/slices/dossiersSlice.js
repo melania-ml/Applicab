@@ -5,7 +5,20 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 import { showMessage } from "app/store/fuse/messageSlice";
-import { getFormattedDateTime } from "app/main/common/functions/getFormattedDateTime";
+import {
+  getFormattedDateTime,
+  getProcedureCode
+} from "app/main/common/functions";
+
+export const getEtapes = createAsyncThunk(
+  "dossiersApp/dossiers/getEtapes",
+  async (obj, { dispatch, getState }) => {
+    debugger;
+    const response = await axios.post("api/caseManagement/filterCaseTask", obj);
+    const data = await response.data;
+    dispatch(setEtapes(data.data));
+  }
+);
 
 export const getNatures = () => async (dispatch) => {
   await axios
@@ -53,7 +66,18 @@ export const addCase = createAsyncThunk(
       .post("api/caseManagement/addCases", dossier)
       .then((data) => {
         if (data.data.status === 201 && data.data.success) {
+          const procedure = getState().dossiers.procedures;
+          const proc = procedure.filter(
+            (fil) => fil.id === data.data.data.procedure
+          )[0].procedure_type;
+          const key = getProcedureCode(proc);
+          let obj = {
+            type: data.data.data.type,
+            case_management_id: data.data.data.id
+          };
+          obj[key] = true;
           dispatch(showMessage({ message: data.data.message }));
+          dispatch(setEtapeObj(obj));
           dispatch(setIsCaseAdded());
         }
       })
@@ -118,14 +142,22 @@ const dossiersSlice = createSlice({
     natures: [],
     procedures: [],
     contacts: [],
-    isCaseAdded: false
+    isCaseAdded: false,
+    etapeObj: {},
+    etapes: []
   }),
   reducers: {
+    setEtapes: (state, action) => {
+      state.etapes = action.payload;
+    },
     setIsLoading: (state, action) => {
       state.isLoading = action.payload;
     },
     setIsCaseAdded: (state, action) => {
       state.isCaseAdded = true;
+    },
+    setEtapeObj: (state, action) => {
+      state.etapeObj = action.payload;
     },
     setDossiers: (state, action) => {
       state.dossiers = action.payload;
@@ -205,7 +237,9 @@ export const {
   setNatures,
   setProcedures,
   setContacts,
-  setIsCaseAdded
+  setIsCaseAdded,
+  setEtapes,
+  setEtapeObj
 } = dossiersSlice.actions;
 
 export default dossiersSlice.reducer;

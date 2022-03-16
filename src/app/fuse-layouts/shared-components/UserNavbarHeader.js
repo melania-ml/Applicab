@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { getFormattedDateTime } from "app/main/common/functions/getFormattedDateTime";
+import { getFormattedDateTime } from "app/main/common/functions";
 
 //material-ui
 import { AppBar, Avatar, Typography } from "@mui/material";
