@@ -5,18 +5,18 @@ const NewDossier = lazy(() => import("./dossier/Dossier"));
 
 const DossiersAppConfig = {
   settings: {
-    layout: {},
+    layout: {}
   },
   routes: [
     {
       path: "apps/dossiers/all",
-      element: <DossiersApp />,
+      element: <DossiersApp />
     },
     {
-      path: "apps/dossiers/new",
-      element: <NewDossier />,
-    },
-  ],
+      path: "apps/dossiers/:id",
+      element: <NewDossier />
+    }
+  ]
 };
 
 export default DossiersAppConfig;

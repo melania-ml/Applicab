@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectMainTheme } from "app/store/fuse/settingsSlice";
 import {
   setDossiersSearchText,
-  openNewContactDialog
+  setNewDossierData
 } from "app/store/slices/dossiersSlice";
 import Filters from "./Filters";
 import { Link } from "react-router-dom";
@@ -55,6 +55,7 @@ function DossiersHeader(props) {
         </div>
         <div className="flex items-center">
           <Button
+            onClick={() => dispatch(setNewDossierData())}
             component={Link}
             to="/apps/dossiers/new"
             variant="contained"

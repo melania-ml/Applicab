@@ -13,7 +13,6 @@ import {
 export const getEtapes = createAsyncThunk(
   "dossiersApp/dossiers/getEtapes",
   async (obj, { dispatch, getState }) => {
-    debugger;
     const response = await axios.post("api/caseManagement/filterCaseTask", obj);
     const data = await response.data;
     dispatch(setEtapes(data.data));
@@ -144,7 +143,11 @@ const dossiersSlice = createSlice({
     contacts: [],
     isCaseAdded: false,
     etapeObj: {},
-    etapes: []
+    etapes: [],
+    editDossierData: {
+      type: "new",
+      data: null
+    }
   }),
   reducers: {
     setEtapes: (state, action) => {
@@ -178,7 +181,7 @@ const dossiersSlice = createSlice({
       },
       prepare: (event) => ({ payload: event.target.value || "" })
     },
-    openNewContactDialog: (state, action) => {
+    openNewEtapeDialog: (state, action) => {
       state.contactDialog = {
         type: "new",
         props: {
@@ -202,6 +205,18 @@ const dossiersSlice = createSlice({
         props: {
           open: true
         },
+        data: action.payload
+      };
+    },
+    setNewDossierData: (state, action) => {
+      state.editDossierData = {
+        type: "new",
+        data: null
+      };
+    },
+    setEditDossierData: (state, action) => {
+      state.editDossierData = {
+        type: "edit",
         data: action.payload
       };
     },
@@ -230,7 +245,7 @@ export const {
   setDossiers,
   resetDossier,
   setDossiersSearchText,
-  openNewContactDialog,
+  openNewEtapeDialog,
   closeNewContactDialog,
   openEditContactDialog,
   closeEditContactDialog,
@@ -239,7 +254,9 @@ export const {
   setContacts,
   setIsCaseAdded,
   setEtapes,
-  setEtapeObj
+  setEtapeObj,
+  setEditDossierData,
+  setNewDossierData
 } = dossiersSlice.actions;
 
 export default dossiersSlice.reducer;

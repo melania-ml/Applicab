@@ -15,7 +15,10 @@ import {
   getProcedureCode
 } from "app/main/common/functions";
 
-import { selectDossiers } from "app/store/slices/dossiersSlice";
+import {
+  selectDossiers,
+  setEditDossierData
+} from "app/store/slices/dossiersSlice";
 
 function DossiersList(props) {
   const dispatch = useDispatch();
@@ -196,7 +199,8 @@ function DossiersList(props) {
         data={filteredData}
         onRowClick={(ev, row) => {
           if (row) {
-            props.navigate(`/apps/dossiers/${row.id}`);
+            props.navigate(`/apps/dossiers/${row.original.id}`);
+            dispatch(setEditDossierData(row.original));
           }
         }}
       />

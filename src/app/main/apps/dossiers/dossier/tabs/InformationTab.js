@@ -20,9 +20,12 @@ import ContactDialog from "app/main/apps/contacts/components/ContactDialog/Conta
 const tags = [];
 function InformationTab() {
   const dispatch = useDispatch();
-  const { natures, procedures, contacts } = useSelector(
-    ({ dossiers }) => dossiers
-  );
+  const {
+    natures,
+    procedures,
+    contacts,
+    editDossierData: { data, type }
+  } = useSelector(({ dossiers }) => dossiers);
   const filter = createFilterOptions();
   const [isValid, setIsValid] = useState(false);
   const [errors, setErrors] = useState({});
@@ -58,6 +61,30 @@ function InformationTab() {
     }
   }, [allFields]);
 
+  useEffect(() => {
+    if (data && Object.keys(data).length !== 0) {
+      setAllFields({
+        ...allFields,
+        case_name: data.case_name,
+        nature: data.nature.nature_title,
+        status: data.status,
+        type: data.type,
+        procedure: data.procedure.procedure_type,
+        location: data.location,
+        tags: data.tags,
+        internal_comment: data.internal_comment,
+        shared_comment: data.shared_comment,
+        client_id: data.client_id.map((clientId) => clientId.id),
+        customer_contact_id: data.customer_contact_id.map(
+          (customerContactId) => customerContactId.id
+        ),
+        opposing_contact_id: data.opposing_contact_id.map(
+          (opposingContactId) => opposingContactId.id
+        )
+      });
+    }
+  }, [data]);
+
   const checkIsDisable = (name, val) => {
     const value = typeof val === "string" ? val.trim() : val;
     if (name === "case_name") {
@@ -70,7 +97,9 @@ function InformationTab() {
   };
 
   function onSubmit(param) {
-    dispatch(addCase({ ...allFields }));
+    if (type === "new") {
+      dispatch(addCase({ ...allFields }));
+    }
   }
 
   return (
@@ -194,7 +223,7 @@ function InformationTab() {
           }}
         >
           {procedures.map((procedure) => (
-            <MenuItem value={procedure.id} key={procedure.id}>
+            <MenuItem value={procedure.procedure_type} key={procedure.id}>
               {procedure.procedure_type}
             </MenuItem>
           ))}

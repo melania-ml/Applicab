@@ -1,33 +1,27 @@
-import FuseLoading from "@fuse/core/FuseLoading";
 import FusePageCarded from "@fuse/core/FusePageCarded";
 import { useDeepCompareEffect } from "@fuse/hooks";
-import Button from "@mui/material/Button";
-import Tab from "@mui/material/Tab";
-import Tabs from "@mui/material/Tabs";
-import Typography from "@mui/material/Typography";
 import withReducer from "app/store/withReducer";
-import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import _ from "@lodash";
-import { useForm, FormProvider } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { styled } from "@mui/material/styles";
+import { FormProvider } from "react-hook-form";
 import {
-  addContact,
-  resetDossier,
   getContacts,
   getNatures,
   getProcedures
 } from "app/store/slices/dossiersSlice";
 import reducer from "app/store";
+
 import DossierHeader from "./DossierHeader";
 import InformationTab from "./tabs/InformationTab";
 import EtapesTab from "./tabs/EtapesTab";
 import EmailTab from "./tabs/EmailTab";
 import DocumentsTab from "./tabs/DocumentsTab";
+
+//material-ui
+import { Tab, Tabs } from "@mui/material";
+import { styled } from "@mui/material/styles";
 
 const Root = styled(FusePageCarded)(({ theme }) => ({
   "& .FusePageCarded-header": {
@@ -52,10 +46,13 @@ function Dossier(props) {
   const routeParams = useParams();
   const dispatch = useDispatch();
 
-  const { isCaseAdded } = useSelector(({ dossiers }) => dossiers);
+  const {
+    isCaseAdded,
+    editDossierData: { type }
+  } = useSelector(({ dossiers }) => dossiers);
 
   useEffect(() => {
-    if (isCaseAdded) {
+    if (type === "new" && isCaseAdded) {
       setTabValue(1);
     }
   }, [isCaseAdded]);
@@ -87,22 +84,22 @@ function Dossier(props) {
             <Tab
               className="h-64 w-1/4 max-w-full"
               label="Informations"
-              disabled={isCaseAdded}
+              disabled={type === "new" && isCaseAdded}
             />
             <Tab
               className="h-64 w-1/4 max-w-full"
               label="Étapes"
-              disabled={!isCaseAdded}
+              disabled={type === "new" && !isCaseAdded}
             />
             <Tab
               className="h-64 w-1/4 max-w-full"
               label="Messages"
-              disabled={!isCaseAdded}
+              disabled={type === "new" && !isCaseAdded}
             />
             <Tab
               className="h-64 w-1/4 max-w-full"
               label="Documents"
-              disabled={!isCaseAdded}
+              disabled={type === "new" && !isCaseAdded}
             />
           </Tabs>
         }

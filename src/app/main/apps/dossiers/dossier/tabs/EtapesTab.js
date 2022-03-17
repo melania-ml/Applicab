@@ -23,7 +23,7 @@ import EtapesDialog from "./EtapesComponent/EtapesDialog";
 import EtapesTable from "./EtapesComponent/EtapesTable";
 import EtapesMultiSelectMenu from "./EtapesComponent/EtapesMultiSelectMenu";
 import {
-  openNewContactDialog,
+  openNewEtapeDialog,
   setDossiersSearchText,
   getEtapes
 } from "app/store/slices/dossiersSlice";
@@ -181,7 +181,11 @@ function EtapeTab(props) {
   );
 
   const dispatch = useDispatch();
-  const { etapes, etapeObj } = useSelector(({ dossiers }) => dossiers);
+  const {
+    etapes,
+    etapeObj,
+    editDossierData: { type }
+  } = useSelector(({ dossiers }) => dossiers);
 
   const [openEtape, setOpenEtape] = useState(false);
 
@@ -233,6 +237,23 @@ function EtapeTab(props) {
       {
         Header: "Étape",
         accessor: "name",
+        Cell: ({ row }) => {
+          return (
+            <CustomTooltip placement="top-end" title={row.original.name}>
+              <span
+                style={{
+                  width: 200,
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  display: "inline-block"
+                }}
+              >
+                {row.original.name}
+              </span>
+            </CustomTooltip>
+          );
+        },
         sortable: true
       },
       {
@@ -281,10 +302,10 @@ function EtapeTab(props) {
   );
 
   useEffect(() => {
-    if (etapeObj.case_management_id) {
+    if (type === "new" && etapeObj.case_management_id) {
       dispatch(getEtapes(etapeObj));
     }
-  }, [etapeObj]);
+  }, [etapeObj, type]);
 
   useEffect(() => {
     function getFilteredArray(entities, _searchText) {
@@ -342,7 +363,7 @@ function EtapeTab(props) {
               </ThemeProvider>
               <Button
                 onClick={() => {
-                  dispatch(openNewContactDialog());
+                  dispatch(openNewEtapeDialog());
                 }}
                 variant="contained"
                 color="secondary"
@@ -361,7 +382,7 @@ function EtapeTab(props) {
                 data={filteredData}
                 onRowClick={(ev, row) => {
                   if (row) {
-                    dispatch(openNewContactDialog(row.original));
+                    dispatch(openNewEtapeDialog(row.original));
                   }
                 }}
               />
