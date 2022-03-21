@@ -88,20 +88,18 @@ function CreatePassword() {
     resolver: yupResolver(schema)
   });
   const { isValid, dirtyFields, errors } = formState;
-  const createPasswordState = useSelector(
-    ({ createPassword }) => createPassword.createPassword
-  );
+  const { success } = useSelector(({ createPassword }) => createPassword);
   const verifyEmailState = useSelector(
     ({ verifyEmail }) => verifyEmail.verifyEmail
   );
 
   useEffect(() => {
-    if (createPasswordState.success) {
+    if (success) {
       history.push({
         pathname: "/login"
       });
     }
-  }, [createPasswordState]);
+  }, [success]);
 
   function onSubmit(model) {
     const token = verifyEmailState.token;
