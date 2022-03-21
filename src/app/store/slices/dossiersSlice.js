@@ -147,7 +147,8 @@ const dossiersSlice = createSlice({
     editDossierData: {
       type: "new",
       data: null
-    }
+    },
+    etapeTabFromAction: false
   }),
   reducers: {
     setEtapes: (state, action) => {
@@ -220,6 +221,9 @@ const dossiersSlice = createSlice({
         data: action.payload
       };
     },
+    setEtapeTabFromAction: (state, action) => {
+      state.etapeTabFromAction = action.payload;
+    },
     closeEditContactDialog: (state, action) => {
       state.contactDialog = {
         type: "edit",
@@ -256,7 +260,8 @@ export const {
   setEtapes,
   setEtapeObj,
   setEditDossierData,
-  setNewDossierData
+  setNewDossierData,
+  setEtapeTabFromAction
 } = dossiersSlice.actions;
 
 export default dossiersSlice.reducer;

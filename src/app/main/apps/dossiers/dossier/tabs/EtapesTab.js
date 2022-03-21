@@ -27,7 +27,10 @@ import {
   setDossiersSearchText,
   getEtapes
 } from "app/store/slices/dossiersSlice";
-import { getFormattedDateTime } from "app/main/common/functions";
+import {
+  getFormattedDateTime,
+  getProcedureCode
+} from "app/main/common/functions";
 
 function EtapeTab(props) {
   const { window } = props;
@@ -184,7 +187,8 @@ function EtapeTab(props) {
   const {
     etapes,
     etapeObj,
-    editDossierData: { type }
+    editDossierData: { data, type },
+    procedures
   } = useSelector(({ dossiers }) => dossiers);
 
   const [openEtape, setOpenEtape] = useState(false);
@@ -302,8 +306,23 @@ function EtapeTab(props) {
   );
 
   useEffect(() => {
+    const objWhileUpdate = {};
+    if (type === "edit" && data) {
+      const proc = procedures.filter((fil) => fil.id === data.procedure.id)[0]
+        .procedure_type;
+      const key = getProcedureCode(proc);
+      objWhileUpdate["type"] = data.type;
+      objWhileUpdate["case_management_id"] = data.id;
+      objWhileUpdate[key] = true;
+      dispatch(getEtapes(objWhileUpdate));
+    }
+  }, [data, type]);
+
+  useEffect(() => {
     if (type === "new" && etapeObj.case_management_id) {
       dispatch(getEtapes(etapeObj));
+    } else {
+      debugger;
     }
   }, [etapeObj, type]);
 

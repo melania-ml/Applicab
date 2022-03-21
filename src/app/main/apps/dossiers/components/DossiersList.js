@@ -17,7 +17,8 @@ import {
 
 import {
   selectDossiers,
-  setEditDossierData
+  setEditDossierData,
+  setEtapeTabFromAction
 } from "app/store/slices/dossiersSlice";
 
 function DossiersList(props) {
@@ -145,7 +146,9 @@ function DossiersList(props) {
               <IconButton
                 onClick={(ev) => {
                   ev.stopPropagation();
-                  setRowId(row.original.id);
+                  dispatch(setEtapeTabFromAction(true));
+                  props.navigate(`/apps/dossiers/${row.original.id}`);
+                  dispatch(setEditDossierData(row.original));
                 }}
                 size="large"
               >
@@ -200,6 +203,7 @@ function DossiersList(props) {
         onRowClick={(ev, row) => {
           if (row) {
             props.navigate(`/apps/dossiers/${row.original.id}`);
+            dispatch(setEtapeTabFromAction(false));
             dispatch(setEditDossierData(row.original));
           }
         }}
