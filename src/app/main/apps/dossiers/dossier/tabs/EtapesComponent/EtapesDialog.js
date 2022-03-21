@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import React from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
@@ -18,49 +19,44 @@ import {
   Select,
   TextField,
   Icon,
-  Stack,
 } from "@mui/material";
 import Statut from "app/main/constants/Statut";
 import Clients from "app/main/constants/Clients";
 import {
-  updateContact,
-  addContact,
   closeNewContactDialog,
   closeEditContactDialog,
 } from "app/store/slices/dossiersSlice";
 
 const tags = [];
+const dateArray = [
+  {
+    id: 1,
+    type: "Jours",
+    value: 24,
+  },
+  {
+    id: 2,
+    type: "hr",
+    value: 1,
+  },
+  {
+    id: 3,
+    type: "min",
+    value: 0,
+  },
+];
 
 function EtapesDialog(props) {
   const [allFields, setAllFields] = useState({
     position: "",
-    clientStatus: "Case",
+    dossier: "dossier that are fixed Value",
     step: "Etapes that are fixed Value",
-    type: "Client",
-    rename: "",
-    dateValue: null,
-    legalStatus: "Enterprise",
-    title: "",
-    companyName: "",
-    country: "",
-    address: "",
-    city: "",
-    postalCode: "",
-    capitalSocial: "",
-    RCSCity: "",
-    number: "",
     name: "",
-    firstName: "",
-    email: "",
-    mobile1: "",
-    mobile2: "",
-    comments: "",
-    tags: [],
-    status: "dossier that are fixed Value ",
-    department: "",
-    nationality: "",
-    nativeCity: "",
-    profession: "",
+    clientStatus: "Case",
+    dateValue: null,
+    chooseCustomer: [],
+    object: "",
+    editorText: "",
   });
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
@@ -71,144 +67,15 @@ function EtapesDialog(props) {
     const file = event.target.files[0];
   };
 
-  useEffect(() => {
-    if (allFields.type === "Client" && allFields.legalStatus === "Enterprise") {
-      if (
-        allFields.type &&
-        allFields.title &&
-        allFields.companyName &&
-        allFields.name &&
-        allFields.firstName &&
-        allFields.email &&
-        validateEmail(allFields.email)
-      ) {
-        setIsValid(true);
-      } else {
-        setIsValid(false);
-      }
-    } else if (
-      allFields.type === "Client" &&
-      allFields.legalStatus === "Personne"
-    ) {
-      if (
-        allFields.type &&
-        allFields.title &&
-        allFields.name &&
-        allFields.firstName &&
-        allFields.email &&
-        validateEmail(allFields.email)
-      ) {
-        setIsValid(true);
-      } else {
-        setIsValid(false);
-      }
-    } else if (
-      allFields.type !== "Client" &&
-      allFields.legalStatus === "Personne"
-    ) {
-      if (allFields.type && allFields.title && allFields.name) {
-        setIsValid(true);
-      } else {
-        setIsValid(false);
-      }
-    } else {
-      if (allFields.type && allFields.title && allFields.companyName) {
-        setIsValid(true);
-      } else {
-        setIsValid(false);
-      }
-    }
-  }, [allFields]);
-
   function closeComposeDialog() {
     return contactDialog.type === "edit"
       ? dispatch(closeEditContactDialog())
       : dispatch(closeNewContactDialog());
   }
 
-  function onSubmit(data) {
-    if (contactDialog.type === "new") {
-      //dispatch(addContact(data));
-    } else {
-      //dispatch(updateContact({ ...contactDialog.data, ...data }));
-    }
-    closeComposeDialog();
-  }
-
   const registerUser = (e) => {
     e.preventDefault();
     console.log(JSON.stringify(allFields));
-  };
-
-  const validateEmail = (value) => {
-    const regex =
-      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    if (value) {
-      if (regex.test(value) === false) {
-        return false;
-      } else {
-        return true;
-      }
-    } else {
-      return false;
-    }
-  };
-
-  const checkIsDisable = (name, value) => {
-    if (name === "companyName") {
-      if (value) {
-        setErrors({ ...errors, companyName: "" });
-      } else {
-        setErrors({ ...errors, companyName: "Must enter a Company name" });
-      }
-    }
-    if (allFields.type !== "Client" && allFields.legalStatus === "Personne") {
-      if (name === "name") {
-        if (value) {
-          setErrors({ ...errors, name: "" });
-        } else {
-          setErrors({ ...errors, name: "Must enter a Name" });
-        }
-      }
-    }
-    if (allFields.type !== "Position" && allFields.position === "Position") {
-      if (name === "Position") {
-        if (value) {
-          setErrors({ ...errors, name: "" });
-        } else {
-          setErrors({ ...errors, name: "Must enter a Position" });
-        }
-      }
-    }
-    if (allFields.type === "Client") {
-      if (name === "name") {
-        if (value) {
-          setErrors({ ...errors, name: "" });
-        } else {
-          setErrors({ ...errors, name: "Must enter a Name" });
-        }
-      }
-      if (name === "firstName") {
-        if (value) {
-          setErrors({ ...errors, firstName: "" });
-        } else {
-          setErrors({ ...errors, firstName: "Must enter a First name" });
-        }
-      }
-      if (name === "email") {
-        const regex =
-          /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-        if (value) {
-          if (regex.test(value) === false) {
-            setErrors({ ...errors, email: "Must enter a valid Email" });
-          } else {
-            setErrors({ ...errors, email: "" });
-          }
-        } else {
-          setErrors({ ...errors, email: "Must enter an Email" });
-        }
-      }
-    }
   };
 
   return (
@@ -245,14 +112,11 @@ function EtapesDialog(props) {
               variant="outlined"
               fullWidth
               value={allFields.position}
-              error={errors?.position}
-              helperText={errors?.position}
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
                   position: e.target.value,
                 });
-                checkIsDisable("name", e.target.value);
               }}
             />
             <TextField
@@ -262,15 +126,12 @@ function EtapesDialog(props) {
               disabled
               variant="outlined"
               fullWidth
-              value={allFields.status}
-              error={errors?.status}
-              helperText={errors?.status}
+              value={allFields.dossier}
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  status: e.target.value,
+                  dossier: e.target.value,
                 });
-                checkIsDisable("name", e.target.value);
               }}
             />
             <TextField
@@ -281,14 +142,11 @@ function EtapesDialog(props) {
               variant="outlined"
               fullWidth
               value={allFields.step}
-              error={errors?.step}
-              helperText={errors?.step}
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
                   step: e.target.value,
                 });
-                checkIsDisable("name", e.target.value);
               }}
             />
             <TextField
@@ -299,14 +157,11 @@ function EtapesDialog(props) {
               variant="outlined"
               fullWidth
               value={allFields.name}
-              error={errors?.name}
-              helperText={errors?.name}
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
                   name: e.target.value,
                 });
-                checkIsDisable("name", e.target.value);
               }}
             />
             <FormControl className="flex w-full mb-12" variant="outlined">
@@ -339,6 +194,40 @@ function EtapesDialog(props) {
                 <TextField className="w-full mb-12" {...params} />
               )}
             />
+            {allFields.dateValue ? (
+              <>
+                <TextField
+                  className="mb-12 xs=4"
+                  label=""
+                  type="number"
+                  variant="outlined"
+                />
+
+                <FormControl className=" mb-12 ml-12 w-6/12" variant="outlined">
+                  <InputLabel>Jours</InputLabel>
+                  <Select label="Age">
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={24}>Jours</MenuItem>
+                    <MenuItem value={1}>les heures</MenuItem>
+                    <MenuItem value={0}>minute</MenuItem>
+                  </Select>
+                </FormControl>
+                <Icon
+                  className="ml-12"
+                  style={{
+                    fontSize: "xx-large",
+                    margin: "10px 19px",
+                    color: "#BABABF",
+                  }}
+                >
+                  clear
+                </Icon>
+              </>
+            ) : (
+              ""
+            )}
             <br />
             <br />
             <br />
@@ -371,13 +260,13 @@ function EtapesDialog(props) {
               <InputLabel>Choisissez un ou plusieurs clients</InputLabel>
               <Select
                 label="Choisissez un ou plusieurs clients"
-                // value={allFields.name}
-                // onChange={(e) =>
-                //   setAllFields({
-                //     ...allFields,
-                //     name: e.target.value,
-                //   })
-                // }
+                value={allFields.chooseCustomer}
+                onChange={(e) =>
+                  setAllFields({
+                    ...allFields,
+                    chooseCustomer: e.target.value,
+                  })
+                }
               >
                 {Clients.map((category) => (
                   <MenuItem value={category.value} key={category.id}>
@@ -392,25 +281,28 @@ function EtapesDialog(props) {
               label="Object"
               variant="outlined"
               fullWidth
-              value={allFields.profession}
-              error={errors?.profession}
-              helperText={errors?.profession}
+              value={allFields.object}
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  profession: e.target.value,
+                  object: e.target.value,
                 });
-                checkIsDisable("name", e.target.value);
               }}
             />
           </div>
           <Editor
-            // editorState={editorState}
+            // editorState={editor}
             toolbarClassName="toolbarClassName"
             wrapperClassName="wrapperClassName"
             editorClassName="editorClassName"
             placeholder="Message"
-            // onEditorStateChange={this.onEditorStateChange}
+            name="editorText"
+            value={allFields.editorText}
+            onChange={(e) => {
+              setAllFields({
+                editorText: e.target.value,
+              });
+            }}
           />
           <div className="px-18">
             <br />
@@ -457,7 +349,7 @@ function EtapesDialog(props) {
               color="secondary"
               type="submit"
               style={{ borderRadius: 0 }}
-              disabled={_.isEmpty(errors) || !isValid}
+              // disabled={_.isEmpty(errors) || !isValid}
             >
               Enregister
             </Button>
@@ -468,12 +360,12 @@ function EtapesDialog(props) {
               color="secondary"
               type="submit"
               style={{ borderRadius: 0 }}
-              disabled={
-                _.isEmpty(errors) ||
-                !isValid ||
-                allFields.status === "Inactif" ||
-                allFields.type !== "Client"
-              }
+              // disabled={
+              //   _.isEmpty(errors) ||
+              //   !isValid ||
+              //   allFields.status === "Inactif" ||
+              //   allFields.type !== "Client"
+              // }
             >
               Envoyer invitation
             </Button>
