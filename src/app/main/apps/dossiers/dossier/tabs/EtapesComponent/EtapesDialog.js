@@ -283,7 +283,7 @@ function EtapesDialog(props) {
             />
             <div className="flex mb-14 w-full">
               <CKEditor
-                //className="mx-8"
+                className="ckeditor"
                 editor={ClassicEditor}
                 data=""
                 config={{
