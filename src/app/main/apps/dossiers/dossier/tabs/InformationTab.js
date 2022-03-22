@@ -69,7 +69,9 @@ function InformationTab() {
         nature: data.nature.nature_title,
         status: data.status,
         type: data.type,
-        procedure: data.procedure.procedure_type,
+        procedure: procedures.filter(
+          (proc) => proc.procedure_type === data.procedure.procedure_type
+        )[0].id,
         location: data.location,
         tags: data.tags,
         internal_comment: data.internal_comment,
@@ -216,14 +218,17 @@ function InformationTab() {
           label="Procédure*"
           value={allFields.procedure}
           onChange={(e) => {
+            const newVal = procedures.filter(
+              (proc) => proc.id === e.target.value
+            );
             setAllFields({
               ...allFields,
-              procedure: e.target.value
+              procedure: newVal[0].id
             });
           }}
         >
           {procedures.map((procedure) => (
-            <MenuItem value={procedure.procedure_type} key={procedure.id}>
+            <MenuItem value={procedure.id} key={procedure.id}>
               {procedure.procedure_type}
             </MenuItem>
           ))}
@@ -234,6 +239,7 @@ function InformationTab() {
         label="Lieu"
         variant="outlined"
         fullWidth
+        value={allFields.location}
         onChange={(e) => {
           setAllFields({
             ...allFields,
@@ -309,10 +315,16 @@ function InformationTab() {
         className="flex w-full mb-12"
         options={contacts}
         getOptionLabel={(option) => {
-          return `${option.first_name + " " + option.last_name} `;
+          if (typeof option === "object") {
+            return `${option.first_name + " " + option.last_name} `;
+          } else {
+            const val = contacts.filter((contact) => contact.id === option);
+            return `${val[0]?.first_name + " " + val[0]?.last_name} `;
+          }
         }}
+        value={allFields.client_id}
         onChange={(event, newValue) => {
-          const array = newValue.map((val) => val.id);
+          const array = newValue.map((val) => val.id ?? val);
           setAllFields({
             ...allFields,
             client_id: array
@@ -330,10 +342,16 @@ function InformationTab() {
         className="flex w-full mb-12"
         options={contacts}
         getOptionLabel={(option) => {
-          return `${option.first_name + " " + option.last_name} `;
+          if (typeof option === "object") {
+            return `${option.first_name + " " + option.last_name} `;
+          } else {
+            const val = contacts.filter((contact) => contact.id === option);
+            return `${val[0]?.first_name + " " + val[0]?.last_name} `;
+          }
         }}
+        value={allFields.customer_contact_id}
         onChange={(event, newValue) => {
-          const array = newValue.map((val) => val.id);
+          const array = newValue.map((val) => val.id ?? val);
           setAllFields({
             ...allFields,
             customer_contact_id: array
@@ -351,10 +369,16 @@ function InformationTab() {
         className="flex w-full mb-12"
         options={contacts}
         getOptionLabel={(option) => {
-          return `${option.first_name + " " + option.last_name} `;
+          if (typeof option === "object") {
+            return `${option.first_name + " " + option.last_name} `;
+          } else {
+            const val = contacts.filter((contact) => contact.id === option);
+            return `${val[0]?.first_name + " " + val[0]?.last_name} `;
+          }
         }}
+        value={allFields.opposing_contact_id}
         onChange={(event, newValue) => {
-          const array = newValue.map((val) => val.id);
+          const array = newValue.map((val) => val.id ?? val);
           setAllFields({
             ...allFields,
             opposing_contact_id: array

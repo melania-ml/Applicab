@@ -322,7 +322,6 @@ function EtapeTab(props) {
     if (type === "new" && etapeObj.case_management_id) {
       dispatch(getEtapes(etapeObj));
     } else {
-      debugger;
     }
   }, [etapeObj, type]);
 
