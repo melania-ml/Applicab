@@ -240,6 +240,12 @@ input[type=file]::-webkit-file-upload-button {
   visibility: hidden;
 }
 
+.ck.ck-reset.ck-editor {
+  margin-left: -1.4rem;
+  margin-right: -1.4rem;
+  border-radius: 2rem;
+}
+
 @media screen and (max-width: 767px) {
   .caseManagementTabs
     .MuiTabs-flexContainer.muiltr-heg063-MuiTabs-flexContainer {
@@ -268,4 +274,3 @@ input[type=file]::-webkit-file-upload-button {
   }
  }
 
- 

@@ -4,6 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import _ from "@lodash";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+
 import DateTimePicker from "@mui/lab/DateTimePicker";
 import {
   Typography,
@@ -28,29 +31,12 @@ import {
 } from "app/store/slices/dossiersSlice";
 
 const tags = [];
-const dateArray = [
-  {
-    id: 1,
-    type: "Jours",
-    value: 24,
-  },
-  {
-    id: 2,
-    type: "hr",
-    value: 1,
-  },
-  {
-    id: 3,
-    type: "min",
-    value: 0,
-  },
-];
 
 function EtapesDialog(props) {
   const [allFields, setAllFields] = useState({
     position: "",
-    dossier: "dossier that are fixed Value",
-    step: "Etapes that are fixed Value",
+    dossier: "",
+    step: "",
     name: "",
     clientStatus: "Case",
     dateValue: null,
@@ -58,11 +44,22 @@ function EtapesDialog(props) {
     object: "",
     editorText: "",
   });
+  const { contacts } = useSelector(({ dossiers }) => dossiers);
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
   const dispatch = useDispatch();
   const contactDialog = useSelector(({ dossiers }) => dossiers.contactDialog);
+  const dateArray = [
+    { name: "ItemOne", id: 1, type: "Jours" },
+    { name: "ItemTwo", id: 2, type: "les heures" },
+    { name: "ItemThree", id: 3, type: "minute" },
+  ];
+  const [list, updateList] = useState(dateArray);
 
+  const handleRemoveItem = (e) => {
+    const name = e.target.getAttribute("name");
+    updateList(list.filter((item) => item.name !== name));
+  };
   const onImageChange = (event) => {
     const file = event.target.files[0];
   };
@@ -123,7 +120,6 @@ function EtapesDialog(props) {
               className="mb-12"
               name="Dossier"
               label="Dossier"
-              disabled
               variant="outlined"
               fullWidth
               value={allFields.dossier}
@@ -138,7 +134,6 @@ function EtapesDialog(props) {
               className="mb-12"
               name="Étape"
               label="Étape"
-              disabled
               variant="outlined"
               fullWidth
               value={allFields.step}
@@ -205,7 +200,7 @@ function EtapesDialog(props) {
 
                 <FormControl className=" mb-12 ml-12 w-6/12" variant="outlined">
                   <InputLabel>Jours</InputLabel>
-                  <Select label="Age">
+                  <Select label="Time">
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
@@ -228,9 +223,7 @@ function EtapesDialog(props) {
             ) : (
               ""
             )}
-            <br />
-            <br />
-            <br />
+
             <div className="px-18">
               <Button
                 variant="outlined"
@@ -249,8 +242,6 @@ function EtapesDialog(props) {
                 Ajouter une notification
               </Button>
               <br />
-              <br />
-              <br />
               <h2>
                 <b>Message</b>
               </h2>
@@ -268,9 +259,12 @@ function EtapesDialog(props) {
                   })
                 }
               >
-                {Clients.map((category) => (
-                  <MenuItem value={category.value} key={category.id}>
-                    {category.label}
+                {contacts.map((data) => (
+                  <MenuItem
+                    value={data.first_name + " " + data.last_name}
+                    key={data.first_name}
+                  >
+                    {data.first_name + " " + data.last_name}
                   </MenuItem>
                 ))}
               </Select>
@@ -290,19 +284,60 @@ function EtapesDialog(props) {
               }}
             />
           </div>
-          <Editor
-            // editorState={editor}
-            toolbarClassName="toolbarClassName"
-            wrapperClassName="wrapperClassName"
-            editorClassName="editorClassName"
-            placeholder="Message"
-            name="editorText"
-            value={allFields.editorText}
-            onChange={(e) => {
-              setAllFields({
-                editorText: e.target.value,
-              });
+          <CKEditor
+            className="mx-8"
+            editor={ClassicEditor}
+            data=""
+            config={{
+              toolbar: [
+                "heading",
+                "|",
+                "bold",
+                "italic",
+                "link",
+                "bulletedList",
+                "numberedList",
+                "blockQuote",
+                "ckfinder",
+                "|",
+                "imageTextAlternative",
+                "imageUpload",
+                "imageStyle:full",
+                "imageStyle:side",
+                "|",
+                "mediaEmbed",
+                "insertTable",
+                "tableColumn",
+                "tableRow",
+                "mergeTableCells",
+                "|",
+                "undo",
+                "redo",
+              ],
             }}
+            onChange={(event, editor) => {
+              const data = editor.getData();
+              // console.log({ data });
+            }}
+
+            // onInit={(editor) => {
+            //   // You can store the "editor" and use when it is needed.
+            //   console.log("Editor is ready to use!", editor);
+            //   console.log(
+            //     "toolbar: ",
+            //     Array.from(editor.ui.componentFactory.names())
+            //   );
+            //   console.log(
+            //     "plugins: ",
+            //     ClassicEditor.builtinPlugins.map((plugin) => plugin.pluginName)
+            //   );
+            // }}
+            // onBlur={(editor) => {
+            //   console.log("Blur.", editor);
+            // }}
+            // onFocus={(editor) => {
+            //   console.log("Focus.", editor);
+            // }}
           />
           <div className="px-18">
             <br />
@@ -337,10 +372,6 @@ function EtapesDialog(props) {
               />
             </Button>
           </div>
-          <br />
-          <br />
-          <br />
-          <br />
         </DialogContent>
         <DialogActions className="justify-between p-4 pb-16">
           <div className="px-16">
