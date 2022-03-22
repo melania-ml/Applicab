@@ -21,13 +21,13 @@ import {
   InputLabel,
   Select,
   TextField,
-  Icon,
+  Icon
 } from "@mui/material";
 import Statut from "app/main/constants/Statut";
 import Clients from "app/main/constants/Clients";
 import {
   closeNewContactDialog,
-  closeEditContactDialog,
+  closeEditContactDialog
 } from "app/store/slices/dossiersSlice";
 
 const tags = [];
@@ -42,7 +42,7 @@ function EtapesDialog(props) {
     dateValue: null,
     chooseCustomer: [],
     object: "",
-    editorText: "",
+    editorText: ""
   });
   const { contacts } = useSelector(({ dossiers }) => dossiers);
   const [errors, setErrors] = useState({});
@@ -52,7 +52,7 @@ function EtapesDialog(props) {
   const dateArray = [
     { name: "ItemOne", id: 1, type: "Jours" },
     { name: "ItemTwo", id: 2, type: "les heures" },
-    { name: "ItemThree", id: 3, type: "minute" },
+    { name: "ItemThree", id: 3, type: "minute" }
   ];
   const [list, updateList] = useState(dateArray);
 
@@ -78,7 +78,7 @@ function EtapesDialog(props) {
   return (
     <Dialog
       classes={{
-        paper: "m-24",
+        paper: "m-24"
       }}
       {...contactDialog.props}
       onClose={closeComposeDialog}
@@ -112,7 +112,7 @@ function EtapesDialog(props) {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  position: e.target.value,
+                  position: e.target.value
                 });
               }}
             />
@@ -126,7 +126,7 @@ function EtapesDialog(props) {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  dossier: e.target.value,
+                  dossier: e.target.value
                 });
               }}
             />
@@ -140,7 +140,7 @@ function EtapesDialog(props) {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  step: e.target.value,
+                  step: e.target.value
                 });
               }}
             />
@@ -155,7 +155,7 @@ function EtapesDialog(props) {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  name: e.target.value,
+                  name: e.target.value
                 });
               }}
             />
@@ -167,7 +167,7 @@ function EtapesDialog(props) {
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    clientStatus: e.target.value,
+                    clientStatus: e.target.value
                   })
                 }
               >
@@ -214,7 +214,7 @@ function EtapesDialog(props) {
                   style={{
                     fontSize: "xx-large",
                     margin: "10px 19px",
-                    color: "#BABABF",
+                    color: "#BABABF"
                   }}
                 >
                   clear
@@ -224,7 +224,7 @@ function EtapesDialog(props) {
               ""
             )}
 
-            <div className="px-18">
+            <div className="px-18 mb-14">
               <Button
                 variant="outlined"
                 style={{ borderRadius: 5 }}
@@ -234,18 +234,16 @@ function EtapesDialog(props) {
                   style={{
                     color: "secondary",
                     fontSize: "large",
-                    margin: "10px",
+                    margin: "10px"
                   }}
                 >
                   notifications
                 </Icon>
                 Ajouter une notification
               </Button>
-              <br />
-              <h2>
-                <b>Message</b>
-              </h2>
-              <br />
+            </div>
+            <div className="flex mb-14 w-full">
+              <b>Message</b>
             </div>
             <FormControl className="flex w-full mb-12" variant="outlined">
               <InputLabel>Choisissez un ou plusieurs clients</InputLabel>
@@ -255,7 +253,7 @@ function EtapesDialog(props) {
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    chooseCustomer: e.target.value,
+                    chooseCustomer: e.target.value
                   })
                 }
               >
@@ -279,98 +277,79 @@ function EtapesDialog(props) {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  object: e.target.value,
+                  object: e.target.value
                 });
               }}
             />
-          </div>
-          <CKEditor
-            className="mx-8"
-            editor={ClassicEditor}
-            data=""
-            config={{
-              toolbar: [
-                "heading",
-                "|",
-                "bold",
-                "italic",
-                "link",
-                "bulletedList",
-                "numberedList",
-                "blockQuote",
-                "ckfinder",
-                "|",
-                "imageTextAlternative",
-                "imageUpload",
-                "imageStyle:full",
-                "imageStyle:side",
-                "|",
-                "mediaEmbed",
-                "insertTable",
-                "tableColumn",
-                "tableRow",
-                "mergeTableCells",
-                "|",
-                "undo",
-                "redo",
-              ],
-            }}
-            onChange={(event, editor) => {
-              const data = editor.getData();
-              // console.log({ data });
-            }}
-
-            // onInit={(editor) => {
-            //   // You can store the "editor" and use when it is needed.
-            //   console.log("Editor is ready to use!", editor);
-            //   console.log(
-            //     "toolbar: ",
-            //     Array.from(editor.ui.componentFactory.names())
-            //   );
-            //   console.log(
-            //     "plugins: ",
-            //     ClassicEditor.builtinPlugins.map((plugin) => plugin.pluginName)
-            //   );
-            // }}
-            // onBlur={(editor) => {
-            //   console.log("Blur.", editor);
-            // }}
-            // onFocus={(editor) => {
-            //   console.log("Focus.", editor);
-            // }}
-          />
-          <div className="px-18">
-            <br />
-            <h2>
-              <b>Documents</b>
-            </h2>
-            <br />
-            <Button
-              variant="outlined"
-              component="span"
-              style={{ borderRadius: 5, marginRight: 7 }}
-              color="secondary"
-            >
-              <Icon
-                style={{
-                  color: "secondary",
-                  fontSize: "large",
-                  margin: "10px",
+            <div className="flex mb-14 w-full">
+              <CKEditor
+                //className="mx-8"
+                editor={ClassicEditor}
+                data=""
+                config={{
+                  toolbar: [
+                    "heading",
+                    "|",
+                    "bold",
+                    "italic",
+                    "link",
+                    "bulletedList",
+                    "numberedList",
+                    "blockQuote",
+                    "ckfinder",
+                    "|",
+                    "imageTextAlternative",
+                    "imageUpload",
+                    "imageStyle:full",
+                    "imageStyle:side",
+                    "|",
+                    "mediaEmbed",
+                    "insertTable",
+                    "tableColumn",
+                    "tableRow",
+                    "mergeTableCells",
+                    "|",
+                    "undo",
+                    "redo"
+                  ]
                 }}
-              >
-                attach_file
-              </Icon>
-              <label htmlFor="icon-button-file">Ajouter un document</label>
-              <input
-                name="Ajouter un document"
-                color="blue"
-                type="file"
-                multiple="multiple"
-                id="icon-button-file"
-                onChange={onImageChange}
-                className="filetype"
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+                  console.log({ data });
+                }}
               />
-            </Button>
+            </div>
+            <div className="flex mb-14 w-full">
+              <b>Documents</b>
+            </div>
+            <div className="px-18">
+              <Button
+                variant="outlined"
+                component="span"
+                style={{ borderRadius: 5, marginRight: 7 }}
+                color="secondary"
+              >
+                <Icon
+                  style={{
+                    color: "secondary",
+                    fontSize: "large",
+                    margin: "10px"
+                  }}
+                >
+                  attach_file
+                </Icon>
+                <label htmlFor="icon-button-file">Ajouter un document</label>
+                <input
+                  name="Ajouter un document"
+                  color="blue"
+                  type="file"
+                  multiple="multiple"
+                  id="icon-button-file"
+                  onChange={onImageChange}
+                  className="filetype"
+                />
+              </Button>
+            </div>
           </div>
         </DialogContent>
         <DialogActions className="justify-between p-4 pb-16">

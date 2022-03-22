@@ -31,63 +31,63 @@ Basic Table Styles
   margin: -5rem 0rem 4rem 15rem;
 } */
 
-.sendButton{
+.sendButton {
   margin: 0px 25px 0px 25px;
 }
- /* Case management tab messages tab css */
+/* Case management tab messages tab css */
 
-.senderName{
+.senderName {
   margin: -0.1rem 0rem 0rem 0rem;
-    width: 180px;
-    white-space: nowrap;
-    overflow: hidden !important;
-    text-overflow: ellipsis;
+  width: 180px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
 }
-.readMsgTime{
+.readMsgTime {
   margin: -0.3rem 0rem 0rem 3rem;
 }
-.reveiverName{
+.reveiverName {
   margin-right: -142rem;
-    width: 180px;
-    white-space: nowrap;
-    overflow: hidden !important;
-    text-overflow: ellipsis;
+  width: 180px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
 }
-.reveiveMsgTime{
+.reveiveMsgTime {
   margin: -0.2rem 0rem 0rem 146rem;
 }
-.receiverAvatar{
+.receiverAvatar {
   margin-right: 1rem;
 }
 
- /* client interface messages tab css */
+/* client interface messages tab css */
 
- .userName{
+.userName {
   width: 200px;
   white-space: nowrap;
   overflow: hidden !important;
   text-overflow: ellipsis;
 }
-.msgCounter{
+.msgCounter {
   margin-left: -8rem;
   margin-top: 3rem;
 }
 
-.clientAvatar{
+.clientAvatar {
   margin: 0rem 28.4rem -3rem 20rem;
 }
 
-.clientName{
-  margin: -2.4rem 0rem -2rem 7rem
+.clientName {
+  margin: -2.4rem 0rem -2rem 7rem;
 }
 
-.msgTime{
+.msgTime {
   margin: -2.5rem 0rem 1rem 28rem;
 }
-.senderClient{
+.senderClient {
   margin: 0rem 0rem -2rem 94rem;
 }
-.senderTime{
+.senderTime {
   margin: -2rem 0rem 0rem 113rem;
 }
 .caseManagementTabs .MuiTabs-flexContainer.muiltr-heg063-MuiTabs-flexContainer {
@@ -159,36 +159,36 @@ table.simple.borderless tbody tr td {
 table.simple.borderless thead tr th {
   border: none;
 }
-.message-tab-header{
+.message-tab-header {
   flex-direction: inherit;
 }
-.message-searchbar{
+.message-searchbar {
   transform: inherit !important;
 }
-.selectedContactsMenu ul li{
+.selectedContactsMenu ul li {
   flex-direction: column;
 }
-.faq-search{
+.faq-search {
   width: 400px;
 }
 .autocomplete label {
   color: #ffffff !important;
 }
 
-.etapesListItem:hover{
- background-color: transparent;
+.etapesListItem:hover {
+  background-color: transparent;
 }
-.etapesListItem div:hover{
+.etapesListItem div:hover {
   background-color: rgba(0, 0, 0, 0.04);
- }
+}
 
- .ant-picker-focused {
+.ant-picker-focused {
   border-color: #e90505;
   box-shadow: 0 0 0 2px rgb(21 21 21 / 20%);
   border-right-width: 1px;
   outline: 0;
 }
-.datepicker{
+.datepicker {
   background: initial;
   border-color: #b9b9b954;
   height: 5rem;
@@ -236,16 +236,16 @@ input#icon-button-file {
   color: #43daf1;
   margin: 0rem -22rem 0rem -5rem;
 }
-input[type=file]::-webkit-file-upload-button {
+input[type="file"]::-webkit-file-upload-button {
   visibility: hidden;
 }
 
 .ck.ck-reset.ck-editor {
-  margin-left: -1.4rem;
-  margin-right: -1.4rem;
   border-radius: 2rem;
 }
-
+.ckeditor .ck-editor {
+  width: 100% !important;
+}
 @media screen and (max-width: 767px) {
   .caseManagementTabs
     .MuiTabs-flexContainer.muiltr-heg063-MuiTabs-flexContainer {
@@ -254,23 +254,22 @@ input[type=file]::-webkit-file-upload-button {
   .res-flex-direction {
     flex-direction: column;
   }
-  .message-tab-header{
-  flex-direction: column;
+  .message-tab-header {
+    flex-direction: column;
   }
   .senderClient {
-	margin: 0rem 0rem -2rem 5rem;
+    margin: 0rem 0rem -2rem 5rem;
   }
   .senderTime {
-	margin: -2rem 0rem 0rem 28rem;
+    margin: -2rem 0rem 0rem 28rem;
   }
-  .faq-search{
-  width: auto;
+  .faq-search {
+    width: auto;
   }
-  .faqcard1-txt{
+  .faqcard1-txt {
     text-align: center;
   }
-  .faqcard2-txt{
+  .faqcard2-txt {
     text-align: center;
   }
- }
-
+}

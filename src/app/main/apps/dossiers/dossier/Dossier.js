@@ -9,7 +9,7 @@ import { FormProvider } from "react-hook-form";
 import {
   getContacts,
   getNatures,
-  getProcedures,
+  getProcedures
 } from "app/store/slices/dossiersSlice";
 import reducer from "app/store";
 
@@ -30,15 +30,15 @@ const Root = styled(FusePageCarded)(({ theme }) => ({
     alignItems: "center",
     [theme.breakpoints.up("md")]: {
       minHeight: 100,
-      height: 100,
-    },
+      height: 100
+    }
   },
   "& .FusePageCarded-contentWrapper": {
-    padding: 0,
+    padding: 0
   },
   "& .search-bar-dossier": {
-    borderRadius: 5,
-  },
+    borderRadius: 5
+  }
 }));
 
 function Dossier(props) {
@@ -49,7 +49,7 @@ function Dossier(props) {
   const {
     isCaseAdded,
     editDossierData: { type },
-    etapeTabFromAction,
+    etapeTabFromAction
   } = useSelector(({ dossiers }) => dossiers);
 
   useEffect(() => {
@@ -93,7 +93,7 @@ function Dossier(props) {
             <Tab
               className="h-64 w-1/4 max-w-full"
               label="Étapes"
-              disabled={type === "new" && !isCaseAdded}
+              //disabled={type === "new" && !isCaseAdded}
             />
             <Tab
               className="h-64 w-1/4 max-w-full"
