@@ -243,8 +243,8 @@ input[type="file"]::-webkit-file-upload-button {
 .ck.ck-reset.ck-editor {
   border-radius: 2rem;
 }
-.ckeditor .ck-editor {
-  width: 100% !important;
+.ck.ck-reset.ck-editor {
+	width: 100%;
 }
 @media screen and (max-width: 767px) {
   .caseManagementTabs
