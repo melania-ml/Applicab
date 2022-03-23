@@ -246,6 +246,11 @@ input[type="file"]::-webkit-file-upload-button {
 .ck.ck-reset.ck-editor {
 	width: 100%;
 }
+
+.dossierLinkButton:hover {
+  background-color: #0cb7e2;
+  color: black;
+}
 @media screen and (max-width: 767px) {
   .caseManagementTabs
     .MuiTabs-flexContainer.muiltr-heg063-MuiTabs-flexContainer {
