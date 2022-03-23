@@ -24,6 +24,7 @@ import EtapesTable from "./EtapesComponent/EtapesTable";
 import EtapesMultiSelectMenu from "./EtapesComponent/EtapesMultiSelectMenu";
 import {
   openNewEtapeDialog,
+  openEditEtapeDialog,
   setDossiersSearchText,
   getEtapes
 } from "app/store/slices/dossiersSlice";
@@ -400,7 +401,7 @@ function EtapeTab(props) {
                 data={filteredData}
                 onRowClick={(ev, row) => {
                   if (row) {
-                    dispatch(openNewEtapeDialog(row.original));
+                    dispatch(openEditEtapeDialog(row.original));
                   }
                 }}
               />

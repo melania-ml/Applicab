@@ -131,7 +131,7 @@ const dossiersSlice = createSlice({
     dossiers: [],
     searchText: "",
     routeParams: {},
-    contactDialog: {
+    etapeDialog: {
       type: "new",
       props: {
         open: false
@@ -183,7 +183,7 @@ const dossiersSlice = createSlice({
       prepare: (event) => ({ payload: event.target.value || "" })
     },
     openNewEtapeDialog: (state, action) => {
-      state.contactDialog = {
+      state.etapeDialog = {
         type: "new",
         props: {
           open: true
@@ -191,8 +191,8 @@ const dossiersSlice = createSlice({
         data: null
       };
     },
-    closeNewContactDialog: (state, action) => {
-      state.contactDialog = {
+    closeNewEtapeDialog: (state, action) => {
+      state.etapeDialog = {
         type: "new",
         props: {
           open: false
@@ -200,8 +200,8 @@ const dossiersSlice = createSlice({
         data: null
       };
     },
-    openEditContactDialog: (state, action) => {
-      state.contactDialog = {
+    openEditEtapeDialog: (state, action) => {
+      state.etapeDialog = {
         type: "edit",
         props: {
           open: true
@@ -224,8 +224,8 @@ const dossiersSlice = createSlice({
     setEtapeTabFromAction: (state, action) => {
       state.etapeTabFromAction = action.payload;
     },
-    closeEditContactDialog: (state, action) => {
-      state.contactDialog = {
+    closeEditEtapeDialog: (state, action) => {
+      state.etapeDialog = {
         type: "edit",
         props: {
           open: false
@@ -250,9 +250,9 @@ export const {
   resetDossier,
   setDossiersSearchText,
   openNewEtapeDialog,
-  closeNewContactDialog,
-  openEditContactDialog,
-  closeEditContactDialog,
+  closeNewEtapeDialog,
+  openEditEtapeDialog,
+  closeEditEtapeDialog,
   setNatures,
   setProcedures,
   setContacts,

@@ -1,8 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import _ from "@lodash";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
@@ -24,31 +22,47 @@ import {
   Icon
 } from "@mui/material";
 import Statut from "app/main/constants/Statut";
-import Clients from "app/main/constants/Clients";
 import {
-  closeNewContactDialog,
-  closeEditContactDialog
+  closeNewEtapeDialog,
+  closeEditEtapeDialog
 } from "app/store/slices/dossiersSlice";
 
 const tags = [];
 
-function EtapesDialog(props) {
+function EtapesDialog() {
   const [allFields, setAllFields] = useState({
-    position: "",
-    dossier: "",
-    step: "",
+    indexNum: "",
+    case_name: "",
     name: "",
-    clientStatus: "Case",
+    new_name: "",
+    status: "A prévoir",
     dateValue: null,
     chooseCustomer: [],
     object: "",
     editorText: ""
   });
-  const { contacts } = useSelector(({ dossiers }) => dossiers);
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
   const dispatch = useDispatch();
-  const contactDialog = useSelector(({ dossiers }) => dossiers.contactDialog);
+  const {
+    etapeDialog: { data, props, type },
+    editDossierData,
+    contacts
+  } = useSelector(({ dossiers }) => dossiers);
+
+  useEffect(() => {
+    if (data && Object.keys(data).length !== 0) {
+      debugger;
+      setAllFields({
+        ...allFields,
+        indexNum: data.indexNum,
+        case_name: editDossierData.data.case_name,
+        name: data.name,
+        status: data.status
+      });
+    }
+  }, [data, type]);
+
   const dateArray = [
     { name: "ItemOne", id: 1, type: "Jours" },
     { name: "ItemTwo", id: 2, type: "les heures" },
@@ -56,18 +70,14 @@ function EtapesDialog(props) {
   ];
   const [list, updateList] = useState(dateArray);
 
-  const handleRemoveItem = (e) => {
-    const name = e.target.getAttribute("name");
-    updateList(list.filter((item) => item.name !== name));
-  };
   const onImageChange = (event) => {
     const file = event.target.files[0];
   };
 
   function closeComposeDialog() {
-    return contactDialog.type === "edit"
-      ? dispatch(closeEditContactDialog())
-      : dispatch(closeNewContactDialog());
+    return type === "edit"
+      ? dispatch(closeEditEtapeDialog())
+      : dispatch(closeNewEtapeDialog());
   }
 
   const registerUser = (e) => {
@@ -80,7 +90,7 @@ function EtapesDialog(props) {
       classes={{
         paper: "m-24"
       }}
-      {...contactDialog.props}
+      {...props}
       onClose={closeComposeDialog}
       fullWidth
       maxWidth="sm"
@@ -88,9 +98,9 @@ function EtapesDialog(props) {
       <AppBar position="static" elevation={0}>
         <Toolbar className="flex w-full">
           <Typography variant="subtitle1" color="inherit">
-            {contactDialog.type === "new"
+            {type === "new"
               ? "Ajouter une nouvelle étape"
-              : " Ajouter une nouvelle étape "}
+              : "Modifier l’étape : Codes d'accès AppliCab envoi au(x) client(s)"}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -108,11 +118,11 @@ function EtapesDialog(props) {
               label="Position"
               variant="outlined"
               fullWidth
-              value={allFields.position}
+              value={allFields.indexNum}
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  position: e.target.value
+                  indexNum: e.target.value
                 });
               }}
             />
@@ -122,11 +132,12 @@ function EtapesDialog(props) {
               label="Dossier"
               variant="outlined"
               fullWidth
-              value={allFields.dossier}
+              disabled
+              value={allFields.case_name}
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  dossier: e.target.value
+                  case_name: e.target.value
                 });
               }}
             />
@@ -136,11 +147,12 @@ function EtapesDialog(props) {
               label="Étape"
               variant="outlined"
               fullWidth
-              value={allFields.step}
+              disabled
+              value={allFields.name}
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  step: e.target.value
+                  name: e.target.value
                 });
               }}
             />
@@ -151,11 +163,11 @@ function EtapesDialog(props) {
               label="Renommer"
               variant="outlined"
               fullWidth
-              value={allFields.name}
+              value={allFields.new_name}
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  name: e.target.value
+                  new_name: e.target.value
                 });
               }}
             />
@@ -163,11 +175,11 @@ function EtapesDialog(props) {
               <InputLabel>Statut</InputLabel>
               <Select
                 label="Statut"
-                value={allFields.clientStatus}
+                value={allFields.status}
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    clientStatus: e.target.value
+                    status: e.target.value
                   })
                 }
               >
@@ -285,7 +297,14 @@ function EtapesDialog(props) {
               <CKEditor
                 className="ckeditor"
                 editor={ClassicEditor}
-                data=""
+                data="<p>Chère Madame, Cher Monsieur,</br>
+                Je vous confirme bien volontiers notre rendez-vous du ........... prochain à .. heures.</br></br>
+                Je vous invite à me confirmer le numéro de téléphone sur lequel je pourrai vous joindre
+                Voici le lien pour participer à notre visioconférence.</br>
+                Je vous recevrai au (adresse du cabinet)</br></br>
+                Dans l'intervalle,</br>
+                Je vous prie de croire, Chère Madame, Cher Monsieur, à l'assurance de mes salutations
+                distinguées.</p>"
                 config={{
                   toolbar: [
                     "heading",
@@ -296,7 +315,6 @@ function EtapesDialog(props) {
                     "bulletedList",
                     "numberedList",
                     "blockQuote",
-                    "ckfinder",
                     "|",
                     "imageTextAlternative",
                     "imageUpload",

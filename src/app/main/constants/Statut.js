@@ -1,18 +1,23 @@
 const Statut = [
   {
     id: 1,
-    value: "A ouvrir",
-    label: "A ouvrir"
+    value: "A prévoir",
+    label: "A prévoir"
   },
   {
     id: 2,
-    value: "Ouvert",
-    label: "Ouvert"
+    value: "A faire",
+    label: "A faire"
   },
   {
     id: 3,
-    value: "Clôturé",
-    label: "Clôturé"
+    value: "Fait",
+    label: "Fait"
+  },
+  {
+    id: 4,
+    value: "Archivé",
+    label: "Archivé"
   }
 ];
 
