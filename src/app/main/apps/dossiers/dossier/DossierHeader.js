@@ -3,10 +3,19 @@ import Icon from "@mui/material/Icon";
 import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import {
+  getProcedureCode,
+  getFormattedDateTime
+} from "app/main/common/functions";
 
 function DossierHeader() {
   const theme = useTheme();
+  const {
+    editDossierData: { data, type }
+  } = useSelector(({ dossiers }) => dossiers);
+  debugger;
   return (
     <div className="flex flex-1 w-full items-center justify-between">
       <div className="flex flex-col items-start max-w-full min-w-0">
@@ -40,7 +49,14 @@ function DossierHeader() {
               animate={{ x: 0, transition: { delay: 0.3 } }}
             >
               <Typography className="text-16 sm:text-20 ml-24 truncate font-semibold">
-                Ajouter un nouveau dossier
+                {type === "edit"
+                  ? `Dossier ${data.case_name} - ${getProcedureCode(
+                      data.procedure.procedure_type
+                    )} - ${getFormattedDateTime({
+                      date: data.created_date,
+                      format: "DD-MM-YYYY"
+                    })} - ${data.unique_code}`
+                  : "Ajouter un nouveau dossier"}
               </Typography>
             </motion.div>
           </div>

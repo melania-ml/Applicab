@@ -14,7 +14,7 @@ const routeConfigs = [
   ForgotPasswordConfig,
   ResetPasswordConfig,
   VerifyEmailConfig,
-  CreatePasswordConfig,
+  CreatePasswordConfig
 ];
 
 const routes = [
@@ -25,16 +25,16 @@ const routes = [
   {
     path: "/",
     //element: <Navigate to="apps/dashboard" />,
-    element: <Navigate to="/login" />,
+    element: <Navigate to="/login" />
   },
   {
     path: "loading",
-    element: <FuseLoading />,
+    element: <FuseLoading />
   },
   {
     path: "*",
-    element: <Navigate to="pages/errors/error-404" />,
-  },
+    element: <Navigate to="apps/errors/error-404" />
+  }
 ];
 
 export default routes;

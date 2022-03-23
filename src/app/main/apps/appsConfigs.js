@@ -3,6 +3,7 @@
 import DashboardAppConfig from "./dashboard/DashboardAppConfig";
 import DossiersAppConfig from "./dossiers/DossiersAppConfig";
 import ContactsAppConfig from "./contacts/ContactsAppConfig";
+import Error404PageConfig from "./errors/404/Error404PageConfig";
 // import AnalyticsDashboardAppConfig from './dashboards/analytics/AnalyticsDashboardAppConfig';
 // import ProjectDashboardAppConfig from './dashboards/project/ProjectDashboardAppConfig';
 // import ECommerceAppConfig from './e-commerce/ECommerceAppConfig';
@@ -26,6 +27,7 @@ const appsConfigs = [
   DashboardAppConfig,
   ContactsAppConfig,
   DossiersAppConfig,
+  Error404PageConfig,
   // AnalyticsDashboardAppConfig,
   // ProjectDashboardAppConfig,
   // MailAppConfig,
@@ -44,7 +46,7 @@ const appsConfigs = [
   ClientDashboardAppConfig,
   // MessageAppConfig,
   ChatAppConfig,
-  FaqAppConfig,
+  FaqAppConfig
 ];
 
 export default appsConfigs;
