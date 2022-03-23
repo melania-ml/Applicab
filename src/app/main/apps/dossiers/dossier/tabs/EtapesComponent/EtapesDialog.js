@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Editor } from "react-draft-wysiwyg";
@@ -6,7 +6,6 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import _ from "@lodash";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-
 import DateTimePicker from "@mui/lab/DateTimePicker";
 import {
   Typography,
@@ -21,16 +20,13 @@ import {
   InputLabel,
   Select,
   TextField,
-  Icon
+  Icon,
 } from "@mui/material";
 import Statut from "app/main/constants/Statut";
-import Clients from "app/main/constants/Clients";
 import {
   closeNewContactDialog,
-  closeEditContactDialog
+  closeEditContactDialog,
 } from "app/store/slices/dossiersSlice";
-
-const tags = [];
 
 function EtapesDialog(props) {
   const [allFields, setAllFields] = useState({
@@ -42,27 +38,47 @@ function EtapesDialog(props) {
     dateValue: null,
     chooseCustomer: [],
     object: "",
-    editorText: ""
+    editorText: "",
+    selectedDocument: [],
   });
   const { contacts } = useSelector(({ dossiers }) => dossiers);
-  const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
   const dispatch = useDispatch();
   const contactDialog = useSelector(({ dossiers }) => dossiers.contactDialog);
   const dateArray = [
     { name: "ItemOne", id: 1, type: "Jours" },
     { name: "ItemTwo", id: 2, type: "les heures" },
-    { name: "ItemThree", id: 3, type: "minute" }
+    { name: "ItemThree", id: 3, type: "minute" },
   ];
   const [list, updateList] = useState(dateArray);
 
   const handleRemoveItem = (e) => {
     const name = e.target.getAttribute("name");
-    updateList(list.filter((item) => item.name !== name));
+    setAllFields(list.filter((item) => item.name !== name));
   };
-  const onImageChange = (event) => {
+  const onSelectDocument = (event) => {
     const file = event.target.files[0];
   };
+
+  useEffect(() => {
+    if (
+      allFields.position &&
+      allFields.dossier &&
+      allFields.step &&
+      allFields.name &&
+      allFields.dossier &&
+      allFields.clientStatus &&
+      // allFields.dateValue &&
+      allFields.chooseCustomer &&
+      allFields.object &&
+      allFields.editorText &&
+      allFields.selectedDocument
+    ) {
+      setIsValid(true);
+    } else {
+      setIsValid(false);
+    }
+  }, [allFields]);
 
   function closeComposeDialog() {
     return contactDialog.type === "edit"
@@ -73,12 +89,13 @@ function EtapesDialog(props) {
   const registerUser = (e) => {
     e.preventDefault();
     console.log(JSON.stringify(allFields));
+    setAllFields("");
   };
 
   return (
     <Dialog
       classes={{
-        paper: "m-24"
+        paper: "m-24",
       }}
       {...contactDialog.props}
       onClose={closeComposeDialog}
@@ -96,7 +113,7 @@ function EtapesDialog(props) {
       </AppBar>
       <form
         noValidate
-        //onSubmit={handleSubmit(onSubmit)}
+        // onSubmit={handleSubmit(onSubmit)}
         onSubmit={registerUser}
         className="flex flex-col md:overflow-hidden"
       >
@@ -112,7 +129,7 @@ function EtapesDialog(props) {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  position: e.target.value
+                  position: e.target.value,
                 });
               }}
             />
@@ -126,7 +143,7 @@ function EtapesDialog(props) {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  dossier: e.target.value
+                  dossier: e.target.value,
                 });
               }}
             />
@@ -140,7 +157,7 @@ function EtapesDialog(props) {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  step: e.target.value
+                  step: e.target.value,
                 });
               }}
             />
@@ -155,7 +172,7 @@ function EtapesDialog(props) {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  name: e.target.value
+                  name: e.target.value,
                 });
               }}
             />
@@ -167,7 +184,7 @@ function EtapesDialog(props) {
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    clientStatus: e.target.value
+                    clientStatus: e.target.value,
                   })
                 }
               >
@@ -204,27 +221,32 @@ function EtapesDialog(props) {
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
-                    <MenuItem value={24}>Jours</MenuItem>
-                    <MenuItem value={1}>les heures</MenuItem>
-                    <MenuItem value={0}>minute</MenuItem>
+                    {dateArray.map((data) => (
+                      <MenuItem value={data.name} key={data.id}>
+                        {data.type}
+                      </MenuItem>
+                    ))}
                   </Select>
+
+                  <span name={allFields.dateValue} onClick={handleRemoveItem}>
+                    <Icon
+                      className="ml-12"
+                      style={{
+                        fontSize: "xx-large",
+                        margin: "-44px 310px 37px",
+                        color: "#BABABF",
+                      }}
+                    >
+                      clear
+                    </Icon>
+                  </span>
                 </FormControl>
-                <Icon
-                  className="ml-12"
-                  style={{
-                    fontSize: "xx-large",
-                    margin: "10px 19px",
-                    color: "#BABABF"
-                  }}
-                >
-                  clear
-                </Icon>
               </>
             ) : (
               ""
             )}
 
-            <div className="px-18 mb-14">
+            <div className="px-18">
               <Button
                 variant="outlined"
                 style={{ borderRadius: 5 }}
@@ -234,16 +256,18 @@ function EtapesDialog(props) {
                   style={{
                     color: "secondary",
                     fontSize: "large",
-                    margin: "10px"
+                    margin: "10px",
                   }}
                 >
                   notifications
                 </Icon>
                 Ajouter une notification
               </Button>
-            </div>
-            <div className="flex mb-14 w-full">
-              <b>Message</b>
+              <br />
+              <h2>
+                <b>Message</b>
+              </h2>
+              <br />
             </div>
             <FormControl className="flex w-full mb-12" variant="outlined">
               <InputLabel>Choisissez un ou plusieurs clients</InputLabel>
@@ -253,7 +277,7 @@ function EtapesDialog(props) {
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    chooseCustomer: e.target.value
+                    chooseCustomer: e.target.value,
                   })
                 }
               >
@@ -277,79 +301,102 @@ function EtapesDialog(props) {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  object: e.target.value
+                  object: e.target.value,
                 });
               }}
             />
-            <div className="flex mb-14 w-full">
-              <CKEditor
-                className="ckeditor"
-                editor={ClassicEditor}
-                data=""
-                config={{
-                  toolbar: [
-                    "heading",
-                    "|",
-                    "bold",
-                    "italic",
-                    "link",
-                    "bulletedList",
-                    "numberedList",
-                    "blockQuote",
-                    "ckfinder",
-                    "|",
-                    "imageTextAlternative",
-                    "imageUpload",
-                    "imageStyle:full",
-                    "imageStyle:side",
-                    "|",
-                    "mediaEmbed",
-                    "insertTable",
-                    "tableColumn",
-                    "tableRow",
-                    "mergeTableCells",
-                    "|",
-                    "undo",
-                    "redo"
-                  ]
-                }}
-                onChange={(event, editor) => {
-                  const data = editor.getData();
-                  console.log({ data });
-                }}
-              />
-            </div>
-            <div className="flex mb-14 w-full">
+          </div>
+          <CKEditor
+            className="mx-8"
+            editor={ClassicEditor}
+            data=""
+            config={{
+              toolbar: [
+                "heading",
+                "|",
+                "bold",
+                "italic",
+                "link",
+                "bulletedList",
+                "numberedList",
+                "blockQuote",
+                "ckfinder",
+                "|",
+                "imageTextAlternative",
+                "imageUpload",
+                "imageStyle:full",
+                "imageStyle:side",
+                "|",
+                "mediaEmbed",
+                "insertTable",
+                "tableColumn",
+                "tableRow",
+                "mergeTableCells",
+                "|",
+                "undo",
+                "redo",
+              ],
+            }}
+            onChange={(event, editor) => {
+              const data = editor.getData();
+              setAllFields({
+                ...allFields,
+                editorText: data,
+              });
+              // console.log({ data });
+            }}
+
+            // onInit={(editor) => {
+            //   // You can store the "editor" and use when it is needed.
+            //   console.log("Editor is ready to use!", editor);
+            //   console.log(
+            //     "toolbar: ",
+            //     Array.from(editor.ui.componentFactory.names())
+            //   );
+            //   console.log(
+            //     "plugins: ",
+            //     ClassicEditor.builtinPlugins.map((plugin) => plugin.pluginName)
+            //   );
+            // }}
+            // onBlur={(editor) => {
+            //   console.log("Blur.", editor);
+            // }}
+            // onFocus={(editor) => {
+            //   console.log("Focus.", editor);
+            // }}
+          />
+          <div className="px-18">
+            <br />
+            <h2>
               <b>Documents</b>
-            </div>
-            <div className="px-18">
-              <Button
-                variant="outlined"
-                component="span"
-                style={{ borderRadius: 5, marginRight: 7 }}
-                color="secondary"
+            </h2>
+            <br />
+            <Button
+              variant="outlined"
+              component="span"
+              style={{ borderRadius: 5, marginRight: 7 }}
+              color="secondary"
+            >
+              <Icon
+                style={{
+                  color: "secondary",
+                  fontSize: "large",
+                  margin: "10px",
+                }}
               >
-                <Icon
-                  style={{
-                    color: "secondary",
-                    fontSize: "large",
-                    margin: "10px"
-                  }}
-                >
-                  attach_file
-                </Icon>
-                <label htmlFor="icon-button-file">Ajouter un document</label>
-                <input
-                  name="Ajouter un document"
-                  color="blue"
-                  type="file"
-                  multiple="multiple"
-                  id="icon-button-file"
-                  onChange={onImageChange}
-                  className="filetype"
-                />
-              </Button>
-            </div>
+                attach_file
+              </Icon>
+              <label htmlFor="icon-button-file">Ajouter un document</label>
+              <input
+                name="Ajouter un document"
+                color="blue"
+                type="file"
+                multiple="multiple"
+                id="icon-button-file"
+                onChange={onSelectDocument}
+                className="filetype"
+              />
+            </Button>
           </div>
         </DialogContent>
         <DialogActions className="justify-between p-4 pb-16">
@@ -359,6 +406,9 @@ function EtapesDialog(props) {
               color="secondary"
               type="submit"
               style={{ borderRadius: 0 }}
+              disabled={!isValid}
+              onClick={closeComposeDialog}
+              // onClick={(() => registerUser())}
               // disabled={_.isEmpty(errors) || !isValid}
             >
               Enregister
@@ -370,12 +420,8 @@ function EtapesDialog(props) {
               color="secondary"
               type="submit"
               style={{ borderRadius: 0 }}
-              // disabled={
-              //   _.isEmpty(errors) ||
-              //   !isValid ||
-              //   allFields.status === "Inactif" ||
-              //   allFields.type !== "Client"
-              // }
+              disabled={!isValid}
+              onClick={(() => registerUser(), closeComposeDialog)}
             >
               Envoyer invitation
             </Button>
