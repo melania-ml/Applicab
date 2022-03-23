@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import _ from "@lodash";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-
 import DateTimePicker from "@mui/lab/DateTimePicker";
 import {
   Typography,
@@ -39,7 +38,8 @@ function EtapesDialog() {
     dateValue: null,
     chooseCustomer: [],
     object: "",
-    editorText: ""
+    editorText: "",
+    selectedDocument: []
   });
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
@@ -74,6 +74,26 @@ function EtapesDialog() {
     const file = event.target.files[0];
   };
 
+  useEffect(() => {
+    if (
+      allFields.position &&
+      allFields.dossier &&
+      allFields.step &&
+      allFields.name &&
+      allFields.dossier &&
+      allFields.clientStatus &&
+      // allFields.dateValue &&
+      allFields.chooseCustomer &&
+      allFields.object &&
+      allFields.editorText &&
+      allFields.selectedDocument
+    ) {
+      setIsValid(true);
+    } else {
+      setIsValid(false);
+    }
+  }, [allFields]);
+
   function closeComposeDialog() {
     return type === "edit"
       ? dispatch(closeEditEtapeDialog())
@@ -83,6 +103,7 @@ function EtapesDialog() {
   const registerUser = (e) => {
     e.preventDefault();
     console.log(JSON.stringify(allFields));
+    setAllFields("");
   };
 
   return (
@@ -106,7 +127,7 @@ function EtapesDialog() {
       </AppBar>
       <form
         noValidate
-        //onSubmit={handleSubmit(onSubmit)}
+        // onSubmit={handleSubmit(onSubmit)}
         onSubmit={registerUser}
         className="flex flex-col md:overflow-hidden"
       >
@@ -216,27 +237,35 @@ function EtapesDialog() {
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
-                    <MenuItem value={24}>Jours</MenuItem>
-                    <MenuItem value={1}>les heures</MenuItem>
-                    <MenuItem value={0}>minute</MenuItem>
+                    {dateArray.map((data) => (
+                      <MenuItem value={data.name} key={data.id}>
+                        {data.type}
+                      </MenuItem>
+                    ))}
                   </Select>
+
+                  <span
+                    name={allFields.dateValue}
+                    //onClick={handleRemoveItem}
+                  >
+                    <Icon
+                      className="ml-12"
+                      style={{
+                        fontSize: "xx-large",
+                        margin: "-44px 310px 37px",
+                        color: "#BABABF"
+                      }}
+                    >
+                      clear
+                    </Icon>
+                  </span>
                 </FormControl>
-                <Icon
-                  className="ml-12"
-                  style={{
-                    fontSize: "xx-large",
-                    margin: "10px 19px",
-                    color: "#BABABF"
-                  }}
-                >
-                  clear
-                </Icon>
               </>
             ) : (
               ""
             )}
 
-            <div className="px-18 mb-14">
+            <div className="px-18">
               <Button
                 variant="outlined"
                 style={{ borderRadius: 5 }}
@@ -253,9 +282,11 @@ function EtapesDialog() {
                 </Icon>
                 Ajouter une notification
               </Button>
-            </div>
-            <div className="flex mb-14 w-full">
-              <b>Message</b>
+              <br />
+              <h2>
+                <b>Message</b>
+              </h2>
+              <br />
             </div>
             <FormControl className="flex w-full mb-12" variant="outlined">
               <InputLabel>Choisissez un ou plusieurs clients</InputLabel>
@@ -340,34 +371,33 @@ function EtapesDialog() {
             <div className="flex mb-14 w-full">
               <b>Documents</b>
             </div>
-            <div className="px-18">
-              <Button
-                variant="outlined"
-                component="span"
-                style={{ borderRadius: 5, marginRight: 7 }}
-                color="secondary"
+            <br />
+            <Button
+              variant="outlined"
+              component="span"
+              style={{ borderRadius: 5, marginRight: 7 }}
+              color="secondary"
+            >
+              <Icon
+                style={{
+                  color: "secondary",
+                  fontSize: "large",
+                  margin: "10px"
+                }}
               >
-                <Icon
-                  style={{
-                    color: "secondary",
-                    fontSize: "large",
-                    margin: "10px"
-                  }}
-                >
-                  attach_file
-                </Icon>
-                <label htmlFor="icon-button-file">Ajouter un document</label>
-                <input
-                  name="Ajouter un document"
-                  color="blue"
-                  type="file"
-                  multiple="multiple"
-                  id="icon-button-file"
-                  onChange={onImageChange}
-                  className="filetype"
-                />
-              </Button>
-            </div>
+                attach_file
+              </Icon>
+              <label htmlFor="icon-button-file">Ajouter un document</label>
+              <input
+                name="Ajouter un document"
+                color="blue"
+                type="file"
+                multiple="multiple"
+                id="icon-button-file"
+                //onChange={onSelectDocument}
+                className="filetype"
+              />
+            </Button>
           </div>
         </DialogContent>
         <DialogActions className="justify-between p-4 pb-16">
@@ -377,6 +407,9 @@ function EtapesDialog() {
               color="secondary"
               type="submit"
               style={{ borderRadius: 0 }}
+              disabled={!isValid}
+              onClick={closeComposeDialog}
+              // onClick={(() => registerUser())}
               // disabled={_.isEmpty(errors) || !isValid}
             >
               Enregister
@@ -388,12 +421,8 @@ function EtapesDialog() {
               color="secondary"
               type="submit"
               style={{ borderRadius: 0 }}
-              // disabled={
-              //   _.isEmpty(errors) ||
-              //   !isValid ||
-              //   allFields.status === "Inactif" ||
-              //   allFields.type !== "Client"
-              // }
+              disabled={!isValid}
+              onClick={(() => registerUser(), closeComposeDialog)}
             >
               Envoyer invitation
             </Button>
