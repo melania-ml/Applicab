@@ -45,6 +45,7 @@ class CaseManagement(CommonBase):
                                on_delete=models.DO_NOTHING, db_column='nature_id')
     status = models.CharField(max_length=100, blank=True, null=True)
     type = models.CharField(max_length=100, blank=True, null=True)
+    unique_code = models.CharField(max_length=100, blank=True, null=True)
     procedure = models.ForeignKey(Procedure,
                                   blank=True, null=True,
                                   on_delete=models.DO_NOTHING, db_column='procedure_id')
@@ -79,6 +80,10 @@ class CaseManagement(CommonBase):
 
 class caseManagementTask(CommonBase):
     name = models.CharField(max_length=525, blank=True, null=True)
+    message = models.CharField(max_length=525, blank=True, null=True)
+    status = models.CharField(max_length=225, blank=True, null=True)
+    subject = models.CharField(max_length=225, blank=True, null=True)
+    notification_date = models.DateTimeField(auto_now=False, blank=True, null=True)
     type = models.CharField(max_length=100, blank=True, null=True)
     TJ = models.BooleanField(default=False)
     JCP = models.BooleanField(default=False)

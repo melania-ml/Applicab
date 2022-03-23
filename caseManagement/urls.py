@@ -8,5 +8,6 @@ urlpatterns = [
     path('getProcedureByUser', procedure.as_view(), name="procedure"),
     path('addCases', casesManagement.as_view(), name="addCases"),
     path('getCasesByLawyer', casesManagement.as_view(), name="addCases"),
-    path('filterCaseTask', filterCaseTask.as_view(), name="addCases"),
+    path('filterCaseTask', caseManagementTaskView.as_view(), name="addCases"),
+    path('updateCaseTask', caseManagementTaskView.as_view(), name="addCases"),
 ]

@@ -1,13 +1,11 @@
-import pandas
 from django.db.models import Q
-from django.shortcuts import render
+import random
 
 # Create your views here.
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from caseManagement.models import *
 from common.common_config.responseHandlar import ResponseInfo
 from static.responseMessages import *
 from .serializers import *
@@ -69,6 +67,7 @@ class casesManagement(APIView):
             userId = request.user.id
             reqData = request.data
             reqData['lawyer_id'] = userId
+            reqData['unique_code'] = random.randint(1000, 9999)
 
             # Find Nature if exist add id if not create new.
             natureData = Nature.objects.filter(nature_title=reqData['nature']).first()
@@ -116,7 +115,7 @@ class casesManagement(APIView):
             return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
 
 
-class filterCaseTask(APIView):
+class caseManagementTaskView(APIView):
     serializers_class = CaseTasSerializer
 
     def post(self, request):
@@ -137,6 +136,59 @@ class filterCaseTask(APIView):
             res = ResponseInfo(serializer.data, SUCCESS, True,
                                status.HTTP_200_OK)
             return Response(res.success_payload(), status=status.HTTP_200_OK)
+        except Exception as err:
+            res = ResponseInfo(err, SOMETHING_WENT_WRONG, False,
+                               status.HTTP_401_UNAUTHORIZED)
+            return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
+    def put(self, request):
+        try:
+            self.serializers_class.Meta.depth = 0  # Adding depth value for Foreign fields
+            taskId = request.data.get('id', None)
+            taskList = caseManagementTask.objects.filter(id=taskId).first()
+            bodyParams = request.data
+            # if it's Default task create replica
+            if taskList.is_default:
+                _dict = {
+                    "message": request.data['message'] if 'message' in request.data else taskList.message,
+                    "name": request.data['name'] if 'name' in request.data else taskList.name,
+                    "type": taskList.type,
+                    "TJ": taskList.TJ,
+                    "JCP": taskList.JCP,
+                    "TCOM": taskList.TCOM,
+                    "REFTJ": taskList.REFTJ,
+                    "REFTC": taskList.REFTC,
+                    "CPH": taskList.CPH,
+                    "JAF": taskList.JAF,
+                    "CA": taskList.CA,
+                    "notification_date": request.data[
+                        'notification_date'] if 'notification_date' in request.data else taskList.notification_date,
+                    "status": request.data['status'] if 'status' in request.data else taskList.status,
+                    "subject": request.data['subject'] if 'subject' in request.data else taskList.subject,
+                    "case_management_id": request.data[
+                        'case_management_id'] if 'case_management_id' in request.data else taskList.case_management_id
+                }
+                bodyParams = _dict
+                serializer = self.serializers_class(data=bodyParams)
+                if serializer.is_valid():
+                    serializer.save()
+                    res = ResponseInfo(serializer.data, SUCCESS, True,
+                                       status.HTTP_201_CREATED)
+                    return Response(res.success_payload(), status=status.HTTP_201_CREATED)
+                res = ResponseInfo(serializer.errors, SOMETHING_WENT_WRONG, False,
+                                   status.HTTP_401_UNAUTHORIZED)
+                return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
+            # if its not default simply updating
+            serializer = self.serializers_class(taskList, data=bodyParams)
+            if serializer.is_valid():
+                serializer.save()
+                res = ResponseInfo(serializer.data, SUCCESS, True,
+                                   status.HTTP_201_CREATED)
+                return Response(res.success_payload(), status=status.HTTP_201_CREATED)
+            res = ResponseInfo(serializer.errors, SOMETHING_WENT_WRONG, False,
+                               status.HTTP_401_UNAUTHORIZED)
+            return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
         except Exception as err:
             res = ResponseInfo(err, SOMETHING_WENT_WRONG, False,
                                status.HTTP_401_UNAUTHORIZED)
