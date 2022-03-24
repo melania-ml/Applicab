@@ -232,14 +232,6 @@ function EtapeTab(props) {
         sortable: false
       },
       {
-        Header: "Num",
-        accessor: "company",
-        Cell: ({ row }) => {
-          return <span>{row.index + 1}</span>;
-        },
-        sortable: true
-      },
-      {
         Header: "Étape",
         accessor: "name",
         Cell: ({ row }) => {

@@ -26,7 +26,6 @@ function InformationTab() {
     contacts,
     editDossierData: { data, type }
   } = useSelector(({ dossiers }) => dossiers);
-  debugger;
   const filter = createFilterOptions();
   const [isValid, setIsValid] = useState(false);
   const [errors, setErrors] = useState({});

@@ -30,7 +30,6 @@ const tags = [];
 
 function EtapesDialog() {
   const [allFields, setAllFields] = useState({
-    indexNum: "",
     case_name: "",
     name: "",
     new_name: "",
@@ -43,6 +42,9 @@ function EtapesDialog() {
   });
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+  const [count, setCount] = useState(0);
+  const [isAddNotification, setIsAddNotification] = useState(false);
   const dispatch = useDispatch();
   const {
     etapeDialog: { data, props, type },
@@ -52,22 +54,16 @@ function EtapesDialog() {
 
   useEffect(() => {
     if (data && Object.keys(data).length !== 0) {
-      debugger;
       setAllFields({
         ...allFields,
-        indexNum: data.indexNum,
         case_name: editDossierData.data.case_name,
         name: data.name,
-        status: data.status
+        status: data.status || "A prévoir"
       });
     }
   }, [data, type]);
 
-  const dateArray = [
-    { name: "ItemOne", id: 1, type: "Jours" },
-    { name: "ItemTwo", id: 2, type: "les heures" },
-    { name: "ItemThree", id: 3, type: "minute" }
-  ];
+  const dateArray = [{ name: "ItemOne", id: 1, type: "Jours" }];
   const [list, updateList] = useState(dateArray);
 
   const onImageChange = (event) => {
@@ -106,6 +102,33 @@ function EtapesDialog() {
     setAllFields("");
   };
 
+  const handleRemoveItem = (e, value) => {
+    setNotifications(
+      notifications.filter((notification) => notification.id !== value)
+    );
+  };
+
+  useEffect(() => {
+    if (notifications.length < 5) {
+      setIsAddNotification(false);
+    } else {
+      setIsAddNotification(true);
+    }
+  }, [notifications.length]);
+
+  const addNotification = () => {
+    setCount(count + 1);
+    if (notifications.length < 5) {
+      let obj = {};
+      obj["id"] = count;
+      obj["count"] = "";
+      obj["format"] = "Day";
+      const newArr = [...notifications];
+      newArr.push(obj);
+      setNotifications(newArr);
+    }
+  };
+
   return (
     <Dialog
       classes={{
@@ -133,20 +156,6 @@ function EtapesDialog() {
       >
         <DialogContent classes={{ root: "p-24" }}>
           <div className="row">
-            <TextField
-              className="mb-12"
-              name="Position"
-              label="Position"
-              variant="outlined"
-              fullWidth
-              value={allFields.indexNum}
-              onChange={(e) => {
-                setAllFields({
-                  ...allFields,
-                  indexNum: e.target.value
-                });
-              }}
-            />
             <TextField
               className="mb-12"
               name="Dossier"
@@ -222,54 +231,57 @@ function EtapesDialog() {
                 <TextField className="w-full mb-12" {...params} />
               )}
             />
-            {allFields.dateValue ? (
-              <>
-                <TextField
-                  className="mb-12 xs=4"
-                  label=""
-                  type="number"
-                  variant="outlined"
-                />
-
-                <FormControl className=" mb-12 ml-12 w-6/12" variant="outlined">
-                  <InputLabel>Jours</InputLabel>
-                  <Select label="Time">
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    {dateArray.map((data) => (
-                      <MenuItem value={data.name} key={data.id}>
-                        {data.type}
-                      </MenuItem>
-                    ))}
-                  </Select>
-
-                  <span
-                    name={allFields.dateValue}
-                    //onClick={handleRemoveItem}
+            {notifications.length > 0 &&
+              notifications?.map((notification) => (
+                <div className="flex w-full mb-12">
+                  <TextField
+                    className="xs=4"
+                    hiddenLabel
+                    placeholder="Day Count"
+                    type="number"
+                    variant="filled"
+                    value={notification.count}
+                    onChange={(e) => {
+                      notifications.map((n) => {
+                        if (n.id === notification.id) {
+                          n.count = e.target.value;
+                        }
+                      });
+                      setNotifications([...notifications]);
+                    }}
+                  />
+                  <FormControl
+                    className="ml-12 w-6/12"
+                    hiddenLabel
+                    variant="filled"
                   >
+                    <Select placeholder="Jours" defaultValue="Jours">
+                      <MenuItem value="Jours" key="Jours">
+                        Jours
+                      </MenuItem>
+                    </Select>
                     <Icon
-                      className="ml-12"
                       style={{
                         fontSize: "xx-large",
                         margin: "-44px 310px 37px",
                         color: "#BABABF"
                       }}
+                      onClick={(e) => handleRemoveItem(e, notification.id)}
                     >
                       clear
                     </Icon>
-                  </span>
-                </FormControl>
-              </>
-            ) : (
-              ""
-            )}
+                  </FormControl>
+                </div>
+              ))}
 
             <div className="px-18">
               <Button
+                className="mb-12"
                 variant="outlined"
                 style={{ borderRadius: 5 }}
                 color="secondary"
+                disabled={isAddNotification}
+                onClick={addNotification}
               >
                 <Icon
                   style={{
@@ -283,10 +295,9 @@ function EtapesDialog() {
                 Ajouter une notification
               </Button>
               <br />
-              <h2>
+              <div className="flex mb-14 w-full">
                 <b>Message</b>
-              </h2>
-              <br />
+              </div>
             </div>
             <FormControl className="flex w-full mb-12" variant="outlined">
               <InputLabel>Choisissez un ou plusieurs clients</InputLabel>
