@@ -251,6 +251,26 @@ input[type="file"]::-webkit-file-upload-button {
   background-color: #0cb7e2;
   color: black;
 }
+.daycount{
+  width: 45%;
+}
+.hourscount{
+  width: 45%;
+}
+.daycount > div {
+    background: #fff;
+    border: 1px solid #c4c4c4;
+}
+.hourscount > div {
+    background: #fff;
+    border: 1px solid #c4c4c4;
+}
+.daycount > div:hover {
+	background-color: #fff;
+}
+.hourscount > div:hover {
+	background-color: #fff;
+}
 @media screen and (max-width: 767px) {
   .caseManagementTabs
     .MuiTabs-flexContainer.muiltr-heg063-MuiTabs-flexContainer {
@@ -276,5 +296,11 @@ input[type="file"]::-webkit-file-upload-button {
   }
   .faqcard2-txt {
     text-align: center;
+  }
+  .daycount{
+  width: 40%;
+  }
+  .hourscount{
+  width: 40%;
   }
 }

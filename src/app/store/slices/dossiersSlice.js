@@ -118,6 +118,21 @@ export const getDossiers = createAsyncThunk(
   }
 );
 
+export const updateEtapes = (allfields) => async (dispatch) => {
+  debugger;
+  await axios
+    .put("api/caseManagement/updateCaseTask", allfields)
+    .then((data) => {
+      if (data.data && data.data.success) {
+        dispatch(showMessage({ message: data.data.message }));
+        dispatch(getEtapes());
+      }
+    })
+    .catch((errors) => {
+      return dispatch(showMessage(errors));
+    });
+};
+
 const dossiersAdapter = createEntityAdapter({});
 
 export const { selectAll: selectDossiers } = dossiersAdapter.getSelectors(
