@@ -18,12 +18,12 @@ import {
   InputLabel,
   Select,
   TextField,
-  Icon
+  Icon,
 } from "@mui/material";
 import Statut from "app/main/constants/Statut";
 import {
   closeNewEtapeDialog,
-  closeEditEtapeDialog
+  closeEditEtapeDialog,
 } from "app/store/slices/dossiersSlice";
 
 const tags = [];
@@ -38,7 +38,7 @@ function EtapesDialog() {
     chooseCustomer: [],
     object: "",
     editorText: "",
-    selectedDocument: []
+    selectedDocument: [],
   });
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
@@ -49,7 +49,7 @@ function EtapesDialog() {
   const {
     etapeDialog: { data, props, type },
     editDossierData,
-    contacts
+    contacts,
   } = useSelector(({ dossiers }) => dossiers);
 
   useEffect(() => {
@@ -58,12 +58,12 @@ function EtapesDialog() {
         ...allFields,
         case_name: editDossierData.data.case_name,
         name: data.name,
-        status: data.status || "A prévoir"
+        status: data.status || "A prévoir",
       });
     } else {
       setAllFields({
         ...allFields,
-        case_name: editDossierData?.data?.case_name
+        case_name: editDossierData?.data?.case_name,
       });
     }
   }, [data, type]);
@@ -137,7 +137,7 @@ function EtapesDialog() {
   return (
     <Dialog
       classes={{
-        paper: "m-24"
+        paper: "m-24",
       }}
       {...props}
       onClose={closeComposeDialog}
@@ -172,7 +172,7 @@ function EtapesDialog() {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  case_name: e.target.value
+                  case_name: e.target.value,
                 });
               }}
             />
@@ -187,7 +187,7 @@ function EtapesDialog() {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  name: e.target.value
+                  name: e.target.value,
                 });
               }}
             />
@@ -202,7 +202,7 @@ function EtapesDialog() {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  new_name: e.target.value
+                  new_name: e.target.value,
                 });
               }}
             />
@@ -214,7 +214,7 @@ function EtapesDialog() {
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    status: e.target.value
+                    status: e.target.value,
                   })
                 }
               >
@@ -240,9 +240,9 @@ function EtapesDialog() {
             />
             {notifications.length > 0 &&
               notifications?.map((notification) => (
-                <div className="flex w-full mb-12">
+                <div className="flex w-full mb-12 relative">
                   <TextField
-                    className="xs=4"
+                    className="xs=4 daycount"
                     hiddenLabel
                     placeholder="Day Count"
                     type="number"
@@ -258,7 +258,7 @@ function EtapesDialog() {
                     }}
                   />
                   <FormControl
-                    className="ml-12 w-6/12"
+                    className="ml-12 hourscount"
                     hiddenLabel
                     variant="filled"
                   >
@@ -270,8 +270,10 @@ function EtapesDialog() {
                     <Icon
                       style={{
                         fontSize: "xx-large",
-                        margin: "-44px 310px 37px",
-                        color: "#BABABF"
+                        position: "absolute",
+                        right: "-40px",
+                        top: "10px",
+                        color: "#BABABF",
                       }}
                       onClick={(e) => handleRemoveItem(e, notification.id)}
                     >
@@ -294,7 +296,7 @@ function EtapesDialog() {
                   style={{
                     color: "secondary",
                     fontSize: "large",
-                    margin: "10px"
+                    margin: "10px",
                   }}
                 >
                   notifications
@@ -314,7 +316,7 @@ function EtapesDialog() {
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    chooseCustomer: e.target.value
+                    chooseCustomer: e.target.value,
                   })
                 }
               >
@@ -338,7 +340,7 @@ function EtapesDialog() {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  object: e.target.value
+                  object: e.target.value,
                 });
               }}
             />
@@ -377,8 +379,8 @@ function EtapesDialog() {
                     "mergeTableCells",
                     "|",
                     "undo",
-                    "redo"
-                  ]
+                    "redo",
+                  ],
                 }}
                 onChange={(event, editor) => {
                   const data = editor.getData();
@@ -400,7 +402,7 @@ function EtapesDialog() {
                 style={{
                   color: "secondary",
                   fontSize: "large",
-                  margin: "10px"
+                  margin: "10px",
                 }}
               >
                 attach_file
