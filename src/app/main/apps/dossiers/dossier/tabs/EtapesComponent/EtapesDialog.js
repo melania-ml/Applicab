@@ -60,6 +60,11 @@ function EtapesDialog() {
         name: data.name,
         status: data.status || "A prévoir"
       });
+    } else {
+      setAllFields({
+        ...allFields,
+        case_name: editDossierData?.data?.case_name
+      });
     }
   }, [data, type]);
 
@@ -223,6 +228,8 @@ function EtapesDialog() {
             <DateTimePicker
               label="Date"
               value={allFields.dateValue}
+              ampm={false}
+              ampmInClock={false}
               maxDate={new Date()}
               onChange={(newValue) => {
                 setAllFields({ ...allFields, dateValue: newValue });
