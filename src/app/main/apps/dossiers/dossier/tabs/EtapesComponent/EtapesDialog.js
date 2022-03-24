@@ -233,9 +233,9 @@ function EtapesDialog() {
             />
             {notifications.length > 0 &&
               notifications?.map((notification) => (
-                <div className="flex w-full mb-12">
+                <div className="flex w-full mb-12 relative">
                   <TextField
-                    className="xs=4"
+                    className="xs=4 daycount"
                     hiddenLabel
                     placeholder="Day Count"
                     type="number"
@@ -251,7 +251,7 @@ function EtapesDialog() {
                     }}
                   />
                   <FormControl
-                    className="ml-12 w-6/12"
+                    className="ml-12 hourscount"
                     hiddenLabel
                     variant="filled"
                   >
@@ -263,7 +263,9 @@ function EtapesDialog() {
                     <Icon
                       style={{
                         fontSize: "xx-large",
-                        margin: "-44px 310px 37px",
+                        position: "absolute",
+                        right: "-40px",
+                        top: "10px",
                         color: "#BABABF"
                       }}
                       onClick={(e) => handleRemoveItem(e, notification.id)}
