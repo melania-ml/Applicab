@@ -194,25 +194,6 @@ function InformationTab() {
         </Select>
       </FormControl>
       <FormControl className="flex w-full mb-12" variant="outlined">
-        <InputLabel>Type*</InputLabel>
-        <Select
-          label="Type*"
-          value={allFields.type}
-          onChange={(e) => {
-            setAllFields({
-              ...allFields,
-              type: e.target.value
-            });
-          }}
-        >
-          {Types.map((type) => (
-            <MenuItem value={type.value} key={type.id}>
-              {type.label}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <FormControl className="flex w-full mb-12" variant="outlined">
         <InputLabel>Procédure*</InputLabel>
         <Select
           label="Procédure*"
@@ -230,6 +211,25 @@ function InformationTab() {
           {procedures.map((procedure) => (
             <MenuItem value={procedure.id} key={procedure.id}>
               {procedure.procedure_type}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      <FormControl className="flex w-full mb-12" variant="outlined">
+        <InputLabel>Type*</InputLabel>
+        <Select
+          label="Type*"
+          value={allFields.type}
+          onChange={(e) => {
+            setAllFields({
+              ...allFields,
+              type: e.target.value
+            });
+          }}
+        >
+          {Types.map((type) => (
+            <MenuItem value={type.value} key={type.id}>
+              {type.label}
             </MenuItem>
           ))}
         </Select>
