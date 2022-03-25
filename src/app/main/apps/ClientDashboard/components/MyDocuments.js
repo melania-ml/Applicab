@@ -71,7 +71,7 @@ export default function MyDocuments() {
           <h1>
             <b>Commentire</b>
           </h1>
-          <textarea className="w-full" style={{ height:140 }}>
+          <textarea className="w-full resize-none" style={{ height: 140 }}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Nibh
             mauris cursus mattis molestie. Ligula ullamcorper malesuada proin
