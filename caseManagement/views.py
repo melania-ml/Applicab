@@ -123,6 +123,8 @@ class caseManagementTaskView(APIView):
             reqData = request.data
             # Remove blank data from dictionary  Q(user_id=userId) | Q(is_default=True)
             kwargs = dict((k, v) for k, v in reqData.items() if v)
+            kwargs['type__in'] = [kwargs['type'], 'Les deuX']
+            del kwargs['type']
             query = Q(**kwargs)
 
             if 'case_management_id' in kwargs:
