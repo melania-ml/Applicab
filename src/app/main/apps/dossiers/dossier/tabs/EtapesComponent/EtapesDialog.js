@@ -38,7 +38,7 @@ function EtapesDialog() {
     client_id: [],
     object: "",
     editorText: "",
-    selectedDocument: []
+    files: []
   });
   const [notifications, setNotifications] = useState([]);
   const [count, setCount] = useState(0);
@@ -66,9 +66,14 @@ function EtapesDialog() {
       });
     }
   }, [data, type]);
-
-  const onImageChange = (event) => {
-    const file = event.target.files[0];
+  let fileObj = [];
+  let fileArray = [];
+  const onFileUpload = (e) => {
+    fileObj.push(e.target.files);
+    for (let i = 0; i < fileObj[0].length; i++) {
+      fileArray.push(URL.createObjectURL(fileObj[0][i]));
+    }
+    setAllFields({ ...allFields, file: fileArray });
   };
 
   useEffect(() => {
@@ -113,7 +118,7 @@ function EtapesDialog() {
     if (notifications.length < 5) {
       let obj = {};
       obj["id"] = count;
-      obj["count"] = "";
+      obj["count"] = notifications.length === 0 ? 15 : "";
       obj["format"] = "Day";
       const newArr = [...notifications];
       newArr.push(obj);
@@ -230,6 +235,7 @@ function EtapesDialog() {
             onChange={(newValue) => {
               setAllFields({ ...allFields, dateValue: newValue });
             }}
+            onClose={() => addNotification()}
             renderInput={(params) => (
               <TextField className="w-full mb-12" {...params} />
             )}
@@ -263,18 +269,21 @@ function EtapesDialog() {
                       Jours
                     </MenuItem>
                   </Select>
-                  <Icon
-                    style={{
-                      fontSize: "xx-large",
-                      position: "absolute",
-                      right: "-40px",
-                      top: "10px",
-                      color: "#BABABF"
-                    }}
-                    onClick={(e) => handleRemoveItem(e, notification.id)}
-                  >
-                    clear
-                  </Icon>
+                  {notification.id !== 0 && (
+                    <Icon
+                      style={{
+                        fontSize: "xx-large",
+                        position: "absolute",
+                        right: "-40px",
+                        top: "10px",
+                        color: "#BABABF",
+                        cursor: "pointer"
+                      }}
+                      onClick={(e) => handleRemoveItem(e, notification.id)}
+                    >
+                      clear
+                    </Icon>
+                  )}
                 </FormControl>
               </div>
             ))}
@@ -415,9 +424,9 @@ function EtapesDialog() {
               name="Ajouter un document"
               color="blue"
               type="file"
-              multiple="multiple"
+              multiple
               id="icon-button-file"
-              //onChange={onSelectDocument}
+              onChange={onFileUpload}
               className="filetype"
             />
           </Button>
