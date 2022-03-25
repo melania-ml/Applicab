@@ -269,21 +269,19 @@ function EtapesDialog() {
                       Jours
                     </MenuItem>
                   </Select>
-                  {notification.id !== 0 && (
-                    <Icon
-                      style={{
-                        fontSize: "xx-large",
-                        position: "absolute",
-                        right: "-40px",
-                        top: "10px",
-                        color: "#BABABF",
-                        cursor: "pointer"
-                      }}
-                      onClick={(e) => handleRemoveItem(e, notification.id)}
-                    >
-                      clear
-                    </Icon>
-                  )}
+                  <Icon
+                    style={{
+                      fontSize: "xx-large",
+                      position: "absolute",
+                      right: "-40px",
+                      top: "10px",
+                      color: "#BABABF",
+                      cursor: "pointer"
+                    }}
+                    onClick={(e) => handleRemoveItem(e, notification.id)}
+                  >
+                    clear
+                  </Icon>
                 </FormControl>
               </div>
             ))}
