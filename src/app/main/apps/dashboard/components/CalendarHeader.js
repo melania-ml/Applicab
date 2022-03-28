@@ -1,21 +1,22 @@
-import Icon from '@mui/material/Icon';
-import { styled, ThemeProvider } from '@mui/material/styles';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import Typography from '@mui/material/Typography';
-import { selectMainThemeDark } from 'app/store/fuse/settingsSlice';
-import clsx from 'clsx';
-import { motion } from 'framer-motion';
-import { useSelector } from 'react-redux';
-import format from 'date-fns/format';
+import Icon from "@mui/material/Icon";
+import { styled, ThemeProvider } from "@mui/material/styles";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import { selectMainThemeDark } from "app/store/fuse/settingsSlice";
+import clsx from "clsx";
+import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
+import format from "date-fns/format";
+import { color } from "@mui/system";
 
-const Root = styled('div')(({ theme }) => ({
-  color: '#000000',
-  backgroundPosition: '0 50%',
-  backgroundRepeat: 'no-repeat',
-  '&:before': {
+const Root = styled("div")(({ theme }) => ({
+  color: "#000000",
+  backgroundPosition: "0 50%",
+  backgroundRepeat: "no-repeat",
+  "&:before": {
     content: "''",
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     right: 0,
     bottom: 0,
@@ -27,16 +28,16 @@ const Root = styled('div')(({ theme }) => ({
 
 const viewNamesObj = {
   dayGridMonth: {
-    title: 'Month',
-    icon: 'view_module',
+    title: "Month",
+    icon: "view_module",
   },
   timeGridWeek: {
-    title: 'Week',
-    icon: 'view_week',
+    title: "Week",
+    icon: "view_week",
   },
   timeGridDay: {
-    title: 'Day',
-    icon: 'view_agenda',
+    title: "Day",
+    icon: "view_agenda",
   },
 };
 
@@ -45,21 +46,24 @@ function CalendarHeader(props) {
 
   const mainThemeDark = useSelector(selectMainThemeDark);
   const calendarApi = () => calendarRef.current?.getApi();
+
   return (
     <ThemeProvider theme={mainThemeDark}>
       <Root
         className={clsx(
-          'flex relative',
-          format(new Date(currentDate?.start || null), 'MMM')
+          "flex relative",
+          format(new Date(currentDate?.start || null), "MMM")
         )}
       >
         <div className="flex flex-1 flex-col justify-between z-10 container">
           <div className="flex flex-col items-center justify-between sm:flex-row">
             <div className="flex items-center sm:mb-0">
-              <h1 style={{ padding: 8 }}><b>Calendar</b> </h1>
+              <h1 style={{ padding: 8 }}>
+                <b>Calendrier</b>{" "}
+              </h1>
             </div>
             <div className="flex items-center">
-              <Tooltip title="Today">
+              {/* <Tooltip title="Today">
                 <div>
                   <motion.div
                     initial={{ scale: 0 }}
@@ -70,11 +74,11 @@ function CalendarHeader(props) {
                       onClick={() => calendarApi().today()}
                       size="large"
                     >
-                      <Icon style={{ color: '#000000' }}>today</Icon>
+                      <Icon style={{ color: "#000000" }}>today</Icon>
                     </IconButton>
                   </motion.div>
                 </div>
-              </Tooltip>
+              </Tooltip> */}
               {Object.entries(viewNamesObj).map(([name, view]) => (
                 <Tooltip title={view.title} key={name}>
                   <div>
@@ -84,7 +88,11 @@ function CalendarHeader(props) {
                     >
                       <IconButton
                         aria-label={name}
-                        style={{ color: '#000000' }}
+                        style={
+                          currentDate?.view.type === name
+                            ? { color: "black" }
+                            : { color: "#BBBBBB" }
+                        }
                         onClick={() => calendarApi().changeView(name)}
                         disabled={currentDate?.view.type === name}
                         size="large"
@@ -104,16 +112,30 @@ function CalendarHeader(props) {
             animate={{ opacity: 1, transition: { delay: 0.3 } }}
           >
             <Tooltip title="Previous">
-              <IconButton aria-label="Previous" onClick={() => calendarApi().prev()} size="large">
-                <Icon style={{ color: '#000000' }}>
-                  {mainThemeDark.direction === 'ltr' ? 'chevron_left' : 'chevron_right'}
+              <IconButton
+                aria-label="Previous"
+                onClick={() => calendarApi().prev()}
+                size="large"
+              >
+                <Icon style={{ color: "#000000" }}>
+                  {mainThemeDark.direction === "ltr"
+                    ? "chevron_left"
+                    : "chevron_right"}
                 </Icon>
               </IconButton>
             </Tooltip>
             <Typography variant="h6">{currentDate?.view.title}</Typography>
             <Tooltip title="Next">
-              <IconButton aria-label="Next" onClick={() => calendarApi().next()} size="large">
-                <Icon style={{ color: '#000000' }}>{mainThemeDark.direction === 'ltr' ? 'chevron_right' : 'chevron_left'}</Icon>
+              <IconButton
+                aria-label="Next"
+                onClick={() => calendarApi().next()}
+                size="large"
+              >
+                <Icon style={{ color: "#000000" }}>
+                  {mainThemeDark.direction === "ltr"
+                    ? "chevron_right"
+                    : "chevron_left"}
+                </Icon>
               </IconButton>
             </Tooltip>
           </motion.div>
