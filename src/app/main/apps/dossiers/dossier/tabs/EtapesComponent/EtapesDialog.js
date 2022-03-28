@@ -32,7 +32,7 @@ function EtapesDialog() {
   const [allFields, setAllFields] = useState({
     case_name: "",
     name: "",
-    new_name: "",
+    sub_name: "",
     status: "A prévoir",
     dateValue: null,
     client_id: [],
@@ -56,7 +56,8 @@ function EtapesDialog() {
         ...allFields,
         case_name: editDossierData.data.case_name,
         name: data.name,
-        status: data.status || "A prévoir"
+        status: data.status || "A prévoir",
+        sub_name: data.sub_name
       });
     } else {
       setAllFields({
@@ -198,11 +199,11 @@ function EtapesDialog() {
               label="Renommer"
               variant="outlined"
               fullWidth
-              value={allFields.new_name}
+              value={allFields.sub_name}
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  new_name: e.target.value
+                  sub_name: e.target.value
                 });
               }}
             />

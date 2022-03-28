@@ -225,7 +225,10 @@ function EtapeTab(props) {
         Cell: ({ row }) => {
           const value = row.original.status;
           return value === "Fait" ? (
-            <CustomTooltip placement="top-end" title={row.original.name}>
+            <CustomTooltip
+              placement="top-end"
+              title={row.original.sub_name || row.original.name}
+            >
               <i
                 style={{
                   width: 200,
@@ -235,11 +238,14 @@ function EtapeTab(props) {
                   display: "inline-block"
                 }}
               >
-                {row.original.name}
+                {row.original.sub_name || row.original.name}
               </i>
             </CustomTooltip>
           ) : (
-            <CustomTooltip placement="top-end" title={row.original.name}>
+            <CustomTooltip
+              placement="top-end"
+              title={row.original.sub_name || row.original.name}
+            >
               <span
                 style={{
                   color: value === "Archivé" ? "#C4C4C4" : "",
@@ -250,7 +256,7 @@ function EtapeTab(props) {
                   display: "inline-block"
                 }}
               >
-                {row.original.name}
+                {row.original.sub_name || row.original.name}
               </span>
             </CustomTooltip>
           );
@@ -259,20 +265,23 @@ function EtapeTab(props) {
       },
       {
         Header: "Date",
-        accessor: "created_date",
+        accessor: "notification_date",
         Cell: ({ row }) => {
+          if (!row.original.notification_date) {
+            return "A RENSEIGNER";
+          }
           const value = row.original.status;
           return value === "Fait" ? (
             <i>
               {getFormattedDateTime({
-                date: row.original.created_date,
+                date: row.original.notification_date,
                 format: "DD-MM-YYYY HH:mm:ss"
               })}
             </i>
           ) : (
             <span style={{ color: value === "Archivé" ? "#C4C4C4" : "" }}>
               {getFormattedDateTime({
-                date: row.original.created_date,
+                date: row.original.notification_date,
                 format: "DD-MM-YYYY HH:mm:ss"
               })}
             </span>
