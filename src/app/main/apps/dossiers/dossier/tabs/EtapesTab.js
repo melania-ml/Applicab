@@ -223,10 +223,26 @@ function EtapeTab(props) {
         Header: "Étape",
         accessor: "name",
         Cell: ({ row }) => {
-          return (
+          const value = row.original.status;
+          return value === "Fait" ? (
+            <CustomTooltip placement="top-end" title={row.original.name}>
+              <i
+                style={{
+                  width: 200,
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  display: "inline-block"
+                }}
+              >
+                {row.original.name}
+              </i>
+            </CustomTooltip>
+          ) : (
             <CustomTooltip placement="top-end" title={row.original.name}>
               <span
                 style={{
+                  color: value === "Archivé" ? "#C4C4C4" : "",
                   width: 200,
                   whiteSpace: "nowrap",
                   overflow: "hidden",
@@ -245,8 +261,16 @@ function EtapeTab(props) {
         Header: "Date",
         accessor: "created_date",
         Cell: ({ row }) => {
-          return (
-            <span>
+          const value = row.original.status;
+          return value === "Fait" ? (
+            <i>
+              {getFormattedDateTime({
+                date: row.original.created_date,
+                format: "DD-MM-YYYY HH:mm:ss"
+              })}
+            </i>
+          ) : (
+            <span style={{ color: value === "Archivé" ? "#C4C4C4" : "" }}>
               {getFormattedDateTime({
                 date: row.original.created_date,
                 format: "DD-MM-YYYY HH:mm:ss"
@@ -264,8 +288,31 @@ function EtapeTab(props) {
           const value = row.original.status;
           return value ? (
             <div className="flex items-center dropSelect">
-              <Icon style={{ color: "#1BD7EF", fontSize: "large" }}>label</Icon>
-              {value}
+              <Icon
+                style={{
+                  color:
+                    value === "Fait"
+                      ? "#78C5A0"
+                      : value === "A faire"
+                      ? "#1BD7EF"
+                      : value === "A prévoir"
+                      ? "#C4C4C4"
+                      : "#E5E5E5",
+                  fontSize: "large"
+                }}
+              >
+                label
+              </Icon>
+              {value === "Fait" ? (
+                <i className="ml-3">{value}</i>
+              ) : (
+                <span
+                  style={{ color: value === "Archivé" ? "#C4C4C4" : "" }}
+                  className="ml-3"
+                >
+                  {value}
+                </span>
+              )}
             </div>
           ) : (
             "-"
