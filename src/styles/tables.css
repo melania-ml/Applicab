@@ -96,9 +96,17 @@ Basic Table Styles
 .table-responsive {
   display: block;
   width: 100%;
+  height: 25rem;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.textWidthLimit{
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 30rem;
 }
 
 table.simple {

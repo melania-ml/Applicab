@@ -23,11 +23,18 @@ export default function InfoCard() {
         <Grid container spacing={5} columns={12}>
           <Grid item xs={12} md={6}>
             <Item className="h-full mt-5 mt-md-0">
-              <h1 className="py-1 font-semibold text-sm text-black">Mon dossier</h1>
-              <h4 className="pb-20 font-medium text-sm text-black">
-                SAA-BAH-20211217-0065 / Altata Juridiction : Tribunal Judiciaire
-                AGEN Gestionnaire : Melania Muñoz
-              </h4>{" "}
+              <h1 className="py-1 font-semibold text-base text-black textWidthLimit">
+                Mon dossier
+              </h1>
+              <h4 className="font-medium text-sm text-black textWidthLimit">
+                SAA-BAH-20211217-0065 / Altata
+              </h4>
+              <h4 className="font-medium text-sm text-black textWidthLimit">
+                Juridiction : Tribunal Judiciaire AGEN{" "}
+              </h4>
+              <h4 className="font-medium text-sm text-black textWidthLimit">
+                Gestionnaire : Melania Muñoz
+              </h4>
             </Item>
           </Grid>
           <Grid item xs={12} md={6}>
@@ -37,20 +44,29 @@ export default function InfoCard() {
                 alt="user photo"
                 src={user.data.profile}
               />
-              <div>
-              <h1 className="py-1 font-semibold text-sm text-black">Mon Avocat</h1>
-              <h4 className="pb-12 font-medium text-sm text-black">
-                Altata Conseil Company Avocat - Melania Muñoz www.altata.tech
-              </h4>
+              <div className="ml-12">
+                <h1 className="py-1 font-semibold text-base text-black textWidthLimit">
+                  Mon Avocat
+                </h1>
+                <h4 className="font-medium text-sm text-black textWidthLimit">
+                  Altata Conseil Company Altata Conseil Company Altata Conseil
+                  Company Altata Conseil Company
+                </h4>
+                <h4 className="font-medium text-sm text-black textWidthLimit">
+                  Avocat - Melania Muñoz Avocat - Melania Muñoz Avocat - Melania
+                  Muñoz Avocat - Melania Muñoz
+                </h4>
+                <h4 className="font-medium text-sm text-black textWidthLimit">
+                  www.altata.tech
+                </h4>
               </div>
-              {" "}
               <Button
                 // onClick={() => {
                 //   dispatch(dispatch(openNewContactDialog()));
                 // }}
                 variant="contained"
                 color="secondary"
-                className="w-full rounded"
+                className="mr-16 rounded float-right ml-auto w-auto whitespace-no-wrap"
               >
                 Nouveau message
               </Button>
