@@ -27,10 +27,11 @@ import {
   openEditEtapeDialog,
   setDossiersSearchText,
   getEtapes,
+  setEtapeObj
 } from "app/store/slices/dossiersSlice";
 import {
   getFormattedDateTime,
-  getProcedureCode,
+  getProcedureCode
 } from "app/main/common/functions";
 
 function EtapeTab(props) {
@@ -46,33 +47,33 @@ function EtapeTab(props) {
 
   const rowsData1 = [
     {
-      actionType: "Tous",
+      actionType: "Tous"
     },
     {
       icon: (
         <Icon
           style={{
             color: "#C4C4C4",
-            fontSize: "large",
+            fontSize: "large"
           }}
         >
           label
         </Icon>
       ),
-      actionType: "A prévoir",
+      actionType: "A prévoir"
     },
     {
       icon: (
         <Icon
           style={{
             color: "#1BD7EF",
-            fontSize: "large",
+            fontSize: "large"
           }}
         >
           label
         </Icon>
       ),
-      actionType: "A faire",
+      actionType: "A faire"
     },
 
     {
@@ -80,27 +81,27 @@ function EtapeTab(props) {
         <Icon
           style={{
             color: "#78C5A0",
-            fontSize: "large",
+            fontSize: "large"
           }}
         >
           label
         </Icon>
       ),
-      actionType: "Fait",
+      actionType: "Fait"
     },
     {
       icon: (
         <Icon
           style={{
             color: "#E5E5E5",
-            fontSize: "large",
+            fontSize: "large"
           }}
         >
           label
         </Icon>
       ),
-      actionType: "Archivé",
-    },
+      actionType: "Archivé"
+    }
   ];
 
   const rowsData2 = [
@@ -109,40 +110,27 @@ function EtapeTab(props) {
         <Icon
           style={{
             color: "#BABABF",
-            fontSize: "large",
+            fontSize: "large"
           }}
         >
           near_me
         </Icon>
       ),
-      actionType: "Message envoyé",
+      actionType: "Message envoyé"
     },
     {
       icon: (
         <Icon
           style={{
             color: "#BABABF",
-            fontSize: "large",
-          }}
-        >
-          access_time
-        </Icon>
-      ),
-      actionType: "En attente",
-    },
-    {
-      icon: (
-        <Icon
-          style={{
-            color: "#BABABF",
-            fontSize: "large",
+            fontSize: "large"
           }}
         >
           text_snippet
         </Icon>
       ),
-      actionType: "Brouillon",
-    },
+      actionType: "Brouillon"
+    }
   ];
   const drawer = (
     <div>
@@ -171,7 +159,7 @@ function EtapeTab(props) {
               <Icon
                 style={{
                   color: "#BABABF",
-                  fontSize: "large",
+                  fontSize: "large"
                 }}
               >
                 delete
@@ -189,7 +177,7 @@ function EtapeTab(props) {
     etapes,
     etapeObj,
     editDossierData: { data, type },
-    procedures,
+    procedures
   } = useSelector(({ dossiers }) => dossiers);
 
   const [openEtape, setOpenEtape] = useState(false);
@@ -203,11 +191,11 @@ function EtapeTab(props) {
     <Tooltip {...props} arrow classes={{ popper: className }} />
   ))(({ theme }) => ({
     [`& .${tooltipClasses.arrow}`]: {
-      color: "#252E3E",
+      color: "#252E3E"
     },
     [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: "#252E3E",
-    },
+      backgroundColor: "#252E3E"
+    }
   }));
 
   const columns = useMemo(
@@ -229,7 +217,7 @@ function EtapeTab(props) {
         },
         className: "justify-center",
         width: 64,
-        sortable: false,
+        sortable: false
       },
       {
         Header: "Étape",
@@ -243,7 +231,7 @@ function EtapeTab(props) {
                   whiteSpace: "nowrap",
                   overflow: "hidden",
                   textOverflow: "ellipsis",
-                  display: "inline-block",
+                  display: "inline-block"
                 }}
               >
                 {row.original.name}
@@ -251,7 +239,7 @@ function EtapeTab(props) {
             </CustomTooltip>
           );
         },
-        sortable: true,
+        sortable: true
       },
       {
         Header: "Date",
@@ -261,23 +249,28 @@ function EtapeTab(props) {
             <span>
               {getFormattedDateTime({
                 date: row.original.created_date,
-                format: "DD-MM-YYYY HH:mm:ss",
+                format: "DD-MM-YYYY HH:mm:ss"
               })}
             </span>
           );
         },
-        sortable: true,
+        sortable: true
       },
       {
         Header: "Statut",
         accessor: "type",
         sortable: true,
-        Cell: ({ row }) => (
-          <div className="flex items-center dropSelect">
-            <Icon style={{ color: "#1BD7EF", fontSize: "large" }}>label</Icon>A
-            prévoir
-          </div>
-        ),
+        Cell: ({ row }) => {
+          const value = row.original.status;
+          return value ? (
+            <div className="flex items-center dropSelect">
+              <Icon style={{ color: "#1BD7EF", fontSize: "large" }}>label</Icon>
+              {value}
+            </div>
+          ) : (
+            "-"
+          );
+        }
       },
       {
         Header: "Notifié",
@@ -291,8 +284,8 @@ function EtapeTab(props) {
               </Icon>
             </CustomTooltip>
           </div>
-        ),
-      },
+        )
+      }
     ],
 
     [dispatch]
@@ -307,6 +300,7 @@ function EtapeTab(props) {
       objWhileUpdate["type"] = data.type;
       objWhileUpdate["case_management_id"] = data.id;
       objWhileUpdate[key] = true;
+      dispatch(setEtapeObj(objWhileUpdate));
       dispatch(getEtapes(objWhileUpdate));
     }
   }, [data, type]);
@@ -366,7 +360,7 @@ function EtapeTab(props) {
                     fullWidth
                     value={searchText}
                     inputProps={{
-                      "aria-label": "Search",
+                      "aria-label": "Search"
                     }}
                     onChange={(ev) => dispatch(setDossiersSearchText(ev))}
                   />
