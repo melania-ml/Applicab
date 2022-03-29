@@ -22,6 +22,7 @@ import {
   Autocomplete
 } from "@mui/material";
 import Statut from "app/main/constants/Statut";
+import { getFormattedDateTime } from "app/main/common/functions";
 import {
   closeNewEtapeDialog,
   closeEditEtapeDialog,
@@ -34,9 +35,9 @@ function EtapesDialog() {
     name: "",
     sub_name: "",
     status: "A prévoir",
-    dateValue: null,
+    notification_date: null,
     client_id: [],
-    object: "",
+    subject: "",
     editorText: "",
     files: []
   });
@@ -57,7 +58,13 @@ function EtapesDialog() {
         case_name: editDossierData.data.case_name,
         name: data.name,
         status: data.status || "A prévoir",
-        sub_name: data.sub_name
+        sub_name: data.sub_name,
+        subject: data.subject,
+        notification_date:
+          data.notification_date &&
+          getFormattedDateTime({
+            date: data.notification_date
+          })
       });
     } else {
       setAllFields({
@@ -127,7 +134,6 @@ function EtapesDialog() {
     }
   };
   const onSubmit = () => {
-    debugger;
     if (type === "edit") {
       dispatch(
         updateEtapes({
@@ -229,12 +235,12 @@ function EtapesDialog() {
           </FormControl>
           <DateTimePicker
             label="Date"
-            value={allFields.dateValue}
+            value={allFields.notification_date}
             ampm={false}
             ampmInClock={false}
             maxDate={new Date()}
             onChange={(newValue) => {
-              setAllFields({ ...allFields, dateValue: newValue });
+              setAllFields({ ...allFields, notification_date: newValue });
             }}
             onClose={() => addNotification()}
             renderInput={(params) => (
@@ -347,11 +353,11 @@ function EtapesDialog() {
             label="Object"
             variant="outlined"
             fullWidth
-            value={allFields.object}
+            value={allFields.subject}
             onChange={(e) => {
               setAllFields({
                 ...allFields,
-                object: e.target.value
+                subject: e.target.value
               });
             }}
           />

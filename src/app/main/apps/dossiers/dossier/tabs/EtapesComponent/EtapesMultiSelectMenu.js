@@ -54,7 +54,7 @@ function EtapesMultiSelectMenu(props) {
           <MenuItem
             className="etapesListItem"
             style={{
-              flexDirection: "column",
+              flexDirection: "column"
             }}
             onClick={() => {
               // dispatch(removeContacts(selectedContactIds));
@@ -70,7 +70,7 @@ function EtapesMultiSelectMenu(props) {
             </div>
             <div className="flex items-center w-full mb-3">
               <ListItemIcon className="min-w-40">
-                <Icon>delete</Icon>
+                <Icon>content_copy</Icon>
               </ListItemIcon>
               <ListItemText primary="Dupliquer" />
             </div>
@@ -79,7 +79,7 @@ function EtapesMultiSelectMenu(props) {
                 <Icon
                   style={{
                     color: "#C4C4C4",
-                    fontSize: "large",
+                    fontSize: "large"
                   }}
                 >
                   label
@@ -92,7 +92,7 @@ function EtapesMultiSelectMenu(props) {
                 <Icon
                   style={{
                     color: "#1BD7EF",
-                    fontSize: "large",
+                    fontSize: "large"
                   }}
                 >
                   label
@@ -105,7 +105,7 @@ function EtapesMultiSelectMenu(props) {
                 <Icon
                   style={{
                     color: "#78C5A0",
-                    fontSize: "large",
+                    fontSize: "large"
                   }}
                 >
                   label
@@ -118,7 +118,7 @@ function EtapesMultiSelectMenu(props) {
                 <Icon
                   style={{
                     color: "#E5E5E5",
-                    fontSize: "large",
+                    fontSize: "large"
                   }}
                 >
                   label

@@ -9,7 +9,7 @@ import {
   Chip,
   Button
 } from "@mui/material";
-import Statut from "app/main/constants/Statut";
+import CaseStatus from "app/main/constants/CaseStatus";
 import Types from "app/main/constants/Types";
 import { useDispatch, useSelector } from "react-redux";
 import { createFilterOptions } from "@mui/material/Autocomplete";
@@ -186,7 +186,7 @@ function InformationTab() {
             });
           }}
         >
-          {Statut.map((status) => (
+          {CaseStatus.map((status) => (
             <MenuItem value={status.value} key={status.id}>
               {status.label}
             </MenuItem>

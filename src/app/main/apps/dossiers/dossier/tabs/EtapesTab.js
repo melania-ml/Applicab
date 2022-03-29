@@ -14,6 +14,7 @@ import { tooltipClasses, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 import _ from "@lodash";
+import FuseLoading from "@fuse/core/FuseLoading";
 import { Paper, Input, Button, Tooltip } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { useMemo, useEffect, useState } from "react";
@@ -36,7 +37,8 @@ import {
 
 function EtapeTab(props) {
   const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [selectedList, setSelectedList] = useState("Tous");
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -45,129 +47,146 @@ function EtapeTab(props) {
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
-  const rowsData1 = [
-    {
-      actionType: "Tous"
-    },
-    {
-      icon: (
-        <Icon
-          style={{
-            color: "#C4C4C4",
-            fontSize: "large"
-          }}
-        >
-          label
-        </Icon>
-      ),
-      actionType: "A prévoir"
-    },
-    {
-      icon: (
-        <Icon
-          style={{
-            color: "#1BD7EF",
-            fontSize: "large"
-          }}
-        >
-          label
-        </Icon>
-      ),
-      actionType: "A faire"
-    },
+  const listClick = (name) => {
+    setSelectedList(name);
+  };
 
-    {
-      icon: (
-        <Icon
-          style={{
-            color: "#78C5A0",
-            fontSize: "large"
-          }}
-        >
-          label
-        </Icon>
-      ),
-      actionType: "Fait"
-    },
-    {
-      icon: (
-        <Icon
-          style={{
-            color: "#E5E5E5",
-            fontSize: "large"
-          }}
-        >
-          label
-        </Icon>
-      ),
-      actionType: "Archivé"
-    }
-  ];
-
-  const rowsData2 = [
-    {
-      icon: (
-        <Icon
-          style={{
-            color: "#BABABF",
-            fontSize: "large"
-          }}
-        >
-          near_me
-        </Icon>
-      ),
-      actionType: "Message envoyé"
-    },
-    {
-      icon: (
-        <Icon
-          style={{
-            color: "#BABABF",
-            fontSize: "large"
-          }}
-        >
-          text_snippet
-        </Icon>
-      ),
-      actionType: "Brouillon"
-    }
-  ];
   const drawer = (
     <div>
       <List>
-        {rowsData1.map((index) => (
-          <ListItem button key={index}>
-            <ListItemIcon>{index.icon}</ListItemIcon>
-            <ListItemText primary={index.actionType} />
-          </ListItem>
-        ))}
+        <ListItem
+          style={{ background: selectedList === "Tous" && "#C4C4C4" }}
+          button
+          onClick={() => listClick("Tous")}
+        >
+          <ListItemIcon></ListItemIcon>
+          <ListItemText primary="Tous" />
+        </ListItem>
+        <ListItem
+          button
+          style={{ background: selectedList === "A prévoir" && "#C4C4C4" }}
+          onClick={() => listClick("A prévoir")}
+        >
+          <ListItemIcon>
+            <Icon
+              style={{
+                color: "#C4C4C4",
+                fontSize: "large"
+              }}
+            >
+              label
+            </Icon>
+          </ListItemIcon>
+          <ListItemText primary="A prévoir" />
+        </ListItem>
+        <ListItem
+          button
+          style={{ background: selectedList === "A faire" && "#C4C4C4" }}
+          onClick={() => listClick("A faire")}
+        >
+          <ListItemIcon>
+            <Icon
+              style={{
+                color: "#1BD7EF",
+                fontSize: "large"
+              }}
+            >
+              label
+            </Icon>
+          </ListItemIcon>
+          <ListItemText primary="A faire" />
+        </ListItem>
+        <ListItem
+          button
+          style={{ background: selectedList === "Fait" && "#C4C4C4" }}
+          onClick={() => listClick("Fait")}
+        >
+          <ListItemIcon>
+            <Icon
+              style={{
+                color: "#78C5A0",
+                fontSize: "large"
+              }}
+            >
+              label
+            </Icon>
+          </ListItemIcon>
+          <ListItemText primary="Fait" />
+        </ListItem>
+        <ListItem
+          button
+          style={{ background: selectedList === "Archivé" && "#C4C4C4" }}
+          onClick={() => listClick("Archivé")}
+        >
+          <ListItemIcon>
+            <Icon
+              style={{
+                color: "#E5E5E5",
+                fontSize: "large"
+              }}
+            >
+              label
+            </Icon>
+          </ListItemIcon>
+          <ListItemText primary="Archivé" />
+        </ListItem>
       </List>
       <Divider />
       <List>
-        {rowsData2.map((index) => (
-          <ListItem button key={index}>
-            <ListItemIcon>{index.icon}</ListItemIcon>
-            <ListItemText primary={index.actionType} />
-          </ListItem>
-        ))}
+        <ListItem
+          button
+          style={{ background: selectedList === "Message envoyé" && "#C4C4C4" }}
+          onClick={() => listClick("Message envoyé")}
+        >
+          <ListItemIcon>
+            <Icon
+              style={{
+                color: "#BABABF",
+                fontSize: "large"
+              }}
+            >
+              near_me
+            </Icon>
+          </ListItemIcon>
+          <ListItemText primary="Message envoyé" />
+        </ListItem>
+        <ListItem
+          button
+          style={{ background: selectedList === "Brouillon" && "#C4C4C4" }}
+          onClick={() => listClick("Brouillon")}
+        >
+          <ListItemIcon>
+            <Icon
+              style={{
+                color: "#BABABF",
+                fontSize: "large"
+              }}
+            >
+              near_me
+            </Icon>
+          </ListItemIcon>
+          <ListItemText primary="Brouillon" />
+        </ListItem>
       </List>
       <Divider />
       <List>
-        {["Corbeille"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              <Icon
-                style={{
-                  color: "#BABABF",
-                  fontSize: "large"
-                }}
-              >
-                delete
-              </Icon>
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        <ListItem
+          button
+          style={{ background: selectedList === "Corbeille" && "#C4C4C4" }}
+          onClick={() => listClick("Corbeille")}
+        >
+          <ListItemIcon>
+            <Icon
+              style={{
+                color: "#BABABF",
+                fontSize: "large"
+              }}
+            >
+              delete
+            </Icon>
+          </ListItemIcon>
+          <ListItemText primary="Corbeille" />
+        </ListItem>
       </List>
     </div>
   );
@@ -177,7 +196,8 @@ function EtapeTab(props) {
     etapes,
     etapeObj,
     editDossierData: { data, type },
-    procedures
+    procedures,
+    isLoading
   } = useSelector(({ dossiers }) => dossiers);
 
   const [openEtape, setOpenEtape] = useState(false);
@@ -384,7 +404,9 @@ function EtapeTab(props) {
   if (!filteredData) {
     return null;
   }
-
+  if (isLoading) {
+    return <FuseLoading />;
+  }
   return (
     <motion.div
       initial={{ y: 20, opacity: 0 }}

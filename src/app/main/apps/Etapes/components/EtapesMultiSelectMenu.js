@@ -75,7 +75,7 @@ function EtapesMultiSelectMenu(props) {
                 <Icon
                   style={{
                     color: "#C4C4C4",
-                    fontSize: "large",
+                    fontSize: "large"
                   }}
                 >
                   label
@@ -88,7 +88,7 @@ function EtapesMultiSelectMenu(props) {
                 <Icon
                   style={{
                     color: "#1BD7EF",
-                    fontSize: "large",                   
+                    fontSize: "large"
                   }}
                 >
                   label
@@ -101,7 +101,7 @@ function EtapesMultiSelectMenu(props) {
                 <Icon
                   style={{
                     color: "#78C5A0",
-                    fontSize: "large",                   
+                    fontSize: "large"
                   }}
                 >
                   label
@@ -114,7 +114,7 @@ function EtapesMultiSelectMenu(props) {
                 <Icon
                   style={{
                     color: "#E5E5E5",
-                    fontSize: "large",                   
+                    fontSize: "large"
                   }}
                 >
                   label
