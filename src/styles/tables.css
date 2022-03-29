@@ -279,6 +279,12 @@ input[type="file"]::-webkit-file-upload-button {
 .hourscount > div:hover {
 	background-color: #fff;
 }
+.etape-txt{
+  width: 300px;
+  display: inline-block;
+  white-space: break-spaces;
+
+}
 @media screen and (max-width: 767px) {
   .caseManagementTabs
     .MuiTabs-flexContainer.muiltr-heg063-MuiTabs-flexContainer {
