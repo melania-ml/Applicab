@@ -47,8 +47,39 @@ function EtapeTab(props) {
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
+  const dispatch = useDispatch();
+  const {
+    etapes,
+    etapeObj,
+    editDossierData: { data, type },
+    procedures,
+    isLoading
+  } = useSelector(({ dossiers }) => dossiers);
+
+  const [openEtape, setOpenEtape] = useState(false);
+
+  const searchText = useSelector(({ dossiers }) => dossiers.searchText);
+
+  const [filteredData, setFilteredData] = useState(null);
+  const mainTheme = useSelector(selectMainTheme);
+
+  const CustomTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} arrow classes={{ popper: className }} />
+  ))(({ theme }) => ({
+    [`& .${tooltipClasses.arrow}`]: {
+      color: "#252E3E"
+    },
+    [`& .${tooltipClasses.tooltip}`]: {
+      backgroundColor: "#252E3E"
+    }
+  }));
+
   const listClick = (name) => {
+    const newObj = {};
+    newObj["status"] = name;
+    newObj["case_management_id"] = etapeObj.case_management_id;
     setSelectedList(name);
+    dispatch(getEtapes(name === "Tous" ? etapeObj : newObj));
   };
 
   const drawer = (
@@ -191,33 +222,6 @@ function EtapeTab(props) {
     </div>
   );
 
-  const dispatch = useDispatch();
-  const {
-    etapes,
-    etapeObj,
-    editDossierData: { data, type },
-    procedures,
-    isLoading
-  } = useSelector(({ dossiers }) => dossiers);
-
-  const [openEtape, setOpenEtape] = useState(false);
-
-  const searchText = useSelector(({ dossiers }) => dossiers.searchText);
-
-  const [filteredData, setFilteredData] = useState(null);
-  const mainTheme = useSelector(selectMainTheme);
-
-  const CustomTooltip = styled(({ className, ...props }) => (
-    <Tooltip {...props} arrow classes={{ popper: className }} />
-  ))(({ theme }) => ({
-    [`& .${tooltipClasses.arrow}`]: {
-      color: "#252E3E"
-    },
-    [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: "#252E3E"
-    }
-  }));
-
   const columns = useMemo(
     () => [
       {
@@ -266,9 +270,10 @@ function EtapeTab(props) {
               placement="top-end"
               title={row.original.sub_name || row.original.name}
             >
-              <span className="etape-txt"
+              <span
+                className="etape-txt"
                 style={{
-                  color: value === "Archivé" ? "#C4C4C4" : "",
+                  color: value === "Archivé" ? "#C4C4C4" : ""
                 }}
               >
                 {row.original.sub_name || row.original.name}
