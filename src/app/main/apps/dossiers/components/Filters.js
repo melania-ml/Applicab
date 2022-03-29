@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { DatePicker } from "antd";
 import "antd/dist/antd.css";
 import Types from "app/main/constants/Types";
-import Statut from "app/main/constants/Statut";
+import CaseStatus from "app/main/constants/CaseStatus";
 import { getDossiers } from "app/store/slices/dossiersSlice";
 
 //material-ui
@@ -109,7 +109,7 @@ export default function Filters() {
         <div className="col-md-4 col-lg-4 col-12 col-xl-2 mb-3 mb-xl-0">
           <Autocomplete
             className="autocomplete"
-            options={Statut}
+            options={CaseStatus}
             getOptionLabel={(option) => {
               return option.value;
             }}

@@ -1,33 +1,18 @@
 const CaseStatus = [
-    {
-        id: 1,
-        value: "Célibataire",
-        label: "Célibataire",
-    },
-    {
-        id: 2,
-        value: "Marié.e",
-        label: "Marié.e",
-    },
-    {
-        id: 3,
-        value: "Pacsé.e",
-        label: "Pacsé.e",
-    },
-    {
-        id: 4,
-        value: "Divorcé.e",
-        label: "Divorcé.e",
-    },
-    {
-        id: 5,
-        value: "Veuf.ve",
-        label: "Veuf.ve",
-    },
-    {
-        id: 6,
-        value: "Autre",
-        label: "Autre",
-    },
+  {
+    id: 1,
+    value: "A ouvrir",
+    label: "A ouvrir"
+  },
+  {
+    id: 2,
+    value: "Ouvert",
+    label: "Ouvert"
+  },
+  {
+    id: 3,
+    value: "Clôture",
+    label: "Clôture"
+  }
 ];
 export default CaseStatus;
