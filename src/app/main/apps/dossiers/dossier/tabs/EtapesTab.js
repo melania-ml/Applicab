@@ -246,14 +246,9 @@ function EtapeTab(props) {
               placement="top-end"
               title={row.original.sub_name || row.original.name}
             >
-              <span
+              <span className="etape-txt"
                 style={{
                   color: value === "Archivé" ? "#C4C4C4" : "",
-                  width: 200,
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  display: "inline-block"
                 }}
               >
                 {row.original.sub_name || row.original.name}
