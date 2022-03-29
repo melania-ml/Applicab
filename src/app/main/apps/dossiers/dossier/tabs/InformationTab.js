@@ -7,7 +7,7 @@ import {
   MenuItem,
   Autocomplete,
   Chip,
-  Button
+  Button,
 } from "@mui/material";
 import CaseStatus from "app/main/constants/CaseStatus";
 import Types from "app/main/constants/Types";
@@ -24,7 +24,7 @@ function InformationTab() {
     natures,
     procedures,
     contacts,
-    editDossierData: { data, type }
+    editDossierData: { data, type },
   } = useSelector(({ dossiers }) => dossiers);
   const filter = createFilterOptions();
   const [isValid, setIsValid] = useState(false);
@@ -41,7 +41,7 @@ function InformationTab() {
     shared_comment: "",
     client_id: [],
     customer_contact_id: [],
-    opposing_contact_id: []
+    opposing_contact_id: [],
   });
 
   useEffect(() => {
@@ -82,7 +82,7 @@ function InformationTab() {
         ),
         opposing_contact_id: data.opposing_contact_id.map(
           (opposingContactId) => opposingContactId.id
-        )
+        ),
       });
     }
   }, [data]);
@@ -114,7 +114,7 @@ function InformationTab() {
         onChange={(e) => {
           setAllFields({
             ...allFields,
-            case_name: e.target.value
+            case_name: e.target.value,
           });
           checkIsDisable("case_name", e.target.value);
         }}
@@ -132,12 +132,12 @@ function InformationTab() {
           } else if (newValue && newValue.inputValue) {
             setAllFields({
               ...allFields,
-              nature: newValue.inputValue
+              nature: newValue.inputValue,
             });
           } else {
             setAllFields({
               ...allFields,
-              nature: newValue?.nature_title
+              nature: newValue?.nature_title,
             });
           }
         }}
@@ -150,7 +150,7 @@ function InformationTab() {
           if (inputValue.trim() !== "" && !isExisting) {
             filtered.push({
               inputValue: inputValue.trim(),
-              nature_title: `Ajouter "${inputValue.trim()}"`
+              nature_title: `Ajouter "${inputValue.trim()}"`,
             });
           }
           return filtered;
@@ -182,7 +182,7 @@ function InformationTab() {
           onChange={(e) => {
             setAllFields({
               ...allFields,
-              status: e.target.value
+              status: e.target.value,
             });
           }}
         >
@@ -204,7 +204,7 @@ function InformationTab() {
             );
             setAllFields({
               ...allFields,
-              procedure: newVal[0].id
+              procedure: newVal[0].id,
             });
           }}
         >
@@ -223,7 +223,7 @@ function InformationTab() {
           onChange={(e) => {
             setAllFields({
               ...allFields,
-              type: e.target.value
+              type: e.target.value,
             });
           }}
         >
@@ -243,7 +243,7 @@ function InformationTab() {
         onChange={(e) => {
           setAllFields({
             ...allFields,
-            location: e.target.value
+            location: e.target.value,
           });
         }}
       />
@@ -254,15 +254,11 @@ function InformationTab() {
         onChange={(event, newValue) => {
           setAllFields({
             ...allFields,
-            tags: [
-              ...allFields.tags,
-              ...newValue.filter(
-                (option) => allFields.tags.indexOf(option) === -1
-              )
-            ]
+            tags: [...newValue],
           });
         }}
         options={tags}
+        value={allFields.tags}
         getOptionLabel={(option) => option.title}
         renderTags={(tagValue, getTagProps) =>
           tagValue.map((option, index) => (
@@ -288,7 +284,7 @@ function InformationTab() {
         onChange={(e) => {
           setAllFields({
             ...allFields,
-            internal_comment: e.target.value
+            internal_comment: e.target.value,
           });
         }}
       />
@@ -303,7 +299,7 @@ function InformationTab() {
         onChange={(e) => {
           setAllFields({
             ...allFields,
-            shared_comment: e.target.value
+            shared_comment: e.target.value,
           });
         }}
       />
@@ -327,7 +323,7 @@ function InformationTab() {
           const array = newValue.map((val) => val.id ?? val);
           setAllFields({
             ...allFields,
-            client_id: array
+            client_id: array,
           });
         }}
         renderInput={(params) => (
@@ -354,7 +350,7 @@ function InformationTab() {
           const array = newValue.map((val) => val.id ?? val);
           setAllFields({
             ...allFields,
-            customer_contact_id: array
+            customer_contact_id: array,
           });
         }}
         renderInput={(params) => (
@@ -381,7 +377,7 @@ function InformationTab() {
           const array = newValue.map((val) => val.id ?? val);
           setAllFields({
             ...allFields,
-            opposing_contact_id: array
+            opposing_contact_id: array,
           });
         }}
         renderInput={(params) => (
