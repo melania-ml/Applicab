@@ -97,7 +97,7 @@ function ContactDialog(props) {
         phone_number: data.phone_number,
         fixe: data.fixe,
         comments: data.comments,
-        tags: data.tags,
+        tags: data.tags ?? [],
         status: data.status,
         date_of_birth: data.date_of_birth,
         department: data.department,
@@ -823,15 +823,15 @@ function ContactDialog(props) {
                     tags: [...newValue],
                   });
                 }}
-                options={tags ?? []}
-                value={allFields.tags ?? []}
+                options={tags}
+                value={allFields.tags}
                 getOptionLabel={(option) => option.title}
                 renderTags={(tagValue, getTagProps) =>
                   tagValue.map((option, index) => (
                     <Chip
                       label={option}
                       {...getTagProps({ index })}
-                      disabled={tags?.indexOf(option) !== -1}
+                      disabled={tags.indexOf(option) !== -1}
                     />
                   ))
                 }
@@ -1178,15 +1178,15 @@ function ContactDialog(props) {
                     tags: [...newValue],
                   });
                 }}
-                options={tags ?? []}
-                value={allFields.tags ?? []}
+                options={tags}
+                value={allFields.tags}
                 getOptionLabel={(option) => option.title}
                 renderTags={(tagValue, getTagProps) =>
                   tagValue.map((option, index) => (
                     <Chip
                       label={option}
                       {...getTagProps({ index })}
-                      disabled={tags?.indexOf(option) !== -1}
+                      disabled={tags.indexOf(option) !== -1}
                     />
                   ))
                 }
