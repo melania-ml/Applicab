@@ -125,7 +125,7 @@ class User(AbstractUser):
     RCS_city = models.CharField(max_length=255, null=True, blank=True)
     native_city = models.CharField(max_length=255, null=True, blank=True)
     number = models.CharField(max_length=255, null=True, blank=True)
-    fixe = models.CharField(max_length=255,null=True, blank=True)
+    fixe = models.CharField(max_length=255, null=True, blank=True)
     comments = models.CharField(max_length=5000, null=True, blank=True)
     civil_status = models.CharField(max_length=5000, null=True, blank=True)
     tags = ArrayField(models.CharField(max_length=200), null=True,
@@ -135,6 +135,8 @@ class User(AbstractUser):
                               null=True, blank=True)
     department = models.CharField(max_length=255, choices=staticModelChoiceFields.departmentChoiceFields(),
                                   null=True, blank=True)
+    lawyer_id = models.ForeignKey('self', blank=True, null=True,
+                                  on_delete=models.DO_NOTHING, db_column='lawyer_id')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

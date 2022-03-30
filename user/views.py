@@ -19,12 +19,11 @@ from static import emailText
 from static.responseMessages import *
 
 
-@authentication_classes([])
-@permission_classes([])
 class registerClient(APIView):
     serializers_class = UserSerializer
 
     def post(self, request):
+        lawyer = request.user.id  # Taking logged lawyer details from token
         user = User.objects.filter(email=request.data['email'])
         if user:
             res = ResponseInfo({"data": EMAIL_ALREADY_REGISTERED}, EMAIL_ALREADY_REGISTERED, False,
@@ -38,7 +37,7 @@ class registerClient(APIView):
         request.data['email_otp'] = emailOtp
         request.data['password'] = setPasswordToken
         request.data['email_token'] = setPasswordToken.lower()
-
+        request.data['lawyer_id'] = lawyer
         clientTitle = Client_title.objects.filter(title=request.data['title']).first()
         clientType = Client_type.objects.filter(client_type=request.data['client_type']).first()
 
@@ -134,7 +133,7 @@ class validateEmailOtp(APIView):
             emailOtp = secretsGenerator.randrange(100000, 999999)
 
             userData = User.objects.get(id=userid)
-            userData.emial_otp = emailOtp
+            userData.email_otp = emailOtp
             userData.email_token = setPasswordToken.lower()
             userData.email_otp_date = datetime.now()
             userData.save()

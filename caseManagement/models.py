@@ -80,6 +80,7 @@ class CaseManagement(CommonBase):
 
 class caseManagementTask(CommonBase):
     name = models.CharField(max_length=525, blank=True, null=True)
+    sub_name = models.CharField(max_length=525, blank=True, null=True)
     message = models.CharField(max_length=525, blank=True, null=True)
     status = models.CharField(max_length=225, blank=True, null=True)
     subject = models.CharField(max_length=225, blank=True, null=True)

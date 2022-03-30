@@ -74,7 +74,7 @@ class casesManagement(APIView):
             if natureData:
                 reqData['nature'] = natureData.id
             else:
-                natureData = Nature.objects.create(nature_title=reqData['nature'], is_default=False, user_id=userId)
+                natureData = Nature.objects.create(nature_title=reqData['nature'], is_default=False, user_id=request.user)
                 reqData['nature'] = natureData.id
 
             # Prepare serializer
@@ -123,15 +123,19 @@ class caseManagementTaskView(APIView):
             reqData = request.data
             # Remove blank data from dictionary  Q(user_id=userId) | Q(is_default=True)
             kwargs = dict((k, v) for k, v in reqData.items() if v)
-            kwargs['type__in'] = [kwargs['type'], 'Les deuX']
-            del kwargs['type']
+            reqType = kwargs['type'] if 'type' in kwargs else None
+
+            if reqType:
+                kwargs['type__in'] = [kwargs['type'], 'Les deuX']
+                del kwargs['type']
+
             query = Q(**kwargs)
 
-            if 'case_management_id' in kwargs:
+            if 'case_management_id' in kwargs and 'status' not in kwargs:
                 del kwargs['case_management_id']
                 query = Q(case_management_id=reqData['case_management_id']) | Q(**kwargs)
 
-            taskList = caseManagementTask.objects.filter(query)
+            taskList = caseManagementTask.objects.filter(query).order_by("notification_date")
 
             serializer = self.serializers_class(taskList, many=True)
             # preparing response
@@ -154,6 +158,7 @@ class caseManagementTaskView(APIView):
                 _dict = {
                     "message": request.data['message'] if 'message' in request.data else taskList.message,
                     "name": request.data['name'] if 'name' in request.data else taskList.name,
+                    "sub_name": request.data['sub_name'] if 'sub_name' in request.data else None,
                     "type": taskList.type,
                     "TJ": taskList.TJ,
                     "JCP": taskList.JCP,
