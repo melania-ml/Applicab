@@ -14,7 +14,7 @@ import Types from "app/main/constants/Types";
 import { useDispatch, useSelector } from "react-redux";
 import { createFilterOptions } from "@mui/material/Autocomplete";
 import { openNewContactDialog } from "app/store/slices/contactsSlice";
-import { addCase } from "app/store/slices/dossiersSlice";
+import { addCase, updateCase } from "app/store/slices/dossiersSlice";
 import ContactDialog from "app/main/apps/contacts/components/ContactDialog/ContactDialog";
 
 const tags = [];
@@ -101,6 +101,8 @@ function InformationTab() {
   function onSubmit(param) {
     if (type === "new") {
       dispatch(addCase({ ...allFields }));
+    } else {
+      dispatch(updateCase({ ...allFields, case_management_id: data.id }));
     }
   }
 

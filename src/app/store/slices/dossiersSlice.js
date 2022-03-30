@@ -86,6 +86,38 @@ export const addCase = createAsyncThunk(
   }
 );
 
+export const updateCase = createAsyncThunk(
+  "dossiersApp/dossiers/updateCase",
+  async (dossier, { dispatch, getState }) => {
+    debugger;
+    await axios
+      .patch(
+        `api/common/updateRetrieve/caseManagement/CaseManagement/${dossier.case_management_id}/`,
+        dossier
+      )
+      .then((data) => {
+        if (data.data.status === 200 && data.data.success) {
+          // const procedure = getState().dossiers.procedures;
+          // const proc = procedure.filter(
+          //   (fil) => fil.id === data.data.data.procedure
+          // )[0].procedure_type;
+          // const key = getProcedureCode(proc);
+          // let obj = {
+          //   type: data.data.data.type,
+          //   case_management_id: data.data.data.id
+          // };
+          // obj[key] = true;
+          dispatch(showMessage({ message: data.data.message }));
+          // dispatch(setEtapeObj(obj));
+          // dispatch(setIsCaseAdded());
+        }
+      })
+      .catch((error) => {
+        dispatch(showMessage({ message: error.response.message }));
+      });
+  }
+);
+
 export const getDossiers = createAsyncThunk(
   "dossiersApp/dossiers/getDossiers",
   async (routeParams, { dispatch, getState }) => {
