@@ -102,7 +102,7 @@ Basic Table Styles
   -ms-overflow-style: -ms-autohiding-scrollbar;
 }
 
-.textWidthLimit{
+.textWidthLimit {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -183,13 +183,6 @@ table.simple.borderless thead tr th {
   color: #ffffff !important;
 }
 
-.etapesListItem:hover {
-  background-color: transparent;
-}
-.etapesListItem div:hover {
-  background-color: rgba(0, 0, 0, 0.04);
-}
-
 .ant-picker-focused {
   border-color: #e90505;
   box-shadow: 0 0 0 2px rgb(21 21 21 / 20%);
@@ -252,38 +245,37 @@ input[type="file"]::-webkit-file-upload-button {
   border-radius: 2rem;
 }
 .ck.ck-reset.ck-editor {
-	width: 100%;
+  width: 100%;
 }
 
 .dossierLinkButton:hover {
   background-color: #0cb7e2;
   color: black;
 }
-.daycount{
+.daycount {
   width: 45%;
 }
-.hourscount{
+.hourscount {
   width: 45%;
 }
 .daycount > div {
-    background: #fff;
-    border: 1px solid #c4c4c4;
+  background: #fff;
+  border: 1px solid #c4c4c4;
 }
 .hourscount > div {
-    background: #fff;
-    border: 1px solid #c4c4c4;
+  background: #fff;
+  border: 1px solid #c4c4c4;
 }
 .daycount > div:hover {
-	background-color: #fff;
+  background-color: #fff;
 }
 .hourscount > div:hover {
-	background-color: #fff;
+  background-color: #fff;
 }
-.etape-txt{
+.etape-txt {
   width: 300px;
   display: inline-block;
   white-space: break-spaces;
-
 }
 @media screen and (max-width: 767px) {
   .caseManagementTabs
@@ -311,10 +303,10 @@ input[type="file"]::-webkit-file-upload-button {
   .faqcard2-txt {
     text-align: center;
   }
-  .daycount{
-  width: 40%;
+  .daycount {
+    width: 40%;
   }
-  .hourscount{
-  width: 40%;
+  .hourscount {
+    width: 40%;
   }
 }

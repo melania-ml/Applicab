@@ -140,7 +140,8 @@ export const getDossiers = createAsyncThunk(
               format: "YYYY-MM-DD"
             }),
           tags__contains: routeParams.tags
-        }
+        },
+        orderBy: "-created_date"
       }
     );
     const data = await response.data;

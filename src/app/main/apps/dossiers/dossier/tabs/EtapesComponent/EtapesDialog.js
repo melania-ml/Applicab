@@ -38,7 +38,7 @@ function EtapesDialog() {
     notification_date: null,
     client_id: [],
     subject: "",
-    editorText: "",
+    message: "",
     files: []
   });
   const [notifications, setNotifications] = useState([]);
@@ -81,7 +81,7 @@ function EtapesDialog() {
     for (let i = 0; i < fileObj[0].length; i++) {
       fileArray.push(URL.createObjectURL(fileObj[0][i]));
     }
-    setAllFields({ ...allFields, file: fileArray });
+    setAllFields({ ...allFields, files: fileArray });
   };
 
   useEffect(() => {
@@ -400,8 +400,10 @@ function EtapesDialog() {
                 ]
               }}
               onChange={(event, editor) => {
-                const data = editor.getData();
-                console.log({ data });
+                setAllFields({
+                  ...allFields,
+                  message: editor.getData()
+                });
               }}
             />
           </div>
@@ -430,6 +432,7 @@ function EtapesDialog() {
               color="blue"
               type="file"
               multiple
+              value={allFields.files}
               id="icon-button-file"
               onChange={onFileUpload}
               className="filetype"

@@ -52,29 +52,28 @@ function EtapesMultiSelectMenu(props) {
       >
         <MenuList>
           <MenuItem
-            className="etapesListItem"
-            style={{
-              flexDirection: "column"
-            }}
             onClick={() => {
-              // dispatch(removeContacts(selectedContactIds));
               closeSelectedContactsMenu();
               setDeleteConfirmation(true);
             }}
           >
-            <div className="flex items-center w-full mb-3">
+            <div className="flex items-center w-full">
               <ListItemIcon className="min-w-40">
                 <Icon>delete</Icon>
               </ListItemIcon>
               <ListItemText primary="Supprimer" />
             </div>
-            <div className="flex items-center w-full mb-3">
+          </MenuItem>
+          <MenuItem>
+            <div className="flex items-center w-full">
               <ListItemIcon className="min-w-40">
-                <Icon>content_copy</Icon>
+                <Icon style={{ fontSize: "large" }}>content_copy</Icon>
               </ListItemIcon>
               <ListItemText primary="Dupliquer" />
             </div>
-            <div className="flex items-center w-full mb-3 ml-2">
+          </MenuItem>
+          <MenuItem>
+            <div className="flex items-center w-full">
               <ListItemIcon className="min-w-40">
                 <Icon
                   style={{
@@ -87,7 +86,9 @@ function EtapesMultiSelectMenu(props) {
               </ListItemIcon>
               <ListItemText primary="Marquer comme à prévoir" />
             </div>
-            <div className="flex items-center w-full mb-3 ml-2">
+          </MenuItem>
+          <MenuItem>
+            <div className="flex items-center w-full">
               <ListItemIcon className="min-w-40">
                 <Icon
                   style={{
@@ -100,7 +101,9 @@ function EtapesMultiSelectMenu(props) {
               </ListItemIcon>
               <ListItemText primary="Marquer comme a faire" />
             </div>
-            <div className="flex items-center w-full mb-3 ml-2">
+          </MenuItem>
+          <MenuItem>
+            <div className="flex items-center w-full">
               <ListItemIcon className="min-w-40">
                 <Icon
                   style={{
@@ -113,7 +116,9 @@ function EtapesMultiSelectMenu(props) {
               </ListItemIcon>
               <ListItemText primary="Marquer comme fait" />
             </div>
-            <div className="flex items-center w-full mb-3 ml-2">
+          </MenuItem>
+          <MenuItem>
+            <div className="flex items-center w-full">
               <ListItemIcon className="min-w-40">
                 <Icon
                   style={{
@@ -132,10 +137,7 @@ function EtapesMultiSelectMenu(props) {
       <DeleteConfirmationDialog
         open={deleteConfirmation}
         onClose={handleClose}
-        title={"Voulez-vous vraiment supprimer ce dossier ?"}
-        subTitle={
-          "TOUTES LES ÉTAPES, MESSAGES, DOCUMENTS ET NOTIFICATIONS SERONT EFFACÉS."
-        }
+        subTitle={"Voulez-vous vraiment supprimer cette étape du dossier ?"}
       />
     </>
   );

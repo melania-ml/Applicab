@@ -1,7 +1,7 @@
 import {
   createSlice,
   createAsyncThunk,
-  createEntityAdapter,
+  createEntityAdapter
 } from "@reduxjs/toolkit";
 import axios from "axios";
 import { showMessage } from "app/store/fuse/messageSlice";
@@ -22,7 +22,7 @@ export const getAllTitles = () => async (dispatch) => {
 export const getFormTitles = (legal_status) => async (dispatch) => {
   await axios
     .post(`api/common/filterData/user/Client_title`, {
-      query: { legal_status },
+      query: { legal_status }
     })
     .then((data) => {
       if (data.data.status === 200 && data.data.success) {
@@ -69,13 +69,17 @@ export const getContacts = createAsyncThunk(
   async (routeParams, { dispatch, getState }) => {
     dispatch(setIsLoading(true));
     routeParams = routeParams || getState().contacts.routeParams;
+    const {
+      data: { id }
+    } = getState().auth.user;
     const response = await axios.post("api/common/filterData/user/User", {
       query: {
         client_type: routeParams.type,
         title: routeParams.title,
         status: routeParams.status,
         tags__contains: routeParams.tags,
-      },
+        lawyer_id: id
+      }
     });
     const data = await response.data;
     dispatch(setContacts(data.data));
@@ -155,15 +159,15 @@ const contactsSlice = createSlice({
     contactDialog: {
       type: "new",
       props: {
-        open: false,
+        open: false
       },
-      data: null,
+      data: null
     },
     titles: [],
     formTitles: [],
     types: [],
     contacts: [],
-    success: false,
+    success: false
   }),
   reducers: {
     setIsLoading: (state, action) => {
@@ -191,44 +195,44 @@ const contactsSlice = createSlice({
       reducer: (state, action) => {
         state.searchText = action.payload;
       },
-      prepare: (event) => ({ payload: event.target.value || "" }),
+      prepare: (event) => ({ payload: event.target.value || "" })
     },
     openNewContactDialog: (state, action) => {
       state.contactDialog = {
         type: "new",
         props: {
-          open: true,
+          open: true
         },
-        data: null,
+        data: null
       };
     },
     closeNewContactDialog: (state, action) => {
       state.contactDialog = {
         type: "new",
         props: {
-          open: false,
+          open: false
         },
-        data: null,
+        data: null
       };
     },
     openEditContactDialog: (state, action) => {
       state.contactDialog = {
         type: "edit",
         props: {
-          open: true,
+          open: true
         },
-        data: action.payload,
+        data: action.payload
       };
     },
     closeEditContactDialog: (state, action) => {
       state.contactDialog = {
         type: "edit",
         props: {
-          open: false,
+          open: false
         },
-        data: null,
+        data: null
       };
-    },
+    }
   },
   extraReducers: {
     [updateContact.fulfilled]: contactsAdapter.upsertOne,
@@ -240,8 +244,8 @@ const contactsSlice = createSlice({
       contactsAdapter.setAll(state, data);
       state.routeParams = routeParams;
       state.searchText = "";
-    },
-  },
+    }
+  }
 });
 
 export const {
@@ -256,7 +260,7 @@ export const {
   setFormTitles,
   setAllTypes,
   setIsLoading,
-  setContacts,
+  setContacts
 } = contactsSlice.actions;
 
 export default contactsSlice.reducer;
