@@ -823,15 +823,15 @@ function ContactDialog(props) {
                     tags: [...newValue],
                   });
                 }}
-                options={tags}
-                value={allFields.tags}
+                options={tags ?? []}
+                value={allFields.tags ?? []}
                 getOptionLabel={(option) => option.title}
                 renderTags={(tagValue, getTagProps) =>
                   tagValue.map((option, index) => (
                     <Chip
                       label={option}
                       {...getTagProps({ index })}
-                      disabled={tags.indexOf(option) !== -1}
+                      disabled={tags?.indexOf(option) !== -1}
                     />
                   ))
                 }
@@ -1178,15 +1178,15 @@ function ContactDialog(props) {
                     tags: [...newValue],
                   });
                 }}
-                options={tags}
-                value={allFields.tags}
+                options={tags ?? []}
+                value={allFields.tags ?? []}
                 getOptionLabel={(option) => option.title}
                 renderTags={(tagValue, getTagProps) =>
                   tagValue.map((option, index) => (
                     <Chip
                       label={option}
                       {...getTagProps({ index })}
-                      disabled={tags.indexOf(option) !== -1}
+                      disabled={tags?.indexOf(option) !== -1}
                     />
                   ))
                 }
