@@ -820,15 +820,11 @@ function ContactDialog(props) {
                 onChange={(event, newValue) => {
                   setAllFields({
                     ...allFields,
-                    tags: [
-                      ...allFields.tags,
-                      ...newValue.filter(
-                        (option) => allFields.tags.indexOf(option) === -1
-                      ),
-                    ],
+                    tags: [...newValue],
                   });
                 }}
                 options={tags}
+                value={allFields.tags}
                 getOptionLabel={(option) => option.title}
                 renderTags={(tagValue, getTagProps) =>
                   tagValue.map((option, index) => (
@@ -1179,15 +1175,11 @@ function ContactDialog(props) {
                 onChange={(event, newValue) => {
                   setAllFields({
                     ...allFields,
-                    tags: [
-                      ...allFields.tags,
-                      ...newValue.filter(
-                        (option) => allFields.tags.indexOf(option) === -1
-                      ),
-                    ],
+                    tags: [...newValue],
                   });
                 }}
                 options={tags}
+                value={allFields.tags}
                 getOptionLabel={(option) => option.title}
                 renderTags={(tagValue, getTagProps) =>
                   tagValue.map((option, index) => (
