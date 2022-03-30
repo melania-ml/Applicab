@@ -89,9 +89,7 @@ function CreatePassword() {
   });
   const { isValid, dirtyFields, errors } = formState;
   const { success } = useSelector(({ createPassword }) => createPassword);
-  const verifyEmailState = useSelector(
-    ({ verifyEmail }) => verifyEmail.verifyEmail
-  );
+  const { token } = useSelector(({ verifyEmail }) => verifyEmail);
 
   useEffect(() => {
     if (success) {
@@ -102,7 +100,6 @@ function CreatePassword() {
   }, [success]);
 
   function onSubmit(model) {
-    const token = verifyEmailState.token;
     dispatch(callCreatePassword({ ...model, token }));
   }
 
