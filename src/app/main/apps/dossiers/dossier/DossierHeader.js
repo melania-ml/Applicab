@@ -49,11 +49,11 @@ function DossierHeader() {
             >
               <Typography className="text-16 sm:text-20 ml-24 truncate font-semibold">
                 {type === "edit"
-                  ? `Dossier ${data.case_name} - ${getProcedureCode(
+                  ? `${data.case_name} - ${getProcedureCode(
                       data.procedure.procedure_type
                     )} - ${getFormattedDateTime({
                       date: data.created_date,
-                      format: "DD-MM-YYYY"
+                      format: "DD/MM/YYYY"
                     })} - ${data.unique_code}`
                   : "Ajouter un nouveau dossier"}
               </Typography>
