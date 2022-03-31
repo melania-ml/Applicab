@@ -1,16 +1,22 @@
-import FuseSearch from "@fuse/core/FuseSearch";
-import { ThemeProvider } from "@mui/material/styles";
-import FuseShortcuts from "@fuse/core/FuseShortcuts";
-import AppBar from "@mui/material/AppBar";
-import Hidden from "@mui/material/Hidden";
-import Toolbar from "@mui/material/Toolbar";
-import NavbarToggleButton from "app/fuse-layouts/shared-components/NavbarToggleButton";
-import UserMenu from "app/fuse-layouts/shared-components/userMenu/UserMenu";
-import clsx from "clsx";
 import { memo } from "react";
 import { useSelector } from "react-redux";
+import clsx from "clsx";
+import FuseShortcuts from "@fuse/core/FuseShortcuts";
+
+//material-ui
+import { ThemeProvider } from "@mui/material/styles";
+import {
+  AppBar,
+  IconButton,
+  Icon,
+  Badge,
+  Hidden,
+  Toolbar
+} from "@mui/material";
+
+import NavbarToggleButton from "app/fuse-layouts/shared-components/NavbarToggleButton";
+import UserMenu from "app/fuse-layouts/shared-components/userMenu/UserMenu";
 import { selectToolbarTheme } from "app/store/fuse/settingsSlice";
-import NotificationPanelToggleButton from "../../shared-components/notificationPanel/NotificationPanelToggleButton";
 import MessagePanelToggleButton from "../../shared-components/messagePanel/MessagePanelToggleButton";
 
 function ToolbarLayout1(props) {
@@ -54,21 +60,13 @@ function ToolbarLayout1(props) {
           </div>
 
           <div className="flex items-center px-8 h-full overflow-x-auto">
-            {/* <LanguageSwitcher />
-
-            <AdjustFontSize />
-
-            <FullScreenToggle />
-
-            <FuseSearch /> */}
-
-            {/* <Hidden lgUp>
-            </Hidden>
-*/}
-
             <MessagePanelToggleButton />
 
-            <NotificationPanelToggleButton />
+            <IconButton className="w-40 h-40" size="large">
+              <Badge color="secondary" badgeContent={3}>
+                <Icon>notifications</Icon>
+              </Badge>
+            </IconButton>
 
             <UserMenu />
           </div>

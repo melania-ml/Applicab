@@ -15,7 +15,7 @@ import {
   TextField,
   Paper,
   Icon,
-  Input,
+  Input
 } from "@mui/material";
 // import { setContactsSearchText } from "app/main/apps/Email/store/emailSlice";
 import { motion } from "framer-motion";
@@ -31,22 +31,22 @@ const bull = (
 function EmailTab(props) {
   const dispatch = useDispatch();
   const user = useSelector(({ auth }) => auth.user);
-  const { userData } = useSelector(({ userMenu }) => userMenu.userMenu);
+  const { userData } = useSelector(({ userMenu }) => userMenu);
   const [allFields, setAllFields] = useState({
     image: "",
-    profile: "",
+    profile: ""
   });
   useEffect(() => {
     setAllFields({
       ...allFields,
-      profile: userData.profile,
+      profile: userData.profile
     });
     const newUser = {
       ...user,
       data: {
         ...user.data,
-        profile: userData.profile,
-      },
+        profile: userData.profile
+      }
     };
     if (userData.profile) {
       dispatch(setUser(newUser));
@@ -85,7 +85,7 @@ function EmailTab(props) {
           background: "#F8F8F8",
           padding: 0,
           height: "auto",
-          borderRadius: 10,
+          borderRadius: 10
         }}
       >
         <AppBar
@@ -94,43 +94,43 @@ function EmailTab(props) {
           className="rounded-t-lg ... p-4 flex items-center justify-between message-tab-header"
         >
           <div className="flex items-center res-flex-direction">
-          <Avatar
-            className="w-68 h-68 md:ml-24"
-            alt="user photo"
-            src={
-              (allFields.image && URL.createObjectURL(allFields.image)) ||
-              allFields.profile
-            }
-          />
-          <Typography
-            variant="subtitle1"
-            color="inherit"
-            className="messagesTab md:ml-24"
-          >
-            Altata - SAA-CIV-20210120-003
-          </Typography>
+            <Avatar
+              className="w-68 h-68 md:ml-24"
+              alt="user photo"
+              src={
+                (allFields.image && URL.createObjectURL(allFields.image)) ||
+                allFields.profile
+              }
+            />
+            <Typography
+              variant="subtitle1"
+              color="inherit"
+              className="messagesTab md:ml-24"
+            >
+              Altata - SAA-CIV-20210120-003
+            </Typography>
           </div>
           <div className="md:mr-24 mt-3 mt-md-0">
-          <Paper
-            component={motion.div}
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 24, opacity: 1, transition: { delay: 0.2 } }}
-            className="flex p-4 search-bar-contact h-48 ... shadow m-auto message-searchbar"
-          >
-            <Icon color="action">search</Icon>
+            <Paper
+              component={motion.div}
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 24, opacity: 1, transition: { delay: 0.2 } }}
+              className="flex p-4 search-bar-contact h-48 ... shadow m-auto message-searchbar"
+            >
+              <Icon color="action">search</Icon>
 
-            <Input
-              placeholder="Recherche"
-              className="flex flex-1 px-16"
-              disableUnderline
-              fullWidth
-              // value={searchText}
-              inputProps={{
-                "aria-label": "Search",
-              }}
-              onChange={(ev) => dispatch(setContactsSearchText(ev))}
-            />
-          </Paper>
+              <Input
+                placeholder="Recherche"
+                className="flex flex-1 px-16"
+                disableUnderline
+                fullWidth
+                // value={searchText}
+                inputProps={{
+                  "aria-label": "Search"
+                }}
+                onChange={(ev) => dispatch(setContactsSearchText(ev))}
+              />
+            </Paper>
           </div>
         </AppBar>
         <br />
@@ -139,32 +139,32 @@ function EmailTab(props) {
           style={{
             display: "inline-block",
             width: "100%",
-            marginRight: "2rem",
+            marginRight: "2rem"
           }}
         >
           <div className="flex mb-10">
-          <Avatar
-            className="w-24 h-24 md:ml-36"
-            alt="user photo"
-            src={
-              (allFields.image && URL.createObjectURL(allFields.image)) ||
-              allFields.profile
-            }
-          />
-          <Typography
-            variant="subtitle1"
-            color="#192A3E"
-            className="senderName ml-2"
-          >
-            Avocat - Melania Munoz
-          </Typography>
-          <Typography
-            variant="subtitle1"
-            color="#BABABF"
-            className="readMsgTime"
-          >
-            11:12
-          </Typography>
+            <Avatar
+              className="w-24 h-24 md:ml-36"
+              alt="user photo"
+              src={
+                (allFields.image && URL.createObjectURL(allFields.image)) ||
+                allFields.profile
+              }
+            />
+            <Typography
+              variant="subtitle1"
+              color="#192A3E"
+              className="senderName ml-2"
+            >
+              Avocat - Melania Munoz
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              color="#BABABF"
+              className="readMsgTime"
+            >
+              11:12
+            </Typography>
           </div>
           <Card className="max-w-md md:ml-36">
             <CardContent>
@@ -180,28 +180,28 @@ function EmailTab(props) {
           </Card>
           <br />
           <div className="flex mb-10 justify-end">
-          <Avatar
-            className="w-24 h-24 float-right receiverAvatar"
-            alt="user photo"
-            src={
-              (allFields.image && URL.createObjectURL(allFields.image)) ||
-              allFields.profile
-            }
-          />
-          <Typography
-            variant="subtitle1"
-            color="#192A3E"
-            className="reveiverName ml-2"
-          >
-            Vous Shasha Andrie
-          </Typography>
-          <Typography
-            variant="subtitle1"
-            color="#BABABF"
-            className="reveiveMsgTime md:mr-36 sm:mr-2"
-          >
-            11:20
-          </Typography>
+            <Avatar
+              className="w-24 h-24 float-right receiverAvatar"
+              alt="user photo"
+              src={
+                (allFields.image && URL.createObjectURL(allFields.image)) ||
+                allFields.profile
+              }
+            />
+            <Typography
+              variant="subtitle1"
+              color="#192A3E"
+              className="reveiverName ml-2"
+            >
+              Vous Shasha Andrie
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              color="#BABABF"
+              className="reveiveMsgTime md:mr-36 sm:mr-2"
+            >
+              11:20
+            </Typography>
           </div>
           <Card className="max-w-md float-right md:mr-36">
             <CardContent
@@ -209,7 +209,7 @@ function EmailTab(props) {
               style={{
                 background: "#272E41",
                 color: "#F8F8F8",
-                alignItems: "right",
+                alignItems: "right"
               }}
             >
               <Typography variant="body2">

@@ -8,11 +8,11 @@ import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import withReducer from "app/store/withReducer";
 import { useEffect, useState } from "react";
-import reducer from "./store";
+import reducer from "app/store";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logoutUser } from "app/auth/store/userSlice";
-import { getProfileData } from "./store/userMenuSlice";
+import { getProfileData } from "app/store/slices/userMenuSlice";
 import EditProfileDialog from "./EditProfileDialog";
 
 function UserMenu(props) {

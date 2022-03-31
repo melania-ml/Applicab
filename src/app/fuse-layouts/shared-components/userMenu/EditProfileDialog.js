@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateProfileData } from "./store/userMenuSlice";
+import { updateProfileData } from "app/store/slices/userMenuSlice";
 import { setUser } from "app/auth/store/userSlice";
 import {
   Dialog,
@@ -17,7 +17,7 @@ import {
 function EditProfileDialog(props) {
   const dispatch = useDispatch();
   const user = useSelector(({ auth }) => auth.user);
-  const { userData } = useSelector(({ userMenu }) => userMenu.userMenu);
+  const { userData } = useSelector(({ userMenu }) => userMenu);
   const [allFields, setAllFields] = useState({
     image: "",
     profile: "",

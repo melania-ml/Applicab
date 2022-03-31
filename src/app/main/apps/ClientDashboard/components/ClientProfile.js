@@ -11,14 +11,14 @@ import {
   DialogActions,
   Button,
   TextField,
-  Avatar,
+  Avatar
 } from "@mui/material";
-import { updateProfileData } from "app/fuse-layouts/shared-components/userMenu/store/userMenuSlice";
+import { updateProfileData } from "app/store/slices/userMenuSlice";
 
 function ClientProfile(props) {
   const dispatch = useDispatch();
   const user = useSelector(({ auth }) => auth.user);
-  const { userData } = useSelector(({ userMenu }) => userMenu.userMenu);
+  const { userData } = useSelector(({ userMenu }) => userMenu);
   const [allFields, setAllFields] = useState({
     title: "",
     image: "",
@@ -31,7 +31,7 @@ function ClientProfile(props) {
     city: "",
     mobile1: "",
     lawyerData: "",
-    comments: "",
+    comments: ""
   });
   useEffect(() => {
     setAllFields({
@@ -45,14 +45,14 @@ function ClientProfile(props) {
       CP: userData.CP,
       mobile1: userData.phone_number,
       lawyerData: userData.lawyerData,
-      comments: userData.comments,
+      comments: userData.comments
     });
     const newUser = {
       ...user,
       data: {
         ...user.data,
-        profile: userData.profile,
-      },
+        profile: userData.profile
+      }
     };
     if (userData.profile) {
       dispatch(setUser(newUser));
@@ -83,7 +83,7 @@ function ClientProfile(props) {
   return (
     <Dialog
       classes={{
-        paper: "m-24",
+        paper: "m-24"
       }}
       open={props.open}
       onClose={props.onClose}
@@ -132,7 +132,7 @@ function ClientProfile(props) {
           onChange={(e) => {
             setAllFields({
               ...allFields,
-              enterPriseName: e.target.value,
+              enterPriseName: e.target.value
             });
           }}
         />
@@ -146,7 +146,7 @@ function ClientProfile(props) {
           onChange={(e) => {
             setAllFields({
               ...allFields,
-              title: e.target.value,
+              title: e.target.value
             });
           }}
         />
@@ -160,7 +160,7 @@ function ClientProfile(props) {
           onChange={(e) => {
             setAllFields({
               ...allFields,
-              name: e.target.value,
+              name: e.target.value
             });
           }}
         />
@@ -173,7 +173,7 @@ function ClientProfile(props) {
           onChange={(e) => {
             setAllFields({
               ...allFields,
-              firstName: e.target.value,
+              firstName: e.target.value
             });
           }}
         />
@@ -187,7 +187,7 @@ function ClientProfile(props) {
           onChange={(e) => {
             setAllFields({
               ...allFields,
-              address: e.target.value,
+              address: e.target.value
             });
           }}
         />
@@ -201,7 +201,7 @@ function ClientProfile(props) {
           onChange={(e) => {
             setAllFields({
               ...allFields,
-              city: e.target.value,
+              city: e.target.value
             });
           }}
         />
@@ -215,7 +215,7 @@ function ClientProfile(props) {
           onChange={(e) => {
             setAllFields({
               ...allFields,
-              CP: e.target.value,
+              CP: e.target.value
             });
           }}
         />
@@ -230,7 +230,7 @@ function ClientProfile(props) {
           onChange={(e) => {
             setAllFields({
               ...allFields,
-              mobile1: e.target.value,
+              mobile1: e.target.value
             });
           }}
         />
@@ -245,7 +245,7 @@ function ClientProfile(props) {
           onChange={(e) => {
             setAllFields({
               ...allFields,
-              lawyerData: e.target.value,
+              lawyerData: e.target.value
             });
           }}
         />
@@ -260,7 +260,7 @@ function ClientProfile(props) {
           onChange={(e) =>
             setAllFields({
               ...allFields,
-              comments: e.target.value,
+              comments: e.target.value
             })
           }
         />
