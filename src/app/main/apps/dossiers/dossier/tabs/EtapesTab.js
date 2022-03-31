@@ -193,7 +193,7 @@ function EtapeTab(props) {
                 fontSize: "large"
               }}
             >
-              near_me
+              insert_drive_file
             </Icon>
           </ListItemIcon>
           <ListItemText primary="Brouillon" />
