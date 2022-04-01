@@ -13,6 +13,7 @@ INVALID_OTP = "Vous avez saisi un code confidentiel incorrect, expiré ou déjà
 SOMETHING_WENT_WRONG = "something went wrong"
 SUCCESS = "Response returned successfully"
 NO_RECORD = "No record found"
+RECORD_UPDATED_SUCCESSFULLY = "Records are updated"
 PROFILE_UPDATE_SUCCESS = "Profil a bien été modifiée"
 RECORD_DELETED_SUCCESSFULLY = "enregistrement supprimé avec succès"
 CONTACT_DELETED = "Contact/Contacts supprimés avec succès"

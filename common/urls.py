@@ -8,6 +8,7 @@ urlpatterns = [
     path('updateRetrieve/<slug:app_label>/<slug:model_name>/<int:pk>/', GeneralGetUpdateViewSet.as_view(),
          name="GeneralGetUpdateViewSet"),
     path('filterData/<slug:app_label>/<slug:model_name>', FilterViewSet.as_view(), name="FilterViewSet"),
-    path('bulkDelete/<slug:app_label>/<slug:model_name>', BulkDeleteViewSet.as_view(), name="BulkDeleteViewSet"),
+    path('bulkDelete/<slug:app_label>/<slug:model_name>', BulkOperationsViewSet.as_view(), name="BulkOperationsViewSet"),
+    path('bulkUpdate/<slug:app_label>/<slug:model_name>', BulkOperationsViewSet.as_view(), name="BulkOperationsViewSet"),
 
 ]
