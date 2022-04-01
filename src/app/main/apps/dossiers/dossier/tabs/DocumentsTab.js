@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,63 +7,40 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { motion } from "framer-motion";
-import { Icon } from "@mui/material";
+import { Icon, IconButton } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { getDocuments } from "app/store/slices/dossiersSlice";
+import { getFormattedDateTime } from "app/main/common/functions";
 
-function createData(
-  type,
-  nom,
-  Propriétaire,
-  Date_de_partage,
-  taille,
-  Telecharger
-) {
-  return { type, nom, Propriétaire, Date_de_partage, taille, Telecharger };
+function createData(nom, Propriétaire, Date_de_partage, Telecharger) {
+  return { nom, Propriétaire, Date_de_partage, Telecharger };
 }
 
 const rows = [
-  createData(
-    "PDF",
-    "lettre-de-mission.pdf",
-    "moi",
-    "18 janv. 2022",
-    "320.91 KB",
-    24
-  ),
-  createData(
-    "PDF ",
-    "tcom-paris.pdf",
-    "Melania Munoz",
-    "22 oct. 2022",
-    "20.91 KB",
-    37
-  ),
-  createData(
-    "PDF",
-    "hgbbh-detro-lesar",
-    "Alex",
-    "8 nov. 2022",
-    "191 KB 24",
-    6.0
-  ),
-  createData(
-    "PD",
-    "lettre-de-mission.pdf",
-    "Roman",
-    "28 dec. 2022",
-    "520.91 KB",
-    67
-  ),
-  createData(
-    "PDF",
-    " tcom-paris.pdf",
-    "Jimmy",
-    "11 janv. 2022",
-    "820.91 KB",
-    49
-  ),
+  createData("lettre-de-mission.pdf", "moi", "18 janv. 2022", 24),
+  createData("tcom-paris.pdf", "Melania Munoz", "22 oct. 2022", 37),
+  createData("hgbbh-detro-lesar", "Alex", "8 nov. 2022", 6.0),
+  createData("lettre-de-mission.pdf", "Roman", "28 dec. 2022", 67),
+  createData(" tcom-paris.pdf", "Jimmy", "11 janv. 2022", 49)
 ];
 
 function DocumentsTab() {
+  const dispatch = useDispatch();
+  const {
+    editDossierData: { data },
+    documents
+  } = useSelector(({ dossiers }) => dossiers);
+
+  useEffect(() => {
+    if (data?.id) {
+      dispatch(getDocuments(data.id));
+    }
+  }, [data]);
+
+  const onDownload = (documentLink) => {
+    window.location.href = documentLink;
+  };
+
   return (
     <div>
       <motion.div
@@ -75,39 +52,36 @@ function DocumentsTab() {
           <Table sx={{ minWidth: 550 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Type</TableCell>
                 <TableCell align="left">Nom</TableCell>
-                <TableCell align="left">Propriétaire</TableCell>
+                <TableCell align="left">Etape Nom</TableCell>
                 <TableCell align="left">Date de partage</TableCell>
-                <TableCell align="left">Taille</TableCell>
                 <TableCell align="center">Télécharger</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
+              {documents.map((row) => (
                 <TableRow
-                  key={row.name}
+                  key={row.id}
                   sx={{
-                    "&:last-child td, &:last-child th": { border: 0 },
+                    "&:last-child td, &:last-child th": { border: 0 }
                   }}
                 >
-                  <TableCell align="left">{row.type}</TableCell>
-                  <TableCell align="left">{row.nom}</TableCell>
-                  <TableCell align="left">{row.Propriétaire}</TableCell>
-                  <TableCell align="left">{row.Date_de_partage}</TableCell>
-                  <TableCell align="left">{row.taille}</TableCell>
+                  <TableCell align="left">{row.file_name}</TableCell>
+                  <TableCell align="left">{row.case_task_id.name}</TableCell>
+                  <TableCell align="left">
+                    {getFormattedDateTime({
+                      date: row.created_date,
+                      format: "DD MMM. YYYY"
+                    })}
+                  </TableCell>
                   <TableCell align="center">
-                    <Icon
-                      style={{
-                        color: "white",
-                        fontSize: "xx-large",
-                        margin: "10px",
-                        borderRadius: "25px",
-                        backgroundColor: "#1BD7EF",
-                      }}
+                    <IconButton
+                      onClick={() => onDownload(row.case_document)}
+                      color="inherit"
+                      size="large"
                     >
-                      arrow_downward
-                    </Icon>
+                      <Icon>arrow_downward</Icon>
+                    </IconButton>
                   </TableCell>
                 </TableRow>
               ))}

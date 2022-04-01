@@ -89,7 +89,6 @@ export const addCase = createAsyncThunk(
 export const updateCase = createAsyncThunk(
   "dossiersApp/dossiers/updateCase",
   async (dossier, { dispatch, getState }) => {
-    debugger;
     await axios
       .patch(
         `api/common/updateRetrieve/caseManagement/CaseManagement/${dossier.case_management_id}/`,
@@ -170,6 +169,39 @@ export const updateEtapes = createAsyncThunk(
   }
 );
 
+export const uploadDocument = createAsyncThunk(
+  "dossiersApp/dossiers/uploadDocument",
+  async (document, { dispatch, getState }) => {
+    await axios
+      .post("api/caseManagement/uploadCaseDocuments", document, {
+        headers: { "Content-type": "multipart/form-data" }
+      })
+      .then((data) => {
+        if (data.data && data.data.success) {
+          console.log("success");
+        }
+      })
+      .catch((errors) => {
+        return dispatch(showMessage(errors));
+      });
+  }
+);
+
+export const getDocuments = (id) => async (dispatch) => {
+  await axios
+    .post(`api/common/filterData/caseManagement/caseManagementDocuments`, {
+      query: { case_management_id: id }
+    })
+    .then((data) => {
+      if (data.data.status === 200 && data.data.success) {
+        dispatch(setDocuments(data.data.data));
+      }
+    })
+    .catch((errors) => {
+      console.error(errors);
+    });
+};
+
 const dossiersAdapter = createEntityAdapter({});
 
 export const { selectAll: selectDossiers } = dossiersAdapter.getSelectors(
@@ -200,7 +232,8 @@ const dossiersSlice = createSlice({
       type: "new",
       data: null
     },
-    etapeTabFromAction: false
+    etapeTabFromAction: false,
+    documents: []
   }),
   reducers: {
     setEtapes: (state, action) => {
@@ -220,6 +253,9 @@ const dossiersSlice = createSlice({
     },
     setNatures: (state, action) => {
       state.natures = action.payload;
+    },
+    setDocuments: (state, action) => {
+      state.documents = action.payload;
     },
     setProcedures: (state, action) => {
       state.procedures = action.payload;
@@ -306,6 +342,7 @@ export const {
   openEditEtapeDialog,
   closeEditEtapeDialog,
   setNatures,
+  setDocuments,
   setProcedures,
   setContacts,
   setIsCaseAdded,

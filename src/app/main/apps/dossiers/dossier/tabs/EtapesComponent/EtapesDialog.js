@@ -19,7 +19,7 @@ import {
   Select,
   TextField,
   Icon,
-  Autocomplete,
+  Autocomplete
 } from "@mui/material";
 import Statut from "app/main/constants/Statut";
 import { getFormattedDateTime } from "app/main/common/functions";
@@ -27,6 +27,7 @@ import {
   closeNewEtapeDialog,
   closeEditEtapeDialog,
   updateEtapes,
+  uploadDocument
 } from "app/store/slices/dossiersSlice";
 
 function EtapesDialog() {
@@ -38,9 +39,9 @@ function EtapesDialog() {
     notification_date: null,
     client_id: [],
     subject: "",
-    message: "",
-    files: [],
+    message: ""
   });
+  const [files, setFiles] = useState(null);
   const [notifications, setNotifications] = useState([]);
   const [count, setCount] = useState(0);
   const [isInvite, setIsInvite] = useState(false);
@@ -48,7 +49,7 @@ function EtapesDialog() {
   const dispatch = useDispatch();
   const {
     etapeDialog: { data, props, type },
-    editDossierData,
+    editDossierData
   } = useSelector(({ dossiers }) => dossiers);
 
   useEffect(() => {
@@ -63,25 +64,20 @@ function EtapesDialog() {
         notification_date:
           data.notification_date &&
           getFormattedDateTime({
-            date: data.notification_date,
-          }),
+            date: data.notification_date
+          })
       });
     } else {
       setAllFields({
         ...allFields,
         case_name: editDossierData?.data?.case_name,
-        name: "",
+        name: ""
       });
     }
   }, [data, type]);
-  let fileObj = [];
-  let fileArray = [];
+
   const onFileUpload = (e) => {
-    fileObj.push(e.target.files);
-    for (let i = 0; i < fileObj[0].length; i++) {
-      fileArray.push(URL.createObjectURL(fileObj[0][i]));
-    }
-    setAllFields({ ...allFields, files: fileArray });
+    setFiles(e.target.files);
   };
 
   useEffect(() => {
@@ -139,9 +135,18 @@ function EtapesDialog() {
         updateEtapes({
           ...allFields,
           id: data.id,
-          case_management_id: editDossierData.data.id,
+          case_management_id: editDossierData.data.id
         })
       );
+    }
+    if (files?.length > 0) {
+      const formData = new FormData();
+      for (let i = 0; i < files.length; i++) {
+        formData.append("case_document", files[i]);
+      }
+      formData.append("case_management_id", editDossierData.data.id);
+      formData.append("case_task_id", data.id);
+      dispatch(uploadDocument(formData));
     }
     closeComposeDialog();
   };
@@ -149,7 +154,7 @@ function EtapesDialog() {
   return (
     <Dialog
       classes={{
-        paper: "m-24",
+        paper: "m-24"
       }}
       {...props}
       onClose={closeComposeDialog}
@@ -178,7 +183,7 @@ function EtapesDialog() {
             onChange={(e) => {
               setAllFields({
                 ...allFields,
-                case_name: e.target.value,
+                case_name: e.target.value
               });
             }}
           />
@@ -193,7 +198,7 @@ function EtapesDialog() {
             onChange={(e) => {
               setAllFields({
                 ...allFields,
-                name: e.target.value,
+                name: e.target.value
               });
             }}
           />
@@ -209,7 +214,7 @@ function EtapesDialog() {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  sub_name: e.target.value,
+                  sub_name: e.target.value
                 });
               }}
             />
@@ -222,7 +227,7 @@ function EtapesDialog() {
               onChange={(e) =>
                 setAllFields({
                   ...allFields,
-                  status: e.target.value,
+                  status: e.target.value
                 })
               }
             >
@@ -283,7 +288,7 @@ function EtapesDialog() {
                       right: "-40px",
                       top: "10px",
                       color: "#BABABF",
-                      cursor: "pointer",
+                      cursor: "pointer"
                     }}
                     onClick={(e) => handleRemoveItem(e, notification.id)}
                   >
@@ -306,7 +311,7 @@ function EtapesDialog() {
                 style={{
                   color: "secondary",
                   fontSize: "large",
-                  margin: "10px",
+                  margin: "10px"
                 }}
               >
                 notifications
@@ -337,7 +342,7 @@ function EtapesDialog() {
               const array = newValue.map((val) => val.id ?? val);
               setAllFields({
                 ...allFields,
-                client_id: array,
+                client_id: array
               });
             }}
             renderInput={(params) => (
@@ -357,7 +362,7 @@ function EtapesDialog() {
             onChange={(e) => {
               setAllFields({
                 ...allFields,
-                subject: e.target.value,
+                subject: e.target.value
               });
             }}
           />
@@ -396,13 +401,13 @@ function EtapesDialog() {
                   "mergeTableCells",
                   "|",
                   "undo",
-                  "redo",
-                ],
+                  "redo"
+                ]
               }}
               onChange={(event, editor) => {
                 setAllFields({
                   ...allFields,
-                  message: editor.getData(),
+                  message: editor.getData()
                 });
               }}
             />
@@ -421,7 +426,7 @@ function EtapesDialog() {
               style={{
                 color: "secondary",
                 fontSize: "large",
-                margin: "10px",
+                margin: "10px"
               }}
             >
               attach_file
