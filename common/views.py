@@ -114,3 +114,23 @@ class FilterViewSet(APIView):
             res = ResponseInfo(err, SOMETHING_WENT_WRONG, False,
                                status.HTTP_401_UNAUTHORIZED)
             return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
+
+class BulkDeleteViewSet(APIView):
+
+    def delete(self, request, app_label, model_name):
+        try:
+            # Get Dynamic model from req
+            model = apps.get_model(app_label=str(app_label), model_name=str(model_name))
+
+            ids = request.data.get('ids', None)
+            if ids:
+                model.objects.filter(id__in=ids).delete()
+                res = ResponseInfo({}, RECORD_DELETED_SUCCESSFULLY, True, status.HTTP_200_OK)
+                return Response(res.success_payload(), status=status.HTTP_200_OK)
+
+            res = ResponseInfo({}, NO_RECORD, False, status.HTTP_401_UNAUTHORIZED)
+            return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
+        except Exception as err:
+            res = ResponseInfo(err, SOMETHING_WENT_WRONG, False, status.HTTP_401_UNAUTHORIZED)
+            return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)

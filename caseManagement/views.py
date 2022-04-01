@@ -74,7 +74,8 @@ class casesManagement(APIView):
             if natureData:
                 reqData['nature'] = natureData.id
             else:
-                natureData = Nature.objects.create(nature_title=reqData['nature'], is_default=False, user_id=request.user)
+                natureData = Nature.objects.create(nature_title=reqData['nature'], is_default=False,
+                                                   user_id=request.user)
                 reqData['nature'] = natureData.id
 
             # Prepare serializer
@@ -116,7 +117,7 @@ class casesManagement(APIView):
 
 
 class caseManagementTaskView(APIView):
-    serializers_class = CaseTasSerializer
+    serializers_class = CaseTaskSerializer
 
     def post(self, request):
         try:
@@ -153,6 +154,7 @@ class caseManagementTaskView(APIView):
             taskId = request.data.get('id', None)
             taskList = caseManagementTask.objects.filter(id=taskId).first()
             bodyParams = request.data
+
             # if it's Default task create replica
             if taskList.is_default:
                 _dict = {
@@ -196,6 +198,57 @@ class caseManagementTaskView(APIView):
             res = ResponseInfo(serializer.errors, SOMETHING_WENT_WRONG, False,
                                status.HTTP_401_UNAUTHORIZED)
             return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
+        except Exception as err:
+            res = ResponseInfo(err, SOMETHING_WENT_WRONG, False,
+                               status.HTTP_401_UNAUTHORIZED)
+            return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
+    def patch(self, request):
+        try:
+            self.serializers_class.Meta.depth = 0  # Adding depth value for Foreign fields
+            taskId = request.data.get('task_ids', None)
+
+            # Return if taskId array missing
+            if not taskId:
+                res = ResponseInfo([], NO_RECORD, False,
+                                   status.HTTP_204_NO_CONTENT)
+                return Response(res.errors_payload(), status=status.HTTP_204_NO_CONTENT)
+
+            # Preparing list for replica
+            bulk_list = list()
+            taskList = caseManagementTask.objects.filter(id__in=taskId)
+            for task in taskList:
+                task.id = None
+                task.is_default = False
+                bulk_list.append(task)
+            replicaTask = caseManagementTask.objects.bulk_create(bulk_list)
+
+            serializer = self.serializers_class(replicaTask, many=True)
+
+            # preparing for response
+            res = ResponseInfo(serializer.data, SUCCESS, True,
+                               status.HTTP_201_CREATED)
+            return Response(res.success_payload(), status=status.HTTP_201_CREATED)
+        except Exception as err:
+            res = ResponseInfo(err, SOMETHING_WENT_WRONG, False,
+                               status.HTTP_401_UNAUTHORIZED)
+            return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
+
+class caseManagementDocumentsView(APIView):
+    serializers_class = CaseDocumentsSerializer
+
+    def post(self, request):
+        try:
+            serializer = self.serializers_class(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                res = ResponseInfo("All documents uploaded successfully", SUCCESS, True, status.HTTP_201_CREATED)
+                return Response(res.success_payload(), status.HTTP_201_CREATED)
+            res = ResponseInfo({"data": serializer.errors}, "something went wrong", False,
+                               status.HTTP_401_UNAUTHORIZED)
+            return Response(res.success_payload(), status.HTTP_401_UNAUTHORIZED)
+
         except Exception as err:
             res = ResponseInfo(err, SOMETHING_WENT_WRONG, False,
                                status.HTTP_401_UNAUTHORIZED)

@@ -104,3 +104,20 @@ class caseManagementTask(CommonBase):
 
     class Meta:
         db_table = 'case_management_task'
+
+
+class caseManagementDocuments(CommonBase):
+    case_document = models.FileField(upload_to='case_documents', blank=True, null=True)
+    file_name = models.CharField(max_length=100, blank=True, null=True)
+    case_management_id = models.ForeignKey(CaseManagement,
+                                           blank=True, null=True,
+                                           on_delete=models.DO_NOTHING, db_column='case_management_id')
+    case_task_id = models.ForeignKey(caseManagementTask,
+                                     blank=True, null=True,
+                                     on_delete=models.DO_NOTHING,related_name='caseDocuments', db_column='case_task_id')
+
+    def __str__(self):
+        return '{}'.format(self.case_document)
+
+    class Meta:
+        db_table = 'case_management_documents'
