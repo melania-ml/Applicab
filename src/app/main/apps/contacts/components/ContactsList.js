@@ -143,7 +143,6 @@ function ContactsList(props) {
       className="flex flex-auto w-full max-h-full rowsPerPage"
     >
       <ContactsTable
-        className="rowsPerPage"
         columns={columns}
         data={filteredData}
         onRowClick={(ev, row) => {
