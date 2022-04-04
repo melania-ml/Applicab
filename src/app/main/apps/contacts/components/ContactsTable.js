@@ -14,7 +14,7 @@ import {
   usePagination,
   useRowSelect,
   useSortBy,
-  useTable
+  useTable,
 } from "react-table";
 import clsx from "clsx";
 import ContactsTablePaginationActions from "./ContactsTablePaginationActions";
@@ -42,12 +42,12 @@ const EnhancedTable = ({ columns, data, onRowClick }) => {
     page,
     gotoPage,
     setPageSize,
-    state: { pageIndex, pageSize }
+    state: { pageIndex, pageSize },
   } = useTable(
     {
       columns,
       data,
-      autoResetPage: true
+      autoResetPage: true,
     },
     useGlobalFilter,
     useSortBy,
@@ -79,9 +79,9 @@ const EnhancedTable = ({ columns, data, onRowClick }) => {
                 onClick={(ev) => ev.stopPropagation()}
               />
             </div>
-          )
+          ),
         },
-        ..._columns
+        ..._columns,
       ]);
     }
   );
@@ -148,15 +148,16 @@ const EnhancedTable = ({ columns, data, onRowClick }) => {
         </Table>
       </TableContainer>
       <TablePagination
+        className="rowsPerPage"
         component="div"
         classes={{
-          root: "shrink-0 border-t-1"
+          root: "shrink-0 border-t-1",
         }}
         rowsPerPageOptions={[
           5,
           10,
           25,
-          { label: "All", value: data.length + 1 }
+          { label: "All", value: data.length + 1 },
         ]}
         colSpan={5}
         count={data.length}
@@ -164,7 +165,7 @@ const EnhancedTable = ({ columns, data, onRowClick }) => {
         page={pageIndex}
         SelectProps={{
           inputProps: { "aria-label": "rows per page" },
-          native: false
+          native: false,
         }}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
@@ -177,7 +178,7 @@ const EnhancedTable = ({ columns, data, onRowClick }) => {
 EnhancedTable.propTypes = {
   columns: PropTypes.array.isRequired,
   data: PropTypes.array.isRequired,
-  onRowClick: PropTypes.func
+  onRowClick: PropTypes.func,
 };
 
 export default EnhancedTable;

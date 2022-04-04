@@ -141,6 +141,7 @@ const EnhancedTable = ({ columns, data, onRowClick }) => {
         </Table>
       </TableContainer>
       <TablePagination
+        className="rowsPerPage"
         component="div"
         classes={{
           root: "shrink-0 border-t-1",
