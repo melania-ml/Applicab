@@ -195,7 +195,7 @@ function DossiersList(props) {
     <motion.div
       initial={{ y: 20, opacity: 0 }}
       animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}
-      className="flex flex-auto w-full max-h-full"
+      className="flex w-full"
     >
       <DossiersTable
         columns={columns}
