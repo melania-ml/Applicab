@@ -42,7 +42,6 @@ const Root = styled(FusePageCarded)(({ theme }) => ({
 }));
 
 function Dossier(props) {
-  const [tabValue, setTabValue] = useState(0);
   const routeParams = useParams();
   const dispatch = useDispatch();
 
@@ -52,11 +51,11 @@ function Dossier(props) {
     etapeTabFromAction
   } = useSelector(({ dossiers }) => dossiers);
 
+  const [tabValue, setTabValue] = useState(
+    type === "edit" && etapeTabFromAction ? 1 : 0
+  );
   useEffect(() => {
-    if (
-      (type === "new" && isCaseAdded) ||
-      (type === "edit" && etapeTabFromAction)
-    ) {
+    if (type === "new" && isCaseAdded) {
       setTabValue(1);
     }
   }, [isCaseAdded, etapeTabFromAction, type]);

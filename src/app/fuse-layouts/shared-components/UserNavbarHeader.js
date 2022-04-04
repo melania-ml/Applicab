@@ -33,7 +33,7 @@ function UserNavbarHeader(props) {
     <StyledAppBar
       position="static"
       color="primary"
-      className="user relative flex flex-col items-center justify-center pt-24 pb-64 mb-32 z-0 shadow-0"
+      className="user relative flex flex-col items-center justify-center pt-24 pb-10 mb-10 z-0 shadow-0"
     >
       <Typography
         className="username text-18 whitespace-nowrap font-semibold mb-4"
@@ -51,13 +51,13 @@ function UserNavbarHeader(props) {
           format: "DD-MM-YYYY HH:mm:ss"
         })}
       </Typography>
-      <div className="flex items-center justify-center absolute bottom-0 -mb-44">
+      {/* <div className="flex items-center justify-center absolute bottom-0 -mb-44">
         <Avatar
           className="avatar w-72 h-72 p-8 box-content"
           alt="user photo"
           src={user.data.profile}
         />
-      </div>
+      </div> */}
     </StyledAppBar>
   );
 }

@@ -230,7 +230,7 @@ function EtapeTab(props) {
 
           return (
             selectedFlatRows.length > 0 && (
-              <EtapesMultiSelectMenu selectedContactIds={selectedRowIds} />
+              <EtapesMultiSelectMenu selectedEtapes={selectedRowIds} />
             )
           );
         },

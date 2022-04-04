@@ -8,15 +8,12 @@ import MenuList from "@mui/material/MenuList";
 import DeleteConfirmationDialog from "app/main/common/components/DeleteConfirmationDialog";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-// import {
-//   setContactsUnstarred,
-//   setContactsStarred,
-//   removeContacts
-// } from "../store/dossiersSlice";
+import { updateStatus, duplicateEtape } from "app/store/slices/dossiersSlice";
 
 function EtapesMultiSelectMenu(props) {
   const dispatch = useDispatch();
-  const { selectedContactIds } = props;
+
+  const { selectedEtapes } = props;
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
@@ -25,13 +22,23 @@ function EtapesMultiSelectMenu(props) {
     setAnchorEl(event.currentTarget);
   }
 
-  function closeSelectedContactsMenu() {
+  function closeSelectedEtapesMenu() {
     setAnchorEl(null);
   }
 
   function handleClose() {
     setDeleteConfirmation(false);
   }
+
+  const updateBulkStatus = (status) => {
+    dispatch(updateStatus({ selectedEtapes, status }));
+    closeSelectedEtapesMenu();
+  };
+
+  const duplicateBulkEtape = () => {
+    dispatch(duplicateEtape(selectedEtapes));
+    closeSelectedEtapesMenu();
+  };
 
   return (
     <>
@@ -48,12 +55,12 @@ function EtapesMultiSelectMenu(props) {
         id="selectedContactsMenu"
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
-        onClose={closeSelectedContactsMenu}
+        onClose={closeSelectedEtapesMenu}
       >
         <MenuList>
           <MenuItem
             onClick={() => {
-              closeSelectedContactsMenu();
+              closeSelectedEtapesMenu();
               setDeleteConfirmation(true);
             }}
           >
@@ -64,7 +71,7 @@ function EtapesMultiSelectMenu(props) {
               <ListItemText primary="Supprimer" />
             </div>
           </MenuItem>
-          <MenuItem>
+          <MenuItem onClick={duplicateBulkEtape}>
             <div className="flex items-center w-full">
               <ListItemIcon className="min-w-40">
                 <Icon style={{ fontSize: "large" }}>content_copy</Icon>
@@ -72,7 +79,7 @@ function EtapesMultiSelectMenu(props) {
               <ListItemText primary="Dupliquer" />
             </div>
           </MenuItem>
-          <MenuItem>
+          <MenuItem onClick={() => updateBulkStatus("A prévoir")}>
             <div className="flex items-center w-full">
               <ListItemIcon className="min-w-40">
                 <Icon
@@ -87,7 +94,7 @@ function EtapesMultiSelectMenu(props) {
               <ListItemText primary="Marquer comme à prévoir" />
             </div>
           </MenuItem>
-          <MenuItem>
+          <MenuItem onClick={() => updateBulkStatus("A faire")}>
             <div className="flex items-center w-full">
               <ListItemIcon className="min-w-40">
                 <Icon
@@ -102,7 +109,7 @@ function EtapesMultiSelectMenu(props) {
               <ListItemText primary="Marquer comme a faire" />
             </div>
           </MenuItem>
-          <MenuItem>
+          <MenuItem onClick={() => updateBulkStatus("Fait")}>
             <div className="flex items-center w-full">
               <ListItemIcon className="min-w-40">
                 <Icon
@@ -117,7 +124,7 @@ function EtapesMultiSelectMenu(props) {
               <ListItemText primary="Marquer comme fait" />
             </div>
           </MenuItem>
-          <MenuItem>
+          <MenuItem onClick={() => updateBulkStatus("Archivé")}>
             <div className="flex items-center w-full">
               <ListItemIcon className="min-w-40">
                 <Icon

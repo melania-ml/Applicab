@@ -117,6 +117,49 @@ export const updateCase = createAsyncThunk(
   }
 );
 
+export const updateStatus = createAsyncThunk(
+  "dossiersApp/dossiers/updateStatus",
+  async (updateValue, { dispatch, getState }) => {
+    await axios
+      .put(`api/caseManagement/bulkUpdateTask`, {
+        ids: updateValue.selectedEtapes,
+        update_value: {
+          status: updateValue.status
+        },
+        case_management_id: getState().dossiers.editDossierData.data.id
+      })
+      .then((data) => {
+        if (data.data.status === 200 && data.data.success) {
+          dispatch(showMessage({ message: data.data.message }));
+          dispatch(getEtapes(getState().dossiers.etapeObj));
+        }
+      })
+      .catch((errors) => {
+        console.error(errors);
+      });
+  }
+);
+
+export const duplicateEtape = createAsyncThunk(
+  "dossiersApp/dossiers/duplicateEtape",
+  async (ids, { dispatch, getState }) => {
+    await axios
+      .patch(`api/caseManagement/bulkReplicaCaseTask`, {
+        task_ids: ids,
+        case_management_id: getState().dossiers.editDossierData.data.id
+      })
+      .then((data) => {
+        if (data.data.status === 201 && data.data.success) {
+          dispatch(showMessage({ message: data.data.message }));
+          dispatch(getEtapes(getState().dossiers.etapeObj));
+        }
+      })
+      .catch((errors) => {
+        console.error(errors);
+      });
+  }
+);
+
 export const getDossiers = createAsyncThunk(
   "dossiersApp/dossiers/getDossiers",
   async (routeParams, { dispatch, getState }) => {
