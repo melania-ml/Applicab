@@ -61,6 +61,7 @@ class registerClient(APIView):
                 stPasswordText = emailText.setPassword() | emailText.commonUrls()
                 stPasswordText['otp'] = emailOtp
                 stPasswordText['text1'] = stPasswordText['text1'].format(userName=serializer.data['first_name'])
+                stPasswordText['text2'] = stPasswordText['text2'].format(lawyerName=request.user.first_name)
                 stPasswordText['button_url'] = stPasswordText['button_url'] + str(serializer.data['id'])
 
                 send_email([serializer.data['email']],
@@ -163,6 +164,13 @@ class setPassword(APIView):
             userData.email_token = None
             userData.is_active = True
             userData.save()
+            # # Send Welcome email
+            # welcomeText = emailText.wellcomeText() | emailText.commonUrls()
+            # welcomeText['text1'] = welcomeText['text1'].format(userName=userData.first_name)
+            #
+            # send_email([userData.email],
+            #            'Bienvenue sur Applicab !', 'email.html',
+            #            welcomeText)
             res = ResponseInfo({"passwordCreated": True}, YOUR_PASSWORD_CHANGED, True, status.HTTP_200_OK)
             return Response(res.success_payload(), status=status.HTTP_200_OK)
         except Exception as err:
@@ -276,9 +284,6 @@ class userUpdateViewSet(generics.RetrieveUpdateDestroyAPIView):
         # prepare response
         res = ResponseInfo(response.data, PROFILE_UPDATE_SUCCESS, True, status.HTTP_200_OK)
         return Response(res.success_payload(), status=status.HTTP_200_OK)
-
-
-import os
 
 
 class uploadUserCsvViewSet(APIView):

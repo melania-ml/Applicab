@@ -36,6 +36,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Application definition
 Api_url = "http://178.79.138.121:8080/"
 Admin_url = 'http://applicab.admin.sctestingsite.com/'
+site_url = 'http://applicab.admin.sctestingsite.com/login'
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

@@ -207,6 +207,7 @@ class caseManagementTaskView(APIView):
         try:
             self.serializers_class.Meta.depth = 0  # Adding depth value for Foreign fields
             taskId = request.data.get('task_ids', None)
+            caseId = request.data.get('case_management_id', None)
 
             # Return if taskId array missing
             if not taskId:
@@ -220,6 +221,7 @@ class caseManagementTaskView(APIView):
             for task in taskList:
                 task.id = None
                 task.is_default = False
+                task.case_management_id = CaseManagement.objects.get(pk=caseId)
                 bulk_list.append(task)
             replicaTask = caseManagementTask.objects.bulk_create(bulk_list)
 
@@ -252,4 +254,30 @@ class caseManagementDocumentsView(APIView):
         except Exception as err:
             res = ResponseInfo(err, SOMETHING_WENT_WRONG, False,
                                status.HTTP_401_UNAUTHORIZED)
+            return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
+
+class bulkCaseTaskOperationsViewSet(APIView):
+    def put(self, request):
+        try:
+            updateValue = request.data['update_value']
+            ids = request.data['ids']
+
+            instances = caseManagementTask.objects.filter(id__in=ids)
+            for instance in instances:
+                if instance.is_default:
+                    instance.id = None
+                    instance.is_default = False
+                    instance.case_management_id = CaseManagement.objects.get(pk=request.data['case_management_id'])
+
+                serializer = CaseTaskSerializer(instance, data=updateValue)
+                if serializer.is_valid():
+                    serializer.save()
+
+            # Preparing response
+            res = ResponseInfo([], RECORD_UPDATED_SUCCESSFULLY, True,
+                               status.HTTP_200_OK)
+            return Response(res.success_payload(), status=status.HTTP_200_OK)
+        except Exception as err:
+            res = ResponseInfo(err, SOMETHING_WENT_WRONG, False, status.HTTP_401_UNAUTHORIZED)
             return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
