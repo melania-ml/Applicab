@@ -9,12 +9,14 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
+import { useSelector } from "react-redux";
+import FuseLoading from "@fuse/core/FuseLoading";
 import {
   useGlobalFilter,
   usePagination,
   useRowSelect,
   useSortBy,
-  useTable,
+  useTable
 } from "react-table";
 import clsx from "clsx";
 import EtapesTablePaginationActions from "./EtapesTablePaginationActions";
@@ -35,6 +37,7 @@ const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
 });
 
 const EnhancedTable = ({ columns, data, onRowClick }) => {
+  const { isLoading } = useSelector(({ dossiers }) => dossiers);
   const {
     getTableProps,
     headerGroups,
@@ -42,12 +45,12 @@ const EnhancedTable = ({ columns, data, onRowClick }) => {
     page,
     gotoPage,
     setPageSize,
-    state: { pageIndex, pageSize },
+    state: { pageIndex, pageSize }
   } = useTable(
     {
       columns,
       data,
-      autoResetPage: true,
+      autoResetPage: true
     },
     useGlobalFilter,
     useSortBy,
@@ -70,9 +73,9 @@ const EnhancedTable = ({ columns, data, onRowClick }) => {
                 onClick={(ev) => ev.stopPropagation()}
               />
             </div>
-          ),
+          )
         },
-        ..._columns,
+        ..._columns
       ]);
     }
   );
@@ -85,6 +88,9 @@ const EnhancedTable = ({ columns, data, onRowClick }) => {
     setPageSize(Number(event.target.value));
   };
 
+  if (isLoading) {
+    return <FuseLoading />;
+  }
   // Render the UI for your table
   return (
     <div className="flex flex-col sm:border-1 sm:rounded-16 overflow-hidden">
@@ -144,13 +150,13 @@ const EnhancedTable = ({ columns, data, onRowClick }) => {
         className="rowsPerPage"
         component="div"
         classes={{
-          root: "shrink-0 border-t-1",
+          root: "shrink-0 border-t-1"
         }}
         rowsPerPageOptions={[
           5,
           10,
           25,
-          { label: "All", value: data.length + 1 },
+          { label: "All", value: data.length + 1 }
         ]}
         colSpan={5}
         count={data.length}
@@ -158,7 +164,7 @@ const EnhancedTable = ({ columns, data, onRowClick }) => {
         page={pageIndex}
         SelectProps={{
           inputProps: { "aria-label": "rows per page" },
-          native: false,
+          native: false
         }}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
@@ -171,7 +177,7 @@ const EnhancedTable = ({ columns, data, onRowClick }) => {
 EnhancedTable.propTypes = {
   columns: PropTypes.array.isRequired,
   data: PropTypes.array.isRequired,
-  onRowClick: PropTypes.func,
+  onRowClick: PropTypes.func
 };
 
 export default EnhancedTable;

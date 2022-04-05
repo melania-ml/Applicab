@@ -32,6 +32,7 @@ import {
 
 function EtapesDialog() {
   const [allFields, setAllFields] = useState({
+    position: "",
     case_name: "",
     name: "",
     sub_name: "",
@@ -174,6 +175,22 @@ function EtapesDialog() {
       </AppBar>
       <DialogContent classes={{ root: "p-24" }}>
         <div className="row">
+          <TextField
+            className="mb-12"
+            name="Position"
+            label="Position"
+            variant="outlined"
+            fullWidth
+            disabled={type === "edit"}
+            type="number"
+            value={allFields.position}
+            onChange={(e) => {
+              setAllFields({
+                ...allFields,
+                position: e.target.value
+              });
+            }}
+          />
           <TextField
             className="mb-12"
             name="Dossier"

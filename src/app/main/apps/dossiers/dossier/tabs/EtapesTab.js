@@ -14,7 +14,6 @@ import { tooltipClasses, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 import _ from "@lodash";
-import FuseLoading from "@fuse/core/FuseLoading";
 import { Paper, Input, Button, Tooltip } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { useMemo, useEffect, useState } from "react";
@@ -52,8 +51,7 @@ function EtapeTab(props) {
     etapes,
     etapeObj,
     editDossierData: { data, type },
-    procedures,
-    isLoading
+    procedures
   } = useSelector(({ dossiers }) => dossiers);
 
   const [openEtape, setOpenEtape] = useState(false);
@@ -404,9 +402,7 @@ function EtapeTab(props) {
   if (!filteredData) {
     return null;
   }
-  if (isLoading) {
-    return <FuseLoading />;
-  }
+
   return (
     <motion.div
       initial={{ y: 20, opacity: 0 }}

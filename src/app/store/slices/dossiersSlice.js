@@ -10,6 +10,30 @@ import {
   getProcedureCode
 } from "app/main/common/functions";
 
+export const removeEtapes = createAsyncThunk(
+  "dossiersApp/dossiers/removeEtapes",
+  async (etapeIds, { dispatch, getState }) => {
+    dispatch(setIsLoading(true));
+    await axios
+      .delete("api/caseManagement/bulkDeleteTask", {
+        data: {
+          ids: etapeIds,
+          case_management_id: getState().dossiers.editDossierData.data.id
+        }
+      })
+      .then((data) => {
+        if (data.data.status === 200 && data.data.success) {
+          dispatch(showMessage({ message: data.data.message }));
+          dispatch(getEtapes(getState().dossiers.etapeObj));
+          dispatch(setIsLoading(false));
+        }
+      })
+      .catch((errors) => {
+        console.error(errors);
+      });
+  }
+);
+
 export const getEtapes = createAsyncThunk(
   "dossiersApp/dossiers/getEtapes",
   async (obj, { dispatch, getState }) => {
@@ -203,6 +227,7 @@ export const updateEtapes = createAsyncThunk(
         if (data.data && data.data.success) {
           dispatch(showMessage({ message: data.data.message }));
           dispatch(getEtapes(getState().dossiers.etapeObj));
+          dispatch(getDocuments(getState().dossiers.editDossierData.data.id));
           dispatch(setIsLoading(false));
         }
       })

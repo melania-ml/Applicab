@@ -8,7 +8,11 @@ import MenuList from "@mui/material/MenuList";
 import DeleteConfirmationDialog from "app/main/common/components/DeleteConfirmationDialog";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { updateStatus, duplicateEtape } from "app/store/slices/dossiersSlice";
+import {
+  updateStatus,
+  duplicateEtape,
+  removeEtapes
+} from "app/store/slices/dossiersSlice";
 
 function EtapesMultiSelectMenu(props) {
   const dispatch = useDispatch();
@@ -29,6 +33,10 @@ function EtapesMultiSelectMenu(props) {
   function handleClose() {
     setDeleteConfirmation(false);
   }
+
+  const handleDeleteEtape = () => {
+    dispatch(removeEtapes(selectedEtapes));
+  };
 
   const updateBulkStatus = (status) => {
     dispatch(updateStatus({ selectedEtapes, status }));
@@ -144,6 +152,7 @@ function EtapesMultiSelectMenu(props) {
       <DeleteConfirmationDialog
         open={deleteConfirmation}
         onClose={handleClose}
+        onDelete={handleDeleteEtape}
         subTitle={"Voulez-vous vraiment supprimer cette étape du dossier ?"}
       />
     </>
