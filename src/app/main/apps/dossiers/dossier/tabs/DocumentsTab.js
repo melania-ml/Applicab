@@ -53,7 +53,7 @@ function DocumentsTab() {
             <TableHead>
               <TableRow>
                 <TableCell align="left">Nom</TableCell>
-                <TableCell align="left">Etape Nom</TableCell>
+                <TableCell align="left">Étape</TableCell>
                 <TableCell align="left">Date de partage</TableCell>
                 <TableCell align="center">Télécharger</TableCell>
               </TableRow>

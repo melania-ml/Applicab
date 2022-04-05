@@ -19,7 +19,7 @@ import {
   Select,
   TextField,
   Icon,
-  Autocomplete,
+  Autocomplete
 } from "@mui/material";
 import Statut from "app/main/constants/Statut";
 import { getFormattedDateTime } from "app/main/common/functions";
@@ -27,7 +27,7 @@ import {
   closeNewEtapeDialog,
   closeEditEtapeDialog,
   updateEtapes,
-  uploadDocument,
+  uploadDocument
 } from "app/store/slices/dossiersSlice";
 
 function EtapesDialog() {
@@ -39,7 +39,7 @@ function EtapesDialog() {
     notification_date: null,
     client_id: [],
     subject: "",
-    message: "",
+    message: ""
   });
   const [files, setFiles] = useState(null);
 
@@ -50,7 +50,7 @@ function EtapesDialog() {
   const dispatch = useDispatch();
   const {
     etapeDialog: { data, props, type },
-    editDossierData,
+    editDossierData
   } = useSelector(({ dossiers }) => dossiers);
 
   useEffect(() => {
@@ -65,14 +65,15 @@ function EtapesDialog() {
         notification_date:
           data.notification_date &&
           getFormattedDateTime({
-            date: data.notification_date,
+            date: data.notification_date
           }),
+        message: data.message
       });
     } else {
       setAllFields({
         ...allFields,
         case_name: editDossierData?.data?.case_name,
-        name: "",
+        name: ""
       });
     }
   }, [data, type]);
@@ -136,7 +137,7 @@ function EtapesDialog() {
         updateEtapes({
           ...allFields,
           id: data.id,
-          case_management_id: editDossierData.data.id,
+          case_management_id: editDossierData.data.id
         })
       );
     }
@@ -155,7 +156,7 @@ function EtapesDialog() {
   return (
     <Dialog
       classes={{
-        paper: "m-24",
+        paper: "m-24"
       }}
       {...props}
       onClose={closeComposeDialog}
@@ -184,7 +185,7 @@ function EtapesDialog() {
             onChange={(e) => {
               setAllFields({
                 ...allFields,
-                case_name: e.target.value,
+                case_name: e.target.value
               });
             }}
           />
@@ -199,7 +200,7 @@ function EtapesDialog() {
             onChange={(e) => {
               setAllFields({
                 ...allFields,
-                name: e.target.value,
+                name: e.target.value
               });
             }}
           />
@@ -215,7 +216,7 @@ function EtapesDialog() {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  sub_name: e.target.value,
+                  sub_name: e.target.value
                 });
               }}
             />
@@ -228,7 +229,7 @@ function EtapesDialog() {
               onChange={(e) =>
                 setAllFields({
                   ...allFields,
-                  status: e.target.value,
+                  status: e.target.value
                 })
               }
             >
@@ -259,7 +260,7 @@ function EtapesDialog() {
                 <TextField
                   className="xs=4 daycount"
                   hiddenLabel
-                  placeholder="Day Count"
+                  placeholder=""
                   type="number"
                   variant="filled"
                   value={notification.count}
@@ -289,7 +290,7 @@ function EtapesDialog() {
                       right: "-40px",
                       top: "10px",
                       color: "#BABABF",
-                      cursor: "pointer",
+                      cursor: "pointer"
                     }}
                     onClick={(e) => handleRemoveItem(e, notification.id)}
                   >
@@ -312,7 +313,7 @@ function EtapesDialog() {
                 style={{
                   color: "secondary",
                   fontSize: "large",
-                  margin: "10px",
+                  margin: "10px"
                 }}
               >
                 notifications
@@ -343,7 +344,7 @@ function EtapesDialog() {
               const array = newValue.map((val) => val.id ?? val);
               setAllFields({
                 ...allFields,
-                client_id: array,
+                client_id: array
               });
             }}
             renderInput={(params) => (
@@ -363,7 +364,7 @@ function EtapesDialog() {
             onChange={(e) => {
               setAllFields({
                 ...allFields,
-                subject: e.target.value,
+                subject: e.target.value
               });
             }}
           />
@@ -402,13 +403,13 @@ function EtapesDialog() {
                   "mergeTableCells",
                   "|",
                   "undo",
-                  "redo",
-                ],
+                  "redo"
+                ]
               }}
               onChange={(event, editor) => {
                 setAllFields({
                   ...allFields,
-                  message: editor.getData(),
+                  message: editor.getData()
                 });
               }}
             />
@@ -427,7 +428,7 @@ function EtapesDialog() {
               style={{
                 color: "secondary",
                 fontSize: "large",
-                margin: "10px",
+                margin: "10px"
               }}
             >
               attach_file
