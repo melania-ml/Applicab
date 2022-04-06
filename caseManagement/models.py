@@ -114,10 +114,33 @@ class caseManagementDocuments(CommonBase):
                                            on_delete=models.DO_NOTHING, db_column='case_management_id')
     case_task_id = models.ForeignKey(caseManagementTask,
                                      blank=True, null=True,
-                                     on_delete=models.DO_NOTHING,related_name='caseDocuments', db_column='case_task_id')
+                                     on_delete=models.DO_NOTHING, related_name='caseDocuments',
+                                     db_column='case_task_id')
 
     def __str__(self):
         return '{}'.format(self.case_document)
 
     class Meta:
         db_table = 'case_management_documents'
+
+
+class caseManagementDeletedTask(CommonBase):
+    case_management_id = models.ForeignKey(CaseManagement,
+                                           blank=True, null=True,
+                                           on_delete=models.DO_NOTHING, db_column='case_management_id')
+
+    case_task_id = models.ForeignKey(caseManagementTask,
+                                     blank=True, null=True,
+                                     on_delete=models.DO_NOTHING,
+                                     db_column='case_task_id')
+
+    lawyer_id = models.ForeignKey(User,
+                                  blank=True, null=True,
+                                  on_delete=models.DO_NOTHING,
+                                  db_column='lawyer_id')
+
+    def __str__(self):
+        return '{}'.format(self.case_task_id)
+
+    class Meta:
+        db_table = 'case_management_deleted_task'

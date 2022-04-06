@@ -35,7 +35,8 @@ class CaseDocumentsSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         for dock in validated_data['case_document']:
             caseManagementDocuments.objects.create(case_document=dock, case_task_id=validated_data['case_task_id'],
-                                                   case_management_id=validated_data['case_management_id'], file_name=str(dock))
+                                                   case_management_id=validated_data['case_management_id'],
+                                                   file_name=str(dock))
         return {"data": "success"}
 
 
@@ -55,8 +56,8 @@ class GetCaseDocumentsSerializer(serializers.ModelSerializer):
 
 class CaseTaskSerializer(serializers.ModelSerializer):
     # caseDocuments = GetCaseDocumentsSerializer(many=True)
-    indexNum = serializers.SerializerMethodField()
-    index = 0
+    # indexNum = serializers.SerializerMethodField()
+    # index = 0
 
     class Meta:
         model = caseManagementTask
@@ -64,6 +65,13 @@ class CaseTaskSerializer(serializers.ModelSerializer):
         # read_only_fields = ['caseDocuments']
         depth = 1
 
-    def get_indexNum(self, obj):
-        self.index += 1
-        return self.index
+    # def get_indexNum(self, obj):
+    #     self.index += 1
+    #     return self.index
+
+
+class CaseDeleteTaskSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = caseManagementDeletedTask
+        fields = '__all__'
+        depth = 0
