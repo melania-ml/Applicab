@@ -7,7 +7,7 @@ import {
   TextField,
   IconButton,
   InputAdornment,
-  Icon
+  Icon,
 } from "@mui/material";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
@@ -31,13 +31,13 @@ const Root = styled("div")(({ theme }) => ({
   "& .Resetpass-leftSection": {
     width: "50%",
     "@media (max-width: 767px)": {
-      width: "100%"
-    }
+      width: "100%",
+    },
   },
   "& .leading-tight": {
     "@media (max-width: 767px)": {
-      fontSize: "30px"
-    }
+      fontSize: "30px",
+    },
   },
 
   "& .Resetpass-rightSection": {
@@ -46,29 +46,29 @@ const Root = styled("div")(({ theme }) => ({
     } 0%, ${darken(theme.palette.primary.dark, 0.5)} 100%)`,
     color: theme.palette.primary.contrastText,
     "@media (max-width: 767px)": {
-      padding: "30px"
-    }
+      padding: "30px",
+    },
   },
   "& .Resetpass-responsive": {
     "@media (max-width: 767px)": {
       display: "block",
-      width: "100%"
-    }
+      width: "100%",
+    },
   },
   "& .MuiCardContent-root": {
     "@media (max-width: 767px)": {
       marginLeft: "auto",
-      marginRight: "auto"
-    }
+      marginRight: "auto",
+    },
   },
   "& .MuiFormControl-root": {
-    width: "100%"
-  }
+    width: "100%",
+  },
 }));
 
 const defaultValues = {
   password: "",
-  confirmPassword: ""
+  confirmPassword: "",
 };
 
 const schema = yup.object().shape({
@@ -89,7 +89,7 @@ const schema = yup.object().shape({
     .oneOf(
       [yup.ref("password"), null],
       "Le nouveau mot de passe et le mot de passe de confirmation ne correspondent pas"
-    )
+    ),
 });
 
 function ResetPassword(props) {
@@ -105,7 +105,7 @@ function ResetPassword(props) {
   useEffect(() => {
     if (success) {
       history.push({
-        pathname: "/login"
+        pathname: "/login",
       });
     }
   }, [success]);
@@ -113,7 +113,7 @@ function ResetPassword(props) {
   const { control, formState, handleSubmit, reset, setError } = useForm({
     mode: "onChange",
     defaultValues,
-    resolver: yupResolver(schema)
+    resolver: yupResolver(schema),
   });
 
   const { isValid, dirtyFields, errors } = formState;
@@ -172,7 +172,7 @@ function ResetPassword(props) {
                             </Icon>
                           </IconButton>
                         </InputAdornment>
-                      )
+                      ),
                     }}
                     required
                   />
@@ -208,7 +208,7 @@ function ResetPassword(props) {
                             </Icon>
                           </IconButton>
                         </InputAdornment>
-                      )
+                      ),
                     }}
                     required
                   />
@@ -275,7 +275,12 @@ function ResetPassword(props) {
                 style={{ background: "none" }}
                 target={"_blank"}
               >
-                <Button variant="contained" color="secondary" className="p-30">
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  className="p-30"
+                  style={{ color: "black", background: "white" }}
+                >
                   Demander une démo
                 </Button>
               </a>

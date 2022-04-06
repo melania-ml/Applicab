@@ -22,7 +22,7 @@ import {
   Icon,
   IconButton,
   Card,
-  CardContent
+  CardContent,
 } from "@mui/material";
 
 const Root = styled("div")(({ theme }) => ({
@@ -34,13 +34,13 @@ const Root = styled("div")(({ theme }) => ({
   "& .Login-leftSection": {
     width: "50%",
     "@media (max-width: 767px)": {
-      width: "100%"
-    }
+      width: "100%",
+    },
   },
   "& .leading-tight": {
     "@media (max-width: 767px)": {
-      fontSize: "30px"
-    }
+      fontSize: "30px",
+    },
   },
 
   "& .Login-rightSection": {
@@ -49,24 +49,24 @@ const Root = styled("div")(({ theme }) => ({
     } 0%, ${darken(theme.palette.primary.dark, 0.5)} 100%)`,
     color: theme.palette.primary.contrastText,
     "@media (max-width: 767px)": {
-      padding: "30px"
-    }
+      padding: "30px",
+    },
   },
   "& .login-responsive": {
     "@media (max-width: 767px)": {
       display: "block",
-      width: "100%"
-    }
+      width: "100%",
+    },
   },
   "& .MuiCardContent-root": {
     "@media (max-width: 767px)": {
       marginLeft: "auto",
-      marginRight: "auto"
-    }
+      marginRight: "auto",
+    },
   },
   "& .MuiFormControl-root": {
-    width: "100%"
-  }
+    width: "100%",
+  },
 }));
 
 const schema = yup.object().shape({
@@ -80,12 +80,12 @@ const schema = yup.object().shape({
     .matches(
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{13,20}$/,
       "13 caractères minimum, Au moins 1 lettre majuscule, Au moins 1 chiffre, Au moins 1 caractère spécial"
-    )
+    ),
 });
 
 const defaultValues = {
   email: "",
-  password: ""
+  password: "",
 };
 
 function Login() {
@@ -98,11 +98,11 @@ function Login() {
     handleSubmit,
     reset,
     trigger,
-    setError
+    setError,
   } = useForm({
     mode: "onChange",
     defaultValues,
-    resolver: yupResolver(schema)
+    resolver: yupResolver(schema),
   });
 
   const { isValid, dirtyFields, errors } = formState;
@@ -113,11 +113,11 @@ function Login() {
     if (localStorage.getItem("email") && localStorage.getItem("password")) {
       setValue("email", localStorage.getItem("email") || "", {
         shouldDirty: true,
-        shouldValidate: true
+        shouldValidate: true,
       });
       setValue("password", localStorage.getItem("password") || "", {
         shouldDirty: true,
-        shouldValidate: true
+        shouldValidate: true,
       });
     }
   }, [reset, setValue, trigger]);
@@ -125,7 +125,7 @@ function Login() {
   useEffect(() => {
     if (login.success) {
       history.push({
-        pathname: "/apps/dashboard"
+        pathname: "/apps/dashboard",
       });
     }
   }, [login.success]);
@@ -186,7 +186,7 @@ function Login() {
                               email
                             </Icon>
                           </InputAdornment>
-                        )
+                        ),
                       }}
                       required
                     />
@@ -219,7 +219,7 @@ function Login() {
                               </Icon>
                             </IconButton>
                           </InputAdornment>
-                        )
+                        ),
                       }}
                       required
                     />
@@ -316,7 +316,11 @@ function Login() {
                 style={{ background: "none" }}
                 target={"_blank"}
               >
-                <Button variant="contained" color="secondary" className="p-30">
+                <Button
+                  variant="contained"
+                  className="p-30"
+                  style={{ color: "black", background: "white" }}
+                >
                   Demander une démo
                 </Button>
               </a>

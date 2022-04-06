@@ -18,7 +18,7 @@ import {
   InputAdornment,
   Icon,
   Card,
-  CardContent
+  CardContent,
 } from "@mui/material";
 
 import { callForgotPassword } from "app/store/slices/forgotPasswordSlice";
@@ -32,13 +32,13 @@ const Root = styled("div")(({ theme }) => ({
   "& .forgotpass-leftSection": {
     width: "50%",
     "@media (max-width: 767px)": {
-      width: "100%"
-    }
+      width: "100%",
+    },
   },
   "& .leading-tight": {
     "@media (max-width: 767px)": {
-      fontSize: "30px"
-    }
+      fontSize: "30px",
+    },
   },
 
   "& .forgotpass-rightSection": {
@@ -47,35 +47,35 @@ const Root = styled("div")(({ theme }) => ({
     } 0%, ${darken(theme.palette.primary.dark, 0.5)} 100%)`,
     color: theme.palette.primary.contrastText,
     "@media (max-width: 767px)": {
-      padding: "30px"
-    }
+      padding: "30px",
+    },
   },
   "& .forgotpass-responsive": {
     "@media (max-width: 767px)": {
       display: "block",
-      width: "100%"
-    }
+      width: "100%",
+    },
   },
   "& .MuiCardContent-root": {
     "@media (max-width: 767px)": {
       marginLeft: "auto",
-      marginRight: "auto"
-    }
+      marginRight: "auto",
+    },
   },
   "& .MuiFormControl-root": {
-    width: "100%"
-  }
+    width: "100%",
+  },
 }));
 
 const schema = yup.object().shape({
   email: yup
     .string()
     .email("Saisissez une adresse e-mail valide")
-    .required("Saisissez une adresse e-mail")
+    .required("Saisissez une adresse e-mail"),
 });
 
 const defaultValues = {
-  email: ""
+  email: "",
 };
 
 function ForgotPassword() {
@@ -84,7 +84,7 @@ function ForgotPassword() {
   const { control, formState, handleSubmit, reset, setError } = useForm({
     mode: "onChange",
     defaultValues,
-    resolver: yupResolver(schema)
+    resolver: yupResolver(schema),
   });
   const dispatch = useDispatch();
   const { success } = useSelector(({ forgotPassword }) => forgotPassword);
@@ -167,7 +167,7 @@ function ForgotPassword() {
                                 email
                               </Icon>
                             </InputAdornment>
-                          )
+                          ),
                         }}
                         variant="outlined"
                         required
@@ -256,7 +256,12 @@ function ForgotPassword() {
                 style={{ background: "none" }}
                 target={"_blank"}
               >
-                <Button variant="contained" color="secondary" className="p-30">
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  className="p-30"
+                  style={{ color: "black", background: "white" }}
+                >
                   Demander une démo
                 </Button>
               </a>
