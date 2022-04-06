@@ -27,7 +27,9 @@ import {
   openEditEtapeDialog,
   setDossiersSearchText,
   getEtapes,
-  setEtapeObj
+  setEtapeObj,
+  getDeletedEtapes,
+  setSelectedList
 } from "app/store/slices/dossiersSlice";
 import {
   getFormattedDateTime,
@@ -37,7 +39,6 @@ import {
 function EtapeTab(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [selectedList, setSelectedList] = useState("Tous");
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -51,7 +52,8 @@ function EtapeTab(props) {
     etapes,
     etapeObj,
     editDossierData: { data, type },
-    procedures
+    procedures,
+    selectedList
   } = useSelector(({ dossiers }) => dossiers);
 
   const [openEtape, setOpenEtape] = useState(false);
@@ -76,8 +78,13 @@ function EtapeTab(props) {
     const newObj = {};
     newObj["status"] = name;
     newObj["case_management_id"] = etapeObj.case_management_id;
-    setSelectedList(name);
+    dispatch(setSelectedList(name));
     dispatch(getEtapes(name === "Tous" ? etapeObj : newObj));
+  };
+
+  const deleteEtapes = () => {
+    dispatch(setSelectedList("Corbeille"));
+    dispatch(getDeletedEtapes(etapeObj.case_management_id));
   };
 
   const drawer = (
@@ -202,7 +209,7 @@ function EtapeTab(props) {
         <ListItem
           button
           style={{ background: selectedList === "Corbeille" && "#C4C4C4" }}
-          onClick={() => listClick("Corbeille")}
+          onClick={deleteEtapes}
         >
           <ListItemIcon>
             <Icon
@@ -228,7 +235,10 @@ function EtapeTab(props) {
 
           return (
             selectedFlatRows.length > 0 && (
-              <EtapesMultiSelectMenu selectedEtapes={selectedRowIds} />
+              <EtapesMultiSelectMenu
+                selectedList={selectedList}
+                selectedEtapes={selectedRowIds}
+              />
             )
           );
         },

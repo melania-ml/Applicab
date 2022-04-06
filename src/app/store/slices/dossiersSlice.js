@@ -10,6 +10,30 @@ import {
   getProcedureCode
 } from "app/main/common/functions";
 
+export const restoreEtape = createAsyncThunk(
+  "dossiersApp/dossiers/restoreEtape",
+  async (etapeIds, { dispatch, getState }) => {
+    dispatch(setIsLoading(true));
+    await axios
+      .delete("api/caseManagement/bulkDeleteTask", {
+        data: {
+          ids: etapeIds,
+          case_management_id: getState().dossiers.editDossierData.data.id
+        }
+      })
+      .then((data) => {
+        if (data.data.status === 200 && data.data.success) {
+          dispatch(showMessage({ message: data.data.message }));
+          dispatch(getEtapes(getState().dossiers.etapeObj));
+          dispatch(setIsLoading(false));
+        }
+      })
+      .catch((errors) => {
+        console.error(errors);
+      });
+  }
+);
+
 export const removeEtapes = createAsyncThunk(
   "dossiersApp/dossiers/removeEtapes",
   async (etapeIds, { dispatch, getState }) => {
@@ -31,6 +55,21 @@ export const removeEtapes = createAsyncThunk(
       .catch((errors) => {
         console.error(errors);
       });
+  }
+);
+
+export const getDeletedEtapes = createAsyncThunk(
+  "dossiersApp/dossiers/getDeletedEtapes",
+  async (id, { dispatch, getState }) => {
+    const response = await axios.get(`api/caseManagement/getDeletedTask/${id}`);
+    debugger;
+    const data = await response.data;
+    let newArr = [];
+    for (let d of data.data) {
+      d.delete_id = d.id;
+      newArr.push(d.case_task_id);
+    }
+    dispatch(setEtapes(newArr));
   }
 );
 
@@ -115,24 +154,23 @@ export const updateCase = createAsyncThunk(
   async (dossier, { dispatch, getState }) => {
     await axios
       .patch(
-        `api/common/updateRetrieve/caseManagement/CaseManagement/${dossier.case_management_id}/`,
+        `api/caseManagement/updateCases/${dossier.case_management_id}`,
         dossier
       )
       .then((data) => {
         if (data.data.status === 200 && data.data.success) {
-          // const procedure = getState().dossiers.procedures;
-          // const proc = procedure.filter(
-          //   (fil) => fil.id === data.data.data.procedure
-          // )[0].procedure_type;
-          // const key = getProcedureCode(proc);
-          // let obj = {
-          //   type: data.data.data.type,
-          //   case_management_id: data.data.data.id
-          // };
-          // obj[key] = true;
+          const procedure = getState().dossiers.procedures;
+          const proc = procedure.filter(
+            (fil) => fil.id === data.data.data.procedure
+          )[0].procedure_type;
+          const key = getProcedureCode(proc);
+          let obj = {
+            type: data.data.data.type,
+            case_management_id: data.data.data.id
+          };
+          obj[key] = true;
           dispatch(showMessage({ message: data.data.message }));
-          // dispatch(setEtapeObj(obj));
-          // dispatch(setIsCaseAdded());
+          dispatch(setEtapeObj(obj));
         }
       })
       .catch((error) => {
@@ -301,7 +339,8 @@ const dossiersSlice = createSlice({
       data: null
     },
     etapeTabFromAction: false,
-    documents: []
+    documents: [],
+    selectedList: "Tous"
   }),
   reducers: {
     setEtapes: (state, action) => {
@@ -388,6 +427,9 @@ const dossiersSlice = createSlice({
         },
         data: null
       };
+    },
+    setSelectedList: (state, action) => {
+      state.selectedList = action.payload;
     }
   },
   extraReducers: {
@@ -418,7 +460,8 @@ export const {
   setEtapeObj,
   setEditDossierData,
   setNewDossierData,
-  setEtapeTabFromAction
+  setEtapeTabFromAction,
+  setSelectedList
 } = dossiersSlice.actions;
 
 export default dossiersSlice.reducer;
