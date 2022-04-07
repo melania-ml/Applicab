@@ -22,7 +22,6 @@ function EtapesMultiSelectMenu(props) {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
-  const [restoreConfirmation, setRestoreConfirmation] = useState(false);
 
   function openSelectedContactMenu(event) {
     setAnchorEl(event.currentTarget);
@@ -35,10 +34,6 @@ function EtapesMultiSelectMenu(props) {
   function handleClose() {
     setDeleteConfirmation(false);
   }
-
-  const handleRestoreClose = () => {
-    setRestoreConfirmation(false);
-  };
 
   const handleDeleteEtape = () => {
     dispatch(removeEtapes(selectedEtapes));
@@ -56,7 +51,7 @@ function EtapesMultiSelectMenu(props) {
 
   const restoreEtapes = () => {
     setAnchorEl(null);
-    setRestoreConfirmation(true);
+    dispatch(restoreEtape());
   };
 
   return (
@@ -173,12 +168,6 @@ function EtapesMultiSelectMenu(props) {
           </MenuList>
         )}
       </Menu>
-      <DeleteConfirmationDialog
-        open={restoreConfirmation}
-        onClose={handleRestoreClose}
-        onDelete={restoreEtape(selectedEtapes)}
-        subTitle={"Voulez-vous vraiment supprimer cette étape ?"}
-      />
       <DeleteConfirmationDialog
         open={deleteConfirmation}
         onClose={handleClose}

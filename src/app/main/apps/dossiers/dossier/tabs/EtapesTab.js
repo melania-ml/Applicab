@@ -252,6 +252,13 @@ function EtapeTab(props) {
         sortable: false
       },
       {
+        Header: "Position",
+        accessor: "position",
+        Cell: ({ row }) => {
+          return row.original.status || "-";
+        }
+      },
+      {
         Header: "Étape",
         accessor: "name",
         Cell: ({ row }) => {
