@@ -7,7 +7,8 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   getProcedureCode,
-  getFormattedDateTime
+  getFormattedDateTime,
+  getWholeCaseName
 } from "app/main/common/functions";
 
 function DossierHeader() {
@@ -49,12 +50,12 @@ function DossierHeader() {
             >
               <Typography className="text-16 sm:text-20 ml-24 truncate font-semibold">
                 {type === "edit"
-                  ? `${data.case_name} - ${getProcedureCode(
-                      data.procedure.procedure_type
-                    )} - ${getFormattedDateTime({
-                      date: data.created_date,
-                      format: "DD/MM/YYYY"
-                    })} - ${data.unique_code}`
+                  ? getWholeCaseName(
+                      data.case_name,
+                      data.procedure.procedure_type,
+                      data.created_date,
+                      data.unique_code
+                    )
                   : "Ajouter un nouveau dossier"}
               </Typography>
             </motion.div>

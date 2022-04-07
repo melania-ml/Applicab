@@ -16,7 +16,7 @@ import reducer from "app/store";
 import DossierHeader from "./DossierHeader";
 import InformationTab from "./tabs/InformationTab";
 import EtapesTab from "./tabs/EtapesTab";
-import EmailTab from "./tabs/EmailTab";
+import MessageTab from "./tabs/MessageTab";
 import DocumentsTab from "./tabs/DocumentsTab";
 
 //material-ui
@@ -115,7 +115,7 @@ function Dossier(props) {
               <EtapesTab />
             </div>
             <div className={tabValue !== 2 ? "hidden" : ""}>
-              <EmailTab />
+              <MessageTab />
             </div>
             <div className={tabValue !== 3 ? "hidden" : ""}>
               <DocumentsTab />

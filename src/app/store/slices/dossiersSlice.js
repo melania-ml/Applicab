@@ -255,6 +255,26 @@ export const getDossiers = createAsyncThunk(
   }
 );
 
+export const addEtapes = createAsyncThunk(
+  "dossiersApp/dossiers/addEtapes",
+  async (allfields, { dispatch, getState }) => {
+    dispatch(setIsLoading(true));
+    await axios
+      .post("api/caseManagement/createCaseTask", allfields)
+      .then((data) => {
+        if (data.data.status === 201 && data.data.success) {
+          dispatch(showMessage({ message: data.data.message }));
+          dispatch(getEtapes(getState().dossiers.etapeObj));
+          dispatch(getDocuments(getState().dossiers.editDossierData.data.id));
+          dispatch(setIsLoading(false));
+        }
+      })
+      .catch((errors) => {
+        return dispatch(showMessage(errors));
+      });
+  }
+);
+
 export const updateEtapes = createAsyncThunk(
   "dossiersApp/dossiers/updateEtapes",
   async (allfields, { dispatch, getState }) => {

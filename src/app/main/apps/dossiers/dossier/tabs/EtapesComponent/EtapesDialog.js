@@ -27,6 +27,7 @@ import {
   closeNewEtapeDialog,
   closeEditEtapeDialog,
   updateEtapes,
+  addEtapes,
   uploadDocument
 } from "app/store/slices/dossiersSlice";
 
@@ -43,7 +44,7 @@ function EtapesDialog() {
     message: ""
   });
   const [files, setFiles] = useState(null);
-
+  const [isValid, setIsValid] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [count, setCount] = useState(0);
   const [isInvite, setIsInvite] = useState(false);
@@ -84,6 +85,11 @@ function EtapesDialog() {
   };
 
   useEffect(() => {
+    if (allFields.position && allFields.name) {
+      setIsValid(true);
+    } else {
+      setIsValid(false);
+    }
     if (
       (allFields.status === "A faire" || allFields.status === "Fait") &&
       allFields.client_id.length
@@ -100,10 +106,15 @@ function EtapesDialog() {
       : dispatch(closeNewEtapeDialog());
   }
 
-  const registerUser = (e) => {
-    e.preventDefault();
-    console.log(JSON.stringify(allFields));
-    setAllFields("");
+  const sendMessage = () => {
+    dispatch(
+      addEtapes({
+        ...allFields,
+        case_management_id: editDossierData.data.id,
+        send_notification: true
+      })
+    );
+    closeComposeDialog();
   };
 
   const handleRemoveItem = (e, value) => {
@@ -138,9 +149,30 @@ function EtapesDialog() {
         updateEtapes({
           ...allFields,
           id: data.id,
-          case_management_id: editDossierData.data.id
+          case_management_id: editDossierData.data.id,
+          send_notification: false
         })
       );
+    } else {
+      dispatch(
+        addEtapes({
+          ...allFields,
+          case_management_id: editDossierData.data.id,
+          send_notification: false
+        })
+      );
+      setAllFields({
+        ...allFields,
+        position: "",
+        case_name: "",
+        name: "",
+        sub_name: "",
+        status: "A prévoir",
+        notification_date: null,
+        client_id: [],
+        subject: "",
+        message: ""
+      });
     }
     if (files?.length > 0) {
       const formData = new FormData();
@@ -180,6 +212,7 @@ function EtapesDialog() {
             name="Position"
             label="Position"
             variant="outlined"
+            required
             fullWidth
             disabled={type === "edit"}
             type="number"
@@ -197,6 +230,7 @@ function EtapesDialog() {
             label="Dossier"
             variant="outlined"
             fullWidth
+            required
             disabled
             value={allFields.case_name}
             onChange={(e) => {
@@ -210,6 +244,7 @@ function EtapesDialog() {
             className="mb-12"
             name="Étape"
             label="Étape"
+            required
             variant="outlined"
             fullWidth
             disabled={type === "new" ? false : true}
@@ -471,6 +506,7 @@ function EtapesDialog() {
             color="secondary"
             type="submit"
             style={{ borderRadius: 0 }}
+            disabled={!isValid}
             onClick={onSubmit}
           >
             Enregister
@@ -483,7 +519,7 @@ function EtapesDialog() {
             type="submit"
             style={{ borderRadius: 0 }}
             disabled={isInvite}
-            onClick={(() => registerUser(), closeComposeDialog)}
+            onClick={sendMessage}
           >
             Envoyer message
           </Button>
