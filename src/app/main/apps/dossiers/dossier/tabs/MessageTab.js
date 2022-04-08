@@ -63,10 +63,10 @@ function MessageTab(props) {
               className="messagesTab md:ml-24"
             >
               {getWholeCaseName(
-                data.case_name,
-                data.procedure.procedure_type,
-                data.created_date,
-                data.unique_code
+                data?.case_name,
+                data?.procedure.procedure_type,
+                data?.created_date,
+                data?.unique_code
               )}
             </Typography>
           </div>
