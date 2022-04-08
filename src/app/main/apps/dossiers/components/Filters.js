@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { DatePicker } from "antd";
-import "antd/dist/antd.css";
 import Types from "app/main/constants/Types";
 import CaseStatus from "app/main/constants/CaseStatus";
 import { getDossiers } from "app/store/slices/dossiersSlice";
 
 //material-ui
-import { FormControl, TextField, Autocomplete } from "@mui/material";
+import { FormControl, TextField, Autocomplete, Icon } from "@mui/material";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import { DesktopDatePicker } from "@mui/lab";
 
 export default function Filters() {
   const dispatch = useDispatch();
@@ -22,8 +23,14 @@ export default function Filters() {
     nature: "",
     inputNature: "",
     dateOfCreation: null,
-    tags: ""
+    tags: "",
   });
+
+  const handleRemoveDate = () => {
+    setAllFields({ ...allFields, dateOfCreation: null });
+    dispatch(getDossiers({ ...allFields, dateOfCreation: null }));
+  };
+
   return (
     <div className="bgm-10 for-res-flex-direction for-full-screen">
       <div className="row items-center">
@@ -43,17 +50,17 @@ export default function Filters() {
               } else if (newValue && newValue.inputValue) {
                 setAllFields({
                   ...allFields,
-                  procedure: newValue.inputValue
+                  procedure: newValue.inputValue,
                 });
               } else if (!newValue) {
                 setAllFields({
                   ...allFields,
-                  procedure: ""
+                  procedure: "",
                 });
               } else {
                 setAllFields({
                   ...allFields,
-                  procedure: typeObj?.id
+                  procedure: typeObj?.id,
                 });
               }
               dispatch(
@@ -82,17 +89,17 @@ export default function Filters() {
               } else if (newValue && newValue.inputValue) {
                 setAllFields({
                   ...allFields,
-                  type: newValue.inputValue
+                  type: newValue.inputValue,
                 });
               } else if (!newValue) {
                 setAllFields({
                   ...allFields,
-                  type: ""
+                  type: "",
                 });
               } else {
                 setAllFields({
                   ...allFields,
-                  type: newValue?.value
+                  type: newValue?.value,
                 });
               }
               dispatch(
@@ -119,17 +126,17 @@ export default function Filters() {
               } else if (newValue && newValue.inputValue) {
                 setAllFields({
                   ...allFields,
-                  status: newValue.inputValue
+                  status: newValue.inputValue,
                 });
               } else if (!newValue) {
                 setAllFields({
                   ...allFields,
-                  status: ""
+                  status: "",
                 });
               } else {
                 setAllFields({
                   ...allFields,
-                  status: newValue.value
+                  status: newValue.value,
                 });
               }
               dispatch(
@@ -159,17 +166,17 @@ export default function Filters() {
               } else if (newValue && newValue.inputValue) {
                 setAllFields({
                   ...allFields,
-                  nature: newValue.inputValue
+                  nature: newValue.inputValue,
                 });
               } else if (!newValue) {
                 setAllFields({
                   ...allFields,
-                  nature: ""
+                  nature: "",
                 });
               } else {
                 setAllFields({
                   ...allFields,
-                  nature: natureObj?.id
+                  nature: natureObj?.id,
                 });
               }
               dispatch(
@@ -183,30 +190,45 @@ export default function Filters() {
             renderInput={(params) => <TextField {...params} label="Nature" />}
           />
         </div>
-        <div className="col-md-4 col-lg-4 col-12 col-xl-2 mb-3 mb-xl-0">
+        <div
+          className="col-md-4 col-lg-4 col-12 col-xl-2 mb-3 mb-xl-0"
+          onKeyDownCapture={(e) => e.preventDefault()}
+        >
           <FormControl className="w-full for-date" variant="outlined">
-            <DatePicker
-              style={{ height: 48, borderRadius: 3 }}
-              size="large"
-              className="datepicker"
-              placeholder="Date de création"
-              showToolbar={false}
-              clearable={true}
-              value={allFields.dateOfCreation}
-              onChange={(newValue) => {
-                setAllFields({ ...allFields, dateOfCreation: newValue });
-                dispatch(
-                  getDossiers({ ...allFields, dateOfCreation: newValue })
-                );
-              }}
-              renderInput={(params) => (
-                <TextField
-                  InputLabelProps={{ style: { color: "#FFFFFF" } }}
-                  className="w-full"
-                  {...params}
-                />
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DesktopDatePicker
+                label="Date de création"
+                value={allFields.dateOfCreation}
+                onChange={(newValue) => {
+                  setAllFields({ ...allFields, dateOfCreation: newValue });
+                  dispatch(
+                    getDossiers({ ...allFields, dateOfCreation: newValue })
+                  );
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    InputLabelProps={{ style: { color: "#FFFFFF" } }}
+                    className="w-full"
+                    {...params}
+                  />
+                )}
+              />
+              {allFields.dateOfCreation && (
+                <Icon
+                  style={{
+                    fontSize: "large",
+                    position: "absolute",
+                    right: 35,
+                    top: 16,
+                    color: "#fff",
+                    cursor: "pointer",
+                  }}
+                  onClick={handleRemoveDate}
+                >
+                  clear
+                </Icon>
               )}
-            />
+            </LocalizationProvider>
           </FormControl>
         </div>
         <div className="col-md-4 col-lg-4 col-12 col-xl-2 mb-3 mb-xl-0">
@@ -216,12 +238,12 @@ export default function Filters() {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  tags: e.target.value ? [e.target.value] : ""
+                  tags: e.target.value ? [e.target.value] : "",
                 });
                 dispatch(
                   getDossiers({
                     ...allFields,
-                    tags: e.target.value ? [e.target.value] : ""
+                    tags: e.target.value ? [e.target.value] : "",
                   })
                 );
               }}
