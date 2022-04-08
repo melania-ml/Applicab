@@ -18,7 +18,7 @@ import {
   Icon,
   Card,
   CardContent,
-  IconButton,
+  IconButton
 } from "@mui/material";
 import { motion } from "framer-motion";
 
@@ -33,13 +33,13 @@ const Root = styled("div")(({ theme }) => ({
   "& .createpass-leftSection": {
     width: "50%",
     "@media (max-width: 767px)": {
-      width: "100%",
-    },
+      width: "100%"
+    }
   },
   "& .leading-tight": {
     "@media (max-width: 767px)": {
-      fontSize: "30px",
-    },
+      fontSize: "30px"
+    }
   },
 
   "& .createpass-rightSection": {
@@ -48,27 +48,27 @@ const Root = styled("div")(({ theme }) => ({
     } 0%, ${darken(theme.palette.primary.dark, 0.5)} 100%)`,
     color: theme.palette.primary.contrastText,
     "@media (max-width: 767px)": {
-      padding: "30px",
-    },
+      padding: "30px"
+    }
   },
   "& .createpass-responsive": {
     "@media (max-width: 767px)": {
       display: "block",
-      width: "100%",
-    },
+      width: "100%"
+    }
   },
   "& .MuiCardContent-root": {
     "@media (max-width: 767px)": {
       marginLeft: "auto",
-      marginRight: "auto",
-    },
+      marginRight: "auto"
+    }
   },
   "& .MuiFormControl-root": {
-    width: "100%",
-  },
+    width: "100%"
+  }
 }));
 const defaultValues = {
-  password: "",
+  password: ""
 };
 const schema = yup.object().shape({
   password: yup
@@ -77,7 +77,7 @@ const schema = yup.object().shape({
     .matches(
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{13,20}$/,
       "13 caractères minimum, Au moins 1 lettre majuscule, Au moins 1 chiffre, Au moins 1 caractère spécial"
-    ),
+    )
 });
 function CreatePassword() {
   const [showPassword, setShowPassword] = useState(false);
@@ -85,7 +85,7 @@ function CreatePassword() {
   const { control, setValue, formState, handleSubmit } = useForm({
     mode: "onChange",
     defaultValues,
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema)
   });
   const { isValid, dirtyFields, errors } = formState;
   const { success } = useSelector(({ createPassword }) => createPassword);
@@ -94,7 +94,7 @@ function CreatePassword() {
   useEffect(() => {
     if (success) {
       history.push({
-        pathname: "/login",
+        pathname: "/login"
       });
     }
   }, [success]);
@@ -161,7 +161,7 @@ function CreatePassword() {
                               </Icon>
                             </IconButton>
                           </InputAdornment>
-                        ),
+                        )
                       }}
                       required
                     />
@@ -226,7 +226,7 @@ function CreatePassword() {
                   variant="contained"
                   color="secondary"
                   className="p-30"
-                  style={{ color: "black", background: "white" }}
+                  style={{ color: "black", background: "#FFFFFF" }}
                 >
                   Demander une démo
                 </Button>

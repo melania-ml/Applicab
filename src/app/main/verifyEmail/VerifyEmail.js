@@ -12,7 +12,7 @@ import { motion } from "framer-motion";
 
 import {
   callVerifyEmail,
-  callResendOTP,
+  callResendOTP
 } from "app/store/slices/verifyEmailSlice";
 
 const Root = styled("div")(({ theme }) => ({
@@ -24,13 +24,13 @@ const Root = styled("div")(({ theme }) => ({
   "& .email-leftSection": {
     width: "50%",
     "@media (max-width: 767px)": {
-      width: "100%",
-    },
+      width: "100%"
+    }
   },
   "& .leading-tight": {
     "@media (max-width: 767px)": {
-      fontSize: "30px",
-    },
+      fontSize: "30px"
+    }
   },
   "& .email-rightSection": {
     background: `linear-gradient(to right, ${
@@ -38,27 +38,27 @@ const Root = styled("div")(({ theme }) => ({
     } 0%, ${darken(theme.palette.primary.dark, 0.5)} 100%)`,
     color: theme.palette.primary.contrastText,
     "@media (max-width: 767px)": {
-      padding: "30px",
-    },
+      padding: "30px"
+    }
   },
   "& .email-responsive": {
     "@media (max-width: 767px)": {
       display: "block",
-      width: "100%",
-    },
+      width: "100%"
+    }
   },
   "& .MuiCardContent-root": {
     "@media (max-width: 767px)": {
       marginLeft: "auto",
-      marginRight: "auto",
-    },
+      marginRight: "auto"
+    }
   },
   "& .MuiFormControl-root": {
-    width: "100%",
+    width: "100%"
   },
   "& .email-leftSection input": {
-    outlineColor: "#22d3ee",
-  },
+    outlineColor: "#22d3ee"
+  }
 }));
 
 function VerifyEmail() {
@@ -78,7 +78,7 @@ function VerifyEmail() {
   useEffect(() => {
     if (success) {
       history.push({
-        pathname: "/createPassword",
+        pathname: "/createPassword"
       });
     }
   }, [success]);
@@ -152,7 +152,7 @@ function VerifyEmail() {
                   style={{
                     background: "none",
                     color: "#22d3ee",
-                    cursor: "pointer",
+                    cursor: "pointer"
                   }}
                 >
                   Renvoyer le code
@@ -204,7 +204,7 @@ function VerifyEmail() {
                   variant="contained"
                   color="secondary"
                   className="p-30"
-                  style={{ color: "black", background: "white" }}
+                  style={{ color: "black", background: "#FFFFFF" }}
                 >
                   Demander une démo
                 </Button>

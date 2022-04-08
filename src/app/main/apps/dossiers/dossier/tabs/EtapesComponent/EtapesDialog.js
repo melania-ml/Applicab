@@ -136,8 +136,7 @@ function EtapesDialog() {
     if (notifications.length < 5) {
       let obj = {};
       obj["id"] = count;
-      obj["count"] = notifications.length === 0 ? 15 : "";
-      obj["format"] = "Day";
+      obj["count"] = notifications.length === 0 ? 15 : null;
       const newArr = [...notifications];
       newArr.push(obj);
       setNotifications(newArr);
@@ -150,7 +149,10 @@ function EtapesDialog() {
           ...allFields,
           id: data.id,
           case_management_id: editDossierData.data.id,
-          send_notification: false
+          send_notification: false,
+          lawyer_notification: notifications.map(
+            (notification) => notification.count
+          )
         })
       );
     } else {
@@ -158,7 +160,10 @@ function EtapesDialog() {
         addEtapes({
           ...allFields,
           case_management_id: editDossierData.data.id,
-          send_notification: false
+          send_notification: false,
+          lawyer_notification: notifications.map(
+            (notification) => notification.count
+          )
         })
       );
       setAllFields({
@@ -319,7 +324,7 @@ function EtapesDialog() {
                   onChange={(e) => {
                     notifications.map((n) => {
                       if (n.id === notification.id) {
-                        n.count = e.target.value;
+                        n.count = parseInt(e.target.value);
                       }
                     });
                     setNotifications([...notifications]);

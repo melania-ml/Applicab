@@ -328,7 +328,7 @@ function Login() {
                 <Button
                   variant="contained"
                   className="p-30"
-                  style={{ color: "black", background: "white" }}
+                  style={{ color: "black", background: "#FFFFFF" }}
                 >
                   Demander une démo
                 </Button>

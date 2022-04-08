@@ -255,7 +255,7 @@ function EtapeTab(props) {
         Header: "Position",
         accessor: "position",
         Cell: ({ row }) => {
-          return row.original.status || "-";
+          return row.original.position || "-";
         }
       },
       {
