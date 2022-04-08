@@ -35,6 +35,37 @@ def forgotPassword():
     return textDict
 
 
+def taskNotification():
+    textDict = {
+        'title': 'Notification 📥',
+        'text1': 'Bonjour {userName},',
+        'text2': 'Un nouveau message est disponible dans votre',
+        'text3': 'espace client, nous vos invitons à le consulter en',
+        'text4': 'cliquant ici 👇.',
+        'button_text': 'Votre espace client',
+        'footer_text1': 'Bonne journée,',
+        'footer_text2': 'L’équipe Applicab',
+        'button_url': site_url
+
+    }
+    return textDict
+
+
+def lawyerTaskNotification():
+    textDict = {
+        'title': 'Notification 📥',
+        'text1': 'Bonjour APPLICAB {userName},',
+        'text2': 'Ceci est une notification afin de vous rappeler que l''étape {taskName} est « à faire ».',
+        'text3': 'Accès direct en cliquant ici 👇.',
+        'button_text': 'Votre espace client',
+        'footer_text1': 'Bonne journée,',
+        'footer_text2': 'L’équipe Applicab',
+        'button_url': site_url
+
+    }
+    return textDict
+
+
 def wellcomeText():
     textDict = {
         'title': 'Bienvenue sur Applicab 🎉! <br> Accédez à votre espace personnel',

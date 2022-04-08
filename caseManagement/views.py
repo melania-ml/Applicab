@@ -1,3 +1,5 @@
+import datetime
+
 from django.db.models import Q
 import random
 
@@ -7,6 +9,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from common.common_config.responseHandlar import ResponseInfo
+from common.common_config.sendEmail import send_email
+from static import emailText
 from static.responseMessages import *
 from .serializers import *
 
@@ -129,7 +133,7 @@ class casesManagement(APIView):
                 reqData['nature'] = natureData.id
 
             # Prepare serializer
-            serializer = self.serializers_class(caseInformation,data=reqData)
+            serializer = self.serializers_class(caseInformation, data=reqData)
             if serializer.is_valid():
                 serializer.save()
                 res = ResponseInfo(serializer.data, RECORD_UPDATED_SUCCESSFULLY, True,
@@ -216,9 +220,15 @@ class caseManagementTaskView(APIView):
                 serializer = self.serializers_class(data=bodyParams)
                 if serializer.is_valid():
                     serializer.save()
+
+                    # prepare Email Notification
+                    if bodyParams['send_notification']:
+                        self.taskNotificationEmail(bodyParams['client_id'])
+
                     res = ResponseInfo(serializer.data, SUCCESS, True,
                                        status.HTTP_201_CREATED)
                     return Response(res.success_payload(), status=status.HTTP_201_CREATED)
+
                 res = ResponseInfo(serializer.errors, SOMETHING_WENT_WRONG, False,
                                    status.HTTP_401_UNAUTHORIZED)
                 return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
@@ -227,6 +237,11 @@ class caseManagementTaskView(APIView):
             serializer = self.serializers_class(taskList, data=bodyParams)
             if serializer.is_valid():
                 serializer.save()
+
+                # prepare Email Notification
+                if bodyParams['send_notification']:
+                    self.taskNotificationEmail(bodyParams['client_id'])
+
                 res = ResponseInfo(serializer.data, SUCCESS, True,
                                    status.HTTP_201_CREATED)
                 return Response(res.success_payload(), status=status.HTTP_201_CREATED)
@@ -238,6 +253,7 @@ class caseManagementTaskView(APIView):
                                status.HTTP_401_UNAUTHORIZED)
             return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
 
+    # Creating Bulk replica
     def patch(self, request):
         try:
             self.serializers_class.Meta.depth = 0  # Adding depth value for Foreign fields
@@ -288,6 +304,38 @@ class caseManagementTaskView(APIView):
             res = ResponseInfo(err, SOMETHING_WENT_WRONG, False,
                                status.HTTP_401_UNAUTHORIZED)
             return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
+    def taskNotificationEmail(self, client_id):
+        userData = User.objects.filter(id__in=client_id)
+        for user in userData:
+            notificationEmailText = emailText.taskNotification() | emailText.commonUrls()
+            notificationEmailText['text1'] = notificationEmailText['text1'].format(userName=user.first_name)
+            send_email([user.email],
+                       'Altata - Notification 🔔 Nom du dossier -  Objet du message', 'email.html',
+                       notificationEmailText)
+
+
+class caseManagementCreateTaskView(APIView):
+    serializers_class = CaseTaskSerializer
+
+    def post(self, request):
+        bodyParams = request.data
+        self.serializers_class.Meta.depth = 0  # Adding depth value for Foreign fields
+        serializer = self.serializers_class(data=bodyParams)
+
+        if serializer.is_valid():
+            serializer.save()
+            # prepare Email Notification
+            if bodyParams['send_notification'] and 'client_id' in bodyParams:
+                caseManagementTaskView.taskNotificationEmail(self, bodyParams['client_id'])
+
+            res = ResponseInfo(serializer.data, TASK_ADDED_SUCCESSFULLY, True,
+                               status.HTTP_201_CREATED)
+            return Response(res.success_payload(), status=status.HTTP_201_CREATED)
+
+        res = ResponseInfo(serializer.errors, SOMETHING_WENT_WRONG, False,
+                           status.HTTP_401_UNAUTHORIZED)
+        return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
 
 
 class caseManagementDocumentsView(APIView):

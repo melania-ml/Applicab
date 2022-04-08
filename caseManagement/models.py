@@ -95,6 +95,7 @@ class caseManagementTask(CommonBase):
     JAF = models.BooleanField(default=False)
     CA = models.BooleanField(default=False)
     is_default = models.BooleanField(default=False)
+    lawyer_notification = ArrayField(models.IntegerField(blank=True, null=True), default=list)
     case_management_id = models.ForeignKey(CaseManagement,
                                            blank=True, null=True,
                                            on_delete=models.DO_NOTHING, db_column='case_management_id')
