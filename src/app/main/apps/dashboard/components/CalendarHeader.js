@@ -21,24 +21,24 @@ const Root = styled("div")(({ theme }) => ({
     right: 0,
     bottom: 0,
     left: 0,
-    zIndex: 1,
+    zIndex: 1
     // background: 'rgba(0, 0, 0, 0.45)',
-  },
+  }
 }));
 
 const viewNamesObj = {
   dayGridMonth: {
     title: "Month",
-    icon: "view_module",
+    icon: "view_module"
   },
   timeGridWeek: {
     title: "Week",
-    icon: "view_week",
+    icon: "view_week"
   },
   timeGridDay: {
     title: "Day",
-    icon: "view_agenda",
-  },
+    icon: "view_agenda"
+  }
 };
 
 function CalendarHeader(props) {
@@ -63,7 +63,7 @@ function CalendarHeader(props) {
               </h1>
             </div>
             <div className="flex items-center">
-              {/* <Tooltip title="Today">
+              <Tooltip title="Today">
                 <div>
                   <motion.div
                     initial={{ scale: 0 }}
@@ -78,7 +78,7 @@ function CalendarHeader(props) {
                     </IconButton>
                   </motion.div>
                 </div>
-              </Tooltip> */}
+              </Tooltip>
               {Object.entries(viewNamesObj).map(([name, view]) => (
                 <Tooltip title={view.title} key={name}>
                   <div>

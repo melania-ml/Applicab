@@ -1,6 +1,5 @@
 import withReducer from "app/store/withReducer";
-import { useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useRef } from "react";
 import { styled } from "@mui/material/styles";
 import FusePageSimple from "@fuse/core/FusePageSimple";
 
@@ -59,7 +58,7 @@ function MainDashboard() {
   return (
     <>
       <Calendar />
-      <TodoList />
+      {/* <TodoList /> */}
     </>
   );
 }
