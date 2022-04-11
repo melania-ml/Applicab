@@ -10,8 +10,8 @@ export const getProfileData = (userId) => async (dispatch) => {
         dispatch(setProfileData(data.data.data));
       }
     })
-    .catch((errors) => {
-      console.error(errors);
+    .catch((error) => {
+      dispatch(showMessage({ message: error.response.message }));
     });
 };
 
@@ -37,8 +37,8 @@ export const updateProfileData = (fields, userId) => async (dispatch) => {
       }
       return data;
     })
-    .catch((errors) => {
-      console.error(errors);
+    .catch((error) => {
+      dispatch(showMessage({ message: error.response.message }));
     });
 };
 

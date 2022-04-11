@@ -28,8 +28,8 @@ export const restoreEtape = createAsyncThunk(
           dispatch(setIsLoading(false));
         }
       })
-      .catch((errors) => {
-        console.error(errors);
+      .catch((error) => {
+        dispatch(showMessage({ message: error.response.message }));
       });
   }
 );
@@ -52,8 +52,8 @@ export const removeEtapes = createAsyncThunk(
           dispatch(setIsLoading(false));
         }
       })
-      .catch((errors) => {
-        console.error(errors);
+      .catch((error) => {
+        dispatch(showMessage({ message: error.response.message }));
       });
   }
 );
@@ -61,8 +61,8 @@ export const removeEtapes = createAsyncThunk(
 export const getDeletedEtapes = createAsyncThunk(
   "dossiersApp/dossiers/getDeletedEtapes",
   async (id, { dispatch, getState }) => {
+    dispatch(setIsLoading(true));
     const response = await axios.get(`api/caseManagement/getDeletedTask/${id}`);
-    debugger;
     const data = await response.data;
     let newArr = [];
     for (let d of data.data) {
@@ -70,15 +70,18 @@ export const getDeletedEtapes = createAsyncThunk(
       newArr.push(d.case_task_id);
     }
     dispatch(setEtapes(newArr));
+    dispatch(setIsLoading(false));
   }
 );
 
 export const getEtapes = createAsyncThunk(
   "dossiersApp/dossiers/getEtapes",
   async (obj, { dispatch, getState }) => {
+    dispatch(setIsLoading(true));
     const response = await axios.post("api/caseManagement/filterCaseTask", obj);
     const data = await response.data;
     dispatch(setEtapes(data.data));
+    dispatch(setIsLoading(false));
   }
 );
 
@@ -90,8 +93,8 @@ export const getNatures = () => async (dispatch) => {
         dispatch(setNatures(data.data.data));
       }
     })
-    .catch((errors) => {
-      console.error(errors);
+    .catch((error) => {
+      dispatch(showMessage({ message: error.response.message }));
     });
 };
 
@@ -103,8 +106,8 @@ export const getProcedures = () => async (dispatch) => {
         dispatch(setProcedures(data.data.data));
       }
     })
-    .catch((errors) => {
-      console.error(errors);
+    .catch((error) => {
+      dispatch(showMessage({ message: error.response.message }));
     });
 };
 
@@ -116,8 +119,8 @@ export const getContacts = () => async (dispatch) => {
         dispatch(setContacts(data.data.data));
       }
     })
-    .catch((errors) => {
-      console.error(errors);
+    .catch((error) => {
+      dispatch(showMessage({ message: error.response.message }));
     });
 };
 
@@ -196,8 +199,8 @@ export const updateStatus = createAsyncThunk(
           dispatch(getEtapes(getState().dossiers.etapeObj));
         }
       })
-      .catch((errors) => {
-        console.error(errors);
+      .catch((error) => {
+        dispatch(showMessage({ message: error.response.message }));
       });
   }
 );
@@ -216,8 +219,8 @@ export const duplicateEtape = createAsyncThunk(
           dispatch(getEtapes(getState().dossiers.etapeObj));
         }
       })
-      .catch((errors) => {
-        console.error(errors);
+      .catch((error) => {
+        dispatch(showMessage({ message: error.response.message }));
       });
   }
 );
@@ -323,8 +326,8 @@ export const getDocuments = (id) => async (dispatch) => {
         dispatch(setDocuments(data.data.data));
       }
     })
-    .catch((errors) => {
-      console.error(errors);
+    .catch((error) => {
+      dispatch(showMessage({ message: error.response.message }));
     });
 };
 

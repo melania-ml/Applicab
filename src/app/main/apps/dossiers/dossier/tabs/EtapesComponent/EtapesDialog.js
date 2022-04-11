@@ -219,7 +219,6 @@ function EtapesDialog() {
             variant="outlined"
             required
             fullWidth
-            disabled={type === "edit"}
             type="number"
             value={allFields.position}
             onChange={(e) => {

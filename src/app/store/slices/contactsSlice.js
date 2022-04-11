@@ -14,8 +14,8 @@ export const getAllTitles = () => async (dispatch) => {
         dispatch(setAllTitles(data.data.data));
       }
     })
-    .catch((errors) => {
-      console.error(errors);
+    .catch((error) => {
+      dispatch(showMessage({ message: error.response.message }));
     });
 };
 
@@ -29,8 +29,8 @@ export const getFormTitles = (legal_status) => async (dispatch) => {
         dispatch(setFormTitles(data.data.data));
       }
     })
-    .catch((errors) => {
-      console.error(errors);
+    .catch((error) => {
+      dispatch(showMessage({ message: error.response.message }));
     });
 };
 
@@ -42,8 +42,8 @@ export const getAllTypes = () => async (dispatch) => {
         dispatch(setAllTypes(data.data.data));
       }
     })
-    .catch((errors) => {
-      console.error(errors);
+    .catch((error) => {
+      dispatch(showMessage({ message: error.response.message }));
     });
 };
 
@@ -120,8 +120,8 @@ export const updateContact = createAsyncThunk(
           dispatch(getContacts());
         }
       })
-      .catch((errors) => {
-        console.error(errors);
+      .catch((error) => {
+        dispatch(showMessage({ message: error.response.message }));
       });
     return data;
   }
@@ -138,8 +138,8 @@ export const removeContacts = createAsyncThunk(
           dispatch(getContacts());
         }
       })
-      .catch((errors) => {
-        console.error(errors);
+      .catch((error) => {
+        dispatch(showMessage({ message: error.response.message }));
       });
     return data;
   }

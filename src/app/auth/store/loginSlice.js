@@ -13,8 +13,8 @@ export const submitLogin =
         dispatch(setUserData(user));
         return dispatch(loginSuccess());
       })
-      .catch((errors) => {
-        dispatch(showMessage({ message: errors.message }));
+      .catch((error) => {
+        dispatch(showMessage({ message: error.response.message }));
         return dispatch(loginError());
       });
   };
