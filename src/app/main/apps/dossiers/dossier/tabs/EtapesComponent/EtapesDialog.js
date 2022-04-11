@@ -69,7 +69,8 @@ function EtapesDialog() {
           getFormattedDateTime({
             date: data.notification_date
           }),
-        message: data.message
+        message: data.message,
+        position: data.position
       });
     } else {
       setAllFields({

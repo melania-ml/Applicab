@@ -76,8 +76,14 @@ function EtapeTab(props) {
 
   const listClick = (name) => {
     const newObj = {};
-    newObj["status"] = name;
     newObj["case_management_id"] = etapeObj.case_management_id;
+    if (name === "Message envoyé") {
+      newObj["send_notification"] = true;
+    } else if (name === "Brouillon") {
+      newObj["send_notification"] = false;
+    } else {
+      newObj["status"] = name;
+    }
     dispatch(setSelectedList(name));
     dispatch(getEtapes(name === "Tous" ? etapeObj : newObj));
   };
