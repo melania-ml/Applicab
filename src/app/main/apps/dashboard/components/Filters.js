@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Statut from "app/main/constants/Statut";
+import { getDossiers } from "app/store/slices/dossiersSlice";
 
 //material-ui
 import {
@@ -8,53 +10,40 @@ import {
   Select,
   MenuItem,
   Autocomplete,
-  TextField,
-  Button
+  TextField
 } from "@mui/material";
 
-const folders = [
-  {
-    id: 1,
-    value: "Tous",
-    label: "Tous"
-  },
-  {
-    id: 2,
-    value: "Adhoc",
-    label: "Adhoc"
-  },
-  {
-    id: 2,
-    value: "COHEN shirly",
-    label: "COHEN shirly"
-  }
-];
 export default function Filters() {
-  const [selectedStatus, setSelectedStatus] = useState("");
-  const [selectedFolder, setSelectedFolder] = useState("");
+  const [status, setStatus] = useState("");
+  const [dossier, setDossier] = useState("");
+  const { dossiers } = useSelector(({ dossiers }) => dossiers);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getDossiers());
+  }, []);
+
   return (
     <div className="bgm-10 flex items-center justify-between w-full">
       <div className="flex">
         <Autocomplete
-          className="w-full sm:w-320 mx-16"
-          disablePortal
-          style={{ color: "#FFFFFF" }}
-          options={folders}
-          renderInput={(params) => (
-            <TextField
-              style={{ color: "#FFFFFF" }}
-              {...params}
-              label="Dossiers"
-              InputLabelProps={{ style: { color: "#FFFFFF" } }}
-            />
-          )}
+          className="w-full sm:w-320 mx-16 autocomplete"
+          options={dossiers}
+          getOptionLabel={(option) => {
+            return option.case_name;
+          }}
+          inputValue={dossier}
+          onInputChange={(event, newInputValue) => {
+            setDossier(newInputValue);
+          }}
+          renderInput={(params) => <TextField {...params} label="Dossiers" />}
         />
         <FormControl className="flex w-full sm:w-320 mx-16" variant="outlined">
           <InputLabel style={{ color: "#FFFFFF" }}>Status</InputLabel>
           <Select
             label="Status"
-            value={selectedStatus}
-            onChange={(e) => setSelectedStatus(e.target.value)}
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
           >
             {Statut.map((category) => (
               <MenuItem value={category.value} key={category.id}>
@@ -64,15 +53,6 @@ export default function Filters() {
           </Select>
         </FormControl>
       </div>
-      {/* <div className="flex items-center mr-16">
-        <Button
-          variant="contained"
-          color="secondary"
-          className="w-full rounded"
-        >
-          To do's
-        </Button>
-      </div> */}
     </div>
   );
 }
