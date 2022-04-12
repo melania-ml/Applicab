@@ -76,11 +76,11 @@ function InformationTab() {
         tags: data.tags,
         internal_comment: data.internal_comment,
         shared_comment: data.shared_comment,
-        client_id: data.client_id.map((clientId) => clientId.id),
-        customer_contact_id: data.customer_contact_id.map(
+        client_id: data.client_id?.map((clientId) => clientId.id),
+        customer_contact_id: data.customer_contact_id?.map(
           (customerContactId) => customerContactId.id
         ),
-        opposing_contact_id: data.opposing_contact_id.map(
+        opposing_contact_id: data.opposing_contact_id?.map(
           (opposingContactId) => opposingContactId.id
         )
       });
