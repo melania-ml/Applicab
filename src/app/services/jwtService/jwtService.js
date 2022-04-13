@@ -30,7 +30,7 @@ class JwtService extends FuseUtils.EventEmitter {
           password
         })
         .then((response) => {
-          if (response.data.status === 200 && response.data.success) {
+          if (response?.data.status === 200 && response?.data.success) {
             this.setSession(response.data.data.jwtoken);
             resolve(response.data);
           }
@@ -48,11 +48,14 @@ class JwtService extends FuseUtils.EventEmitter {
           email
         })
         .then((response) => {
-          if (response.data.data.email_shared) {
+          if (response.data.success) {
             resolve(response.data);
           } else {
             reject(response.data.error);
           }
+        })
+        .catch((error) => {
+          reject(error.response.data);
         });
     });
   };
@@ -66,7 +69,7 @@ class JwtService extends FuseUtils.EventEmitter {
           password
         })
         .then((response) => {
-          if (response.data.data.password_changed) {
+          if (response.data.success) {
             resolve(response.data);
           } else {
             reject(response.data.error);

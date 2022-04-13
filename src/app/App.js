@@ -38,6 +38,7 @@ const App = () => {
           dispatch(logoutUser());
         }
       }
+      return Promise.reject(error);
     }
   );
   return (

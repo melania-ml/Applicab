@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import jwtService from "app/services/jwtService";
+import { showMessage } from "app/store/fuse/messageSlice";
 
 export const callForgotPassword =
   ({ email }) =>
@@ -11,8 +12,9 @@ export const callForgotPassword =
           return dispatch(ForgotPasswordSuccess());
         }
       })
-      .catch((errors) => {
-        return dispatch(ForgotPasswordError(errors));
+      .catch((error) => {
+        dispatch(showMessage({ message: error.message }));
+        return dispatch(ForgotPasswordError(error));
       });
   };
 

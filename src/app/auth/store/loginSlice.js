@@ -14,7 +14,7 @@ export const submitLogin =
         return dispatch(loginSuccess());
       })
       .catch((error) => {
-        dispatch(showMessage({ message: error.response.message }));
+        dispatch(showMessage({ message: error.message }));
         return dispatch(loginError());
       });
   };
