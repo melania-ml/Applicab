@@ -1,13 +1,6 @@
 import { useState } from "react";
 import Icon from "@mui/material/Icon";
-import {
-  Button,
-  Input,
-  Paper,
-  IconButton,
-  Menu,
-  MenuItem,
-} from "@mui/material";
+import { Button, Input, Paper } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +8,8 @@ import { selectMainTheme } from "app/store/fuse/settingsSlice";
 import {
   setDossiersSearchText,
   setNewDossierData,
+  setIsCaseAdded,
+  setEtapeTabFromAction
 } from "app/store/slices/dossiersSlice";
 import Filters from "./Filters";
 import { Link } from "react-router-dom";
@@ -46,7 +41,7 @@ function DossiersHeader(props) {
                 fullWidth
                 value={searchText}
                 inputProps={{
-                  "aria-label": "Search",
+                  "aria-label": "Search"
                 }}
                 onChange={(ev) => dispatch(setDossiersSearchText(ev))}
               />
@@ -55,7 +50,11 @@ function DossiersHeader(props) {
         </div>
         <div className="flex items-center">
           <Button
-            onClick={() => dispatch(setNewDossierData())}
+            onClick={() => {
+              dispatch(setNewDossierData());
+              dispatch(setIsCaseAdded(false));
+              dispatch(setEtapeTabFromAction(false));
+            }}
             component={Link}
             to="/apps/dossiers/new"
             variant="contained"

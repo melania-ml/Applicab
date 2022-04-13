@@ -143,7 +143,7 @@ export const addCase = createAsyncThunk(
           obj[key] = true;
           dispatch(showMessage({ message: data.data.message }));
           dispatch(setEtapeObj(obj));
-          dispatch(setIsCaseAdded());
+          dispatch(setIsCaseAdded(true));
         }
       })
       .catch((error) => {
@@ -373,7 +373,7 @@ const dossiersSlice = createSlice({
       state.isLoading = action.payload;
     },
     setIsCaseAdded: (state, action) => {
-      state.isCaseAdded = true;
+      state.isCaseAdded = action.payload;
     },
     setEtapeObj: (state, action) => {
       state.etapeObj = action.payload;
