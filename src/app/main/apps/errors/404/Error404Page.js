@@ -1,9 +1,8 @@
-import Icon from "@mui/material/Icon";
-import Input from "@mui/material/Input";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+
+//material-ui
+import { Icon, Input, Paper, Typography } from "@mui/material";
 
 function Error404Page() {
   return (
