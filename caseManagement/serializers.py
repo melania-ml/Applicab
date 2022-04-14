@@ -55,19 +55,10 @@ class GetCaseDocumentsSerializer(serializers.ModelSerializer):
 
 
 class CaseTaskSerializer(serializers.ModelSerializer):
-    # caseDocuments = GetCaseDocumentsSerializer(many=True)
-    # indexNum = serializers.SerializerMethodField()
-    # index = 0
-
     class Meta:
         model = caseManagementTask
         fields = "__all__"
-        # read_only_fields = ['caseDocuments']
         depth = 1
-
-    # def get_indexNum(self, obj):
-    #     self.index += 1
-    #     return self.index
 
 
 class CaseDeleteTaskSerializer(serializers.ModelSerializer):

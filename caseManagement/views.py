@@ -153,6 +153,7 @@ class caseManagementTaskView(APIView):
     serializers_class = CaseTaskSerializer
     serializers_deleted_task_class = CaseDeleteTaskSerializer
 
+    # Filter Api
     def post(self, request):
         try:
             userid = request.user.id
@@ -168,15 +169,18 @@ class caseManagementTaskView(APIView):
             deletedTask = list(
                 caseManagementDeletedTask.objects.filter(case_management_id=reqData['case_management_id'],
                                                          lawyer_id=userid).values_list("case_task_id", flat=True))
+
+            if 'send_notification' in reqData:
+                kwargs['send_notification'] = reqData['send_notification']
+
             query = Q(~Q(id__in=deletedTask), **kwargs)
 
-            if 'case_management_id' in kwargs and 'status' not in kwargs:
+            if 'case_management_id' in kwargs and 'status' not in kwargs and 'send_notification' not in reqData:
                 del kwargs['case_management_id']
                 query = Q(~Q(id__in=deletedTask), case_management_id=reqData['case_management_id']) | Q(
                     ~Q(id__in=deletedTask), **kwargs)
 
-            taskList = caseManagementTask.objects.filter(query).order_by("notification_date")
-
+            taskList = caseManagementTask.objects.filter(query).order_by("position")
             serializer = self.serializers_class(taskList, many=True)
             # preparing response
             res = ResponseInfo(serializer.data, SUCCESS, True,
@@ -187,6 +191,7 @@ class caseManagementTaskView(APIView):
                                status.HTTP_401_UNAUTHORIZED)
             return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
 
+    # Update/replica Api
     def put(self, request):
         try:
             self.serializers_class.Meta.depth = 0  # Adding depth value for Foreign fields
@@ -196,31 +201,12 @@ class caseManagementTaskView(APIView):
 
             # if it's Default task create replica
             if taskList.is_default:
-                _dict = {
-                    "message": request.data['message'] if 'message' in request.data else taskList.message,
-                    "name": request.data['name'] if 'name' in request.data else taskList.name,
-                    "sub_name": request.data['sub_name'] if 'sub_name' in request.data else None,
-                    "type": taskList.type,
-                    "TJ": taskList.TJ,
-                    "JCP": taskList.JCP,
-                    "TCOM": taskList.TCOM,
-                    "REFTJ": taskList.REFTJ,
-                    "REFTC": taskList.REFTC,
-                    "CPH": taskList.CPH,
-                    "JAF": taskList.JAF,
-                    "CA": taskList.CA,
-                    "notification_date": request.data[
-                        'notification_date'] if 'notification_date' in request.data else taskList.notification_date,
-                    "status": request.data['status'] if 'status' in request.data else taskList.status,
-                    "subject": request.data['subject'] if 'subject' in request.data else taskList.subject,
-                    "case_management_id": request.data[
-                        'case_management_id'] if 'case_management_id' in request.data else taskList.case_management_id
-                }
-                bodyParams = _dict
-                serializer = self.serializers_class(data=bodyParams)
+                taskList.id = None
+                taskList.is_default = False
+                taskList.case_management_id = CaseManagement.objects.get(pk=request.data['case_management_id'])
+                serializer = self.serializers_class(taskList, data=request.data)
                 if serializer.is_valid():
                     serializer.save()
-
                     # prepare Email Notification
                     if bodyParams['send_notification']:
                         self.taskNotificationEmail(bodyParams['client_id'])

@@ -23,7 +23,7 @@ class jwtBaseAuthentication(BaseAuthentication):
             return user, token
 
         except jwt.ExpiredSignatureError as ex:
-            raise exceptions.AuthenticationFailed({'status': 403,'message': 'Token is expired, login again','success': False})
+            raise exceptions.AuthenticationFailed({'status': 403,'message': 'connectez-vous à votre compte','success': False})
 
         except jwt.DecodeError as ex:
-            raise exceptions.AuthenticationFailed({'status': 403,'message': 'Invalid token','success': False})
+            raise exceptions.AuthenticationFailed({'status': 403,'message': 'connectez-vous à votre compte','success': False})

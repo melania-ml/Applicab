@@ -80,6 +80,7 @@ class CaseManagement(CommonBase):
 
 class caseManagementTask(CommonBase):
     name = models.CharField(max_length=525, blank=True, null=True)
+    position = models.IntegerField(blank=True, null=True)
     sub_name = models.CharField(max_length=525, blank=True, null=True)
     message = models.CharField(max_length=525, blank=True, null=True)
     status = models.CharField(max_length=225, blank=True, null=True)
@@ -95,7 +96,8 @@ class caseManagementTask(CommonBase):
     JAF = models.BooleanField(default=False)
     CA = models.BooleanField(default=False)
     is_default = models.BooleanField(default=False)
-    lawyer_notification = ArrayField(models.IntegerField(blank=True, null=True), default=list)
+    send_notification = models.BooleanField(default=False)
+    lawyer_notification = ArrayField(base_field=models.IntegerField(blank=True, null=True), blank=True, default=list)
     case_management_id = models.ForeignKey(CaseManagement,
                                            blank=True, null=True,
                                            on_delete=models.DO_NOTHING, db_column='case_management_id')
@@ -145,3 +147,37 @@ class caseManagementDeletedTask(CommonBase):
 
     class Meta:
         db_table = 'case_management_deleted_task'
+
+
+class caseManagementChatGroup(CommonBase):
+    case_management_id = models.ForeignKey(CaseManagement,
+                                           blank=True, null=True,
+                                           on_delete=models.DO_NOTHING, db_column='case_management_id')
+    group_members = models.ManyToManyField(User,
+                                           blank=True,
+                                           related_name='related_group_member_id',
+                                           db_column='group_member')
+
+    def __str__(self):
+        return '{}'.format(self.case_management_id)
+
+    class Meta:
+        db_table = 'case_management_group_chat'
+
+
+class caseManagementGroupMessage(CommonBase):
+    group_id = models.ForeignKey(caseManagementChatGroup,
+                                 blank=True, null=True,
+                                 on_delete=models.DO_NOTHING, db_column='group_id')
+
+    message_send_by = models.ForeignKey(User,
+                                        blank=True, null=True,
+                                        on_delete=models.DO_NOTHING, db_column='message_send_by')
+
+    message = models.CharField(max_length=50000, blank=True, null=True)
+
+    def __str__(self):
+        return '{}'.format(self.group_id)
+
+    class Meta:
+        db_table = 'case_management_group_message'
