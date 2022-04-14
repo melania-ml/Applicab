@@ -131,6 +131,12 @@ export const addCase = createAsyncThunk(
       .post("api/caseManagement/addCases", dossier)
       .then((data) => {
         if (data.data.status === 201 && data.data.success) {
+          dispatch(
+            createChatGroup({
+              case_management_id: data.data.data.id,
+              group_members: data.data.data.client_id
+            })
+          );
           const procedure = getState().dossiers.procedures;
           const proc = procedure.filter(
             (fil) => fil.id === data.data.data.procedure
@@ -181,6 +187,15 @@ export const updateCase = createAsyncThunk(
       });
   }
 );
+
+const createChatGroup = (obj) => async (dispatch) => {
+  await axios
+    .post(`api/common/listCreate/caseManagement/caseManagementChatGroup`, obj)
+    .then(() => {})
+    .catch((error) => {
+      dispatch(showMessage({ message: error.response.message }));
+    });
+};
 
 export const updateStatus = createAsyncThunk(
   "dossiersApp/dossiers/updateStatus",

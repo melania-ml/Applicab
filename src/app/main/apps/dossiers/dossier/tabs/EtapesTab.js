@@ -1,23 +1,9 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
+import { useMemo, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import FuseUtils from "@fuse/utils";
 import withRouter from "@fuse/core/withRouter";
-import Icon from "@mui/material/Icon";
-import Grid from "@mui/material/Grid";
-import { tooltipClasses, Typography } from "@mui/material";
-import { styled } from "@mui/material/styles";
 
-import _ from "@lodash";
-import { Paper, Input, Button, Tooltip } from "@mui/material";
-import { ThemeProvider } from "@mui/material/styles";
-import { useMemo, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { selectMainTheme } from "app/store/fuse/settingsSlice";
 import EtapesDialog from "./EtapesComponent/EtapesDialog";
 import EtapesTable from "./EtapesComponent/EtapesTable";
@@ -36,17 +22,26 @@ import {
   getProcedureCode
 } from "app/main/common/functions";
 
+//material-ui
+import {
+  tooltipClasses,
+  Typography,
+  Icon,
+  Grid,
+  Box,
+  Divider,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Paper,
+  Input,
+  Button,
+  Tooltip
+} from "@mui/material";
+import { styled, ThemeProvider } from "@mui/material/styles";
+
 function EtapeTab(props) {
-  const { window } = props;
-  const [mobileOpen, setMobileOpen] = useState(false);
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
-
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
-
   const dispatch = useDispatch();
   const {
     etapes,
@@ -249,9 +244,8 @@ function EtapeTab(props) {
           );
         },
         accessor: "avatar",
-        Cell: ({ row }) => {
+        Cell: () => {
           return null;
-          // <Avatar className="mx-8" alt={row.original.name} src={row.original.avatar} />;
         },
         className: "justify-center",
         width: 64,
@@ -401,6 +395,10 @@ function EtapeTab(props) {
       dispatch(getEtapes(objWhileUpdate));
     }
   }, [data, type]);
+
+  useEffect(() => {
+    dispatch(setSelectedList("Tous"));
+  }, []);
 
   useEffect(() => {
     if (type === "new" && etapeObj.case_management_id) {
