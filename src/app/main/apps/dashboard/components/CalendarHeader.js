@@ -1,14 +1,12 @@
-import Icon from "@mui/material/Icon";
-import { styled, ThemeProvider } from "@mui/material/styles";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import Typography from "@mui/material/Typography";
-import { selectMainThemeDark } from "app/store/fuse/settingsSlice";
-import clsx from "clsx";
-import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
+import { motion } from "framer-motion";
+import clsx from "clsx";
+import { selectMainThemeDark } from "app/store/fuse/settingsSlice";
 import format from "date-fns/format";
-import { color } from "@mui/system";
+
+//material-ui
+import { Icon, IconButton, Tooltip, Typography } from "@mui/material";
+import { styled, ThemeProvider } from "@mui/material/styles";
 
 const Root = styled("div")(({ theme }) => ({
   color: "#000000",
@@ -22,7 +20,6 @@ const Root = styled("div")(({ theme }) => ({
     bottom: 0,
     left: 0,
     zIndex: 1
-    // background: 'rgba(0, 0, 0, 0.45)',
   }
 }));
 
