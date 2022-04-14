@@ -283,6 +283,28 @@ input[type="file"]::-webkit-file-upload-button {
 .muiltr-ub5i9i-MuiInputBase-input-MuiOutlinedInput-input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 100px #1f2836 inset;
 }
+.search-bar-msg{
+  border-radius: 68px;
+}
+.msg-send-btn{
+  top: 20px;
+  right: 20px;
+  
+}
+.time{
+  right: 32px;
+  bottom: 0px;
+}
+.msg-emoji-selction:hover{
+  background-color: transparent;
+}
+.smily-icon:hover{
+  opacity: 0.8;
+}
+.msg-main-section{
+  height: calc(100vh - 320px);
+}
+
 @media screen and (max-width: 767px) {
   .caseManagementTabs
     .MuiTabs-flexContainer.muiltr-heg063-MuiTabs-flexContainer {

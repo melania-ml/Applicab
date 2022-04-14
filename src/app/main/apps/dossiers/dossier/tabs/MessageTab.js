@@ -168,9 +168,10 @@ function MessageTab(props) {
       <AppBar
         position="sticky"
         elevation={0}
-        className="rounded-t-lg ... p-4 flex justify-between message-tab-header"
+        className="rounded-t-lg ... p-4 flex justify-between message-tab-header items-center"
       >
-        <div className="flex res-flex-direction">
+        <div className="flex res-flex-direction justify-between w-full">
+          <div className="flex items-center res-flex-direction">
           <Avatar
             className="w-40 h-40 md:ml-40"
             alt="item photo"
@@ -182,7 +183,7 @@ function MessageTab(props) {
           <Typography
             variant="subtitle1"
             color="inherit"
-            className="messagesTab md:ml-24"
+            className="messagesTab md:ml-24 mt-3 mt-md-0"
           >
             {getWholeCaseName(
               data?.case_name,
@@ -191,12 +192,13 @@ function MessageTab(props) {
               data?.unique_code
             )}
           </Typography>
+          </div>
           <div className="md:mr-24 mt-3 mt-md-0">
             <Paper
               component={motion.div}
               initial={{ y: -20, opacity: 0 }}
               animate={{ y: 24, opacity: 1, transition: { delay: 0.2 } }}
-              className="flex p-4 search-bar-contact h-48 ... shadow m-auto message-searchbar"
+              className="flex p-4 search-bar-msg h-48 ... shadow m-auto message-searchbar"
             >
               <Icon color="action">search</Icon>
 
@@ -215,7 +217,7 @@ function MessageTab(props) {
           </div>
         </div>
       </AppBar>
-      <div className={clsx("flex flex-col", props.className)}>
+      <div className={clsx("flex flex-col msg-main-section", props.className)}>
         <FuseScrollbars
           ref={chatRef}
           className="flex flex-1 flex-col overflow-y-auto"
@@ -247,7 +249,7 @@ function MessageTab(props) {
                       <StyledMessageRow
                         key={item.time}
                         className={clsx(
-                          "flex flex-col grow-0 shrink-0 items-start justify-end relative px-16 pb-4",
+                          "flex flex-col grow-0 shrink-0 items-start justify-end relative px-16 pb-4 pl-0 flex items-end",
                           { me: item.who === item.id },
                           { contact: item.who !== item.id },
                           { "first-of-group": isFirstMessageOfGroup(item, i) },
@@ -255,6 +257,7 @@ function MessageTab(props) {
                           i + 1 === allFields.length && "pb-96"
                         )}
                       >
+                        <div className="flex items-center">
                         <Avatar className="h-20 w-20" src={contact.avatar} />
                         <Typography
                           variant="subtitle1"
@@ -263,20 +266,23 @@ function MessageTab(props) {
                         >
                           Avocat - Melania Munoz
                         </Typography>
+                        </div>
                         <div className="bubble flex relative items-center justify-center p-12 max-w-full shadow">
                           <div className="leading-tight whitespace-pre-wrap">
                             {e.allFieldsMessage}
                           </div>
                         </div>
+                        
                       </StyledMessageRow>
                       <Typography
-                        className="time absolute w-full text-11 mt-4 -mb-16 bottom-0 whitespace-nowrap"
+                        className="time absolute text-11 whitespace-nowrap"
                         color="textSecondary"
                       >
                         {formatDistanceToNow(new Date(), {
                           addSuffix: true,
                         })}
                       </Typography>
+                      
                     </>
                   );
                 })}
@@ -300,11 +306,11 @@ function MessageTab(props) {
         {allFields && (
           <form
             onSubmit={onSubmitMessage}
-            className="absolute bottom-0 right-0 left-0 py-16 px-8"
+            className="relative bottom-0 right-0 left-0 py-16 px-8"
           >
-            <Paper className="flex items-center relative rounded-24 shadow">
-              <Button onClick={() => setShowPicker((val) => !val)}>
-                <Icon className="flex flex-1 px-36" color="action">
+            <Paper className="flex items-center rounded-24 shadow">
+              <Button onClick={() => setShowPicker((val) => !val)} className="msg-emoji-selction">
+                <Icon className="flex flex-1 px-36 smily-icon" color="action">
                   sentiment_satisfied
                 </Icon>
                 {showPicker && (
@@ -316,7 +322,7 @@ function MessageTab(props) {
               </Button>
               {showPicker && (
                 <Picker
-                  pickerStyle={{ width: "100%" }}
+                  pickerStyle={{ position:"absolute",bottom:"63px" }}
                   onEmojiClick={onEmojiClick}
                   onChange={(e) => e.target.value}
                 />
@@ -330,7 +336,7 @@ function MessageTab(props) {
                 value={message}
               />
               <IconButton
-                className="absolute ltr:right-0 rtl:left-0 top-0"
+                className="absolute msg-send-btn"
                 type="submit"
                 size="small"
               >
