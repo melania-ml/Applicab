@@ -302,7 +302,16 @@ input[type="file"]::-webkit-file-upload-button {
   opacity: 0.8;
 }
 .msg-main-section{
-  height: calc(100vh - 320px);
+  height: calc(100vh - 355px);
+}
+
+@media screen and (max-width: 1700px) {
+.dash-monavocat-tab{
+  flex-direction: column;
+}
+.dash-monavocat-tab button {
+	margin: 10px 0px !important;
+}
 }
 
 @media screen and (max-width: 767px) {
@@ -336,5 +345,8 @@ input[type="file"]::-webkit-file-upload-button {
   }
   .hourscount {
     width: 40%;
+  }
+  .msg-main-section {
+    height: calc(100vh - 435px);
   }
 }

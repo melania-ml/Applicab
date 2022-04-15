@@ -22,7 +22,8 @@ export default function InfoCard() {
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={5} columns={12}>
           <Grid item xs={12} md={6}>
-            <Item className="h-full mt-5 mt-md-0">
+            <Item className="h-full mt-5 mt-md-0 flex items-center justify-center">
+              <div>
               <h1 className="py-1 font-semibold text-base text-black textWidthLimit">
                 Mon dossier
               </h1>
@@ -35,10 +36,11 @@ export default function InfoCard() {
               <h4 className="font-medium text-sm text-black textWidthLimit">
                 Gestionnaire : Melania Muñoz
               </h4>
+              </div>
             </Item>
           </Grid>
           <Grid item xs={12} md={6}>
-            <Item className="flex items-center res-flex-direction mt-5 mt-md-0">
+            <Item className="flex items-center res-flex-direction mt-5 mt-md-0 msg-mo dash-monavocat-tab">
               <Avatar
                 className="avatar w-72 h-72 p-8 box-content mon-avocate"
                 alt="user photo"

@@ -97,7 +97,7 @@ function Dossier(props) {
             <Tab
               className="h-64 w-1/4 max-w-full"
               label="Messages"
-              disabled={type === "new" && !isCaseAdded}
+              // disabled={type === "new" && !isCaseAdded}
             />
             <Tab
               className="h-64 w-1/4 max-w-full"
