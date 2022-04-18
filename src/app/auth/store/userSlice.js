@@ -94,7 +94,7 @@ export const setUserData = (user) => async (dispatch, getState) => {
   if (!user.data.profile) {
     newUser = {
       ...user,
-      data: { ...user.data, profile: "assets/images/avatars/profile.jpg" }
+      data: { ...user.data, profile: "assets/images/logos/profile.jpg" }
     };
   } else {
     newUser = user;
@@ -164,7 +164,7 @@ export const updateUserData = (user) => async (dispatch, getState) => {
 const initialState = {
   role: [], // guest
   data: {
-    profile: "assets/images/avatars/profile.jpg",
+    profile: "assets/images/logos/profile.jpg",
     shortcuts: ["calendar", "mail", "contacts", "todo"]
   }
 };
