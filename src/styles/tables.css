@@ -38,7 +38,7 @@ Basic Table Styles
 
 .senderName {
   margin: -0.1rem 0rem 0rem 0rem;
-  width: 180px;
+  width: auto;
   white-space: nowrap;
   overflow: hidden !important;
   text-overflow: ellipsis;

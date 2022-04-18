@@ -18,17 +18,7 @@ import Chat from "./Chat";
 import ChatsSidebar from "./ChatsSidebar";
 import ContactSidebar from "./ContactSidebar";
 import StatusIcon from "./StatusIcon";
-import reducer from "./store";
-import { getUserData } from "./store/userSlice";
-import { selectContactById, getContacts } from "./store/contactsSlice";
-import {
-  closeContactSidebar,
-  openContactSidebar,
-  openMobileChatsSidebar,
-  closeUserSidebar,
-  closeMobileChatsSidebar,
-} from "./store/sidebarsSlice";
-
+import reducer from "app/store";
 import UserSidebar from "./UserSidebar";
 
 const drawerWidth = 400;
@@ -51,7 +41,7 @@ const Root = styled("div")(({ theme }) => ({
     backgroundImage: 'url("/assets/images/patterns/rain-grey.png")',
     backgroundColor: theme.palette.background.paper,
     minHeight: 0,
-    overflow: "hidden",
+    overflow: "hidden"
   },
 
   "& .ChatApp-contentWrapper": {
@@ -65,14 +55,14 @@ const Root = styled("div")(({ theme }) => ({
     )} 0,${alpha(theme.palette.background.paper, 0.6)} 20%,${alpha(
       theme.palette.background.paper,
       0.8
-    )})`,
+    )})`
   },
 
   "& .ChatApp-content": {
     display: "flex",
     flex: "1 1 100%",
-    minHeight: 0,
-  },
+    minHeight: 0
+  }
 }));
 
 const StyledSwipeableDrawer = styled(SwipeableDrawer)(({ theme }) => ({
@@ -82,39 +72,32 @@ const StyledSwipeableDrawer = styled(SwipeableDrawer)(({ theme }) => ({
     overflow: "hidden",
     // height: '100%',
     [theme.breakpoints.up("md")]: {
-      position: "relative",
-    },
-  },
+      position: "relative"
+    }
+  }
 }));
 
 function ChatApp(props) {
   const dispatch = useDispatch();
-  const chat = useSelector(({ chatApp }) => chatApp.chat);
+  const chat = useSelector(({ chatApp }) => chatApp?.chat);
   const mobileChatsSidebarOpen = useSelector(
-    ({ chatApp }) => chatApp.sidebars.mobileChatsSidebarOpen
+    ({ chatApp }) => chatApp?.sidebars.mobileChatsSidebarOpen
   );
   const userSidebarOpen = useSelector(
-    ({ chatApp }) => chatApp.sidebars.userSidebarOpen
+    ({ chatApp }) => chatApp?.sidebars.userSidebarOpen
   );
   const contactSidebarOpen = useSelector(
-    ({ chatApp }) => chatApp.sidebars.contactSidebarOpen
+    ({ chatApp }) => chatApp?.sidebars.contactSidebarOpen
   );
-  const selectedContact = useSelector((state) =>
-    selectContactById(state, state.chatApp.contacts.selectedContactId)
-  );
-
-  useEffect(() => {
-    dispatch(getUserData());
-    dispatch(getContacts());
-  }, [dispatch]);
+  const selectedContact = null;
 
   return (
     <>
       <GlobalStyles
         styles={(theme) => ({
           "#fuse-main": {
-            height: "100vh",
-          },
+            height: "100vh"
+          }
         })}
       />
       <Root>
@@ -128,7 +111,7 @@ function ChatApp(props) {
             onClose={() => dispatch(closeMobileChatsSidebar())}
             disableSwipeToOpen
             classes={{
-              paper: "absolute ltr:left-0 rtl:right-0",
+              paper: "absolute ltr:left-0 rtl:right-0"
             }}
             style={{ position: "absolute" }}
             ModalProps={{
@@ -136,9 +119,9 @@ function ChatApp(props) {
               disablePortal: true,
               BackdropProps: {
                 classes: {
-                  root: "absolute",
-                },
-              },
+                  root: "absolute"
+                }
+              }
             }}
           >
             <ChatsSidebar />
@@ -163,7 +146,7 @@ function ChatApp(props) {
           onOpen={(ev) => {}}
           onClose={() => dispatch(closeUserSidebar())}
           classes={{
-            paper: "absolute left-0",
+            paper: "absolute left-0"
           }}
           style={{ position: "absolute" }}
           ModalProps={{
@@ -171,9 +154,9 @@ function ChatApp(props) {
             disablePortal: true,
             BackdropProps: {
               classes: {
-                root: "absolute",
-              },
-            },
+                root: "absolute"
+              }
+            }
           }}
         >
           <UserSidebar />
@@ -265,7 +248,7 @@ function ChatApp(props) {
           onOpen={(ev) => {}}
           onClose={() => dispatch(closeContactSidebar())}
           classes={{
-            paper: "absolute ltr:right-0 rtl:left-0",
+            paper: "absolute ltr:right-0 rtl:left-0"
           }}
           sx={{ "& .MuiDrawer-paper": { position: "absolute" } }}
           ModalProps={{
@@ -273,9 +256,9 @@ function ChatApp(props) {
             disablePortal: true,
             BackdropProps: {
               classes: {
-                root: "absolute",
-              },
-            },
+                root: "absolute"
+              }
+            }
           }}
         >
           <ContactSidebar />

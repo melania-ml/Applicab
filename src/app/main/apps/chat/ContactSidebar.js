@@ -7,14 +7,12 @@ import TextField from "@mui/material/TextField";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { useDispatch, useSelector } from "react-redux";
-import { selectContacts } from "./store/contactsSlice";
-import { closeContactSidebar } from "./store/sidebarsSlice";
 
 function ContactSidebar(props) {
   const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
+  const contacts = [];
   const selectedContactId = useSelector(
-    ({ chatApp }) => chatApp.contacts.selectedContactId
+    ({ chatApp }) => chatApp?.contacts?.selectedContactId
   );
 
   const contact = contacts.find(

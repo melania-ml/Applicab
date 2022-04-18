@@ -18,7 +18,9 @@ import {
 import {
   selectDossiers,
   setEditDossierData,
-  setEtapeTabFromAction
+  setEtapeTabFromAction,
+  setMessageTabFromAction,
+  getMessages
 } from "app/store/slices/dossiersSlice";
 
 function DossiersList(props) {
@@ -119,6 +121,13 @@ function DossiersList(props) {
           <div className="flex items-center">
             <CustomTooltip placement="top-end" title="Non lus et non envoyé">
               <Fab
+                onClick={(ev) => {
+                  ev.stopPropagation();
+                  dispatch(setEtapeTabFromAction(false));
+                  dispatch(setMessageTabFromAction(true));
+                  props.navigate(`/apps/dossiers/${row.original.id}`);
+                  dispatch(setEditDossierData(row.original));
+                }}
                 variant="circular"
                 disableRipple={true}
                 size="small"
@@ -146,6 +155,7 @@ function DossiersList(props) {
               <IconButton
                 onClick={(ev) => {
                   ev.stopPropagation();
+                  dispatch(setMessageTabFromAction(false));
                   dispatch(setEtapeTabFromAction(true));
                   props.navigate(`/apps/dossiers/${row.original.id}`);
                   dispatch(setEditDossierData(row.original));
@@ -203,8 +213,10 @@ function DossiersList(props) {
         onRowClick={(ev, row) => {
           if (row) {
             props.navigate(`/apps/dossiers/${row.original.id}`);
+            dispatch(setMessageTabFromAction(false));
             dispatch(setEtapeTabFromAction(false));
             dispatch(setEditDossierData(row.original));
+            dispatch(getMessages(row.original.id));
           }
         }}
       />

@@ -48,17 +48,22 @@ function Dossier(props) {
   const {
     isCaseAdded,
     editDossierData: { type },
-    etapeTabFromAction
+    etapeTabFromAction,
+    messageTabFromAction
   } = useSelector(({ dossiers }) => dossiers);
 
   const [tabValue, setTabValue] = useState(
-    type === "edit" && etapeTabFromAction ? 1 : 0
+    type === "edit" && etapeTabFromAction
+      ? 1
+      : type === "edit" && messageTabFromAction
+      ? 2
+      : 0
   );
   useEffect(() => {
     if (type === "new" && isCaseAdded) {
       setTabValue(1);
     }
-  }, [isCaseAdded, etapeTabFromAction, type]);
+  }, [isCaseAdded, etapeTabFromAction, messageTabFromAction, type]);
 
   useDeepCompareEffect(async () => {
     await dispatch(getNatures());
@@ -97,7 +102,7 @@ function Dossier(props) {
             <Tab
               className="h-64 w-1/4 max-w-full"
               label="Messages"
-              // disabled={type === "new" && !isCaseAdded}
+              disabled={type === "new" && !isCaseAdded}
             />
             <Tab
               className="h-64 w-1/4 max-w-full"

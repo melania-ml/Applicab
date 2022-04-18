@@ -1,19 +1,19 @@
-import { motion } from "framer-motion";
-import { getWholeCaseName } from "app/main/common/functions";
-import Picker from "emoji-picker-react";
-import FuseScrollbars from "@fuse/core/FuseScrollbars";
-import { styled } from "@mui/material/styles";
-import IconButton from "@mui/material/IconButton";
-import clsx from "clsx";
-import formatDistanceToNow from "date-fns/formatDistanceToNow";
-import { useEffect, itemef, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import InputBase from "@mui/material/InputBase";
+import Picker from "emoji-picker-react";
+import { motion } from "framer-motion";
+import FuseScrollbars from "@fuse/core/FuseScrollbars";
+import clsx from "clsx";
+import { indexOf } from "lodash";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import { sendMessage } from "app/store/slices/dossiersSlice";
+import {
+  getWholeCaseName,
+  getFormattedDateTime
+} from "app/main/common/functions";
+
 //material-ui
 import {
-  Box,
-  Card,
-  CardContent,
   AppBar,
   Typography,
   Avatar,
@@ -21,8 +21,10 @@ import {
   Icon,
   Input,
   Button,
+  InputBase,
+  IconButton
 } from "@mui/material";
-import { indexOf } from "lodash";
+import { styled } from "@mui/material/styles";
 
 const StyledMessageRow = styled("div")(({ theme }) => ({
   "&.contact": {
@@ -34,26 +36,26 @@ const StyledMessageRow = styled("div")(({ theme }) => ({
       borderTopRightRadius: 20,
       borderBottomRightRadius: 20,
       "& .time": {
-        marginLeft: 0,
-      },
+        marginLeft: 0
+      }
     },
     "&.first-of-group": {
       "& .bubble": {
-        borderTopLeftRadius: 20,
-      },
+        borderTopLeftRadius: 20
+      }
     },
     "&.last-of-group": {
       "& .bubble": {
-        borderBottomLeftRadius: 20,
-      },
-    },
+        borderBottomLeftRadius: 20
+      }
+    }
   },
   "&.me": {
     paddingLeft: 40,
 
     "& .avatar": {
       order: 2,
-      margin: "0 0 0 16px",
+      margin: "0 0 0 16px"
     },
     "& .bubble": {
       marginLeft: "auto",
@@ -66,83 +68,82 @@ const StyledMessageRow = styled("div")(({ theme }) => ({
       "& .time": {
         justifyContent: "flex-end",
         right: 0,
-        marginRight: 0,
-      },
+        marginRight: 0
+      }
     },
     "&.first-of-group": {
       "& .bubble": {
-        borderTopRightRadius: 20,
-      },
+        borderTopRightRadius: 20
+      }
     },
 
     "&.last-of-group": {
       "& .bubble": {
-        borderBottomRightRadius: 20,
-      },
-    },
+        borderBottomRightRadius: 20
+      }
+    }
   },
   "&.contact + .me, &.me + .contact": {
     paddingTop: 20,
-    marginTop: 20,
+    marginTop: 20
   },
   "&.first-of-group": {
     "& .bubble": {
       borderTopLeftRadius: 20,
-      paddingTop: 13,
-    },
+      paddingTop: 13
+    }
   },
   "&.last-of-group": {
     "& .bubble": {
       borderBottomLeftRadius: 20,
       paddingBottom: 13,
       "& .time": {
-        display: "flex",
-      },
-    },
-  },
+        display: "flex"
+      }
+    }
+  }
 }));
 
 function MessageTab(props) {
   const dispatch = useDispatch();
   const {
     editDossierData: { data },
+    messages,
+    groupId,
+    caseId
   } = useSelector(({ dossiers }) => dossiers);
+  const {
+    data: { id, profile }
+  } = useSelector(({ auth }) => auth.user);
   const [message, setMessage] = useState("");
   const [searchText, setSearchText] = useState("");
   const [showPicker, setShowPicker] = useState(false);
   const chatRef = useRef(null);
 
-  const [allFields, setAllFields] = useState([
-    {
-      image: "",
-      profile: "",
-      name: "",
-      allFieldsMessage: "hey..! you are Welcome",
-      date: new Date(),
-    },
-  ]);
-
   useEffect(() => {
-    if (message) {
+    if (messages) {
       scrollToBottom();
     }
-  }, [message]);
+  }, [messages]);
 
   function scrollToBottom() {
     chatRef.current.scrollTop = chatRef.current.scrollHeight;
   }
 
-  const onKeyDownHandler = (e) => {
-    if (e.keyCode === 13) {
-      setAllFields((prev) => [...prev, { allFieldsMessage: message }]);
-      setMessage("");
-    }
-  };
-
   const onSubmitMessage = (e) => {
     e.preventDefault();
-    setAllFields((prev) => [...prev, { allFieldsMessage: message }]);
-    setMessage("");
+    if (message === "") {
+      return;
+    }
+    dispatch(
+      sendMessage({
+        message,
+        groupId,
+        caseId
+      })
+    ).then(() => {
+      setMessage("");
+    });
   };
 
   const onEmojiClick = (event, emojiObject) => {
@@ -153,14 +154,19 @@ function MessageTab(props) {
   };
 
   function isFirstMessageOfGroup(item, i) {
-    return message;
+    return (
+      i === 0 ||
+      (messages[i - 1] &&
+        messages[i - 1].message_send_by.id !== item.message_send_by.id)
+    );
   }
 
   function isLastMessageOfGroup(item, i) {
-    return message;
-  }
-  function shouldShowContactAvatar(item, i) {
-    return message;
+    return (
+      i === messages.length - 1 ||
+      (messages[i + 1] &&
+        messages[i + 1].message_send_by.id !== item.message_send_by.id)
+    );
   }
 
   return (
@@ -172,26 +178,23 @@ function MessageTab(props) {
       >
         <div className="flex res-flex-direction justify-between w-full">
           <div className="flex items-center res-flex-direction">
-          <Avatar
-            className="w-40 h-40 md:ml-40"
-            alt="item photo"
-            src={
-              (allFields.image && URL.createObjectURL(allFields.image)) ||
-              allFields.profile
-            }
-          />
-          <Typography
-            variant="subtitle1"
-            color="inherit"
-            className="messagesTab md:ml-24 mt-3 mt-md-0"
-          >
-            {getWholeCaseName(
-              data?.case_name,
-              data?.procedure.procedure_type,
-              data?.created_date,
-              data?.unique_code
-            )}
-          </Typography>
+            <Avatar
+              className="w-40 h-40 md:ml-40"
+              alt="item photo"
+              src={profile}
+            />
+            <Typography
+              variant="subtitle1"
+              color="inherit"
+              className="messagesTab md:ml-24 mt-3 mt-md-0"
+            >
+              {getWholeCaseName(
+                data?.case_name,
+                data?.procedure.procedure_type,
+                data?.created_date,
+                data?.unique_code
+              )}
+            </Typography>
           </div>
           <div className="md:mr-24 mt-3 mt-md-0">
             <Paper
@@ -209,7 +212,7 @@ function MessageTab(props) {
                 fullWidth
                 value={searchText}
                 inputProps={{
-                  "aria-label": "Search",
+                  "aria-label": "Search"
                 }}
                 onChange={(event) => setSearchText(event.target.value)}
               />
@@ -222,76 +225,67 @@ function MessageTab(props) {
           ref={chatRef}
           className="flex flex-1 flex-col overflow-y-auto"
         >
-          {allFields && allFields.length > 0 ? (
+          {messages && messages.length > 0 ? (
             <div className="flex flex-col pt-16 px-16 ltr:pl-56 rtl:pr-56 pb-40">
-              {allFields
-                .filter((filteredData) => {
-                  if (searchText === "") {
-                    return filteredData;
-                  } else if (
-                    filteredData.allFieldsMessage
-                      .toLowerCase()
-                      .includes(searchText.toLocaleLowerCase())
-                  ) {
-                    return filteredData;
-                  }
-                })
-                .map((e, item, i) => {
-                  const contact =
-                    item.who === item.id
-                      ? item
-                      : filteredData.find(
-                          (_contact) => _contact.id === item.who
-                        );
-
-                  return (
-                    <>
-                      <StyledMessageRow
-                        key={item.time}
-                        className={clsx(
-                          "flex flex-col grow-0 shrink-0 items-start justify-end relative px-16 pb-4 pl-0 flex items-end",
-                          { me: item.who === item.id },
-                          { contact: item.who !== item.id },
-                          { "first-of-group": isFirstMessageOfGroup(item, i) },
-                          { "last-of-group": isLastMessageOfGroup(item, i) },
-                          i + 1 === allFields.length && "pb-96"
-                        )}
-                      >
-                        <div className="flex items-center">
-                        <Avatar className="h-20 w-20" src={contact.avatar} />
+              {messages.map((item, i) => {
+                return (
+                  <>
+                    <StyledMessageRow
+                      key={item.time}
+                      className={clsx(
+                        "flex flex-col grow-0 shrink-0 items-start justify-end relative px-16 pb-2",
+                        { me: id === item.message_send_by.id },
+                        { contact: id !== item.message_send_by.id },
+                        { "first-of-group": isFirstMessageOfGroup(item, i) },
+                        { "last-of-group": isLastMessageOfGroup(item, i) },
+                        i + 1 === messages.length && "pb-96"
+                      )}
+                    >
+                      {isFirstMessageOfGroup(item, i) && (
+                        <div className="flex items-center w-full justify-end mb-1">
+                          <Avatar
+                            className="h-20 w-20"
+                            src={item.message_send_by.profile}
+                          />
+                          <Typography
+                            variant="span"
+                            color="#192A3E"
+                            className="senderName ml-2"
+                          >
+                            {item.message_send_by.first_name +
+                              " " +
+                              item.message_send_by.last_name}
+                          </Typography>
+                        </div>
+                      )}
+                      <div className="bubble flex relative items-center justify-center p-12 max-w-full shadow">
+                        <div className="leading-tight whitespace-pre-wrap">
+                          {item.message}
+                        </div>
                         <Typography
-                          variant="subtitle1"
-                          color="#192A3E"
-                          className="senderName ml-2"
+                          className="time absolute w-full hidden text-11 mt-8 -mb-24 ltr:left-0 rtl:right-0 bottom-0 whitespace-nowrap"
+                          color="textSecondary"
                         >
-                          Avocat - Melania Munoz
+                          {formatDistanceToNow(
+                            new Date(
+                              getFormattedDateTime({ date: item.created_date })
+                            ),
+                            {
+                              addSuffix: true
+                            }
+                          )}
                         </Typography>
-                        </div>
-                        <div className="bubble flex relative items-center justify-center p-12 max-w-full shadow">
-                          <div className="leading-tight whitespace-pre-wrap">
-                            {e.allFieldsMessage}
-                          </div>
-                        </div>
-                        
-                      </StyledMessageRow>
-                      <Typography
-                        className="time absolute text-11 whitespace-nowrap"
-                        color="textSecondary"
-                      >
-                        {formatDistanceToNow(new Date(), {
-                          addSuffix: true,
-                        })}
-                      </Typography>
-                      
-                    </>
-                  );
-                })}
+                      </div>
+                    </StyledMessageRow>
+                  </>
+                );
+              })}
             </div>
           ) : (
             <div className="flex flex-col flex-1">
               <div className="flex flex-col flex-1 items-center justify-center">
                 <Icon className="text-128" color="disabled">
-                  allFields
+                  chat
                 </Icon>
               </div>
               <Typography
@@ -303,54 +297,55 @@ function MessageTab(props) {
             </div>
           )}
         </FuseScrollbars>
-        {allFields && (
-          <form
-            onSubmit={onSubmitMessage}
-            className="relative bottom-0 right-0 left-0 py-16 px-8"
-          >
-            <Paper className="flex items-center rounded-24 shadow">
-              <Button onClick={() => setShowPicker((val) => !val)} className="msg-emoji-selction">
-                <Icon className="flex flex-1 px-36 smily-icon" color="action">
-                  sentiment_satisfied
-                </Icon>
-                {showPicker && (
-                  <emoji-picker
-                    pickerStyle={{ width: "100%" }}
-                    onEmojiClick={onEmojiClick}
-                  />
-                )}
-              </Button>
+        <form
+          onSubmit={onSubmitMessage}
+          className="relative bottom-0 right-0 left-0 py-16 px-8"
+        >
+          <Paper className="flex items-center rounded-24 shadow">
+            <Button
+              onClick={() => setShowPicker((val) => !val)}
+              className="msg-emoji-selction"
+            >
+              <Icon className="flex flex-1 px-36 smily-icon" color="action">
+                sentiment_satisfied
+              </Icon>
               {showPicker && (
-                <Picker
-                  pickerStyle={{ position:"absolute",bottom:"63px" }}
+                <emoji-picker
+                  pickerStyle={{ width: "100%" }}
                   onEmojiClick={onEmojiClick}
-                  onChange={(e) => e.target.value}
                 />
               )}
-              <InputBase
-                autoFocus={false}
-                id="message-input"
-                className="flex-1 flex grow shrink-0 mx-16 ltr:mr-48 rtl:ml-48 my-8"
-                placeholder="Envoyer un message..."
-                onChange={(e) => setMessage(e.target.value)}
-                value={message}
+            </Button>
+            {showPicker && (
+              <Picker
+                pickerStyle={{ position: "absolute", bottom: "63px" }}
+                onEmojiClick={onEmojiClick}
+                onChange={(e) => e.target.value}
               />
-              <IconButton
-                className="absolute msg-send-btn"
-                type="submit"
-                size="small"
+            )}
+            <InputBase
+              autoFocus={false}
+              id="message-input"
+              className="flex-1 flex grow shrink-0 mx-16 ltr:mr-48 rtl:ml-48 my-8"
+              placeholder="Envoyer un message..."
+              onChange={(e) => setMessage(e.target.value)}
+              value={message}
+            />
+            <IconButton
+              className="absolute msg-send-btn"
+              type="submit"
+              size="small"
+            >
+              <Icon
+                className="text-24"
+                color="action"
+                onClick={onSubmitMessage}
               >
-                <Icon
-                  className="text-24"
-                  color="action"
-                  onClick={onSubmitMessage}
-                >
-                  send
-                </Icon>
-              </IconButton>
-            </Paper>
-          </form>
-        )}
+                send
+              </Icon>
+            </IconButton>
+          </Paper>
+        </form>
       </div>
     </>
   );

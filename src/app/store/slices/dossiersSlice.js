@@ -150,6 +150,8 @@ export const addCase = createAsyncThunk(
           dispatch(showMessage({ message: data.data.message }));
           dispatch(setEtapeObj(obj));
           dispatch(setIsCaseAdded(true));
+          dispatch(setCaseId(data.data.data.id));
+          dispatch(getMessages(data.data.data.id, getState().dossiers.groupId));
         }
       })
       .catch((error) => {
@@ -191,7 +193,9 @@ export const updateCase = createAsyncThunk(
 const createChatGroup = (obj) => async (dispatch) => {
   await axios
     .post(`api/common/listCreate/caseManagement/caseManagementChatGroup`, obj)
-    .then(() => {})
+    .then((data) => {
+      dispatch(setGroupId(data.data.id));
+    })
     .catch((error) => {
       dispatch(showMessage({ message: error.response.message }));
     });
@@ -272,6 +276,44 @@ export const getDossiers = createAsyncThunk(
     return { data: data.data, routeParams };
   }
 );
+
+export const getMessages =
+  (case_management_id, group_id) => async (dispatch) => {
+    await axios
+      .get(`api/caseManagement/caseGroupMessages/${case_management_id}`)
+      .then((data) => {
+        dispatch(setMessages(data.data.data.group_message));
+        dispatch(readGroupMessages(group_id));
+      })
+      .catch((error) => {
+        dispatch(showMessage({ message: error.response.message }));
+      });
+  };
+
+export const readGroupMessages = (group_id) => async (dispatch) => {
+  await axios
+    .put(`api/caseManagement/readGroupMessages`, { group_id })
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      dispatch(showMessage({ message: error.response.message }));
+    });
+};
+
+export const sendMessage = (obj) => async (dispatch) => {
+  await axios
+    .post(`api/caseManagement/sendMessage`, {
+      message: obj.message,
+      group_id: obj.groupId
+    })
+    .then((data) => {
+      dispatch(getMessages(obj.caseId, obj.groupId));
+    })
+    .catch((error) => {
+      dispatch(showMessage({ message: error.response.message }));
+    });
+};
 
 export const addEtapes = createAsyncThunk(
   "dossiersApp/dossiers/addEtapes",
@@ -377,8 +419,12 @@ const dossiersSlice = createSlice({
       data: null
     },
     etapeTabFromAction: false,
+    messageTabFromAction: false,
     documents: [],
-    selectedList: "Tous"
+    selectedList: "Tous",
+    messages: [],
+    groupId: null,
+    caseId: null
   }),
   reducers: {
     setEtapes: (state, action) => {
@@ -395,6 +441,15 @@ const dossiersSlice = createSlice({
     },
     setDossiers: (state, action) => {
       state.dossiers = action.payload;
+    },
+    setCaseId: (state, action) => {
+      state.caseId = action.payload;
+    },
+    setMessages: (state, action) => {
+      state.messages = action.payload;
+    },
+    setGroupId: (state, action) => {
+      state.groupId = action.payload;
     },
     setNatures: (state, action) => {
       state.natures = action.payload;
@@ -457,6 +512,9 @@ const dossiersSlice = createSlice({
     setEtapeTabFromAction: (state, action) => {
       state.etapeTabFromAction = action.payload;
     },
+    setMessageTabFromAction: (state, action) => {
+      state.messageTabFromAction = action.payload;
+    },
     closeEditEtapeDialog: (state, action) => {
       state.etapeDialog = {
         type: "edit",
@@ -483,6 +541,9 @@ const dossiersSlice = createSlice({
 export const {
   setIsLoading,
   setDossiers,
+  setMessages,
+  setGroupId,
+  setCaseId,
   resetDossier,
   setDossiersSearchText,
   openNewEtapeDialog,
@@ -499,6 +560,7 @@ export const {
   setEditDossierData,
   setNewDossierData,
   setEtapeTabFromAction,
+  setMessageTabFromAction,
   setSelectedList
 } = dossiersSlice.actions;
 

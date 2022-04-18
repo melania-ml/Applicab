@@ -10,8 +10,6 @@ import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import InputBase from "@mui/material/InputBase";
-import { selectContacts } from "./store/contactsSlice";
-import { sendMessage } from "./store/chatSlice";
 
 const StyledMessageRow = styled("div")(({ theme }) => ({
   "&.contact": {
@@ -23,26 +21,26 @@ const StyledMessageRow = styled("div")(({ theme }) => ({
       borderTopRightRadius: 20,
       borderBottomRightRadius: 20,
       "& .time": {
-        marginLeft: 12,
-      },
+        marginLeft: 12
+      }
     },
     "&.first-of-group": {
       "& .bubble": {
-        borderTopLeftRadius: 20,
-      },
+        borderTopLeftRadius: 20
+      }
     },
     "&.last-of-group": {
       "& .bubble": {
-        borderBottomLeftRadius: 20,
-      },
-    },
+        borderBottomLeftRadius: 20
+      }
+    }
   },
   "&.me": {
     paddingLeft: 40,
 
     "& .avatar": {
       order: 2,
-      margin: "0 0 0 16px",
+      margin: "0 0 0 16px"
     },
     "& .bubble": {
       marginLeft: "auto",
@@ -55,40 +53,40 @@ const StyledMessageRow = styled("div")(({ theme }) => ({
       "& .time": {
         justifyContent: "flex-end",
         right: 0,
-        marginRight: 12,
-      },
+        marginRight: 12
+      }
     },
     "&.first-of-group": {
       "& .bubble": {
-        borderTopRightRadius: 20,
-      },
+        borderTopRightRadius: 20
+      }
     },
 
     "&.last-of-group": {
       "& .bubble": {
-        borderBottomRightRadius: 20,
-      },
-    },
+        borderBottomRightRadius: 20
+      }
+    }
   },
   "&.contact + .me, &.me + .contact": {
     paddingTop: 20,
-    marginTop: 20,
+    marginTop: 20
   },
   "&.first-of-group": {
     "& .bubble": {
       borderTopLeftRadius: 20,
-      paddingTop: 13,
-    },
+      paddingTop: 13
+    }
   },
   "&.last-of-group": {
     "& .bubble": {
       borderBottomLeftRadius: 20,
       paddingBottom: 13,
       "& .time": {
-        display: "flex",
-      },
-    },
-  },
+        display: "flex"
+      }
+    }
+  }
 }));
 
 function Chat(props) {
@@ -148,7 +146,7 @@ function Chat(props) {
       sendMessage({
         messageText,
         chatId: chat.id,
-        contactId: selectedContactId,
+        contactId: selectedContactId
       })
     ).then(() => {
       setMessageText("");
@@ -196,7 +194,7 @@ function Chat(props) {
                       color="textSecondary"
                     >
                       {formatDistanceToNow(new Date(item.time), {
-                        addSuffix: true,
+                        addSuffix: true
                       })}
                     </Typography>
                   </div>

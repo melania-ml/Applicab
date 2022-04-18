@@ -1,9 +1,18 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import _ from "@lodash";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import Statut from "app/main/constants/Statut";
+import { getFormattedDateTime } from "app/main/common/functions";
+import {
+  closeNewEtapeDialog,
+  closeEditEtapeDialog,
+  updateEtapes,
+  addEtapes,
+  uploadDocument
+} from "app/store/slices/dossiersSlice";
+
+//material-ui
 import DateTimePicker from "@mui/lab/DateTimePicker";
 import {
   Typography,
@@ -21,15 +30,6 @@ import {
   Icon,
   Autocomplete
 } from "@mui/material";
-import Statut from "app/main/constants/Statut";
-import { getFormattedDateTime } from "app/main/common/functions";
-import {
-  closeNewEtapeDialog,
-  closeEditEtapeDialog,
-  updateEtapes,
-  addEtapes,
-  uploadDocument
-} from "app/store/slices/dossiersSlice";
 
 function EtapesDialog() {
   const [allFields, setAllFields] = useState({

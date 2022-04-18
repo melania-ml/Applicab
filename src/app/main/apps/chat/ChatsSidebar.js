@@ -23,39 +23,35 @@ import { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ContactListItem from "./ContactListItem";
 import StatusIcon from "./StatusIcon";
-import { getChat } from "./store/chatSlice";
-import { selectContacts } from "./store/contactsSlice";
-import { openUserSidebar } from "./store/sidebarsSlice";
-import { updateUserData } from "./store/userSlice";
 
 const statusArr = [
   {
     title: "Online",
-    value: "online",
+    value: "online"
   },
   {
     title: "Away",
-    value: "away",
+    value: "away"
   },
   {
     title: "Do not disturb",
-    value: "do-not-disturb",
+    value: "do-not-disturb"
   },
   {
     title: "Offline",
-    value: "offline",
-  },
+    value: "offline"
+  }
 ];
 
 const contactsDB = [
   {
-    id: "1",
-  },
+    id: "1"
+  }
 ];
 function ChatsSidebar(props) {
   const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
-  const user = useSelector(({ chatApp }) => chatApp.user);
+  const contacts = [];
+  const user = null;
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
@@ -83,7 +79,7 @@ function ChatsSidebar(props) {
     dispatch(
       updateUserData({
         ...user,
-        status,
+        status
       })
     );
     setStatusMenuEl(null);
@@ -178,7 +174,7 @@ function ChatsSidebar(props) {
                   fullWidth
                   value={searchText}
                   inputProps={{
-                    "aria-label": "Search",
+                    "aria-label": "Search"
                   }}
                   onChange={handleSearchText}
                 />
@@ -205,7 +201,7 @@ function ChatsSidebar(props) {
                     ..._chat,
                     ...contacts.find(
                       (_contact) => _contact.id === _chat.contactId
-                    ),
+                    )
                   }))
                 : [];
             const filteredContacts = getFilteredArray(
@@ -220,14 +216,14 @@ function ChatsSidebar(props) {
             const container = {
               show: {
                 transition: {
-                  staggerChildren: 0.1,
-                },
-              },
+                  staggerChildren: 0.1
+                }
+              }
             };
 
             const item = {
               hidden: { opacity: 0, y: 20 },
-              show: { opacity: 1, y: 0 },
+              show: { opacity: 1, y: 0 }
             };
 
             return (
