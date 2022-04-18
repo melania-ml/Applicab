@@ -178,15 +178,11 @@ function MessageTab(props) {
       >
         <div className="flex res-flex-direction justify-between w-full">
           <div className="flex items-center res-flex-direction">
-            <Avatar
-              className="w-40 h-40 md:ml-40"
-              alt="item photo"
-              src={profile}
-            />
+            <Avatar className="w-40 h-40" alt="item photo" src={profile} />
             <Typography
               variant="subtitle1"
               color="inherit"
-              className="messagesTab md:ml-24 mt-3 mt-md-0"
+              className="messagesTab ml-12 mt-3 mt-md-0"
             >
               {getWholeCaseName(
                 data?.case_name,
