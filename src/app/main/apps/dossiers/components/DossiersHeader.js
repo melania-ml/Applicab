@@ -15,9 +15,8 @@ import Filters from "./Filters";
 import { Link } from "react-router-dom";
 
 function DossiersHeader(props) {
-  const [moreMenuEl, setMoreMenuEl] = useState(null);
   const dispatch = useDispatch();
-  const searchText = useSelector(({ dossiers }) => dossiers.searchText);
+  const { searchText } = useSelector(({ dossiers }) => dossiers);
   const mainTheme = useSelector(selectMainTheme);
 
   return (

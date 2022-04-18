@@ -41,8 +41,7 @@ export const removeEtapes = createAsyncThunk(
     await axios
       .delete("api/caseManagement/bulkDeleteTask", {
         data: {
-          ids: etapeIds,
-          case_management_id: getState().dossiers.editDossierData.data.id
+          ids: etapeIds
         }
       })
       .then((data) => {
@@ -64,12 +63,7 @@ export const getDeletedEtapes = createAsyncThunk(
     dispatch(setIsLoading(true));
     const response = await axios.get(`api/caseManagement/getDeletedTask/${id}`);
     const data = await response.data;
-    let newArr = [];
-    for (let d of data.data) {
-      d.delete_id = d.id;
-      newArr.push(d.case_task_id);
-    }
-    dispatch(setEtapes(newArr));
+    dispatch(setEtapes(data.data));
     dispatch(setIsLoading(false));
   }
 );
@@ -138,10 +132,17 @@ export const addCase = createAsyncThunk(
             })
           );
           const procedure = getState().dossiers.procedures;
-          const proc = procedure.filter(
+          const { id, procedure_type } = procedure.filter(
             (fil) => fil.id === data.data.data.procedure
-          )[0].procedure_type;
-          const key = getProcedureCode(proc);
+          )[0];
+          dispatch(
+            createDefaultEtapes({
+              type: data.data.data.type,
+              procedure: id,
+              case_management_id: data.data.data.id
+            })
+          );
+          const key = getProcedureCode(procedure_type);
           let obj = {
             type: data.data.data.type,
             case_management_id: data.data.data.id
@@ -190,11 +191,22 @@ export const updateCase = createAsyncThunk(
   }
 );
 
-const createChatGroup = (obj) => async (dispatch) => {
+export const createChatGroup = (obj) => async (dispatch) => {
   await axios
     .post(`api/common/listCreate/caseManagement/caseManagementChatGroup`, obj)
     .then((data) => {
       dispatch(setGroupId(data.data.id));
+    })
+    .catch((error) => {
+      dispatch(showMessage({ message: error.response.message }));
+    });
+};
+
+const createDefaultEtapes = (obj) => async (dispatch) => {
+  await axios
+    .put(`api/caseManagement/addDefaultCaseTask`, obj)
+    .then((data) => {
+      console.log(data);
     })
     .catch((error) => {
       dispatch(showMessage({ message: error.response.message }));

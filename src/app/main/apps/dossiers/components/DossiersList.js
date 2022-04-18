@@ -26,8 +26,9 @@ import {
 function DossiersList(props) {
   const dispatch = useDispatch();
   const dossiers = useSelector(selectDossiers);
-  const searchText = useSelector(({ dossiers }) => dossiers.searchText);
-  const isLoading = useSelector(({ dossiers }) => dossiers.isLoading);
+  const { searchText, isLoading, groupId } = useSelector(
+    ({ dossiers }) => dossiers
+  );
 
   const [filteredData, setFilteredData] = useState(null);
 
@@ -216,7 +217,7 @@ function DossiersList(props) {
             dispatch(setMessageTabFromAction(false));
             dispatch(setEtapeTabFromAction(false));
             dispatch(setEditDossierData(row.original));
-            dispatch(getMessages(row.original.id));
+            dispatch(getMessages(row.original.id, groupId));
           }
         }}
       />
