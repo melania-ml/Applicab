@@ -27,12 +27,24 @@ class SoftDeletableManager(models.Manager):
         )
 
 
+class ReturnSoftDeleteManager(models.Manager):
+    """Manager that filters out soft-deleted objects"""
+
+    def get_queryset(self):
+        return SoftDeletableQS(
+            model=self.model, using=self._db, hints=self._hints
+        ).filter(
+            is_deleted=True
+        )
+
+
 class CommonBase(models.Model):
     is_deleted = models.BooleanField(default=False)
     created_date = models.DateTimeField(auto_now=False, default=django.utils.timezone.now)
     updated_date = models.DateTimeField(auto_now=True)
 
     objects = SoftDeletableManager()
+    deleted_objects = ReturnSoftDeleteManager()
 
     class Meta:
         db_table = 'common_base'

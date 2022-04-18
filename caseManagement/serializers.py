@@ -61,8 +61,30 @@ class CaseTaskSerializer(serializers.ModelSerializer):
         depth = 1
 
 
-class CaseDeleteTaskSerializer(serializers.ModelSerializer):
+class CaseGroupMessageSerializer(serializers.ModelSerializer):
     class Meta:
-        model = caseManagementDeletedTask
+        model = caseManagementGroupMessage
         fields = '__all__'
-        depth = 0
+
+
+# Used For Appending data Only..
+class MessageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = caseManagementGroupMessage
+        fields = ['id', 'message', 'created_date', 'message_send_by']
+        depth = 1
+
+
+class RetrieveCaseGroupMessageSerializer(serializers.ModelSerializer):
+    group_message = MessageSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = caseManagementChatGroup
+        fields = '__all__'
+        read_only_fields = ['group_message']
+
+    def to_representation(self, instance):
+        response = super().to_representation(instance)
+        response["group_message"] = sorted(response["group_message"], key=lambda x: x["id"])
+        return response

@@ -151,12 +151,12 @@ class casesManagement(APIView):
 
 class caseManagementTaskView(APIView):
     serializers_class = CaseTaskSerializer
-    serializers_deleted_task_class = CaseDeleteTaskSerializer
+
+    # serializers_deleted_task_class = CaseDeleteTaskSerializer
 
     # Filter Api
     def post(self, request):
         try:
-            userid = request.user.id
             reqData = request.data
 
             # Remove blank data from dictionary
@@ -166,19 +166,15 @@ class caseManagementTaskView(APIView):
             if reqType:
                 kwargs['type__in'] = [kwargs['type'], 'Les deuX']
                 del kwargs['type']
-            deletedTask = list(
-                caseManagementDeletedTask.objects.filter(case_management_id=reqData['case_management_id'],
-                                                         lawyer_id=userid).values_list("case_task_id", flat=True))
 
             if 'send_notification' in reqData:
                 kwargs['send_notification'] = reqData['send_notification']
 
-            query = Q(~Q(id__in=deletedTask), **kwargs)
+            query = Q(**kwargs)
 
             if 'case_management_id' in kwargs and 'status' not in kwargs and 'send_notification' not in reqData:
                 del kwargs['case_management_id']
-                query = Q(~Q(id__in=deletedTask), case_management_id=reqData['case_management_id']) | Q(
-                    ~Q(id__in=deletedTask), **kwargs)
+                query = Q(case_management_id=reqData['case_management_id']) | Q(**kwargs)
 
             taskList = caseManagementTask.objects.filter(query).order_by("position")
             serializer = self.serializers_class(taskList, many=True)
@@ -199,27 +195,6 @@ class caseManagementTaskView(APIView):
             taskList = caseManagementTask.objects.filter(id=taskId).first()
             bodyParams = request.data
 
-            # if it's Default task create replica
-            if taskList.is_default:
-                taskList.id = None
-                taskList.is_default = False
-                taskList.case_management_id = CaseManagement.objects.get(pk=request.data['case_management_id'])
-                serializer = self.serializers_class(taskList, data=request.data)
-                if serializer.is_valid():
-                    serializer.save()
-                    # prepare Email Notification
-                    if bodyParams['send_notification']:
-                        self.taskNotificationEmail(bodyParams['client_id'])
-
-                    res = ResponseInfo(serializer.data, SUCCESS, True,
-                                       status.HTTP_201_CREATED)
-                    return Response(res.success_payload(), status=status.HTTP_201_CREATED)
-
-                res = ResponseInfo(serializer.errors, SOMETHING_WENT_WRONG, False,
-                                   status.HTTP_401_UNAUTHORIZED)
-                return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
-
-            # if its not default simply updating
             serializer = self.serializers_class(taskList, data=bodyParams)
             if serializer.is_valid():
                 serializer.save()
@@ -275,12 +250,10 @@ class caseManagementTaskView(APIView):
 
     def get(self, request, case_id):
         try:
-            userId = request.user.id
-            deletedTask = caseManagementDeletedTask.objects.filter(lawyer_id=userId, case_management_id=case_id)
+            deletedTask = caseManagementTask.deleted_objects.filter(case_management_id=case_id)
 
-            self.serializers_deleted_task_class.Meta.depth = 1
-            self.serializers_deleted_task_class.Meta.fields = ['id', 'case_task_id']
-            serializer = self.serializers_deleted_task_class(deletedTask, many=True)
+            # self.serializers_class.Meta.depth = 1
+            serializer = self.serializers_class(deletedTask, many=True)
 
             # preparing response
             res = ResponseInfo(serializer.data, SUCCESS, True,
@@ -323,6 +296,33 @@ class caseManagementCreateTaskView(APIView):
                            status.HTTP_401_UNAUTHORIZED)
         return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
 
+    # Used For adding Default task to related case as-per filter
+    def put(self, request):
+        try:
+            self.serializers_class.Meta.depth = 0
+            caseId = request.data.get('case_management_id', None)
+            reqData = request.data
+            reqData['type__in'] = [reqData['type'], 'Les deuX']
+            procedureType = Procedure.objects.get(pk=reqData['procedure'])
+            reqData.pop('type')
+            reqData.pop('procedure')
+            reqData.pop('case_management_id')
+            reqData[procedureType.procedure_sub_name] = True
+            defaultTask = caseManagementDefaultTask.objects.filter(**reqData).values()
+            for task in defaultTask:
+                del task['id']
+                task['case_management_id'] = caseId
+                serializer = self.serializers_class(data=task)
+                if serializer.is_valid():
+                    serializer.save()
+            res = ResponseInfo([], TASK_ADDED_SUCCESSFULLY, True,
+                               status.HTTP_201_CREATED)
+            return Response(res.success_payload(), status=status.HTTP_201_CREATED)
+        except Exception as err:
+            res = ResponseInfo(err, SOMETHING_WENT_WRONG, False,
+                               status.HTTP_401_UNAUTHORIZED)
+            return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
 
 class caseManagementDocumentsView(APIView):
     serializers_class = CaseDocumentsSerializer
@@ -352,11 +352,6 @@ class bulkCaseTaskOperationsViewSet(APIView):
 
             instances = caseManagementTask.objects.filter(id__in=ids)
             for instance in instances:
-                if instance.is_default:
-                    instance.id = None
-                    instance.is_default = False
-                    instance.case_management_id = CaseManagement.objects.get(pk=request.data['case_management_id'])
-
                 serializer = CaseTaskSerializer(instance, data=updateValue)
                 if serializer.is_valid():
                     serializer.save()
@@ -372,23 +367,69 @@ class bulkCaseTaskOperationsViewSet(APIView):
     def delete(self, request):
         try:
             ids = request.data.get('ids', None)
-            caseId = request.data.get('case_management_id', None)
-            if not ids or not caseId:
-                res = ResponseInfo([], NO_RECORD, False, status.HTTP_204_NO_CONTENT)
-                return Response(res.errors_payload(), status=status.HTTP_204_NO_CONTENT)
+            if ids:
+                caseManagementTask.objects.filter(id__in=ids).delete()
+                res = ResponseInfo([], RECORD_DELETED_SUCCESSFULLY, True, status.HTTP_200_OK)
+                return Response(res.success_payload(), status=status.HTTP_200_OK)
 
-            caseTasks = caseManagementTask.objects.filter(id__in=ids)
-            for task in caseTasks:
-                _dist = {'lawyer_id': request.user.id, 'case_management_id': caseId, 'case_task_id': task.id}
-                serializer = CaseDeleteTaskSerializer(data=_dist)
-                if serializer.is_valid():
-                    serializer.save()
+            res = ResponseInfo({}, NO_RECORD, False, status.HTTP_401_UNAUTHORIZED)
+            return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
 
-            # Preparing response
-            response = []
-            if serializer.errors:
-                response = serializer.errors
-            res = ResponseInfo(response, RECORD_DELETED_SUCCESSFULLY, True, status.HTTP_200_OK)
+        except Exception as err:
+            res = ResponseInfo(err, SOMETHING_WENT_WRONG, False, status.HTTP_401_UNAUTHORIZED)
+            return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
+
+class caseGroupMessageViewSet(APIView):
+    serializers_class = CaseGroupMessageSerializer
+
+    def post(self, request):
+        try:
+            userId = request.user.id
+            reqData = request.data
+            reqData['message_send_by'] = userId
+            reqData['message_read_by'] = [userId]
+            serializer = self.serializers_class(data=reqData)
+
+            if serializer.is_valid():
+                serializer.save()
+                # Preparing response
+                res = ResponseInfo(serializer.data, SUCCESS, True,
+                                   status.HTTP_201_CREATED)
+                return Response(res.success_payload(), status=status.HTTP_201_CREATED)
+
+            res = ResponseInfo(serializer.errors, SOMETHING_WENT_WRONG, False, status.HTTP_401_UNAUTHORIZED)
+            return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
+        except Exception as err:
+            res = ResponseInfo(err, SOMETHING_WENT_WRONG, False, status.HTTP_401_UNAUTHORIZED)
+            return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
+    def put(self, request):
+        try:
+            userId = request.user.id
+            reqData = request.data
+            chatData = caseManagementGroupMessage.objects.filter(Q(group_id=reqData['group_id']),
+                                                                 ~Q(message_read_by__contains=[userId]))
+            for chat in chatData:
+                chat.message_read_by.append(userId)
+                chat.save()
+            res = ResponseInfo([], SUCCESS, True, status.HTTP_200_OK)
+            return Response(res.success_payload(), status=status.HTTP_200_OK)
+        except Exception as err:
+            res = ResponseInfo(err, SOMETHING_WENT_WRONG, False, status.HTTP_401_UNAUTHORIZED)
+            return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
+
+class retrieveCaseGroupMessageViewSet(APIView):
+    serializers_class = RetrieveCaseGroupMessageSerializer
+
+    def get(self, request, case_id):
+        try:
+            caseGroup = caseManagementChatGroup.objects.filter(case_management_id=case_id).first()
+            serializer = self.serializers_class(caseGroup)
+
+            res = ResponseInfo(serializer.data, SUCCESS, True,
+                               status.HTTP_200_OK)
             return Response(res.success_payload(), status=status.HTTP_200_OK)
         except Exception as err:
             res = ResponseInfo(err, SOMETHING_WENT_WRONG, False, status.HTTP_401_UNAUTHORIZED)
