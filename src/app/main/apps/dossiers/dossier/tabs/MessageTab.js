@@ -1,10 +1,11 @@
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Picker from "emoji-picker-react";
-import { motion } from "framer-motion";
-import FuseScrollbars from "@fuse/core/FuseScrollbars";
 import clsx from "clsx";
 import { indexOf } from "lodash";
+import Picker from "emoji-picker-react";
+import { motion } from "framer-motion";
+import FuseUtils from "@fuse/utils";
+import FuseScrollbars from "@fuse/core/FuseScrollbars";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { sendMessage } from "app/store/slices/dossiersSlice";
 import {
@@ -119,12 +120,26 @@ function MessageTab(props) {
   const [searchText, setSearchText] = useState("");
   const [showPicker, setShowPicker] = useState(false);
   const chatRef = useRef(null);
+  const [filteredData, setFilteredData] = useState(null);
 
   useEffect(() => {
     if (messages) {
       scrollToBottom();
     }
   }, [messages]);
+
+  useEffect(() => {
+    function getFilteredArray(entities, _searchText) {
+      if (_searchText.length === 0) {
+        return messages;
+      }
+      return FuseUtils.filterArrayByString(messages, _searchText);
+    }
+
+    if (messages) {
+      setFilteredData(getFilteredArray(messages, searchText));
+    }
+  }, [messages, searchText]);
 
   function scrollToBottom() {
     chatRef.current.scrollTop = chatRef.current.scrollHeight;
@@ -221,9 +236,9 @@ function MessageTab(props) {
           ref={chatRef}
           className="flex flex-1 flex-col overflow-y-auto"
         >
-          {messages && messages.length > 0 ? (
+          {filteredData && filteredData.length > 0 ? (
             <div className="flex flex-col pt-16 px-16 ltr:pl-56 rtl:pr-56 pb-40">
-              {messages.map((item, i) => {
+              {filteredData.map((item, i) => {
                 return (
                   <>
                     <StyledMessageRow

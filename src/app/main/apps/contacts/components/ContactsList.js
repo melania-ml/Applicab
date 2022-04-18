@@ -8,7 +8,7 @@ import ContactsMultiSelectMenu from "./ContactsMultiSelectMenu";
 import ContactsTable from "./ContactsTable";
 import {
   openEditContactDialog,
-  selectContacts,
+  selectContacts
 } from "app/store/slices/contactsSlice";
 
 function ContactsList(props) {
@@ -38,7 +38,7 @@ function ContactsList(props) {
         },
         className: "justify-center",
         width: 64,
-        sortable: false,
+        sortable: false
       },
       {
         Header: "Type",
@@ -47,7 +47,7 @@ function ContactsList(props) {
           return <span>{row.original.client_type?.client_type}</span>;
         },
         className: "font-medium",
-        sortable: true,
+        sortable: true
       },
       {
         Header: "Titre",
@@ -56,7 +56,7 @@ function ContactsList(props) {
           return <span>{row.original.title?.title}</span>;
         },
         className: "font-medium",
-        sortable: true,
+        sortable: true
       },
       {
         Header: "Nom",
@@ -68,17 +68,17 @@ function ContactsList(props) {
             </span>
           );
         },
-        sortable: true,
+        sortable: true
       },
       {
         Header: "Téléphone",
         accessor: "phone_number",
-        sortable: true,
+        sortable: true
       },
       {
         Header: "Email",
         accessor: "email",
-        sortable: true,
+        sortable: true
       },
       {
         Header: "Status",
@@ -93,16 +93,16 @@ function ContactsList(props) {
                 sx={{
                   "& .MuiBadge-badge": {
                     backgroundColor:
-                      row.original.status === "Actif" ? "#78C5A0" : "#C4C4C4",
-                  },
+                      row.original.status === "Actif" ? "#78C5A0" : "#C4C4C4"
+                  }
                 }}
               />
               <p>{row.original.status}</p>
             </div>
           );
         },
-        sortable: true,
-      },
+        sortable: true
+      }
     ],
     [dispatch]
   );
