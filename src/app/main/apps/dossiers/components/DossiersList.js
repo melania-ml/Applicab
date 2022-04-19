@@ -1,27 +1,35 @@
+import { useMemo, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import FuseUtils from "@fuse/utils";
 import withRouter from "@fuse/core/withRouter";
-import Fab from "@mui/material/Fab";
-import Icon from "@mui/material/Icon";
 import FuseLoading from "@fuse/core/FuseLoading";
-import IconButton from "@mui/material/IconButton";
-import { Tooltip, styled, tooltipClasses, Typography } from "@mui/material";
-import { useMemo, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import DossiersMultiSelectMenu from "./DossiersMultiSelectMenu";
 import DossiersTable from "./DossiersTable";
 import {
   getFormattedDateTime,
   getProcedureCode
 } from "app/main/common/functions";
-
 import {
   selectDossiers,
   setEditDossierData,
   setEtapeTabFromAction,
   setMessageTabFromAction,
+  setGroupId,
+  setCaseId,
   getMessages
 } from "app/store/slices/dossiersSlice";
+
+//material-ui
+import {
+  Tooltip,
+  styled,
+  tooltipClasses,
+  Typography,
+  IconButton,
+  Fab,
+  Icon
+} from "@mui/material";
 
 function DossiersList(props) {
   const dispatch = useDispatch();
@@ -31,8 +39,6 @@ function DossiersList(props) {
   );
 
   const [filteredData, setFilteredData] = useState(null);
-
-  const [rowId, setRowId] = useState(null);
 
   const CustomTooltip = styled(({ className, ...props }) => (
     <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -139,7 +145,9 @@ function DossiersList(props) {
                 }}
                 aria-label="add"
               >
-                <Typography variant="bold">1</Typography>
+                <Typography variant="bold">
+                  {row.original.case_group.un_read_count}
+                </Typography>
               </Fab>
             </CustomTooltip>
           </div>
@@ -214,6 +222,8 @@ function DossiersList(props) {
         onRowClick={(ev, row) => {
           if (row) {
             props.navigate(`/apps/dossiers/${row.original.id}`);
+            dispatch(setCaseId(row.original.id));
+            dispatch(setGroupId(row.original.case_group.id));
             dispatch(setMessageTabFromAction(false));
             dispatch(setEtapeTabFromAction(false));
             dispatch(setEditDossierData(row.original));

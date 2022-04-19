@@ -262,26 +262,23 @@ export const getDossiers = createAsyncThunk(
     dispatch(setIsLoading(true));
     const id = getState().auth.user.data.id;
     routeParams = routeParams || getState().dossiers.routeParams;
-    const response = await axios.post(
-      "api/common/filterData/caseManagement/caseManagement",
-      {
-        query: {
-          lawyer_id: id,
-          procedure: routeParams.procedure,
-          type: routeParams.type,
-          status: routeParams.status,
-          nature: routeParams.nature,
-          created_date__date:
-            routeParams.dateOfCreation &&
-            getFormattedDateTime({
-              date: routeParams.dateOfCreation,
-              format: "YYYY-MM-DD"
-            }),
-          tags__contains: routeParams.tags
-        },
-        orderBy: "-created_date"
-      }
-    );
+    const response = await axios.post("api/caseManagement/filterCases", {
+      query: {
+        lawyer_id: id,
+        procedure: routeParams.procedure,
+        type: routeParams.type,
+        status: routeParams.status,
+        nature: routeParams.nature,
+        created_date__date:
+          routeParams.dateOfCreation &&
+          getFormattedDateTime({
+            date: routeParams.dateOfCreation,
+            format: "YYYY-MM-DD"
+          }),
+        tags__contains: routeParams.tags
+      },
+      orderBy: "-created_date"
+    });
     const data = await response.data;
     await dispatch(setDossiers(data.data));
     await dispatch(setIsLoading(false));
