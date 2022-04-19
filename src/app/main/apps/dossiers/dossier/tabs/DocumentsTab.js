@@ -1,28 +1,22 @@
 import React, { useEffect } from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { motion } from "framer-motion";
-import { Icon, IconButton } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import { motion } from "framer-motion";
 import { getDocuments } from "app/store/slices/dossiersSlice";
 import { getFormattedDateTime } from "app/main/common/functions";
 
-function createData(nom, Propriétaire, Date_de_partage, Telecharger) {
-  return { nom, Propriétaire, Date_de_partage, Telecharger };
-}
-
-const rows = [
-  createData("lettre-de-mission.pdf", "moi", "18 janv. 2022", 24),
-  createData("tcom-paris.pdf", "Melania Munoz", "22 oct. 2022", 37),
-  createData("hgbbh-detro-lesar", "Alex", "8 nov. 2022", 6.0),
-  createData("lettre-de-mission.pdf", "Roman", "28 dec. 2022", 67),
-  createData(" tcom-paris.pdf", "Jimmy", "11 janv. 2022", 49)
-];
+//material-ui
+import {
+  Icon,
+  IconButton,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper
+} from "@mui/material";
 
 function DocumentsTab() {
   const dispatch = useDispatch();
@@ -40,6 +34,16 @@ function DocumentsTab() {
   const onDownload = (documentLink) => {
     window.location.href = documentLink;
   };
+
+  if (documents.length === 0) {
+    return (
+      <div className="flex flex-1 items-center justify-center h-full">
+        <Typography color="textSecondary" variant="h5">
+          There are no documents!
+        </Typography>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -87,7 +91,7 @@ function DocumentsTab() {
               ))}
             </TableBody>
           </Table>
-        </TableContainer>{" "}
+        </TableContainer>
       </motion.div>
     </div>
   );

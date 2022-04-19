@@ -85,8 +85,8 @@ const StyledMessageRow = styled("div")(({ theme }) => ({
     }
   },
   "&.contact + .me, &.me + .contact": {
-    paddingTop: 20,
-    marginTop: 20
+    paddingTop: 15,
+    marginTop: 15
   },
   "&.first-of-group": {
     "& .bubble": {
@@ -237,7 +237,7 @@ function MessageTab(props) {
           className="flex flex-1 flex-col overflow-y-auto"
         >
           {filteredData && filteredData.length > 0 ? (
-            <div className="flex flex-col pt-16 px-16 ltr:pl-56 rtl:pr-56 pb-40">
+            <div className="flex flex-col pt-16 px-16 rtl:pr-56 pb-40">
               {filteredData.map((item, i) => {
                 return (
                   <>
@@ -253,7 +253,13 @@ function MessageTab(props) {
                       )}
                     >
                       {isFirstMessageOfGroup(item, i) && (
-                        <div className="flex items-center w-full justify-end mb-1">
+                        <div
+                          className={
+                            id === item.message_send_by.id
+                              ? "flex items-center w-full justify-end mb-1"
+                              : "flex items-center w-full mb-1"
+                          }
+                        >
                           <Avatar
                             className="h-20 w-20"
                             src={item.message_send_by.profile}
