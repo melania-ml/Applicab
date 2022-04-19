@@ -69,10 +69,9 @@ class CaseGroupMessageSerializer(serializers.ModelSerializer):
 
 # Used For Appending data Only..
 class MessageSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = caseManagementGroupMessage
-        fields = ['id', 'message', 'created_date', 'message_send_by']
+        fields = ['id', 'message', 'created_date', 'message_send_by', 'message_read_by']
         depth = 1
 
 
@@ -87,4 +86,29 @@ class RetrieveCaseGroupMessageSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         response = super().to_representation(instance)
         response["group_message"] = sorted(response["group_message"], key=lambda x: x["id"])
+        print(response["group_message"])
+        return response
+
+
+# used only for get cases with foreign key fields
+class GetCaseSerializer(serializers.ModelSerializer):
+    case_group = RetrieveCaseGroupMessageSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = CaseManagement
+        fields = '__all__'
+        depth = 1
+        read_only_fields = ['group_message']
+
+    def to_representation(self, instance):
+        response = super().to_representation(instance)
+        loginUser = self.context['user'].id
+        _dict = {'un_read_count': 0}
+        if len(response["case_group"]) > 0:
+            _dict['id'] = response["case_group"][0]["id"]
+            if len(response["case_group"][0]["group_message"]) > 0:
+                count = sum(loginUser not in groupMessages['message_read_by'] for groupMessages in
+                            response["case_group"][0]["group_message"])
+                _dict['un_read_count'] = count
+        response["case_group"] = _dict
         return response

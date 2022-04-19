@@ -152,6 +152,7 @@ class caseManagementDocuments(CommonBase):
 class caseManagementChatGroup(CommonBase):
     case_management_id = models.ForeignKey(CaseManagement,
                                            blank=True, null=True,
+                                           related_name='case_group',
                                            on_delete=models.DO_NOTHING, db_column='case_management_id')
     group_members = models.ManyToManyField(User,
                                            blank=True,

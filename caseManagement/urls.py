@@ -8,6 +8,7 @@ urlpatterns = [
     path('addCases', casesManagement.as_view(), name="addCases"),
     path('updateCases/<slug:case_id>', casesManagement.as_view(), name="addCases"),
     path('getCasesByLawyer', casesManagement.as_view(), name="addCases"),
+    path('filterCases', filterCasesManagement.as_view(), name="filterCases"),
     path('filterCaseTask', caseManagementTaskView.as_view(), name="addCases"),
     path('updateCaseTask', caseManagementTaskView.as_view(), name="addCases"),
     path('createCaseTask', caseManagementCreateTaskView.as_view(), name="addCases"),

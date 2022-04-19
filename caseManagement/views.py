@@ -61,6 +61,7 @@ class procedure(APIView):
 
 class casesManagement(APIView):
     serializers_class = CaseSerializer
+    get_serializers_class = GetCaseSerializer
     task_serializers_class = CaseTaskSerializer
 
     def post(self, request):
@@ -108,8 +109,7 @@ class casesManagement(APIView):
                                    status.HTTP_204_NO_CONTENT)
                 return Response(res.errors_payload(), status=status.HTTP_204_NO_CONTENT)
 
-            self.serializers_class.Meta.depth = 1  # Adding depth value for ManyToMany fields
-            serializer = self.serializers_class(caseInformation, many=True)
+            serializer = self.get_serializers_class(caseInformation, many=True, context={'user': self.request.user})
 
             # preparing response
             res = ResponseInfo(serializer.data, SUCCESS, True,
@@ -172,6 +172,41 @@ class casesManagement(APIView):
                 serializer.save()
 
 
+class filterCasesManagement(APIView):
+    serializers_class = GetCaseSerializer
+
+    def post(self, request):
+        try:
+            # Payload data
+            reqLimit = request.data.get('limit', 0)
+            reqOffset = request.data.get('offset', 0)
+            orderBy = request.data.get('orderBy', "created_date")
+            reqData = request.data['query']
+
+            # Adding sorting param if needed.
+            orderBy = "created_date" if orderBy == " " or orderBy == "" else orderBy
+
+            # Adding pagination if needed
+            limit = None if reqLimit == 0 and reqOffset == 0 else reqLimit + reqOffset
+            offset = None if reqOffset == 0 else reqOffset
+
+            # Remove blank data from dictionary
+            kwargs = dict((k, v) for k, v in reqData.items() if v)
+
+            # Database Query and serializer call
+            data = CaseManagement.objects.filter(**kwargs).order_by(orderBy)[offset:limit]
+            serializer = self.serializers_class(data, context={'user': request.user}, many=True)
+
+            # Preparing response
+            res = ResponseInfo(serializer.data, SUCCESS, True,
+                               status.HTTP_200_OK)
+            return Response(res.success_payload(), status=status.HTTP_200_OK)
+        except Exception as err:
+            res = ResponseInfo(err, SOMETHING_WENT_WRONG, False,
+                               status.HTTP_401_UNAUTHORIZED)
+            return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
+
 class caseManagementTaskView(APIView):
     serializers_class = CaseTaskSerializer
 
@@ -188,16 +223,7 @@ class caseManagementTaskView(APIView):
                 kwargs['type__in'] = [kwargs['type'], 'Les deuX']
                 del kwargs['type']
 
-            if 'send_notification' in reqData:
-                kwargs['send_notification'] = reqData['send_notification']
-
-            query = Q(**kwargs)
-
-            if 'case_management_id' in kwargs and 'status' not in kwargs and 'send_notification' not in reqData:
-                del kwargs['case_management_id']
-                query = Q(case_management_id=reqData['case_management_id']) | Q(**kwargs)
-
-            taskList = caseManagementTask.objects.filter(query).order_by("position")
+            taskList = caseManagementTask.objects.filter(**kwargs).order_by("position")
             serializer = self.serializers_class(taskList, many=True)
             # preparing response
             res = ResponseInfo(serializer.data, SUCCESS, True,
