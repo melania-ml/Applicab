@@ -61,6 +61,7 @@ class procedure(APIView):
 
 class casesManagement(APIView):
     serializers_class = CaseSerializer
+    task_serializers_class = CaseTaskSerializer
 
     def post(self, request):
         try:
@@ -121,8 +122,11 @@ class casesManagement(APIView):
 
     def patch(self, request, case_id):
         try:
+            reqType = request.data.get('type', None)
+            reqProcedure = request.data.get('procedure', None)
             caseInformation = CaseManagement.objects.filter(pk=case_id).first()
             reqData = request.data
+            createDefaultTask = False
             # Find Nature if exist add id if not create new.
             natureData = Nature.objects.filter(nature_title=reqData['nature']).first()
             if natureData:
@@ -132,10 +136,17 @@ class casesManagement(APIView):
                                                    user_id=request.user)
                 reqData['nature'] = natureData.id
 
+            # Adding default task according status and procedure if change
+            if reqType and reqProcedure:
+                if reqType != caseInformation.type or reqProcedure != caseInformation.procedure.id:
+                    createDefaultTask = True
+
             # Prepare serializer
             serializer = self.serializers_class(caseInformation, data=reqData)
             if serializer.is_valid():
                 serializer.save()
+                if createDefaultTask:
+                    self.addDefaultTask(case_id, caseInformation.procedure.procedure_sub_name, reqType)
                 res = ResponseInfo(serializer.data, RECORD_UPDATED_SUCCESSFULLY, True,
                                    status.HTTP_200_OK)
                 return Response(res.success_payload(), status=status.HTTP_200_OK)
@@ -148,11 +159,21 @@ class casesManagement(APIView):
                                status.HTTP_401_UNAUTHORIZED)
             return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
 
+    def addDefaultTask(self, caseId, procedure, type):
+        caseManagementTask.objects.filter(case_management_id=caseId).hard_delete()
+        _dict = {'type__in': [type, 'Les deuX'], procedure: True}
+        defaultTask = caseManagementDefaultTask.objects.filter(**_dict).values()
+        self.task_serializers_class.Meta.depth = 0
+        for task in defaultTask:
+            del task['id']
+            task['case_management_id'] = caseId
+            serializer = self.task_serializers_class(data=task)
+            if serializer.is_valid():
+                serializer.save()
+
 
 class caseManagementTaskView(APIView):
     serializers_class = CaseTaskSerializer
-
-    # serializers_deleted_task_class = CaseDeleteTaskSerializer
 
     # Filter Api
     def post(self, request):
@@ -248,6 +269,7 @@ class caseManagementTaskView(APIView):
                                status.HTTP_401_UNAUTHORIZED)
             return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
 
+    # get deleted task
     def get(self, request, case_id):
         try:
             deletedTask = caseManagementTask.deleted_objects.filter(case_management_id=case_id)
