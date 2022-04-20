@@ -21,4 +21,5 @@ urlpatterns = [
     path('sendMessage', caseGroupMessageViewSet.as_view(), name="sendMessage"),
     path('caseGroupMessages/<slug:case_id>', retrieveCaseGroupMessageViewSet.as_view(), name="sendMessage"),
     path('readGroupMessages', caseGroupMessageViewSet.as_view(), name="readGroupMessages"),
+    path('getDashboardData', dashboardViewSet.as_view(), name="getDashboardData"),
 ]

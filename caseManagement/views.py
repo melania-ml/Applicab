@@ -482,3 +482,33 @@ class retrieveCaseGroupMessageViewSet(APIView):
         except Exception as err:
             res = ResponseInfo(err, SOMETHING_WENT_WRONG, False, status.HTTP_401_UNAUTHORIZED)
             return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
+
+class dashboardViewSet(APIView):
+    serializers_class = DashboardTaskSerializer
+
+    def post(self, request):
+        try:
+            caseId = request.data.get('case_management_id', None)
+            statusData = request.data.get('status', None)
+            if caseId and statusData:
+                query = {'case_management_id': caseId, 'status': statusData, 'notification_date__isnull': False}
+            elif caseId and not statusData:
+                query = {'case_management_id': caseId, 'notification_date__isnull': False}
+            elif not caseId and not statusData or not caseId and statusData:
+                caseId = list(CaseManagement.objects.filter(lawyer_id=request.user.id).values_list('id', flat=True))
+                query = {'notification_date__isnull': False,'case_management_id__in': caseId}
+                if statusData:
+                    query = {'notification_date__isnull': False, 'status': statusData, 'case_management_id__in': caseId}
+            else:
+                res = ResponseInfo([], "Please check payload for filter keyword..", False, status.HTTP_401_UNAUTHORIZED)
+                return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
+            caseTask = caseManagementTask.objects.filter(**query).order_by("notification_date")
+            serializer = self.serializers_class(caseTask, many=True)
+
+            res = ResponseInfo(serializer.data, SUCCESS, True,status.HTTP_200_OK)
+            return Response(res.success_payload(), status=status.HTTP_200_OK)
+
+        except Exception as err:
+            res = ResponseInfo(err, SOMETHING_WENT_WRONG, False, status.HTTP_401_UNAUTHORIZED)
+            return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)

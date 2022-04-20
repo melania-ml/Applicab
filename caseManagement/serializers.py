@@ -117,3 +117,21 @@ class GetCaseSerializer(serializers.ModelSerializer):
                 _dict['un_read_count'] = count
         response["case_group"] = _dict
         return response
+
+
+class DashboardTaskSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = caseManagementTask
+        fields = '__all__'
+        depth = 0
+
+    def to_representation(self, instance):
+        response = super().to_representation(instance)
+        _dict = {
+            'start': response['notification_date'],
+            'end': response['notification_date'],
+            'title': response['name'],
+            'task_obj': response
+        }
+        return _dict
