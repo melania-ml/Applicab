@@ -1,25 +1,25 @@
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Icon from "@mui/material/Icon";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import MenuItem from "@mui/material/MenuItem";
-import Popover from "@mui/material/Popover";
-import Typography from "@mui/material/Typography";
-import withReducer from "app/store/withReducer";
-import { useEffect, useState } from "react";
-import reducer from "app/store";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import withReducer from "app/store/withReducer";
+import reducer from "app/store";
 import { logoutUser } from "app/auth/store/userSlice";
 import { getProfileData } from "app/store/slices/userMenuSlice";
 import EditProfileDialog from "./EditProfileDialog";
 
-function UserMenu(props) {
+//material-ui
+import {
+  Avatar,
+  Button,
+  Icon,
+  ListItemIcon,
+  ListItemText,
+  MenuItem,
+  Popover
+} from "@mui/material";
+
+function UserMenu() {
   const dispatch = useDispatch();
   const user = useSelector(({ auth }) => auth.user);
-  const navigate = useNavigate();
-
   const [userMenu, setUserMenu] = useState(null);
   const [isEditProfile, setIsEditProfile] = useState(false);
 
@@ -48,19 +48,6 @@ function UserMenu(props) {
         onClick={userMenuClick}
         color="inherit"
       >
-        {/* <div className="hidden md:flex flex-col mx-4 items-end">
-          <Typography component="span" className="font-semibold flex">
-            {user.data.displayName}
-          </Typography>
-          <Typography
-            className="text-11 font-medium capitalize"
-            color="textSecondary"
-          >
-            {user.role.toString()}
-            {(!user.role || (Array.isArray(user.role) && user.role.length === 0)) && 'Guest'}
-          </Typography>
-        </div> */}
-
         {user.data.profile && (
           <Avatar
             className="md:mx-4"
@@ -69,7 +56,6 @@ function UserMenu(props) {
           />
         )}
       </Button>
-
       <Popover
         open={Boolean(userMenu)}
         anchorEl={userMenu}
@@ -86,64 +72,24 @@ function UserMenu(props) {
           paper: "py-8"
         }}
       >
-        {!user.role || user.role.length === 0 ? (
-          <>
-            <MenuItem onClick={handleEditProfile} role="button">
-              <ListItemIcon className="min-w-40">
-                <Icon>edit</Icon>
-              </ListItemIcon>
-              <ListItemText primary="Mon compte" />
-            </MenuItem>
-            <MenuItem
-              onClick={() => {
-                dispatch(logoutUser());
-                userMenuClose();
-              }}
-              role="button"
-            >
-              <ListItemIcon className="min-w-40">
-                <Icon>exit_to_app</Icon>
-              </ListItemIcon>
-              <ListItemText primary="Déconnexion" />
-            </MenuItem>
-          </>
-        ) : (
-          <>
-            <MenuItem
-              component={Link}
-              to="/pages/profile"
-              onClick={userMenuClose}
-              role="button"
-            >
-              <ListItemIcon className="min-w-40">
-                <Icon>account_circle</Icon>
-              </ListItemIcon>
-              <ListItemText primary="My Profile" />
-            </MenuItem>
-            <MenuItem
-              component={Link}
-              to="/apps/mail"
-              onClick={userMenuClose}
-              role="button"
-            >
-              <ListItemIcon className="min-w-40">
-                <Icon>mail</Icon>
-              </ListItemIcon>
-              <ListItemText primary="Inbox" />
-            </MenuItem>
-            <MenuItem
-              onClick={() => {
-                dispatch(logoutUser());
-                userMenuClose();
-              }}
-            >
-              <ListItemIcon className="min-w-40">
-                <Icon>exit_to_app</Icon>
-              </ListItemIcon>
-              <ListItemText primary="Logout" />
-            </MenuItem>
-          </>
-        )}
+        <MenuItem onClick={handleEditProfile} role="button">
+          <ListItemIcon className="min-w-40">
+            <Icon>edit</Icon>
+          </ListItemIcon>
+          <ListItemText primary="Mon compte" />
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            dispatch(logoutUser());
+            userMenuClose();
+          }}
+          role="button"
+        >
+          <ListItemIcon className="min-w-40">
+            <Icon>exit_to_app</Icon>
+          </ListItemIcon>
+          <ListItemText primary="Déconnexion" />
+        </MenuItem>
       </Popover>
       <EditProfileDialog open={isEditProfile} onClose={handleClose} />
     </>
