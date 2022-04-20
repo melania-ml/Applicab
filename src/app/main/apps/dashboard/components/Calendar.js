@@ -1,15 +1,16 @@
-import React, { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useRef, useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import CalendarHeader from "./CalendarHeader";
+import { getCalendarData } from "app/store/slices/dashboardSlice";
 
 //material-ui
 import { styled } from "@mui/material/styles";
-import Typography from "@mui/material/Typography";
+import { Typography, Tooltip, tooltipClasses } from "@mui/material";
 
 const Root = styled("div")(({ theme }) => ({
   "& a": {
@@ -68,11 +69,26 @@ const Root = styled("div")(({ theme }) => ({
   }
 }));
 
+const CustomTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: "#252E3E"
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#252E3E"
+  }
+}));
+
 export default function Calendar() {
-  const dispatch = useDispatch();
-  const calendarRef = useRef();
-  const events = [];
   const [currentDate, setCurrentDate] = useState();
+  const dispatch = useDispatch();
+  const { calendarData } = useSelector(({ dashboard }) => dashboard);
+  const calendarRef = useRef();
+
+  useEffect(() => {
+    dispatch(getCalendarData({}));
+  }, []);
 
   const handleDates = (rangeInfo) => {
     setCurrentDate(rangeInfo);
@@ -90,11 +106,11 @@ export default function Calendar() {
 
   function renderEventContent(eventInfo) {
     return (
-      <div className="flex items-center">
+      <CustomTooltip placement="top-end" title={eventInfo.event.title}>
         <Typography className="text-12 px-4 truncate">
           {eventInfo.event.title}
         </Typography>
-      </div>
+      </CustomTooltip>
     );
   }
   return (
@@ -121,13 +137,8 @@ export default function Calendar() {
             weekends
             datesSet={handleDates}
             select={handleDateSelect}
-            events={events}
+            events={calendarData}
             eventContent={renderEventContent}
-            // eventClick={handleEventClick}
-            //eventAdd={handleEventAdd}
-            //eventChange={handleEventChange}
-            //eventRemove={handleEventRemove}
-            //eventDrop={handleEventDrop}
             initialDate={new Date()}
             ref={calendarRef}
           />

@@ -2,16 +2,10 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Statut from "app/main/constants/Statut";
 import { getDossiers } from "app/store/slices/dossiersSlice";
+import { getCalendarData } from "app/store/slices/dashboardSlice";
 
 //material-ui
-import {
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Autocomplete,
-  TextField
-} from "@mui/material";
+import { Autocomplete, TextField } from "@mui/material";
 
 export default function Filters() {
   const [status, setStatus] = useState("");
@@ -32,26 +26,51 @@ export default function Filters() {
           getOptionLabel={(option) => {
             return option.case_name;
           }}
-          inputValue={dossier}
-          onInputChange={(event, newInputValue) => {
-            setDossier(newInputValue);
+          onChange={(event, newValue) => {
+            const caseObj = dossiers.find((type) => type.id === newValue?.id);
+            if (typeof newValue === "string") {
+              setDossier(newValue);
+            } else if (newValue && newValue.inputValue) {
+              setDossier(newValue.inputValue);
+            } else if (!newValue) {
+              setDossier("");
+            } else {
+              setDossier(caseObj.id);
+            }
+            dispatch(
+              getCalendarData({
+                case_management_id: caseObj?.id,
+                status: status
+              })
+            );
           }}
           renderInput={(params) => <TextField {...params} label="Dossiers" />}
         />
-        <FormControl className="flex w-full sm:w-320 mx-16" variant="outlined">
-          <InputLabel style={{ color: "#FFFFFF" }}>Status</InputLabel>
-          <Select
-            label="Status"
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-          >
-            {Statut.map((category) => (
-              <MenuItem value={category.value} key={category.id}>
-                {category.label}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        <Autocomplete
+          className="w-full sm:w-320 mx-16 autocomplete"
+          options={Statut}
+          getOptionLabel={(option) => {
+            return option.value;
+          }}
+          onChange={(event, newValue) => {
+            if (typeof newValue === "string") {
+              setStatus(newValue);
+            } else if (newValue && newValue.inputValue) {
+              setStatus(newValue.inputValue);
+            } else if (!newValue) {
+              setStatus("");
+            } else {
+              setStatus(newValue.value);
+            }
+            dispatch(
+              getCalendarData({
+                case_management_id: dossier,
+                status: newValue?.value
+              })
+            );
+          }}
+          renderInput={(params) => <TextField {...params} label="Status" />}
+        />
       </div>
     </div>
   );

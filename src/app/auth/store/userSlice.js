@@ -1,40 +1,13 @@
-/* eslint import/no-extraneous-dependencies: off */
 import { createSlice } from "@reduxjs/toolkit";
-import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import history from "@history";
 import _ from "@lodash";
-import {
-  setInitialSettings,
-  setDefaultSettings
-} from "app/store/fuse/settingsSlice";
-import { showMessage } from "app/store/fuse/messageSlice";
+import { setInitialSettings } from "app/store/fuse/settingsSlice";
 import jwtService from "app/services/jwtService";
-import settingsConfig from "app/fuse-configs/settingsConfig";
 import { loginError } from "./loginSlice";
 
 export const setUserData = (user) => async (dispatch, getState) => {
-  /*
-  You can redirect the logged-in user to a specific route depending on his role
-  */
-  if (user.loginRedirectUrl) {
-    settingsConfig.loginRedirectUrl = user.loginRedirectUrl; // for example 'apps/academy'
-  }
-
-  /*
-  Set User Settings
-  */
-  //dispatch(setDefaultSettings(user.data.settings));
-  let newUser;
-  if (!user.data.profile) {
-    newUser = {
-      ...user,
-      data: { ...user.data, profile: "assets/images/logos/profile.jpg" }
-    };
-  } else {
-    newUser = user;
-  }
-  dispatch(setUser(newUser));
+  dispatch(setUser(user));
 };
 
 export const logoutUser = () => async (dispatch, getState) => {
@@ -52,7 +25,7 @@ export const logoutUser = () => async (dispatch, getState) => {
 };
 
 const initialState = {
-  role: [], // guest
+  role: [],
   data: {
     profile: "assets/images/logos/profile.jpg",
     shortcuts: ["calendar", "mail", "contacts", "todo"]

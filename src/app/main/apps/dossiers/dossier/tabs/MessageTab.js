@@ -322,7 +322,7 @@ function MessageTab(props) {
           className="relative bottom-0 right-0 left-0 py-16 px-8"
         >
           <Paper className="flex items-center rounded-24 shadow">
-            <Button
+            {/* <Button
               onClick={() => setShowPicker((val) => !val)}
               className="msg-emoji-selction"
             >
@@ -342,7 +342,7 @@ function MessageTab(props) {
                 onEmojiClick={onEmojiClick}
                 onChange={(e) => e.target.value}
               />
-            )}
+            )} */}
             <InputBase
               autoFocus={false}
               id="message-input"

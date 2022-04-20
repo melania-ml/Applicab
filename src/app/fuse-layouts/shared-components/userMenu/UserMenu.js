@@ -48,13 +48,11 @@ function UserMenu() {
         onClick={userMenuClick}
         color="inherit"
       >
-        {user.data.profile && (
-          <Avatar
-            className="md:mx-4"
-            alt="user photo"
-            src={user.data.profile}
-          />
-        )}
+        <Avatar
+          className="md:mx-4"
+          alt="user photo"
+          src={user.data.profile || "assets/images/logos/profile.jpg"}
+        />
       </Button>
       <Popover
         open={Boolean(userMenu)}

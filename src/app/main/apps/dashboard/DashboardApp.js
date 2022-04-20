@@ -78,4 +78,4 @@ function DashboardApp() {
   );
 }
 
-export default withReducer("calendarApp", reducer)(DashboardApp);
+export default withReducer("dashboardApp", reducer)(DashboardApp);
