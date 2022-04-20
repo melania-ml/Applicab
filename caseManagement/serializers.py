@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework.fields import Field
 
 from caseManagement.models import *
+from user.serializers import UserSerializer
 
 
 class NatureSerializer(serializers.ModelSerializer):
@@ -83,10 +84,14 @@ class RetrieveCaseGroupMessageSerializer(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = ['group_message']
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # We pass the "upper serializer" context to the "nested one"
+        self.fields['group_message'].context.update(self.context)
+
     def to_representation(self, instance):
         response = super().to_representation(instance)
         response["group_message"] = sorted(response["group_message"], key=lambda x: x["id"])
-        print(response["group_message"])
         return response
 
 

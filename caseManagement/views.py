@@ -474,7 +474,7 @@ class retrieveCaseGroupMessageViewSet(APIView):
     def get(self, request, case_id):
         try:
             caseGroup = caseManagementChatGroup.objects.filter(case_management_id=case_id).first()
-            serializer = self.serializers_class(caseGroup)
+            serializer = self.serializers_class(caseGroup, context={'request': request})
 
             res = ResponseInfo(serializer.data, SUCCESS, True,
                                status.HTTP_200_OK)

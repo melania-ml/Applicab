@@ -184,3 +184,6 @@ class caseManagementGroupMessage(CommonBase):
 
     class Meta:
         db_table = 'case_management_group_message'
+
+
+
