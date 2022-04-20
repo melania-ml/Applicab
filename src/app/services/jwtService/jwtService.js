@@ -78,12 +78,6 @@ class JwtService extends FuseUtils.EventEmitter {
     });
   };
 
-  updateUserData = (user) => {
-    return axios.post("/api/auth/user/update", {
-      user
-    });
-  };
-
   setSession = (access_token) => {
     if (access_token) {
       localStorage.setItem("jwt_access_token", access_token);

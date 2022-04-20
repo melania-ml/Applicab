@@ -9,7 +9,6 @@ export const submitLogin =
     return jwtService
       .signInWithEmailAndPassword(email, password)
       .then((user) => {
-        window.localStorage.setItem("User", JSON.stringify(user));
         dispatch(setUserData(user));
         return dispatch(loginSuccess());
       })

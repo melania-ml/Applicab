@@ -262,7 +262,10 @@ function MessageTab(props) {
                         >
                           <Avatar
                             className="h-20 w-20"
-                            src={item.message_send_by.profile}
+                            src={
+                              item.message_send_by.profile ||
+                              "assets/images/logos/profile.jpg"
+                            }
                           />
                           <Typography
                             variant="span"

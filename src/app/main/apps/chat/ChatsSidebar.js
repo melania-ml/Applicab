@@ -76,12 +76,12 @@ function ChatsSidebar(props) {
   function handleStatusSelect(event, status) {
     event.preventDefault();
     event.stopPropagation();
-    dispatch(
-      updateUserData({
-        ...user,
-        status
-      })
-    );
+    // dispatch(
+    //   updateUserData({
+    //     ...user,
+    //     status
+    //   })
+    // );
     setStatusMenuEl(null);
   }
 

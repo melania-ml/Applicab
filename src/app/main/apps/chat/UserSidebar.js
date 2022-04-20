@@ -44,7 +44,7 @@ function UserSidebar(props) {
   const form = watch();
 
   const updateUser = useDebounce((_form) => {
-    dispatch(updateUserData(_form));
+    // dispatch(updateUserData(_form));
   }, 500);
 
   useEffect(() => {

@@ -1,7 +1,6 @@
 import { memo } from "react";
 import { useSelector } from "react-redux";
 import clsx from "clsx";
-import FuseShortcuts from "@fuse/core/FuseShortcuts";
 
 //material-ui
 import { ThemeProvider } from "@mui/material/styles";
@@ -53,10 +52,6 @@ function ToolbarLayout1(props) {
                 </Hidden>
               </>
             )}
-
-            <Hidden lgDown>
-              <FuseShortcuts />
-            </Hidden>
           </div>
 
           <div className="flex items-center px-8 h-full overflow-x-auto">
