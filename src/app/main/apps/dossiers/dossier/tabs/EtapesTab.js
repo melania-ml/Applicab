@@ -13,7 +13,6 @@ import {
   openEditEtapeDialog,
   setDossiersSearchText,
   getEtapes,
-  setEtapeObj,
   getDeletedEtapes,
   setSelectedList
 } from "app/store/slices/dossiersSlice";
@@ -45,10 +44,10 @@ function EtapeTab(props) {
   const dispatch = useDispatch();
   const {
     etapes,
-    etapeObj,
     editDossierData: { data, type },
     procedures,
-    selectedList
+    selectedList,
+    caseId
   } = useSelector(({ dossiers }) => dossiers);
 
   const [openEtape, setOpenEtape] = useState(false);
@@ -71,7 +70,7 @@ function EtapeTab(props) {
 
   const listClick = (name) => {
     const newObj = {};
-    newObj["case_management_id"] = etapeObj.case_management_id;
+    newObj["case_management_id"] = caseId;
     if (name === "Message envoyé") {
       newObj["send_notification"] = true;
     } else if (name === "Brouillon") {
@@ -80,12 +79,14 @@ function EtapeTab(props) {
       newObj["status"] = name;
     }
     dispatch(setSelectedList(name));
-    dispatch(getEtapes(name === "Tous" ? etapeObj : newObj));
+    dispatch(
+      getEtapes(name === "Tous" ? { case_management_id: caseId } : newObj)
+    );
   };
 
   const deleteEtapes = () => {
     dispatch(setSelectedList("Corbeille"));
-    dispatch(getDeletedEtapes(etapeObj.case_management_id));
+    dispatch(getDeletedEtapes(caseId));
   };
 
   const drawer = (
@@ -383,16 +384,8 @@ function EtapeTab(props) {
   );
 
   useEffect(() => {
-    const objWhileUpdate = {};
     if (type === "edit" && data) {
-      const proc = procedures.filter((fil) => fil.id === data.procedure.id)[0]
-        .procedure_type;
-      const key = getProcedureCode(proc);
-      objWhileUpdate["type"] = data.type;
-      objWhileUpdate["case_management_id"] = data.id;
-      objWhileUpdate[key] = true;
-      dispatch(setEtapeObj(objWhileUpdate));
-      dispatch(getEtapes(objWhileUpdate));
+      dispatch(getEtapes({ case_management_id: caseId }));
     }
   }, [data, type]);
 
@@ -401,11 +394,11 @@ function EtapeTab(props) {
   }, []);
 
   useEffect(() => {
-    if (type === "new" && etapeObj.case_management_id) {
-      dispatch(getEtapes(etapeObj));
+    if (type === "new" && caseId) {
+      dispatch(getEtapes({ case_management_id: caseId }));
     } else {
     }
-  }, [etapeObj, type]);
+  }, [caseId, type]);
 
   useEffect(() => {
     function getFilteredArray(entities, _searchText) {

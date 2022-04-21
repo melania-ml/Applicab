@@ -24,7 +24,11 @@ export const restoreEtape = createAsyncThunk(
       .then((data) => {
         if (data.data.status === 200 && data.data.success) {
           dispatch(showMessage({ message: data.data.message }));
-          dispatch(getEtapes(getState().dossiers.etapeObj));
+          dispatch(
+            getEtapes({
+              case_management_id: getState().dossiers.editDossierData.data.id
+            })
+          );
           dispatch(setIsLoading(false));
         }
       })
@@ -47,7 +51,11 @@ export const removeEtapes = createAsyncThunk(
       .then((data) => {
         if (data.data.status === 200 && data.data.success) {
           dispatch(showMessage({ message: data.data.message }));
-          dispatch(getEtapes(getState().dossiers.etapeObj));
+          dispatch(
+            getEtapes({
+              case_management_id: getState().dossiers.editDossierData.data.id
+            })
+          );
           dispatch(setIsLoading(false));
         }
       })
@@ -142,14 +150,7 @@ export const addCase = createAsyncThunk(
               case_management_id: data.data.data.id
             })
           );
-          const key = getProcedureCode(procedure_type);
-          let obj = {
-            type: data.data.data.type,
-            case_management_id: data.data.data.id
-          };
-          obj[key] = true;
           dispatch(showMessage({ message: data.data.message }));
-          dispatch(setEtapeObj(obj));
           dispatch(setIsCaseAdded(true));
           dispatch(setCaseId(data.data.data.id));
           dispatch(getMessages(data.data.data.id, getState().dossiers.groupId));
@@ -171,18 +172,7 @@ export const updateCase = createAsyncThunk(
       )
       .then((data) => {
         if (data.data.status === 200 && data.data.success) {
-          const procedure = getState().dossiers.procedures;
-          const proc = procedure.filter(
-            (fil) => fil.id === data.data.data.procedure
-          )[0].procedure_type;
-          const key = getProcedureCode(proc);
-          let obj = {
-            type: data.data.data.type,
-            case_management_id: data.data.data.id
-          };
-          obj[key] = true;
           dispatch(showMessage({ message: data.data.message }));
-          dispatch(setEtapeObj(obj));
         }
       })
       .catch((error) => {
@@ -227,7 +217,11 @@ export const updateStatus = createAsyncThunk(
       .then((data) => {
         if (data.data.status === 200 && data.data.success) {
           dispatch(showMessage({ message: data.data.message }));
-          dispatch(getEtapes(getState().dossiers.etapeObj));
+          dispatch(
+            getEtapes({
+              case_management_id: getState().dossiers.editDossierData.data.id
+            })
+          );
         }
       })
       .catch((error) => {
@@ -247,7 +241,11 @@ export const duplicateEtape = createAsyncThunk(
       .then((data) => {
         if (data.data.status === 201 && data.data.success) {
           dispatch(showMessage({ message: data.data.message }));
-          dispatch(getEtapes(getState().dossiers.etapeObj));
+          dispatch(
+            getEtapes({
+              case_management_id: getState().dossiers.editDossierData.data.id
+            })
+          );
         }
       })
       .catch((error) => {
@@ -333,7 +331,11 @@ export const addEtapes = createAsyncThunk(
       .then((data) => {
         if (data.data.status === 201 && data.data.success) {
           dispatch(showMessage({ message: data.data.message }));
-          dispatch(getEtapes(getState().dossiers.etapeObj));
+          dispatch(
+            getEtapes({
+              case_management_id: getState().dossiers.editDossierData.data.id
+            })
+          );
           dispatch(getDocuments(getState().dossiers.editDossierData.data.id));
           dispatch(setIsLoading(false));
         }
@@ -353,7 +355,11 @@ export const updateEtapes = createAsyncThunk(
       .then((data) => {
         if (data.data && data.data.success) {
           dispatch(showMessage({ message: data.data.message }));
-          dispatch(getEtapes(getState().dossiers.etapeObj));
+          dispatch(
+            getEtapes({
+              case_management_id: getState().dossiers.editDossierData.data.id
+            })
+          );
           dispatch(getDocuments(getState().dossiers.editDossierData.data.id));
           dispatch(setIsLoading(false));
         }
@@ -421,7 +427,6 @@ const dossiersSlice = createSlice({
     procedures: [],
     contacts: [],
     isCaseAdded: false,
-    etapeObj: {},
     etapes: [],
     editDossierData: {
       type: "new",
@@ -444,9 +449,6 @@ const dossiersSlice = createSlice({
     },
     setIsCaseAdded: (state, action) => {
       state.isCaseAdded = action.payload;
-    },
-    setEtapeObj: (state, action) => {
-      state.etapeObj = action.payload;
     },
     setDossiers: (state, action) => {
       state.dossiers = action.payload;
@@ -565,7 +567,6 @@ export const {
   setContacts,
   setIsCaseAdded,
   setEtapes,
-  setEtapeObj,
   setEditDossierData,
   setNewDossierData,
   setEtapeTabFromAction,

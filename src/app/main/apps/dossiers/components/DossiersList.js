@@ -130,10 +130,13 @@ function DossiersList(props) {
               <Fab
                 onClick={(ev) => {
                   ev.stopPropagation();
+                  dispatch(setCaseId(row.original.id));
+                  dispatch(setGroupId(row.original.case_group.id));
                   dispatch(setEtapeTabFromAction(false));
                   dispatch(setMessageTabFromAction(true));
                   props.navigate(`/apps/dossiers/${row.original.id}`);
                   dispatch(setEditDossierData(row.original));
+                  dispatch(getMessages(row.original.id, groupId));
                 }}
                 variant="circular"
                 disableRipple={true}
@@ -164,10 +167,13 @@ function DossiersList(props) {
               <IconButton
                 onClick={(ev) => {
                   ev.stopPropagation();
+                  dispatch(setCaseId(row.original.id));
+                  dispatch(setGroupId(row.original.case_group.id));
                   dispatch(setMessageTabFromAction(false));
                   dispatch(setEtapeTabFromAction(true));
                   props.navigate(`/apps/dossiers/${row.original.id}`);
                   dispatch(setEditDossierData(row.original));
+                  dispatch(getMessages(row.original.id, groupId));
                 }}
                 size="large"
               >

@@ -147,7 +147,7 @@ function MessageTab(props) {
 
   const onSubmitMessage = (e) => {
     e.preventDefault();
-    if (message === "") {
+    if (message.trim() === "") {
       return;
     }
     dispatch(
