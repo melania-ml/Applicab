@@ -94,19 +94,12 @@ function Login() {
   const {
     data: { client_type }
   } = useSelector(({ auth }) => auth.user);
-  const {
-    control,
-    setValue,
-    formState,
-    handleSubmit,
-    reset,
-    trigger,
-    setError
-  } = useForm({
-    mode: "onChange",
-    defaultValues,
-    resolver: yupResolver(schema)
-  });
+  const { control, setValue, formState, handleSubmit, reset, trigger } =
+    useForm({
+      mode: "onChange",
+      defaultValues,
+      resolver: yupResolver(schema)
+    });
 
   const { isValid, dirtyFields, errors } = formState;
 
@@ -280,9 +273,6 @@ function Login() {
               >
                 Contactez-nous
               </a>
-              {/* <Link className="font-normal mt-8" to="/">
-                Contactez-nous
-              </Link> */}
             </div>
           </CardContent>
         </Card>

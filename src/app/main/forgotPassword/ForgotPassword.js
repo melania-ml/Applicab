@@ -8,6 +8,7 @@ import _ from "@lodash";
 import withReducer from "app/store/withReducer";
 import { motion } from "framer-motion";
 import reducer from "app/store";
+import { callForgotPassword } from "app/store/slices/forgotPasswordSlice";
 
 //material-ui
 import { styled, darken } from "@mui/material/styles";
@@ -20,8 +21,6 @@ import {
   Card,
   CardContent
 } from "@mui/material";
-
-import { callForgotPassword } from "app/store/slices/forgotPasswordSlice";
 
 const Root = styled("div")(({ theme }) => ({
   background: `linear-gradient(to right, ${
@@ -81,7 +80,7 @@ const defaultValues = {
 function ForgotPassword() {
   const [isConfirmationMessage, setIsConfirmationMessage] = useState(false);
 
-  const { control, formState, handleSubmit, reset, setError } = useForm({
+  const { control, formState, handleSubmit } = useForm({
     mode: "onChange",
     defaultValues,
     resolver: yupResolver(schema)

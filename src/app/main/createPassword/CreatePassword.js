@@ -4,9 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import _ from "@lodash";
+import { motion } from "framer-motion";
 import history from "@history";
 import withReducer from "app/store/withReducer";
 import reducer from "app/store";
+import { callCreatePassword } from "../../store/slices/createPasswordSlice";
 
 //material-ui
 import { styled, darken } from "@mui/material/styles";
@@ -20,9 +22,6 @@ import {
   CardContent,
   IconButton
 } from "@mui/material";
-import { motion } from "framer-motion";
-
-import { callCreatePassword } from "../../store/slices/createPasswordSlice";
 
 const Root = styled("div")(({ theme }) => ({
   background: `linear-gradient(to right, ${
@@ -82,7 +81,7 @@ const schema = yup.object().shape({
 function CreatePassword() {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
-  const { control, setValue, formState, handleSubmit } = useForm({
+  const { control, formState, handleSubmit } = useForm({
     mode: "onChange",
     defaultValues,
     resolver: yupResolver(schema)

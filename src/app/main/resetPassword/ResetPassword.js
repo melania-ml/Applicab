@@ -1,16 +1,5 @@
-import Card from "@mui/material/Card";
-import { styled, darken } from "@mui/material/styles";
-import CardContent from "@mui/material/CardContent";
-import {
-  Typography,
-  Button,
-  TextField,
-  IconButton,
-  InputAdornment,
-  Icon
-} from "@mui/material";
-import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
 import withReducer from "app/store/withReducer";
@@ -21,6 +10,19 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import _ from "@lodash";
 import reducer from "app/store";
 import { callResetPassword } from "app/store/slices/resetPasswordSlice";
+
+//material-ui
+import {
+  Typography,
+  Button,
+  TextField,
+  IconButton,
+  InputAdornment,
+  Icon,
+  Card,
+  CardContent
+} from "@mui/material";
+import { styled, darken } from "@mui/material/styles";
 
 const Root = styled("div")(({ theme }) => ({
   background: `linear-gradient(to right, ${
@@ -95,7 +97,6 @@ const schema = yup.object().shape({
 function ResetPassword(props) {
   const dispatch = useDispatch();
   const searchParam = window.location.pathname.split("/")[2];
-  const authRegister = useSelector(({ auth }) => auth.register);
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
