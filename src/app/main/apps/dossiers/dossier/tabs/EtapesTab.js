@@ -16,7 +16,7 @@ import {
   setSelectedList
 } from "app/store/slices/dossiersSlice";
 import { getFormattedDateTime } from "app/main/common/functions";
-import { CustomTooltip } from "app/main/common/components/CustomTooltip";
+import { CustomTooltip } from "app/main/common/components";
 
 //material-ui
 import {

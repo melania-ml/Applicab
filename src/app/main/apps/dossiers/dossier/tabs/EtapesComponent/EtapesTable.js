@@ -11,6 +11,7 @@ import {
   useTable
 } from "react-table";
 import EtapesTablePaginationActions from "./EtapesTablePaginationActions";
+import { IndeterminateCheckbox } from "app/main/common/components";
 
 //material-ui
 import {
@@ -24,21 +25,6 @@ import {
   Checkbox,
   Table
 } from "@mui/material";
-
-const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
-  const defaultRef = useRef();
-  const resolvedRef = ref || defaultRef;
-
-  useEffect(() => {
-    resolvedRef.current.indeterminate = indeterminate;
-  }, [resolvedRef, indeterminate]);
-
-  return (
-    <>
-      <Checkbox ref={resolvedRef} {...rest} />
-    </>
-  );
-});
 
 const EnhancedTable = ({ columns, data, onRowClick }) => {
   const { isLoading } = useSelector(({ dossiers }) => dossiers);

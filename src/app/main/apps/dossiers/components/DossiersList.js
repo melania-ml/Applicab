@@ -19,7 +19,7 @@ import {
   setCaseId,
   getMessages
 } from "app/store/slices/dossiersSlice";
-import { CustomTooltip } from "app/main/common/components/CustomTooltip";
+import { CustomTooltip } from "app/main/common/components";
 
 //material-ui
 import { Typography, IconButton, Fab, Icon } from "@mui/material";

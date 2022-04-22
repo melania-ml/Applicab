@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteCase } from "app/store/slices/dossiersSlice";
-import DeleteConfirmationDialog from "app/main/common/components/DeleteConfirmationDialog";
+import { DeleteConfirmationDialog } from "app/main/common/components";
 
 //material-ui
 import {

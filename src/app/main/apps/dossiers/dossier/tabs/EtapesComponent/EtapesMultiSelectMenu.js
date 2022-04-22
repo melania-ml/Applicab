@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import DeleteConfirmationDialog from "app/main/common/components/DeleteConfirmationDialog";
+import { DeleteConfirmationDialog } from "app/main/common/components";
 import {
   updateStatus,
   duplicateEtape,

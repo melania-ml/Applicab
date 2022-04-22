@@ -7,7 +7,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import CalendarHeader from "./CalendarHeader";
 import { getCalendarData } from "app/store/slices/dashboardSlice";
-import { CustomTooltip } from "app/main/common/components/CustomTooltip";
+import { CustomTooltip } from "app/main/common/components";
 
 //material-ui
 import { styled } from "@mui/material/styles";

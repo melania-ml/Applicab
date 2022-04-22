@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { removeContacts } from "app/store/slices/contactsSlice";
-import DeleteConfirmationDialog from "app/main/common/components/DeleteConfirmationDialog";
+import { DeleteConfirmationDialog } from "app/main/common/components";
 
 //material-ui
 import {

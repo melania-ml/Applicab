@@ -8,7 +8,7 @@ import {
   Button
 } from "@mui/material";
 
-function DeleteConfirmationDialog(props) {
+export const DeleteConfirmationDialog = (props) => {
   const { open, onClose, onDelete, title, subTitle } = props;
   return (
     <Dialog
@@ -63,5 +63,5 @@ function DeleteConfirmationDialog(props) {
       </DialogContent>
     </Dialog>
   );
-}
+};
 export default DeleteConfirmationDialog;
