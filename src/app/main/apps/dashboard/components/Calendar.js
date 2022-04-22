@@ -7,10 +7,11 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import CalendarHeader from "./CalendarHeader";
 import { getCalendarData } from "app/store/slices/dashboardSlice";
+import { CustomTooltip } from "app/main/common/components/CustomTooltip";
 
 //material-ui
 import { styled } from "@mui/material/styles";
-import { Typography, Tooltip, tooltipClasses } from "@mui/material";
+import { Typography } from "@mui/material";
 
 const Root = styled("div")(({ theme }) => ({
   "& a": {
@@ -66,17 +67,6 @@ const Root = styled("div")(({ theme }) => ({
     "@media (max-width: 992px)": {
       width: "100%"
     }
-  }
-}));
-
-const CustomTooltip = styled(({ className, ...props }) => (
-  <Tooltip {...props} arrow classes={{ popper: className }} />
-))(({ theme }) => ({
-  [`& .${tooltipClasses.arrow}`]: {
-    color: "#252E3E"
-  },
-  [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: "#252E3E"
   }
 }));
 

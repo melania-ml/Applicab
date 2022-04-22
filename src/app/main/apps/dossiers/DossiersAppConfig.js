@@ -4,9 +4,6 @@ const DossiersApp = lazy(() => import("./DossiersApp"));
 const NewDossier = lazy(() => import("./dossier/Dossier"));
 
 const DossiersAppConfig = {
-  settings: {
-    layout: {}
-  },
   routes: [
     {
       path: "apps/dossiers/all",

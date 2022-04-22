@@ -1,12 +1,10 @@
-import withReducer from "app/store/withReducer";
 import { useRef } from "react";
-import { styled } from "@mui/material/styles";
 import FusePageSimple from "@fuse/core/FusePageSimple";
-
 import Calendar from "./components/Calendar";
-import TodoList from "./components/TodoList";
 import Filters from "./components/Filters";
-import reducer from "app/store";
+
+//material-ui
+import { styled } from "@mui/material/styles";
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
   "& .FusePageSimple-header": {
@@ -55,12 +53,7 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
 }));
 
 function MainDashboard() {
-  return (
-    <>
-      <Calendar />
-      {/* <TodoList /> */}
-    </>
-  );
+  return <Calendar />;
 }
 
 function DashboardApp() {
@@ -78,4 +71,4 @@ function DashboardApp() {
   );
 }
 
-export default withReducer("dashboardApp", reducer)(DashboardApp);
+export default DashboardApp;

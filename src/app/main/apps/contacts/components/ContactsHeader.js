@@ -1,23 +1,23 @@
 import { useState } from "react";
-import Icon from "@mui/material/Icon";
-import { Button, Input, Paper, Menu, MenuItem } from "@mui/material";
-import { ThemeProvider } from "@mui/material/styles";
-import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
+import { motion } from "framer-motion";
 import { selectMainTheme } from "app/store/fuse/settingsSlice";
 import {
   setContactsSearchText,
   openNewContactDialog,
-  importContacts,
+  importContacts
 } from "app/store/slices/contactsSlice";
 import Filters from "./Filters";
 
-function ContactsHeader(props) {
+//material-ui
+import { Icon, Button, Input, Paper, Menu, MenuItem } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
+
+function ContactsHeader() {
   const [moreMenuEl, setMoreMenuEl] = useState(null);
   const dispatch = useDispatch();
-  const { searchText } = useSelector(({ contacts }) => contacts);
+  const { searchText, contacts } = useSelector(({ contacts }) => contacts);
   const mainTheme = useSelector(selectMainTheme);
-  const contacts = useSelector(({ contacts }) => contacts.contacts);
 
   const exportContacts = () => {
     let rows = [
@@ -43,8 +43,8 @@ function ContactsHeader(props) {
         "Native City",
         "Department",
         "Profession",
-        "Civil Status",
-      ],
+        "Civil Status"
+      ]
     ];
     for (let i = 0; i < contacts.length; i++) {
       let _tempRow = [];
@@ -113,7 +113,7 @@ function ContactsHeader(props) {
                 fullWidth
                 value={searchText}
                 inputProps={{
-                  "aria-label": "Search",
+                  "aria-label": "Search"
                 }}
                 onChange={(ev) => dispatch(setContactsSearchText(ev))}
               />

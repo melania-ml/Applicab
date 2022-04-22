@@ -1,19 +1,17 @@
+import { useRef } from "react";
 import withReducer from "app/store/withReducer";
-import { useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { styled } from "@mui/material/styles";
+import reducer from "app/store";
 import FusePageSimple from "@fuse/core/FusePageSimple";
 import Calendar from "./components/Calendar";
 import TodoList from "./components/TodoList";
 import Filters from "./components/Filters";
-import reducer from "app/store";
 import MyDocuments from "./components/MyDocuments";
 import SidebarContent from "./components/SidebarContent";
 import InfoCard from "./components/InfoCard";
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
+
+//material-ui
+import { Box, Grid } from "@mui/material";
+import { styled } from "@mui/material/styles";
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
   "& .FusePageSimple-header": {
@@ -67,7 +65,6 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
       flexDirection: "column"
     }
   },
-
   ...theme.typography.body2,
   padding: theme.spacing(1),
   color: theme.palette.text.secondary

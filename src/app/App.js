@@ -1,3 +1,6 @@
+import { Provider, useDispatch } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import axios from "axios";
 import BrowserRouter from "@fuse/core/BrowserRouter";
 import FuseAuthorization from "@fuse/core/FuseAuthorization";
 import FuseLayout from "@fuse/core/FuseLayout";
@@ -8,12 +11,8 @@ import { CacheProvider } from "@emotion/react";
 import withAppProviders from "./withAppProviders";
 import { Auth } from "./auth";
 import store, { persistor } from "./store";
-import { Provider, useDispatch } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
 import { logoutUser } from "app/auth/store/userSlice";
 import { showMessage } from "app/store/fuse/messageSlice";
-
-import axios from "axios";
 
 const emotionCacheOptions = {
   ltr: {

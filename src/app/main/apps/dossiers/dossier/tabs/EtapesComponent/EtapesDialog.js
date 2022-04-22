@@ -496,7 +496,6 @@ function EtapesDialog() {
               color="blue"
               type="file"
               multiple
-              // value={allFields.files}
               id="icon-button-file"
               onChange={onFileUpload}
               className="filetype"

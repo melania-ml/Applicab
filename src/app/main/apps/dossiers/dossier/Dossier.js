@@ -1,6 +1,5 @@
 import FusePageCarded from "@fuse/core/FusePageCarded";
 import { useDeepCompareEffect } from "@fuse/hooks";
-import withReducer from "app/store/withReducer";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -11,8 +10,6 @@ import {
   getNatures,
   getProcedures
 } from "app/store/slices/dossiersSlice";
-import reducer from "app/store";
-
 import DossierHeader from "./DossierHeader";
 import InformationTab from "./tabs/InformationTab";
 import EtapesTab from "./tabs/EtapesTab";
@@ -41,7 +38,7 @@ const Root = styled(FusePageCarded)(({ theme }) => ({
   }
 }));
 
-function Dossier(props) {
+function Dossier() {
   const routeParams = useParams();
   const dispatch = useDispatch();
 
@@ -132,4 +129,4 @@ function Dossier(props) {
     </FormProvider>
   );
 }
-export default withReducer("dossiersApp", reducer)(Dossier);
+export default Dossier;

@@ -1,4 +1,12 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import CaseStatus from "app/main/constants/CaseStatus";
+import Types from "app/main/constants/Types";
+import { openNewContactDialog } from "app/store/slices/contactsSlice";
+import { addCase, updateCase } from "app/store/slices/dossiersSlice";
+import ContactDialog from "app/main/apps/contacts/components/ContactDialog";
+
+//material-ui
 import {
   TextField,
   InputLabel,
@@ -9,13 +17,7 @@ import {
   Chip,
   Button
 } from "@mui/material";
-import CaseStatus from "app/main/constants/CaseStatus";
-import Types from "app/main/constants/Types";
-import { useDispatch, useSelector } from "react-redux";
 import { createFilterOptions } from "@mui/material/Autocomplete";
-import { openNewContactDialog } from "app/store/slices/contactsSlice";
-import { addCase, updateCase } from "app/store/slices/dossiersSlice";
-import ContactDialog from "app/main/apps/contacts/components/ContactDialog/ContactDialog";
 
 const tags = [];
 function InformationTab() {

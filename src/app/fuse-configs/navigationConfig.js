@@ -5,7 +5,7 @@ const navigationConfig = [
     type: "item",
     icon: "dashboard",
     url: "apps/dashboard",
-    access: ["Lawyer"],
+    access: ["Lawyer"]
   },
   {
     id: "contacts",
@@ -13,7 +13,7 @@ const navigationConfig = [
     type: "item",
     icon: "account_box",
     url: "apps/contacts/all",
-    access: ["Lawyer"],
+    access: ["Lawyer"]
   },
   {
     id: "dossiers",
@@ -21,39 +21,15 @@ const navigationConfig = [
     type: "item",
     icon: "view_column",
     url: "apps/dossiers/all",
-    access: ["Lawyer"],
+    access: ["Lawyer"]
   },
-  // {
-  //   id: 'Étapes',
-  //   title: 'Étapes',
-  //   translate: 'Étapes',
-  //   type: 'item',
-  //   icon: 'view_agenda',
-  //   url: 'apps/etapes/all',
-  // },
-  // {
-  //   id: "Email",
-  //   title: "Email",
-  //   translate: "Email",
-  //   type: "item",
-  //   icon: "email",
-  //   url: "apps/email/all",
-  // },
-  // {
-  //   id: 'Agenda',
-  //   title: 'Agenda',
-  //   translate: 'Agenda',
-  //   type: 'item',
-  //   icon: 'event',
-  //   url: 'apps/natures/all',
-  // },
   {
     id: "client_dashboard",
     title: "Dashboard",
     type: "item",
     icon: "dashboard",
     url: "apps/client_dashboard",
-    access: ["Client"],
+    access: ["Client"]
   },
   {
     id: "message",
@@ -61,7 +37,7 @@ const navigationConfig = [
     type: "item",
     icon: "mail",
     url: "apps/chat",
-    access: ["Client"],
+    access: ["Client"]
   },
   {
     id: "faq",
@@ -69,15 +45,7 @@ const navigationConfig = [
     type: "item",
     icon: "help_outline",
     url: "apps/faq",
-    access: ["Client"],
-  },
-  // {
-  //   id: 'Applicab',
-  //   title: 'Applicab',
-  //   translate: 'Applicab',
-  //   type: 'item',
-  //   icon: 'Applicab',
-  //   url: 'apps/applicab/all',
-  // },
+    access: ["Client"]
+  }
 ];
 export default navigationConfig;

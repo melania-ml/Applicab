@@ -1,71 +1,72 @@
 import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-
 import { motion } from "framer-motion";
-import { styled } from "@mui/material/styles";
-import Typography from "@mui/material/Typography";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-
 import CalendarHeader from "./CalendarHeader";
+import { CustomTooltip } from "app/main/common/components/CustomTooltip";
+
+//material-ui
+import { styled } from "@mui/material/styles";
+import { Typography } from "@mui/material";
 
 const Root = styled("div")(({ theme }) => ({
   "& a": {
     color: `${theme.palette.text.primary}!important`,
-    textDecoration: "none!important",
+    textDecoration: "none!important"
   },
   "&  .fc-media-screen": {
-    minHeight: "100%",
+    minHeight: "100%"
   },
   "& .fc-scrollgrid, & .fc-theme-standard td, & .fc-theme-standard th": {
-    borderColor: `${theme.palette.divider}!important`,
+    borderColor: `${theme.palette.divider}!important`
   },
   "&  .fc-scrollgrid-section > td": {
-    border: 0,
+    border: 0
   },
   "& .fc-daygrid-body, & .fc-scrollgrid-sync-table, & .fc-col-header ": {
-    width: "100% !important",
+    width: "100% !important"
   },
   "& .fc-daygrid-day": {
     "&:last-child": {
-      borderRight: 0,
-    },
+      borderRight: 0
+    }
   },
   "& .fc-col-header-cell": {
     borderWidth: "0 0 1px 0",
     padding: "16px 0",
     "& .fc-col-header-cell-cushion": {
       color: theme.palette.text.secondary,
-      fontWeight: 500,
-    },
+      fontWeight: 500
+    }
   },
   "& .fc-view ": {
     borderRadius: 20,
     overflow: "hidden",
     border: `1px solid ${theme.palette.divider}`,
     "& > .fc-scrollgrid": {
-      border: 0,
-    },
+      border: 0
+    }
   },
   "& .fc-daygrid-day-number": {
     color: theme.palette.text.secondary,
-    fontWeight: 500,
+    fontWeight: 500
   },
   "& .fc-event": {
     backgroundColor: `${theme.palette.primary.dark}!important`,
     color: `${theme.palette.primary.contrastText}!important`,
     border: 0,
     padding: "0 6px",
-    borderRadius: "16px!important",
+    borderRadius: "16px!important"
   },
   "& .for-width-cal": {
     width: "50%",
     "@media (max-width: 992px)": {
-      width: "100%",
-    },
-  },
+      width: "100%"
+    }
+  }
 }));
 
 export default function Calendar() {
@@ -83,18 +84,18 @@ export default function Calendar() {
     dispatch(
       openNewEventDialog({
         start,
-        end,
+        end
       })
     );
   };
 
   function renderEventContent(eventInfo) {
     return (
-      <div className="flex items-center">
+      <CustomTooltip placement="top-end" title={eventInfo.event.title}>
         <Typography className="text-12 px-4 truncate">
           {eventInfo.event.title}
         </Typography>
-      </div>
+      </CustomTooltip>
     );
   }
   return (
@@ -114,7 +115,6 @@ export default function Calendar() {
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             headerToolbar={false}
             initialView="dayGridMonth"
-            editable
             selectable
             selectMirror
             dayMaxEvents
@@ -123,11 +123,6 @@ export default function Calendar() {
             select={handleDateSelect}
             events={events}
             eventContent={renderEventContent}
-            // eventClick={handleEventClick}
-            //eventAdd={handleEventAdd}
-            //eventChange={handleEventChange}
-            //eventRemove={handleEventRemove}
-            //eventDrop={handleEventDrop}
             initialDate={new Date()}
             ref={calendarRef}
           />

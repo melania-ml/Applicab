@@ -1,9 +1,6 @@
-import { useState } from "react";
-import Icon from "@mui/material/Icon";
-import { Button, Input, Paper } from "@mui/material";
-import { ThemeProvider } from "@mui/material/styles";
-import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { selectMainTheme } from "app/store/fuse/settingsSlice";
 import {
   setDossiersSearchText,
@@ -12,9 +9,12 @@ import {
   setEtapeTabFromAction
 } from "app/store/slices/dossiersSlice";
 import Filters from "./Filters";
-import { Link } from "react-router-dom";
 
-function DossiersHeader(props) {
+//material-ui
+import { Icon, Button, Input, Paper } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
+
+function DossiersHeader() {
   const dispatch = useDispatch();
   const { searchText } = useSelector(({ dossiers }) => dossiers);
   const mainTheme = useSelector(selectMainTheme);

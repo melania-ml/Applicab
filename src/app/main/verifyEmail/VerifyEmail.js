@@ -1,19 +1,18 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { motion } from "framer-motion";
+import OTPInput from "otp-input-react";
 import withReducer from "app/store/withReducer";
 import reducer from "app/store";
 import history from "@history";
-import OTPInput from "otp-input-react";
-
-//material-ui
-import { styled, darken } from "@mui/material/styles";
-import { Typography, Button, Card, CardContent } from "@mui/material";
-import { motion } from "framer-motion";
-
 import {
   callVerifyEmail,
   callResendOTP
 } from "app/store/slices/verifyEmailSlice";
+
+//material-ui
+import { styled, darken } from "@mui/material/styles";
+import { Typography, Button, Card, CardContent } from "@mui/material";
 
 const Root = styled("div")(({ theme }) => ({
   background: `linear-gradient(to right, ${
@@ -63,10 +62,14 @@ const Root = styled("div")(({ theme }) => ({
 
 function VerifyEmail() {
   const [otp, setOtp] = useState("");
-  const searchParam = window.location.pathname.split("/")[2];
   const [isValid, setIsValid] = useState(false);
+
   const dispatch = useDispatch();
+
   const { success } = useSelector(({ verifyEmail }) => verifyEmail);
+
+  const searchParam = window.location.pathname.split("/")[2];
+
   function onSubmit() {
     dispatch(callVerifyEmail(otp));
   }

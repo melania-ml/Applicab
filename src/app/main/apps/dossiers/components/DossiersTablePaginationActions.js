@@ -1,10 +1,14 @@
-import FirstPageIcon from '@mui/icons-material/FirstPage';
-import IconButton from '@mui/material/IconButton';
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import LastPageIcon from '@mui/icons-material/LastPage';
-import { useTheme } from '@mui/material/styles';
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
+
+//material-ui
+import {
+  FirstPage,
+  KeyboardArrowLeft,
+  KeyboardArrowRight,
+  LastPage
+} from "@mui/icons-material";
+import { IconButton } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 const DossiersTablePaginationActions = (props) => {
   const theme = useTheme();
@@ -34,7 +38,7 @@ const DossiersTablePaginationActions = (props) => {
         aria-label="first page"
         size="large"
       >
-        {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
+        {theme.direction === "rtl" ? <LastPage /> : <FirstPage />}
       </IconButton>
       <IconButton
         onClick={handleBackButtonClick}
@@ -42,7 +46,11 @@ const DossiersTablePaginationActions = (props) => {
         aria-label="previous page"
         size="large"
       >
-        {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+        {theme.direction === "rtl" ? (
+          <KeyboardArrowRight />
+        ) : (
+          <KeyboardArrowLeft />
+        )}
       </IconButton>
       <IconButton
         onClick={handleNextButtonClick}
@@ -50,7 +58,11 @@ const DossiersTablePaginationActions = (props) => {
         aria-label="next page"
         size="large"
       >
-        {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+        {theme.direction === "rtl" ? (
+          <KeyboardArrowLeft />
+        ) : (
+          <KeyboardArrowRight />
+        )}
       </IconButton>
       <IconButton
         onClick={handleLastPageButtonClick}
@@ -58,7 +70,7 @@ const DossiersTablePaginationActions = (props) => {
         aria-label="last page"
         size="large"
       >
-        {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
+        {theme.direction === "rtl" ? <FirstPage /> : <LastPage />}
       </IconButton>
     </div>
   );
@@ -68,7 +80,7 @@ DossiersTablePaginationActions.propTypes = {
   count: PropTypes.number.isRequired,
   onPageChange: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
-  rowsPerPage: PropTypes.number.isRequired,
+  rowsPerPage: PropTypes.number.isRequired
 };
 
 export default DossiersTablePaginationActions;

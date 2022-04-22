@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import FuseUtils from "@fuse/utils";
 import withRouter from "@fuse/core/withRouter";
-
 import { selectMainTheme } from "app/store/fuse/settingsSlice";
 import EtapesDialog from "./EtapesComponent/EtapesDialog";
 import EtapesTable from "./EtapesComponent/EtapesTable";
@@ -16,14 +15,11 @@ import {
   getDeletedEtapes,
   setSelectedList
 } from "app/store/slices/dossiersSlice";
-import {
-  getFormattedDateTime,
-  getProcedureCode
-} from "app/main/common/functions";
+import { getFormattedDateTime } from "app/main/common/functions";
+import { CustomTooltip } from "app/main/common/components/CustomTooltip";
 
 //material-ui
 import {
-  tooltipClasses,
   Typography,
   Icon,
   Grid,
@@ -35,17 +31,15 @@ import {
   ListItemText,
   Paper,
   Input,
-  Button,
-  Tooltip
+  Button
 } from "@mui/material";
-import { styled, ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 
-function EtapeTab(props) {
+function EtapeTab() {
   const dispatch = useDispatch();
   const {
     etapes,
     editDossierData: { data, type },
-    procedures,
     selectedList,
     caseId
   } = useSelector(({ dossiers }) => dossiers);
@@ -56,17 +50,6 @@ function EtapeTab(props) {
 
   const [filteredData, setFilteredData] = useState(null);
   const mainTheme = useSelector(selectMainTheme);
-
-  const CustomTooltip = styled(({ className, ...props }) => (
-    <Tooltip {...props} arrow classes={{ popper: className }} />
-  ))(({ theme }) => ({
-    [`& .${tooltipClasses.arrow}`]: {
-      color: "#252E3E"
-    },
-    [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: "#252E3E"
-    }
-  }));
 
   const listClick = (name) => {
     const newObj = {};

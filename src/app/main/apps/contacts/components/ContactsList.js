@@ -1,8 +1,7 @@
-import { motion } from "framer-motion";
-import FuseUtils from "@fuse/utils";
-import { Typography, Badge } from "@mui/material";
 import { useMemo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { motion } from "framer-motion";
+import FuseUtils from "@fuse/utils";
 import FuseLoading from "@fuse/core/FuseLoading";
 import ContactsMultiSelectMenu from "./ContactsMultiSelectMenu";
 import ContactsTable from "./ContactsTable";
@@ -11,11 +10,13 @@ import {
   selectContacts
 } from "app/store/slices/contactsSlice";
 
-function ContactsList(props) {
+//material-ui
+import { Typography, Badge } from "@mui/material";
+
+function ContactsList() {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
-  const isLoading = useSelector(({ contacts }) => contacts.isLoading);
-  const searchText = useSelector(({ contacts }) => contacts.searchText);
+  const { isLoading, searchText } = useSelector(({ contacts }) => contacts);
 
   const [filteredData, setFilteredData] = useState(null);
 
@@ -32,9 +33,8 @@ function ContactsList(props) {
           );
         },
         accessor: "avatar",
-        Cell: ({ row }) => {
+        Cell: () => {
           return null;
-          // <Avatar className="mx-8" alt={row.original.name} src={row.original.avatar} />;
         },
         className: "justify-center",
         width: 64,

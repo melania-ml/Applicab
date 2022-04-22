@@ -1,21 +1,18 @@
-import Button from "@mui/material/Button";
-import Icon from "@mui/material/Icon";
-import { useTheme } from "@mui/material/styles";
-import Typography from "@mui/material/Typography";
-import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-  getProcedureCode,
-  getFormattedDateTime,
-  getWholeCaseName
-} from "app/main/common/functions";
+import { motion } from "framer-motion";
+import { getWholeCaseName } from "app/main/common/functions";
+
+//material-ui
+import { Icon, Typography } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 function DossierHeader() {
   const theme = useTheme();
   const {
     editDossierData: { data, type }
   } = useSelector(({ dossiers }) => dossiers);
+
   return (
     <div className="flex flex-1 w-full items-center justify-between">
       <div className="flex flex-col items-start max-w-full min-w-0">

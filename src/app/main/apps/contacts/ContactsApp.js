@@ -1,19 +1,19 @@
-import FusePageSimple from "@fuse/core/FusePageSimple";
-import withReducer from "app/store/withReducer";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import FusePageSimple from "@fuse/core/FusePageSimple";
 import { useDeepCompareEffect } from "@fuse/hooks";
-import { styled } from "@mui/material/styles";
-import ContactDialog from "./components/ContactDialog/ContactDialog";
+import ContactDialog from "./components/ContactDialog";
 import ContactsHeader from "./components/ContactsHeader";
 import ContactsList from "./components/ContactsList";
-import reducer from "app/store";
 import {
   getContacts,
   getAllTitles,
   getAllTypes
 } from "app/store/slices/contactsSlice";
+
+//material-ui
+import { styled } from "@mui/material/styles";
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
   "& .FusePageSimple-header": {
@@ -79,7 +79,7 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
   }
 }));
 
-function ContactsApp(props) {
+function ContactsApp() {
   const dispatch = useDispatch();
 
   const pageLayout = useRef(null);
@@ -105,4 +105,4 @@ function ContactsApp(props) {
   );
 }
 
-export default withReducer("contactsApp", reducer)(ContactsApp);
+export default ContactsApp;

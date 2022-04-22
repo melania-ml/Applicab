@@ -1,19 +1,14 @@
-import { lazy } from 'react';
+import { lazy } from "react";
 
-const DashboardApp = lazy(() => import('./DashboardApp'));
+const DashboardApp = lazy(() => import("./DashboardApp"));
 
 const DashboardAppConfig = {
-  settings: {
-    layout: {
-      config: {},
-    },
-  },
   routes: [
     {
-      path: 'apps/dashboard',
-      element: <DashboardApp />,
-    },
-  ],
+      path: "apps/dashboard",
+      element: <DashboardApp />
+    }
+  ]
 };
 
 export default DashboardAppConfig;

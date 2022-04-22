@@ -1,20 +1,19 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FormControl, TextField, Autocomplete } from "@mui/material";
 import { getContacts } from "app/store/slices/contactsSlice";
 import Status from "app/main/constants/Status";
 
+//material-ui
+import { FormControl, TextField, Autocomplete } from "@mui/material";
+
 export default function Filters() {
   const dispatch = useDispatch();
-  const titles = useSelector(({ contacts }) => contacts.titles);
-  const types = useSelector(({ contacts }) => contacts.types);
+  const { titles, types } = useSelector(({ contacts }) => contacts);
+
   const [allFields, setAllFields] = useState({
     type: "",
-    inputType: "",
     title: "",
-    inputTitle: "",
     status: "",
-    inputStatus: "",
     tags: ""
   });
   return (
@@ -25,12 +24,6 @@ export default function Filters() {
             className="autocomplete"
             options={types}
             getOptionLabel={(option) => {
-              if (typeof option === "string") {
-                return option;
-              }
-              if (option.inputValue) {
-                return option.inputValue;
-              }
               return option.client_type;
             }}
             onChange={(event, newValue) => {
@@ -57,10 +50,6 @@ export default function Filters() {
               }
               dispatch(getContacts({ ...allFields, type: typeObj?.id || "" }));
             }}
-            inputValue={allFields.inputType}
-            onInputChange={(event, newInputValue) => {
-              setAllFields({ ...allFields, inputType: newInputValue });
-            }}
             renderInput={(params) => <TextField {...params} label="Type" />}
           />
         </div>
@@ -69,12 +58,6 @@ export default function Filters() {
             className="autocomplete"
             options={titles}
             getOptionLabel={(option) => {
-              if (typeof option === "string") {
-                return option;
-              }
-              if (option.inputValue) {
-                return option.inputValue;
-              }
               return option.title;
             }}
             onChange={(event, newValue) => {
@@ -103,10 +86,6 @@ export default function Filters() {
                 getContacts({ ...allFields, title: titleObj?.id || "" })
               );
             }}
-            inputValue={allFields.inputTitle}
-            onInputChange={(event, newInputValue) => {
-              setAllFields({ ...allFields, inputTitle: newInputValue });
-            }}
             renderInput={(params) => <TextField {...params} label="Titre" />}
           />
         </div>
@@ -115,12 +94,6 @@ export default function Filters() {
             className="autocomplete"
             options={Status}
             getOptionLabel={(option) => {
-              if (typeof option === "string") {
-                return option;
-              }
-              if (option.inputValue) {
-                return option.inputValue;
-              }
               return option.value;
             }}
             onChange={(event, newValue) => {
@@ -146,17 +119,7 @@ export default function Filters() {
                 getContacts({ ...allFields, status: newValue?.value || "" })
               );
             }}
-            inputValue={allFields.inputStatus}
-            onInputChange={(event, newInputValue) => {
-              setAllFields({ ...allFields, inputStatus: newInputValue });
-            }}
-            renderInput={(params) => (
-              <TextField
-                style={{ color: "white !important" }}
-                {...params}
-                label="Status"
-              />
-            )}
+            renderInput={(params) => <TextField {...params} label="Status" />}
           />
         </div>
         <div className="col-md-3 col-lg-3 col-12 col-xl-3 mb-3 mb-xl-0">
@@ -165,7 +128,6 @@ export default function Filters() {
               value={allFields.tags}
               InputLabelProps={{ style: { color: "#FFFFFF" } }}
               style={{ color: "#FFFFFF" }}
-              className=""
               label="Tags"
               variant="outlined"
               fullWidth

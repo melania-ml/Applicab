@@ -24,7 +24,6 @@ const routes = [
   ...FuseUtils.generateRoutesFromConfigs(routeConfigs, null),
   {
     path: "/",
-    //element: <Navigate to="apps/dashboard" />,
     element: <Navigate to="/login" />
   },
   {

@@ -19,17 +19,10 @@ import {
   setCaseId,
   getMessages
 } from "app/store/slices/dossiersSlice";
+import { CustomTooltip } from "app/main/common/components/CustomTooltip";
 
 //material-ui
-import {
-  Tooltip,
-  styled,
-  tooltipClasses,
-  Typography,
-  IconButton,
-  Fab,
-  Icon
-} from "@mui/material";
+import { Typography, IconButton, Fab, Icon } from "@mui/material";
 
 function DossiersList(props) {
   const dispatch = useDispatch();
@@ -39,17 +32,6 @@ function DossiersList(props) {
   );
 
   const [filteredData, setFilteredData] = useState(null);
-
-  const CustomTooltip = styled(({ className, ...props }) => (
-    <Tooltip {...props} arrow classes={{ popper: className }} />
-  ))(({ theme }) => ({
-    [`& .${tooltipClasses.arrow}`]: {
-      color: "#252E3E"
-    },
-    [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: "#252E3E"
-    }
-  }));
 
   const columns = useMemo(
     () => [

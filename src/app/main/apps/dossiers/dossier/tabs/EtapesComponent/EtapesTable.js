@@ -1,15 +1,7 @@
 import { forwardRef, useRef, useEffect } from "react";
-import Checkbox from "@mui/material/Checkbox";
-import Table from "@mui/material/Table";
-import PropTypes from "prop-types";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
-import TableSortLabel from "@mui/material/TableSortLabel";
 import { useSelector } from "react-redux";
+import PropTypes from "prop-types";
+import clsx from "clsx";
 import FuseLoading from "@fuse/core/FuseLoading";
 import {
   useGlobalFilter,
@@ -18,8 +10,20 @@ import {
   useSortBy,
   useTable
 } from "react-table";
-import clsx from "clsx";
 import EtapesTablePaginationActions from "./EtapesTablePaginationActions";
+
+//material-ui
+import {
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+  TableSortLabel,
+  Checkbox,
+  Table
+} from "@mui/material";
 
 const IndeterminateCheckbox = forwardRef(({ indeterminate, ...rest }, ref) => {
   const defaultRef = useRef();
@@ -91,7 +95,7 @@ const EnhancedTable = ({ columns, data, onRowClick }) => {
   if (isLoading) {
     return <FuseLoading />;
   }
-  // Render the UI for your table
+
   return (
     <div className="flex flex-col sm:border-1 sm:rounded-16 overflow-hidden">
       <TableContainer className="flex ">
@@ -110,7 +114,6 @@ const EnhancedTable = ({ columns, data, onRowClick }) => {
                     {column.sortable ? (
                       <TableSortLabel
                         active={column.isSorted}
-                        // react-table has a unsorted state which is not treated here
                         direction={column.isSortedDesc ? "desc" : "asc"}
                       />
                     ) : null}
