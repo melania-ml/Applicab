@@ -55,13 +55,13 @@ function ToolbarLayout1(props) {
           </div>
 
           <div className="flex items-center px-8 h-full overflow-x-auto">
-            <MessagePanelToggleButton />
+            {/* <MessagePanelToggleButton />
 
             <IconButton className="w-40 h-40" size="large">
               <Badge color="secondary" badgeContent={3}>
                 <Icon>notifications</Icon>
               </Badge>
-            </IconButton>
+            </IconButton> */}
 
             <UserMenu />
           </div>

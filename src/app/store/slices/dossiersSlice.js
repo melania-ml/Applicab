@@ -154,6 +154,14 @@ export const addCase = createAsyncThunk(
           dispatch(setIsCaseAdded(true));
           dispatch(setCaseId(data.data.data.id));
           dispatch(getMessages(data.data.data.id, getState().dossiers.groupId));
+          dispatch(
+            setMessageHeader({
+              case_name: data.data.data.case_name,
+              procedure: data.data.data.procedure,
+              created_date: data.data.data.created_date,
+              unique_code: data.data.data.unique_code
+            })
+          );
         }
       })
       .catch((error) => {
@@ -173,6 +181,25 @@ export const updateCase = createAsyncThunk(
       .then((data) => {
         if (data.data.status === 200 && data.data.success) {
           dispatch(showMessage({ message: data.data.message }));
+        }
+      })
+      .catch((error) => {
+        dispatch(showMessage({ message: error.response.message }));
+      });
+  }
+);
+
+export const deleteCase = createAsyncThunk(
+  "dossiersApp/dossiers/deleteCase",
+  async (ids, { dispatch, getState }) => {
+    await axios
+      .delete(`api/caseManagement/bulkDeleteCases`, {
+        data: { case_management_id: ids }
+      })
+      .then((data) => {
+        if (data.data.status === 200 && data.data.success) {
+          dispatch(showMessage({ message: data.data.message }));
+          dispatch(getDossiers());
         }
       })
       .catch((error) => {
@@ -438,7 +465,8 @@ const dossiersSlice = createSlice({
     selectedList: "Tous",
     messages: [],
     groupId: null,
-    caseId: null
+    caseId: null,
+    messageHeader: {}
   }),
   reducers: {
     setEtapes: (state, action) => {
@@ -473,6 +501,9 @@ const dossiersSlice = createSlice({
     },
     setContacts: (state, action) => {
       state.contacts = action.payload;
+    },
+    setMessageHeader: (state, action) => {
+      state.messageHeader = action.payload;
     },
     resetDossier: () => null,
     setDossiersSearchText: {
@@ -566,6 +597,7 @@ export const {
   setProcedures,
   setContacts,
   setIsCaseAdded,
+  setMessageHeader,
   setEtapes,
   setEditDossierData,
   setNewDossierData,

@@ -7,17 +7,12 @@ import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-// import {
-//   setContactsUnstarred,
-//   setContactsStarred,
-//   removeContacts
-// } from "../store/dossiersSlice";
+import { deleteCase } from "app/store/slices/dossiersSlice";
 import DeleteConfirmationDialog from "app/main/common/components/DeleteConfirmationDialog";
 
 function DossiersMultiSelectMenu(props) {
   const dispatch = useDispatch();
   const { selectedContactIds } = props;
-
   const [anchorEl, setAnchorEl] = useState(null);
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
 
@@ -32,6 +27,10 @@ function DossiersMultiSelectMenu(props) {
   function handleClose() {
     setDeleteConfirmation(false);
   }
+
+  const deleteDossier = () => {
+    dispatch(deleteCase(selectedContactIds));
+  };
 
   return (
     <>
@@ -68,6 +67,7 @@ function DossiersMultiSelectMenu(props) {
       <DeleteConfirmationDialog
         open={deleteConfirmation}
         onClose={handleClose}
+        onDelete={deleteDossier}
         title={"Voulez-vous vraiment supprimer ce dossier ?"}
         subTitle={
           "TOUTES LES ÉTAPES, MESSAGES, DOCUMENTS ET NOTIFICATIONS SERONT EFFACÉS."
