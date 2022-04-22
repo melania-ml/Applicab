@@ -51,10 +51,8 @@ export const importContacts = (contact) => async (dispatch) => {
   await axios
     .post(`auth/user/uploadUserCsv`, contact)
     .then((data) => {
-      console.log("data: ", data);
       if (data.data.status === 200 && data.data.success) {
         dispatch(showMessage({ message: data.data.message }));
-        console.log("if data.data.message: ", data.data.message);
       } else {
         dispatch(showMessage({ message: data.data.message }));
       }

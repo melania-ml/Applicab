@@ -222,9 +222,7 @@ export const createChatGroup = (obj) => async (dispatch) => {
 const createDefaultEtapes = (obj) => async (dispatch) => {
   await axios
     .put(`api/caseManagement/addDefaultCaseTask`, obj)
-    .then((data) => {
-      console.log(data);
-    })
+    .then(() => {})
     .catch((error) => {
       dispatch(showMessage({ message: error.response.message }));
     });
@@ -327,9 +325,7 @@ export const getMessages =
 export const readGroupMessages = (group_id) => async (dispatch) => {
   await axios
     .put(`api/caseManagement/readGroupMessages`, { group_id })
-    .then((data) => {
-      console.log(data);
-    })
+    .then(() => {})
     .catch((error) => {
       dispatch(showMessage({ message: error.response.message }));
     });
@@ -404,11 +400,7 @@ export const uploadDocument = createAsyncThunk(
       .post("api/caseManagement/uploadCaseDocuments", document, {
         headers: { "Content-type": "multipart/form-data" }
       })
-      .then((data) => {
-        if (data.data && data.data.success) {
-          console.log("success");
-        }
-      })
+      .then(() => {})
       .catch((errors) => {
         return dispatch(showMessage(errors));
       });
