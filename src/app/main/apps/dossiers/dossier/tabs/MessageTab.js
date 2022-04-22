@@ -346,6 +346,7 @@ function MessageTab(props) {
             <InputBase
               autoFocus={false}
               id="message-input"
+              autoComplete="off"
               className="flex-1 flex grow shrink-0 mx-16 ltr:mr-48 rtl:ml-48 my-8"
               placeholder="Envoyer un message..."
               onChange={(e) => setMessage(e.target.value)}
