@@ -5,10 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 import { showMessage } from "app/store/fuse/messageSlice";
-import {
-  getFormattedDateTime,
-  getProcedureCode
-} from "app/main/common/functions";
+import { getFormattedDateTime } from "app/main/common/functions";
 
 export const restoreEtape = createAsyncThunk(
   "dossiersApp/dossiers/restoreEtape",

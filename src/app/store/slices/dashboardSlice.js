@@ -8,19 +8,17 @@ export const getCalendarData = (obj) => async (dispatch) => {
     .post("api/caseManagement/getDashboardData", obj)
     .then((data) => {
       const response = data.data;
-      if (response.data?.length > 0) {
-        let newData = [];
-        newData = response.data.map((calendar) => {
-          calendar.start = getFormattedDateTime({
-            date: calendar.start
-          });
-          calendar.end = getFormattedDateTime({ date: calendar.end });
-          return calendar;
-        });
-        dispatch(setCalendarData(newData));
-      } else {
-        dispatch(setCalendarData(response.data));
-      }
+      response.data =
+        response.data?.length > 0
+          ? response.data.map((calendar) => {
+              calendar.start = getFormattedDateTime({
+                date: calendar.start
+              });
+              calendar.end = getFormattedDateTime({ date: calendar.end });
+              return calendar;
+            })
+          : response.data;
+      dispatch(setCalendarData(response.data));
     })
     .catch((errors) => {
       return dispatch(showMessage({ message: errors.response.data.message }));

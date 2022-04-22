@@ -7,7 +7,6 @@ import verifyEmail from "./slices/verifyEmailSlice";
 import resetPassword from "./slices/resetPasswordSlice";
 import forgotPassword from "./slices/forgotPasswordSlice";
 import createPassword from "./slices/createPasswordSlice";
-import etapes from "./slices/etapesSlice";
 import userMenu from "./slices/userMenuSlice";
 import dashboard from "./slices/dashboardSlice";
 
@@ -21,7 +20,6 @@ const createReducer = () => (state, action) => {
     resetPassword,
     forgotPassword,
     createPassword,
-    etapes,
     userMenu,
     dashboard
   });
