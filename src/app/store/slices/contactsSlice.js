@@ -88,8 +88,8 @@ export const getContacts = createAsyncThunk(
 
 export const addContact = createAsyncThunk(
   "contactsApp/contacts/addContact",
-  async (contact, { dispatch, getState }) => {
-    const response = await axios
+  async (contact, { dispatch }) => {
+    await axios
       .post("auth/user/registerClient", contact)
       .then((data) => {
         if (data.data.status === 201 && data.data.success) {
@@ -109,8 +109,8 @@ export const addContact = createAsyncThunk(
 
 export const updateContact = createAsyncThunk(
   "contactsApp/contacts/updateContact",
-  async (contact, { dispatch, getState }) => {
-    const response = await axios
+  async (contact, { dispatch }) => {
+    await axios
       .patch(`auth/user/updateUser/${contact.id}`, contact)
       .then((data) => {
         if (data.data.status === 200 && data.data.success) {
@@ -127,8 +127,8 @@ export const updateContact = createAsyncThunk(
 
 export const removeContacts = createAsyncThunk(
   "contactsApp/contacts/removeContacts",
-  async (contactIds, { dispatch, getState }) => {
-    const response = await axios
+  async (contactIds, { dispatch }) => {
+    await axios
       .delete("auth/user/bulkDeleteUser", { data: { user_ids: contactIds } })
       .then((data) => {
         if (data.data.status === 200 && data.data.success) {

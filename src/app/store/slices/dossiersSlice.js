@@ -360,8 +360,8 @@ export const addEtapes = createAsyncThunk(
           dispatch(setIsLoading(false));
         }
       })
-      .catch((errors) => {
-        return dispatch(showMessage(errors));
+      .catch((error) => {
+        return dispatch(showMessage({ message: error.response.message }));
       });
   }
 );

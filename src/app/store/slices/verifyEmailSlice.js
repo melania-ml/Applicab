@@ -29,8 +29,8 @@ export const callResendOTP =
           dispatch(showMessage({ message: data.data.message }));
         }
       })
-      .catch((errors) => {
-        return dispatch(showMessage(errors));
+      .catch((error) => {
+        return dispatch(showMessage({ message: error.response.message }));
       });
   };
 
