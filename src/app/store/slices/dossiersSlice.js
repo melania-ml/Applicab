@@ -64,7 +64,7 @@ export const removeEtapes = createAsyncThunk(
 
 export const getDeletedEtapes = createAsyncThunk(
   "dossiersApp/dossiers/getDeletedEtapes",
-  async (id, { dispatch, getState }) => {
+  async (id, { dispatch }) => {
     dispatch(setIsLoading(true));
     const response = await axios.get(`api/caseManagement/getDeletedTask/${id}`);
     const data = await response.data;
@@ -75,7 +75,7 @@ export const getDeletedEtapes = createAsyncThunk(
 
 export const getEtapes = createAsyncThunk(
   "dossiersApp/dossiers/getEtapes",
-  async (obj, { dispatch, getState }) => {
+  async (obj, { dispatch }) => {
     dispatch(setIsLoading(true));
     const response = await axios.post("api/caseManagement/filterCaseTask", obj);
     const data = await response.data;
@@ -137,7 +137,7 @@ export const addCase = createAsyncThunk(
             })
           );
           const procedure = getState().dossiers.procedures;
-          const { id, procedure_type } = procedure.filter(
+          const { id } = procedure.filter(
             (fil) => fil.id === data.data.data.procedure
           )[0];
           dispatch(
@@ -169,7 +169,7 @@ export const addCase = createAsyncThunk(
 
 export const updateCase = createAsyncThunk(
   "dossiersApp/dossiers/updateCase",
-  async (dossier, { dispatch, getState }) => {
+  async (dossier, { dispatch }) => {
     await axios
       .patch(
         `api/caseManagement/updateCases/${dossier.case_management_id}`,
@@ -188,7 +188,7 @@ export const updateCase = createAsyncThunk(
 
 export const deleteCase = createAsyncThunk(
   "dossiersApp/dossiers/deleteCase",
-  async (ids, { dispatch, getState }) => {
+  async (ids, { dispatch }) => {
     await axios
       .delete(`api/caseManagement/bulkDeleteCases`, {
         data: { case_management_id: ids }
@@ -392,7 +392,7 @@ export const updateEtapes = createAsyncThunk(
 
 export const uploadDocument = createAsyncThunk(
   "dossiersApp/dossiers/uploadDocument",
-  async (document, { dispatch, getState }) => {
+  async (document, { dispatch }) => {
     await axios
       .post("api/caseManagement/uploadCaseDocuments", document, {
         headers: { "Content-type": "multipart/form-data" }
