@@ -539,9 +539,9 @@ function ContactDialog(props) {
                   if (typeof newValue === "string") {
                     setAllFields({ ...allFields, title: newValue });
                   } else if (newValue && newValue.inputValue) {
-                    setAllFields({ ...allFields, title: newValue.inputValue });
+                    setAllFields({ ...allFields, title: newValue?.inputValue });
                   } else {
-                    setAllFields({ ...allFields, title: newValue.title });
+                    setAllFields({ ...allFields, title: newValue?.title });
                   }
                 }}
                 filterOptions={(options, params) => {
@@ -608,7 +608,7 @@ function ContactDialog(props) {
                 onChange={(e, newValue) =>
                   setAllFields({
                     ...allFields,
-                    country: newValue.label
+                    country: newValue?.label
                   })
                 }
                 renderInput={(params) => <TextField {...params} label="Pays" />}
@@ -875,9 +875,9 @@ function ContactDialog(props) {
                   if (typeof newValue === "string") {
                     setAllFields({ ...allFields, title: newValue });
                   } else if (newValue && newValue.inputValue) {
-                    setAllFields({ ...allFields, title: newValue.inputValue });
+                    setAllFields({ ...allFields, title: newValue?.inputValue });
                   } else {
-                    setAllFields({ ...allFields, title: newValue.title });
+                    setAllFields({ ...allFields, title: newValue?.title });
                   }
                 }}
                 filterOptions={(options, params) => {
@@ -1068,7 +1068,7 @@ function ContactDialog(props) {
                 onChange={(e, newValue) => {
                   setAllFields({
                     ...allFields,
-                    nationality: newValue.label
+                    nationality: newValue?.label
                   });
                 }}
                 renderInput={(params) => (
@@ -1086,7 +1086,7 @@ function ContactDialog(props) {
                 onChange={(e, newValue) =>
                   setAllFields({
                     ...allFields,
-                    country: newValue.label
+                    country: newValue?.label
                   })
                 }
                 renderInput={(params) => <TextField {...params} label="Pays" />}
@@ -1115,7 +1115,7 @@ function ContactDialog(props) {
                 onChange={(e, newValue) =>
                   setAllFields({
                     ...allFields,
-                    department: newValue.label
+                    department: newValue?.label
                   })
                 }
                 renderInput={(params) => (
