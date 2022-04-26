@@ -1,6 +1,21 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import _ from "@lodash";
+import Countries from "app/main/constants/Countries";
+import Nationalities from "app/main/constants/Nationalities";
+import Departments from "app/main/constants/Departments";
+import Status from "app/main/constants/Status";
+import ClientStatus from "app/main/constants/ClientStatus";
+import {
+  updateContact,
+  addContact,
+  closeNewContactDialog,
+  closeEditContactDialog,
+  getFormTitles,
+  getAllTypes
+} from "app/store/slices/contactsSlice";
+
+//material-ui
 import {
   Typography,
   Toolbar,
@@ -21,22 +36,8 @@ import {
   InputAdornment,
   Chip
 } from "@mui/material";
-import { createFilterOptions } from "@mui/material/Autocomplete";
 import DatePicker from "@mui/lab/DatePicker";
-import Countries from "app/main/constants/Countries";
-import Nationalities from "app/main/constants/Nationalities";
-import Departments from "app/main/constants/Departments";
-import Status from "app/main/constants/Status";
-import ClientStatus from "app/main/constants/ClientStatus";
-
-import {
-  updateContact,
-  addContact,
-  closeNewContactDialog,
-  closeEditContactDialog,
-  getFormTitles,
-  getAllTypes
-} from "app/store/slices/contactsSlice";
+import { createFilterOptions } from "@mui/material/Autocomplete";
 
 const tags = [];
 const filter = createFilterOptions();

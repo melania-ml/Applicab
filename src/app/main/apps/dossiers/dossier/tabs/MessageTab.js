@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { indexOf } from "lodash";
 import Picker from "emoji-picker-react";
 import { motion } from "framer-motion";
+import parse from "html-react-parser";
 import FuseUtils from "@fuse/utils";
 import FuseScrollbars from "@fuse/core/FuseScrollbars";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
@@ -280,7 +281,7 @@ function MessageTab(props) {
                       )}
                       <div className="bubble flex relative items-center justify-center p-12 max-w-full shadow">
                         <div className="leading-tight whitespace-pre-wrap">
-                          {item.message}
+                          {parse(item.message)}
                         </div>
                         <Typography
                           className="time absolute w-full hidden text-11 mt-8 -mb-24 ltr:left-0 rtl:right-0 bottom-0 whitespace-nowrap"

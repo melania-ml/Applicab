@@ -1,4 +1,3 @@
-import { forwardRef, useRef, useEffect } from "react";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import {
@@ -20,7 +19,6 @@ import {
   TablePagination,
   TableRow,
   TableSortLabel,
-  Checkbox,
   Table
 } from "@mui/material";
 

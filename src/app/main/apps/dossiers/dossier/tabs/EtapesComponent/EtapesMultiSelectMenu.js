@@ -55,7 +55,7 @@ function EtapesMultiSelectMenu(props) {
 
   const restoreEtapes = () => {
     setAnchorEl(null);
-    dispatch(restoreEtape());
+    dispatch(restoreEtape(selectedEtapes));
   };
 
   return (

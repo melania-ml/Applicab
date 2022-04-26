@@ -32,6 +32,15 @@ import {
 } from "@mui/material";
 
 function EtapesDialog() {
+  const defaultData = `<p>Chère Madame, Cher Monsieur,</br>
+  Je vous confirme bien volontiers notre rendez-vous du ........... prochain à .. heures.</br></br>
+  Je vous invite à me confirmer le numéro de téléphone sur lequel je pourrai vous joindre
+  Voici le lien pour participer à notre visioconférence.</br>
+  Je vous recevrai au (adresse du cabinet)</br></br>
+  Dans l'intervalle,</br>
+  Je vous prie de croire, Chère Madame, Cher Monsieur, à l'assurance de mes salutations
+  distinguées.</p>`;
+
   const [allFields, setAllFields] = useState({
     position: "",
     case_name: "",
@@ -108,13 +117,28 @@ function EtapesDialog() {
   }
 
   const sendMessage = () => {
-    dispatch(
-      addEtapes({
-        ...allFields,
-        case_management_id: editDossierData.data.id,
-        send_notification: true
-      })
-    );
+    if (type === "edit") {
+      dispatch(
+        updateEtapes({
+          ...allFields,
+          message: allFields.message || defaultData,
+          id: data.id,
+          case_management_id: editDossierData.data.id,
+          send_notification: true,
+          lawyer_notification: notifications.map(
+            (notification) => notification.count
+          )
+        })
+      );
+    } else {
+      dispatch(
+        addEtapes({
+          ...allFields,
+          case_management_id: editDossierData.data.id,
+          send_notification: true
+        })
+      );
+    }
     closeComposeDialog();
   };
 
@@ -429,14 +453,7 @@ function EtapesDialog() {
             <CKEditor
               className="ckeditor"
               editor={ClassicEditor}
-              data="<p>Chère Madame, Cher Monsieur,</br>
-                Je vous confirme bien volontiers notre rendez-vous du ........... prochain à .. heures.</br></br>
-                Je vous invite à me confirmer le numéro de téléphone sur lequel je pourrai vous joindre
-                Voici le lien pour participer à notre visioconférence.</br>
-                Je vous recevrai au (adresse du cabinet)</br></br>
-                Dans l'intervalle,</br>
-                Je vous prie de croire, Chère Madame, Cher Monsieur, à l'assurance de mes salutations
-                distinguées.</p>"
+              data={defaultData}
               config={{
                 toolbar: [
                   "heading",

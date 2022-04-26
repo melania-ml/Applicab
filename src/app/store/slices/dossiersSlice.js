@@ -12,11 +12,8 @@ export const restoreEtape = createAsyncThunk(
   async (etapeIds, { dispatch, getState }) => {
     dispatch(setIsLoading(true));
     await axios
-      .delete("api/caseManagement/bulkDeleteTask", {
-        data: {
-          ids: etapeIds,
-          case_management_id: getState().dossiers.editDossierData.data.id
-        }
+      .post("api/caseManagement/bulkRestoreTask", {
+        task_id: etapeIds
       })
       .then((data) => {
         if (data.data.status === 200 && data.data.success) {
@@ -381,6 +378,9 @@ export const updateEtapes = createAsyncThunk(
             })
           );
           dispatch(getDocuments(getState().dossiers.editDossierData.data.id));
+          dispatch(
+            getMessages(getState().dossiers.caseId, getState().dossiers.groupId)
+          );
           dispatch(setIsLoading(false));
         }
       })
