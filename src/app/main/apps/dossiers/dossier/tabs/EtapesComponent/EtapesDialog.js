@@ -81,6 +81,7 @@ function EtapesDialog() {
         message: data.message,
         position: data.position
       });
+      setNotifications(data.lawyer_notification?.map((e) => ({ count: e })));
     } else {
       setAllFields({
         ...allFields,
@@ -142,10 +143,13 @@ function EtapesDialog() {
     closeComposeDialog();
   };
 
-  const handleRemoveItem = (e, value) => {
-    setNotifications(
-      notifications.filter((notification) => notification.id !== value)
-    );
+  const handleRemoveItem = (e, index) => {
+    let _tempNotification = [...notifications];
+    _tempNotification.splice(index, 1);
+    setNotifications([..._tempNotification]);
+    // setNotifications(
+    //   notifications.filter((notification) => notification.id !== value)
+    // );
   };
 
   useEffect(() => {
@@ -242,6 +246,7 @@ function EtapesDialog() {
             name="Position"
             label="Position"
             variant="outlined"
+            autoComplete="off"
             required
             fullWidth
             type="number"
@@ -273,6 +278,7 @@ function EtapesDialog() {
             className="mb-12"
             name="Étape"
             label="Étape"
+            autoComplete="off"
             required
             variant="outlined"
             fullWidth
@@ -336,7 +342,7 @@ function EtapesDialog() {
             )}
           />
           {notifications.length > 0 &&
-            notifications?.map((notification) => (
+            notifications?.map((notification, index) => (
               <div className="flex w-full mb-12 relative">
                 <TextField
                   className="xs=4 daycount"
@@ -373,7 +379,7 @@ function EtapesDialog() {
                       color: "#BABABF",
                       cursor: "pointer"
                     }}
-                    onClick={(e) => handleRemoveItem(e, notification.id)}
+                    onClick={(e) => handleRemoveItem(e, index)}
                   >
                     clear
                   </Icon>
@@ -440,6 +446,7 @@ function EtapesDialog() {
             name="Object"
             label="Object"
             variant="outlined"
+            autoComplete="off"
             fullWidth
             value={allFields.subject}
             onChange={(e) => {

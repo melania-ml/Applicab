@@ -539,9 +539,9 @@ function ContactDialog(props) {
                   if (typeof newValue === "string") {
                     setAllFields({ ...allFields, title: newValue });
                   } else if (newValue && newValue.inputValue) {
-                    setAllFields({ ...allFields, title: newValue.inputValue });
+                    setAllFields({ ...allFields, title: newValue?.inputValue });
                   } else {
-                    setAllFields({ ...allFields, title: newValue.title });
+                    setAllFields({ ...allFields, title: newValue?.title });
                   }
                 }}
                 filterOptions={(options, params) => {
@@ -608,7 +608,7 @@ function ContactDialog(props) {
                 onChange={(e, newValue) =>
                   setAllFields({
                     ...allFields,
-                    country: newValue.label
+                    country: newValue?.label
                   })
                 }
                 renderInput={(params) => <TextField {...params} label="Pays" />}
@@ -688,6 +688,7 @@ function ContactDialog(props) {
                 label="Immatriculé.e au RCS de"
                 variant="outlined"
                 fullWidth
+                autoComplete="off"
                 value={allFields.RCS_city}
                 onChange={(e) =>
                   setAllFields({
@@ -701,6 +702,7 @@ function ContactDialog(props) {
                 label="Numéro"
                 variant="outlined"
                 fullWidth
+                autoComplete="off"
                 type="number"
                 // error={errors?.number}
                 // helperText={errors?.number}
@@ -722,6 +724,7 @@ function ContactDialog(props) {
                 label={allFields.client_type === "Client" ? "Nom*" : "Nom"}
                 variant="outlined"
                 fullWidth
+                autoComplete="off"
                 value={allFields.last_name}
                 error={errors?.last_name}
                 helperText={errors?.last_name}
@@ -740,6 +743,7 @@ function ContactDialog(props) {
                 }
                 variant="outlined"
                 fullWidth
+                autoComplete="off"
                 value={allFields.first_name}
                 error={errors?.firstName}
                 helperText={errors?.firstName}
@@ -756,6 +760,7 @@ function ContactDialog(props) {
                 className="mb-12"
                 variant="outlined"
                 fullWidth
+                autoComplete="off"
                 value={allFields.email}
                 error={errors?.email}
                 helperText={errors?.email}
@@ -772,6 +777,7 @@ function ContactDialog(props) {
                 label="Mobile"
                 variant="outlined"
                 fullWidth
+                autoComplete="off"
                 error={errors?.mobile1}
                 helperText={errors?.mobile1}
                 value={allFields.phone_number}
@@ -875,9 +881,9 @@ function ContactDialog(props) {
                   if (typeof newValue === "string") {
                     setAllFields({ ...allFields, title: newValue });
                   } else if (newValue && newValue.inputValue) {
-                    setAllFields({ ...allFields, title: newValue.inputValue });
+                    setAllFields({ ...allFields, title: newValue?.inputValue });
                   } else {
-                    setAllFields({ ...allFields, title: newValue.title });
+                    setAllFields({ ...allFields, title: newValue?.title });
                   }
                 }}
                 filterOptions={(options, params) => {
@@ -919,6 +925,7 @@ function ContactDialog(props) {
                 className="mb-12"
                 name="Name"
                 label="Nom*"
+                autoComplete="off"
                 variant="outlined"
                 fullWidth
                 value={allFields.last_name}
@@ -1015,6 +1022,7 @@ function ContactDialog(props) {
                 className="mb-12"
                 label="Ville"
                 variant="outlined"
+                autoComplete="off"
                 fullWidth
                 value={allFields.city}
                 onChange={(e) =>
@@ -1028,6 +1036,7 @@ function ContactDialog(props) {
                 className="mb-12"
                 label="CP"
                 type="number"
+                autoComplete="off"
                 variant="outlined"
                 fullWidth
                 onKeyPress={(event) => {
@@ -1068,7 +1077,7 @@ function ContactDialog(props) {
                 onChange={(e, newValue) => {
                   setAllFields({
                     ...allFields,
-                    nationality: newValue.label
+                    nationality: newValue?.label
                   });
                 }}
                 renderInput={(params) => (
@@ -1086,7 +1095,7 @@ function ContactDialog(props) {
                 onChange={(e, newValue) =>
                   setAllFields({
                     ...allFields,
-                    country: newValue.label
+                    country: newValue?.label
                   })
                 }
                 renderInput={(params) => <TextField {...params} label="Pays" />}
@@ -1115,7 +1124,7 @@ function ContactDialog(props) {
                 onChange={(e, newValue) =>
                   setAllFields({
                     ...allFields,
-                    department: newValue.label
+                    department: newValue?.label
                   })
                 }
                 renderInput={(params) => (
