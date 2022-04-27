@@ -14,6 +14,7 @@ import {
   getFormTitles,
   getAllTypes
 } from "app/store/slices/contactsSlice";
+import { getFormattedDateTime } from "app/main/common/functions";
 
 //material-ui
 import {
@@ -140,7 +141,7 @@ function ContactDialog(props) {
         civil_status: ""
       });
     }
-  }, [success]);
+  }, [contactDialog.props.open, success]);
 
   useEffect(() => {
     if (contactDialog.props.open) {
@@ -688,6 +689,7 @@ function ContactDialog(props) {
                 label="Immatriculé.e au RCS de"
                 variant="outlined"
                 fullWidth
+                autoComplete="off"
                 value={allFields.RCS_city}
                 onChange={(e) =>
                   setAllFields({
@@ -701,6 +703,7 @@ function ContactDialog(props) {
                 label="Numéro"
                 variant="outlined"
                 fullWidth
+                autoComplete="off"
                 type="number"
                 // error={errors?.number}
                 // helperText={errors?.number}
@@ -722,6 +725,7 @@ function ContactDialog(props) {
                 label={allFields.client_type === "Client" ? "Nom*" : "Nom"}
                 variant="outlined"
                 fullWidth
+                autoComplete="off"
                 value={allFields.last_name}
                 error={errors?.last_name}
                 helperText={errors?.last_name}
@@ -740,6 +744,7 @@ function ContactDialog(props) {
                 }
                 variant="outlined"
                 fullWidth
+                autoComplete="off"
                 value={allFields.first_name}
                 error={errors?.firstName}
                 helperText={errors?.firstName}
@@ -756,6 +761,7 @@ function ContactDialog(props) {
                 className="mb-12"
                 variant="outlined"
                 fullWidth
+                autoComplete="off"
                 value={allFields.email}
                 error={errors?.email}
                 helperText={errors?.email}
@@ -772,6 +778,7 @@ function ContactDialog(props) {
                 label="Mobile"
                 variant="outlined"
                 fullWidth
+                autoComplete="off"
                 error={errors?.mobile1}
                 helperText={errors?.mobile1}
                 value={allFields.phone_number}
@@ -919,6 +926,7 @@ function ContactDialog(props) {
                 className="mb-12"
                 name="Name"
                 label="Nom*"
+                autoComplete="off"
                 variant="outlined"
                 fullWidth
                 value={allFields.last_name}
@@ -979,7 +987,7 @@ function ContactDialog(props) {
                     ...allFields,
                     phone_number: e.target.value
                   });
-                  setIsValid("mobile1", e.target.value);
+                  checkIsDisable("mobile1", e.target.value);
                 }}
               />
               <TextField
@@ -995,7 +1003,7 @@ function ContactDialog(props) {
                     ...allFields,
                     fixe: e.target.value
                   });
-                  setIsValid("mobile2", e.target.value);
+                  checkIsDisable("mobile2", e.target.value);
                 }}
               />
               <TextField
@@ -1015,6 +1023,7 @@ function ContactDialog(props) {
                 className="mb-12"
                 label="Ville"
                 variant="outlined"
+                autoComplete="off"
                 fullWidth
                 value={allFields.city}
                 onChange={(e) =>
@@ -1028,6 +1037,7 @@ function ContactDialog(props) {
                 className="mb-12"
                 label="CP"
                 type="number"
+                autoComplete="off"
                 variant="outlined"
                 fullWidth
                 onKeyPress={(event) => {
@@ -1051,7 +1061,13 @@ function ContactDialog(props) {
                 value={allFields.date_of_birth}
                 maxDate={new Date()}
                 onChange={(newValue) => {
-                  setAllFields({ ...allFields, date_of_birth: newValue });
+                  setAllFields({
+                    ...allFields,
+                    date_of_birth: getFormattedDateTime({
+                      date: newValue,
+                      format: "YYYY-MM-DD"
+                    })
+                  });
                 }}
                 renderInput={(params) => (
                   <TextField className="w-full mb-12" {...params} />

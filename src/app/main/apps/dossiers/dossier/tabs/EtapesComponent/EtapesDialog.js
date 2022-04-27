@@ -246,6 +246,7 @@ function EtapesDialog() {
             name="Position"
             label="Position"
             variant="outlined"
+            autoComplete="off"
             required
             fullWidth
             type="number"
@@ -277,6 +278,7 @@ function EtapesDialog() {
             className="mb-12"
             name="Étape"
             label="Étape"
+            autoComplete="off"
             required
             variant="outlined"
             fullWidth
@@ -444,6 +446,7 @@ function EtapesDialog() {
             name="Object"
             label="Object"
             variant="outlined"
+            autoComplete="off"
             fullWidth
             value={allFields.subject}
             onChange={(e) => {
