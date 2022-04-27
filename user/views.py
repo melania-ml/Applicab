@@ -164,13 +164,13 @@ class setPassword(APIView):
             userData.email_token = None
             userData.is_active = True
             userData.save()
-            # # Send Welcome email
-            # welcomeText = emailText.wellcomeText() | emailText.commonUrls()
-            # welcomeText['text1'] = welcomeText['text1'].format(userName=userData.first_name)
-            #
-            # send_email([userData.email],
-            #            'Bienvenue sur Applicab !', 'email.html',
-            #            welcomeText)
+            # Send Welcome email
+            welcomeText = emailText.wellcomeText() | emailText.commonUrls()
+            welcomeText['text1'] = welcomeText['text1'].format(userName=userData.first_name)
+
+            send_email([userData.email],
+                       'Bienvenue sur Applicab !', 'email.html',
+                       welcomeText)
             res = ResponseInfo({"passwordCreated": True}, YOUR_PASSWORD_CHANGED, True, status.HTTP_200_OK)
             return Response(res.success_payload(), status=status.HTTP_200_OK)
         except Exception as err:

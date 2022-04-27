@@ -68,7 +68,8 @@ def lawyerTaskNotification():
 
 def wellcomeText():
     textDict = {
-        'title': 'Bienvenue sur Applicab 🎉! <br> Accédez à votre espace personnel',
+        'title': 'Bienvenue sur Applicab 🎉!',
+        'title2': 'Accédez à votre espace personnel',
         'text1': 'Bonjour {userName},',
         'text2': 'Bienvenue chez Applicab ! Votre espace personnel a été crée avec succès.',
         'text3': "Pour y accéder, cliquez sur le bouton suivant:",
