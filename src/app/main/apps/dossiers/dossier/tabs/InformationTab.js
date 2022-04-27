@@ -5,6 +5,7 @@ import Types from "app/main/constants/Types";
 import { openNewContactDialog } from "app/store/slices/contactsSlice";
 import { addCase, updateCase } from "app/store/slices/dossiersSlice";
 import ContactDialog from "app/main/apps/contacts/components/ContactDialog";
+import { getUniqueTags } from "app/main/common/functions";
 
 //material-ui
 import {
@@ -327,7 +328,7 @@ function InformationTab() {
           const array = newValue.map((val) => val.id ?? val);
           setAllFields({
             ...allFields,
-            client_id: array
+            client_id: getUniqueTags(array)
           });
         }}
         renderInput={(params) => (
@@ -354,7 +355,7 @@ function InformationTab() {
           const array = newValue.map((val) => val.id ?? val);
           setAllFields({
             ...allFields,
-            customer_contact_id: array
+            customer_contact_id: getUniqueTags(array)
           });
         }}
         renderInput={(params) => (
@@ -381,7 +382,7 @@ function InformationTab() {
           const array = newValue.map((val) => val.id ?? val);
           setAllFields({
             ...allFields,
-            opposing_contact_id: array
+            opposing_contact_id: getUniqueTags(array)
           });
         }}
         renderInput={(params) => (
