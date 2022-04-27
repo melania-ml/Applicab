@@ -131,7 +131,7 @@ class DashboardTaskSerializer(serializers.ModelSerializer):
         _dict = {
             'start': response['notification_date'],
             'end': response['notification_date'],
-            'title': response['name'],
+            'title': response['sub_name'] if response['sub_name'] else response['name'],
             'task_obj': response
         }
         return _dict

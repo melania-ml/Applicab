@@ -159,6 +159,22 @@ class casesManagement(APIView):
                                status.HTTP_401_UNAUTHORIZED)
             return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
 
+    def delete(self, request):
+        try:
+            reqData = request.data
+            caseManagementDocuments.objects.filter(case_management_id__in=reqData['case_management_id']).delete()
+            caseManagementTask.objects.filter(case_management_id__in=reqData['case_management_id']).hard_delete()
+            groupChat = list(caseManagementChatGroup.objects.filter(case_management_id__in=reqData['case_management_id']).values_list('id',flat=True))
+            caseManagementGroupMessage.objects.filter(group_id__in=groupChat).delete()
+            caseManagementChatGroup.objects.filter(case_management_id__in=reqData['case_management_id']).delete()
+            CaseManagement.objects.filter(id__in=reqData['case_management_id']).delete()
+            res = ResponseInfo([], RECORD_DELETED_SUCCESSFULLY, True,status.HTTP_200_OK)
+            return Response(res.success_payload(), status=status.HTTP_200_OK)
+        except Exception as err:
+            res = ResponseInfo(err, SOMETHING_WENT_WRONG, False,
+                               status.HTTP_401_UNAUTHORIZED)
+            return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
     def addDefaultTask(self, caseId, procedure, type):
         caseManagementTask.objects.filter(case_management_id=caseId).hard_delete()
         _dict = {'type__in': [type, 'Les deuX'], procedure: True}
@@ -249,7 +265,7 @@ class caseManagementTaskView(APIView):
                 # prepare Email Notification
                 if bodyParams['send_notification']:
                     self.taskNotificationEmail(bodyParams['client_id'])
-
+                    self.sendTaskMessage(bodyParams['case_management_id'], request.user, serializer.data['message'])
                 res = ResponseInfo(serializer.data, SUCCESS, True,
                                    status.HTTP_201_CREATED)
                 return Response(res.success_payload(), status=status.HTTP_201_CREATED)
@@ -321,6 +337,13 @@ class caseManagementTaskView(APIView):
                        'Altata - Notification 🔔 Nom du dossier -  Objet du message', 'email.html',
                        notificationEmailText)
 
+    def sendTaskMessage(self, caseId, lawyerId, message):
+        groupId = caseManagementChatGroup.objects.filter(case_management_id=caseId).first()
+        if not message or message == "":
+            message = "<Blank-message-from-task-make-sure-to-add-message>"
+        caseManagementGroupMessage.objects.create(message_read_by=[lawyerId.id], message=message, group_id=groupId,
+                                                  message_send_by=lawyerId)
+
 
 class caseManagementCreateTaskView(APIView):
     serializers_class = CaseTaskSerializer
@@ -334,7 +357,8 @@ class caseManagementCreateTaskView(APIView):
             serializer.save()
             # prepare Email Notification
             if bodyParams['send_notification'] and 'client_id' in bodyParams:
-                caseManagementTaskView.taskNotificationEmail(self, bodyParams['client_id'])
+                caseManagementTaskView.taskNotificationEmail(self,bodyParams['client_id'])
+                caseManagementTaskView.sendTaskMessage(self, bodyParams['case_management_id'], request.user, serializer.data['message'])
 
             res = ResponseInfo(serializer.data, TASK_ADDED_SUCCESSFULLY, True,
                                status.HTTP_201_CREATED)
@@ -393,6 +417,18 @@ class caseManagementDocumentsView(APIView):
 
 
 class bulkCaseTaskOperationsViewSet(APIView):
+    def post(self, request):
+        try:
+            taskIds = request.data.get('task_id', None)
+            caseManagementTask.deleted_objects.filter(id__in=taskIds).un_delete()
+            res = ResponseInfo([], TASK_RESTORED_SUCCESSFULLY, True,
+                               status.HTTP_200_OK)
+            return Response(res.success_payload(), status=status.HTTP_200_OK)
+        except Exception as err:
+            res = ResponseInfo(err, SOMETHING_WENT_WRONG, False,
+                               status.HTTP_401_UNAUTHORIZED)
+            return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
     def put(self, request):
         try:
             updateValue = request.data['update_value']
@@ -497,7 +533,7 @@ class dashboardViewSet(APIView):
                 query = {'case_management_id': caseId, 'notification_date__isnull': False}
             elif not caseId and not statusData or not caseId and statusData:
                 caseId = list(CaseManagement.objects.filter(lawyer_id=request.user.id).values_list('id', flat=True))
-                query = {'notification_date__isnull': False,'case_management_id__in': caseId}
+                query = {'notification_date__isnull': False, 'case_management_id__in': caseId}
                 if statusData:
                     query = {'notification_date__isnull': False, 'status': statusData, 'case_management_id__in': caseId}
             else:
@@ -506,7 +542,7 @@ class dashboardViewSet(APIView):
             caseTask = caseManagementTask.objects.filter(**query).order_by("notification_date")
             serializer = self.serializers_class(caseTask, many=True)
 
-            res = ResponseInfo(serializer.data, SUCCESS, True,status.HTTP_200_OK)
+            res = ResponseInfo(serializer.data, SUCCESS, True, status.HTTP_200_OK)
             return Response(res.success_payload(), status=status.HTTP_200_OK)
 
         except Exception as err:

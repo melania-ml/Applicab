@@ -50,11 +50,11 @@ class CaseManagement(CommonBase):
     procedure = models.ForeignKey(Procedure,
                                   blank=True, null=True,
                                   on_delete=models.DO_NOTHING, db_column='procedure_id')
-    location = models.CharField(max_length=100, blank=True, null=True)  # lieu
+    location = models.CharField(max_length=600, blank=True, null=True)  # lieu
     tags = ArrayField(models.CharField(max_length=200), null=True,
                       blank=True)
-    internal_comment = models.CharField(max_length=100, blank=True, null=True)
-    shared_comment = models.CharField(max_length=100, blank=True, null=True)
+    internal_comment = models.CharField(max_length=10000, blank=True, null=True)
+    shared_comment = models.CharField(max_length=10000, blank=True, null=True)
     lawyer_id = models.ForeignKey(User,
                                   blank=True, null=True,
                                   on_delete=models.DO_NOTHING, related_name='related_type_lawyer_id',
@@ -139,7 +139,7 @@ class caseManagementDocuments(CommonBase):
                                            on_delete=models.DO_NOTHING, db_column='case_management_id')
     case_task_id = models.ForeignKey(caseManagementTask,
                                      blank=True, null=True,
-                                     on_delete=models.DO_NOTHING, related_name='caseDocuments',
+                                     on_delete=models.SET_NULL, related_name='caseDocuments',
                                      db_column='case_task_id')
 
     def __str__(self):
