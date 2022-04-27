@@ -157,9 +157,8 @@ function MessageTab(props) {
         groupId,
         caseId
       })
-    ).then(() => {
-      setMessage("");
-    });
+    );
+    setMessage("");
   };
 
   const onEmojiClick = (event, emojiObject) => {

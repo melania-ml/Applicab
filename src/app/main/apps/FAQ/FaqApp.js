@@ -85,7 +85,7 @@ function FaqApp() {
   }
 
   return (
-    <Root className="w-full flex flex-col flex-auto">
+    <Root className="w-full flex flex-col flex-auto select-none">
       <div className="FaqPage-header flex flex-col shrink-0 items-center justify-center text-center">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
