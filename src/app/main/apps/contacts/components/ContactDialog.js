@@ -14,6 +14,7 @@ import {
   getFormTitles,
   getAllTypes
 } from "app/store/slices/contactsSlice";
+import { getFormattedDateTime } from "app/main/common/functions";
 
 //material-ui
 import {
@@ -140,7 +141,7 @@ function ContactDialog(props) {
         civil_status: ""
       });
     }
-  }, [success]);
+  }, [contactDialog.props.open, success]);
 
   useEffect(() => {
     if (contactDialog.props.open) {
@@ -986,7 +987,7 @@ function ContactDialog(props) {
                     ...allFields,
                     phone_number: e.target.value
                   });
-                  setIsValid("mobile1", e.target.value);
+                  checkIsDisable("mobile1", e.target.value);
                 }}
               />
               <TextField
@@ -1002,7 +1003,7 @@ function ContactDialog(props) {
                     ...allFields,
                     fixe: e.target.value
                   });
-                  setIsValid("mobile2", e.target.value);
+                  checkIsDisable("mobile2", e.target.value);
                 }}
               />
               <TextField
@@ -1060,7 +1061,13 @@ function ContactDialog(props) {
                 value={allFields.date_of_birth}
                 maxDate={new Date()}
                 onChange={(newValue) => {
-                  setAllFields({ ...allFields, date_of_birth: newValue });
+                  setAllFields({
+                    ...allFields,
+                    date_of_birth: getFormattedDateTime({
+                      date: newValue,
+                      format: "YYYY-MM-DD"
+                    })
+                  });
                 }}
                 renderInput={(params) => (
                   <TextField className="w-full mb-12" {...params} />
