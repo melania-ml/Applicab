@@ -273,7 +273,6 @@ input[type="file"]::-webkit-file-upload-button {
   background-color: #fff;
 }
 .etape-txt {
-  /* display: block; */
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
