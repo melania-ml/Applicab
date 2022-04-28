@@ -1056,23 +1056,28 @@ function ContactDialog(props) {
               <div className="flex mb-14 w-full justify-center">
                 <b>Information complémentaire</b>
               </div>
-              <DatePicker
-                label="Date de naissance"
-                value={allFields.date_of_birth}
-                maxDate={new Date()}
-                onChange={(newValue) => {
-                  setAllFields({
-                    ...allFields,
-                    date_of_birth: getFormattedDateTime({
-                      date: newValue,
-                      format: "YYYY-MM-DD"
-                    })
-                  });
-                }}
-                renderInput={(params) => (
-                  <TextField className="w-full mb-12" {...params} />
-                )}
-              />
+              <div
+                className="flex w-full mb-12"
+                onKeyDownCapture={(e) => e.preventDefault()}
+              >
+                <DatePicker
+                  label="Date de naissance"
+                  value={allFields.date_of_birth}
+                  maxDate={new Date()}
+                  onChange={(newValue) => {
+                    setAllFields({
+                      ...allFields,
+                      date_of_birth: getFormattedDateTime({
+                        date: newValue,
+                        format: "YYYY-MM-DD"
+                      })
+                    });
+                  }}
+                  renderInput={(params) => (
+                    <TextField className="w-full mb-12" {...params} />
+                  )}
+                />
+              </div>
               <Autocomplete
                 className="flex w-full mb-12"
                 disablePortal
