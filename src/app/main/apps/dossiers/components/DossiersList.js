@@ -57,6 +57,13 @@ function DossiersList(props) {
       {
         Header: "Nom",
         accessor: "case_name",
+        Cell: ({ row }) => {
+          return (
+            <CustomTooltip placement="top-start" title={row.original.case_name}>
+              <span className="etape-txt">{row.original.case_name}</span>
+            </CustomTooltip>
+          );
+        },
         sortable: true
       },
       {

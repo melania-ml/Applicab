@@ -276,8 +276,9 @@ input[type="file"]::-webkit-file-upload-button {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  width: 150px;
+  width: 128px;
   max-width: 15rem;
+  display: block;
 }
 .rowsPerPage p{
   margin: 0 !important;

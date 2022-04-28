@@ -252,16 +252,10 @@ function EtapeTab() {
               placement="top-end"
               title={row.original.sub_name || row.original.name}
             >
-              <i
-                style={{
-                  width: 200,
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  display: "inline-block"
-                }}
-              >
-                {row.original.sub_name || row.original.name}
+              <i>
+                <span className="etape-txt">
+                  {row.original.sub_name || row.original.name}
+                </span>
               </i>
             </CustomTooltip>
           ) : (

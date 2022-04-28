@@ -5,6 +5,7 @@ import FuseUtils from "@fuse/utils";
 import FuseLoading from "@fuse/core/FuseLoading";
 import ContactsMultiSelectMenu from "./ContactsMultiSelectMenu";
 import ContactsTable from "./ContactsTable";
+import { CustomTooltip } from "app/main/common/components";
 import {
   openEditContactDialog,
   selectContacts
@@ -44,7 +45,16 @@ function ContactsList() {
         Header: "Type",
         accessor: "client_type",
         Cell: ({ row }) => {
-          return <span>{row.original.client_type?.client_type}</span>;
+          return (
+            <CustomTooltip
+              placement="top-start"
+              title={row.original.client_type?.client_type}
+            >
+              <span className="etape-txt">
+                {row.original.client_type?.client_type}
+              </span>
+            </CustomTooltip>
+          );
         },
         className: "font-medium",
         sortable: true
@@ -53,7 +63,14 @@ function ContactsList() {
         Header: "Titre",
         accessor: "title",
         Cell: ({ row }) => {
-          return <span>{row.original.title?.title}</span>;
+          return (
+            <CustomTooltip
+              placement="top-start"
+              title={row.original.title?.title}
+            >
+              <span className="etape-txt">{row.original.title?.title}</span>
+            </CustomTooltip>
+          );
         },
         className: "font-medium",
         sortable: true
@@ -63,9 +80,14 @@ function ContactsList() {
         accessor: "last_name",
         Cell: ({ row }) => {
           return (
-            <span>
-              {row.original.first_name} {row.original.last_name}
-            </span>
+            <CustomTooltip
+              placement="top-start"
+              title={row.original.first_name + " " + row.original.last_name}
+            >
+              <span className="etape-txt">
+                {row.original.first_name} {row.original.last_name}
+              </span>
+            </CustomTooltip>
           );
         },
         sortable: true
@@ -78,6 +100,13 @@ function ContactsList() {
       {
         Header: "Email",
         accessor: "email",
+        Cell: ({ row }) => {
+          return (
+            <CustomTooltip placement="top-start" title={row.original.email}>
+              <span className="etape-txt">{row.original.email}</span>
+            </CustomTooltip>
+          );
+        },
         sortable: true
       },
       {
