@@ -332,7 +332,6 @@ function EtapesDialog() {
             value={allFields.notification_date}
             ampm={false}
             ampmInClock={false}
-            maxDate={new Date()}
             onChange={(newValue) => {
               setAllFields({ ...allFields, notification_date: newValue });
             }}
