@@ -240,7 +240,8 @@ function EtapeTab() {
         accessor: "position",
         Cell: ({ row }) => {
           return row.original.position || "-";
-        }
+        },
+        sortable: true
       },
       {
         Header: "Étape",
