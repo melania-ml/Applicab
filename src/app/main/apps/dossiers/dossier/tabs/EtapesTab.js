@@ -249,7 +249,7 @@ function EtapeTab() {
           const value = row.original.status;
           return value === "Fait" ? (
             <CustomTooltip
-              placement="top-end"
+              placement="top-start"
               title={row.original.sub_name || row.original.name}
             >
               <i>
@@ -260,7 +260,7 @@ function EtapeTab() {
             </CustomTooltip>
           ) : (
             <CustomTooltip
-              placement="top-end"
+              placement="top-start"
               title={row.original.sub_name || row.original.name}
             >
               <span
