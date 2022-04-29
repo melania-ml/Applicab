@@ -46,6 +46,14 @@ const navigationConfig = [
     icon: "help_outline",
     url: "apps/faq",
     access: ["Client"]
+  },
+  {
+    id: "lawyer",
+    title: "Lawyer",
+    type: "item",
+    icon: "account_box",
+    url: "apps/lawyers/all",
+    access: ["Admin"]
   }
 ];
 export default navigationConfig;

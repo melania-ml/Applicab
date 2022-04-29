@@ -124,6 +124,10 @@ function Login() {
         history.push({
           pathname: "/apps/client_dashboard"
         });
+      } else if (user_type === "Admin") {
+        history.push({
+          pathname: "/apps/lawyers/all"
+        });
       } else {
         history.push({
           pathname: "/apps/dashboard"
