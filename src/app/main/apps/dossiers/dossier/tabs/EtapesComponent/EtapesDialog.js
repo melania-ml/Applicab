@@ -349,17 +349,21 @@ function EtapesDialog() {
                   placeholder=""
                   type="number"
                   variant="filled"
-                  value={notification.count}
+                  value={notification.count ?? ""}
                   onChange={(e) => {
-                    if (e.target.value < 0) {
-                      return;
-                    }
                     notifications.map((n) => {
-                      if (n.id === notification.id) {
-                        n.count = parseInt(e.target.value);
-                      }
+                      if (e.target.value < 0) return;
+                      setNotifications((prev) =>
+                        prev.map((newObject, id) => {
+                          if (index === id)
+                            return {
+                              ...newObject,
+                              count: parseInt(e.target.value)
+                            };
+                          return newObject;
+                        })
+                      );
                     });
-                    setNotifications([...notifications]);
                   }}
                 />
                 <FormControl
