@@ -1,8 +1,7 @@
-import { lazy } from "react";
+import { authRoles } from "app/auth";
+import LoginAdmin from "./LoginAdmin";
 
-const Error404Page = lazy(() => import("./Error404Page"));
-
-const Error404PageConfig = {
+const LoginAdminConfig = {
   settings: {
     layout: {
       config: {
@@ -24,12 +23,13 @@ const Error404PageConfig = {
       }
     }
   },
+  auth: authRoles.onlyGuest,
   routes: [
     {
-      path: "apps/errors/error-404",
-      element: <Error404Page />
+      path: "login_admin",
+      element: <LoginAdmin />
     }
   ]
 };
 
-export default Error404PageConfig;
+export default LoginAdminConfig;

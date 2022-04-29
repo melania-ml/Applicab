@@ -9,10 +9,10 @@ import navigationConfig from "app/fuse-configs/navigationConfig";
 
 function Navigation(props) {
   const {
-    data: { client_type }
+    data: { user_type }
   } = useSelector(({ auth }) => auth.user);
   const navigation = navigationConfig.filter((config) =>
-    config.access.includes(client_type?.client_type)
+    config.access.includes(user_type)
   );
   const theme = useTheme();
   const mdDown = useMediaQuery(theme.breakpoints.down("lg"));

@@ -88,7 +88,7 @@ const defaultValues = {
   password: ""
 };
 
-function Login() {
+function LoginAdmin() {
   const dispatch = useDispatch();
   const login = useSelector(({ auth }) => auth.login);
   const {
@@ -240,9 +240,6 @@ function Login() {
                       label="Se souvenir de moi"
                     />
                   </FormGroup>
-                  <Link className="font-normal" to="/forgotPassword">
-                    Mot de passe oublié ?
-                  </Link>
                 </div>
 
                 <Button
@@ -331,4 +328,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default LoginAdmin;

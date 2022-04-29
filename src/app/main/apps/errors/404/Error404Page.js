@@ -34,7 +34,7 @@ function Error404Page() {
           </Typography>
         </motion.div>
 
-        <Paper className="flex items-center w-full h-56 p-16 mt-48 mb-16 shadow">
+        {/* <Paper className="flex items-center w-full h-56 p-16 mt-48 mb-16 shadow">
           <Icon color="action">search</Icon>
           <Input
             placeholder="Search for anything"
@@ -49,7 +49,7 @@ function Error404Page() {
 
         <Link className="font-normal" to="/apps/dashboard">
           Go back to dashboard
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

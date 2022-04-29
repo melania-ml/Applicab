@@ -9,7 +9,19 @@ export const submitLogin =
     return jwtService
       .signInWithEmailAndPassword(email, password)
       .then((user) => {
-        dispatch(setUserData(user));
+        const userName = user.data.is_superuser
+          ? "Admin"
+          : user.data.is_lawyer
+          ? "Lawyer"
+          : "Client";
+        const newUser = {
+          ...user,
+          data: {
+            ...user.data,
+            user_type: userName
+          }
+        };
+        dispatch(setUserData(newUser));
         return dispatch(loginSuccess());
       })
       .catch((error) => {
