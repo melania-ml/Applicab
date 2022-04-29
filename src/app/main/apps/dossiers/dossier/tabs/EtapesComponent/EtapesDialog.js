@@ -352,6 +352,9 @@ function EtapesDialog() {
                   variant="filled"
                   value={notification.count}
                   onChange={(e) => {
+                    if (e.target.value < 0) {
+                      return;
+                    }
                     notifications.map((n) => {
                       if (n.id === notification.id) {
                         n.count = parseInt(e.target.value);
