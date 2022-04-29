@@ -239,8 +239,16 @@ function EtapeTab() {
         Header: "Position",
         accessor: "position",
         Cell: ({ row }) => {
-          return row.original.position || "-";
-        }
+          const value = row.original.status;
+          return value === "Fait" ? (
+            <i>
+              <span>{row.original.position}</span>
+            </i>
+          ) : (
+            <span>{row.original.position || "-"}</span>
+          );
+        },
+        sortable: true
       },
       {
         Header: "Étape",
