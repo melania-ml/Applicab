@@ -303,8 +303,8 @@ class uploadUserCsvViewSet(APIView):
     def post(self, request):
         lawyerId = request.user
         if str(request.data['csv'])[-3:] != 'csv':
-            res = ResponseInfo({}, "Please use csv file for importing contacts", False, status.HTTP_204_NO_CONTENT)
-            return Response(res.success_payload(), status=status.HTTP_204_NO_CONTENT)
+            res = ResponseInfo({}, CSV_VALIDATION, False, status.HTTP_401_UNAUTHORIZED)
+            return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
 
         csvData = pandas.read_csv(request.data['csv'])
         if len(csvData) > 50:
@@ -312,7 +312,7 @@ class uploadUserCsvViewSet(APIView):
             return Response(res.success_payload(), status=status.HTTP_200_OK)
         successCounter = 0
         nullData = False
-        resString = "Empty row Please add proper data on row number: "
+        resString = CSV_ROW_VALIDATION
         null = csvData.notnull()
         for _, row in null.iterrows():
             if not row['Type'] or not row['Title'] or not row['Capital Social'] or not row['Number'] \
@@ -328,7 +328,7 @@ class uploadUserCsvViewSet(APIView):
 
         for _, row in csvData.iterrows():
             try:
-                _dict = {'lawyer_id': lawyerId,'email': row["Email"], 'legal_status': row["Legal Status"],
+                _dict = {'lawyer_id': lawyerId, 'email': row["Email"], 'legal_status': row["Legal Status"],
                          'company_name': row["Company Name"], 'country': row["Country"], 'address': row["Address"],
                          'city': row["City"], 'RCS_city': row["RCS City"], 'first_name': row["First Name"],
                          'nationality': row["Nationality"],
