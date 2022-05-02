@@ -20,7 +20,8 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
     minHeight: "auto",
     height: "auto",
     [theme.breakpoints.up("lg")]: {
-      height: 140
+      minHeight: 100,
+      height: 100
     }
   },
   "& .FusePageSimple-wrapper": {
