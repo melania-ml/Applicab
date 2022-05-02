@@ -93,10 +93,10 @@ function ContactsHeader() {
   };
 
   return (
-    <div className="flex-1 items-center justify-between p-4 for-full-scren-flex">
+    <div className="flex-1 items-center justify-between p-4 for-full-scren-flex lawyers-header flex">
       {/* <Filters /> */}
-      <div className="flex for-res-flex-direction full-screen-secondwidth">
-        <div className="flex flex-1 items-center mb-3 mb-xl-0 full-screen-justify-end">
+      <div className="flex for-res-flex-direction w-full">
+        <div className="flex flex-1 items-center mb-3 mb-md-0">
           <ThemeProvider theme={mainTheme}>
             <Paper
               component={motion.div}
