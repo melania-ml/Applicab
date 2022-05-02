@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { showMessage } from "app/store/fuse/messageSlice";
 import jwtService from "app/services/jwtService";
 import { setUserData } from "./userSlice";
+import { setProfileData } from "app/store/slices/userMenuSlice";
 
 export const submitLogin =
   ({ email, password }) =>
@@ -21,6 +22,8 @@ export const submitLogin =
             user_type: userName
           }
         };
+        const data = { profile: user.data.profile };
+        dispatch(setProfileData(data));
         dispatch(setUserData(newUser));
         return dispatch(loginSuccess());
       })

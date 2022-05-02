@@ -8,7 +8,7 @@ import { showMessage } from "app/store/fuse/messageSlice";
 
 export const getAllTitles = () => async (dispatch) => {
   await axios
-    .get(`api/common/listCreate/user/Client_title`)
+    .post(`auth/user/getClientTitle`)
     .then((data) => {
       if (data.data.status === 200 && data.data.success) {
         dispatch(setAllTitles(data.data.data));
@@ -21,8 +21,8 @@ export const getAllTitles = () => async (dispatch) => {
 
 export const getFormTitles = (legal_status) => async (dispatch) => {
   await axios
-    .post(`api/common/filterData/user/Client_title`, {
-      query: { legal_status }
+    .post(`auth/user/getClientTitle`, {
+      legal_status
     })
     .then((data) => {
       if (data.data.status === 200 && data.data.success) {
@@ -36,7 +36,7 @@ export const getFormTitles = (legal_status) => async (dispatch) => {
 
 export const getAllTypes = () => async (dispatch) => {
   await axios
-    .get(`api/common/listCreate/user/Client_type`)
+    .get(`auth/user/getClientType`)
     .then((data) => {
       if (data.data.status === 200 && data.data.success) {
         dispatch(setAllTypes(data.data.data));

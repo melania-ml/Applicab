@@ -48,6 +48,7 @@ function Dossier() {
     etapeTabFromAction,
     messageTabFromAction
   } = useSelector(({ dossiers }) => dossiers);
+  const user = useSelector(({ auth }) => auth.user);
 
   const [tabValue, setTabValue] = useState(
     type === "edit" && etapeTabFromAction
@@ -65,7 +66,7 @@ function Dossier() {
   useDeepCompareEffect(async () => {
     await dispatch(getNatures());
     await dispatch(getProcedures());
-    await dispatch(getContacts());
+    await dispatch(getContacts(user.data.id));
   }, [dispatch, routeParams]);
 
   const handleTabChange = (event, value) => {

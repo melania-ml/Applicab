@@ -353,15 +353,20 @@ function EtapeTab() {
         Header: "Notifié",
         className: "font-medium",
         sortable: true,
-        Cell: ({ row }) => (
-          <div className="flex items-center">
-            <CustomTooltip placement="top-end" title="add your tooltip text">
-              <Icon style={{ color: "#BABABF", fontSize: "large" }}>
-                near_me
-              </Icon>
-            </CustomTooltip>
-          </div>
-        )
+        Cell: ({ row }) => {
+          return row.original.send_notification ? (
+            <Icon style={{ color: "#BABABF", fontSize: "large" }}>near_me</Icon>
+          ) : (
+            <Icon
+              style={{
+                color: "#BABABF",
+                fontSize: "large"
+              }}
+            >
+              insert_drive_file
+            </Icon>
+          );
+        }
       }
     ],
 

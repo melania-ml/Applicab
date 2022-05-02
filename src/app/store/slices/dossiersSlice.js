@@ -107,9 +107,11 @@ export const getProcedures = () => async (dispatch) => {
     });
 };
 
-export const getContacts = () => async (dispatch) => {
+export const getContacts = (id) => async (dispatch) => {
   await axios
-    .post(`api/common/filterData/user/User`, { query: { client_type: 1 } })
+    .post(`api/common/filterData/user/User`, {
+      query: { client_type: 1, lawyer_id: id }
+    })
     .then((data) => {
       if (data.data.status === 200 && data.data.success) {
         dispatch(setContacts(data.data.data));
