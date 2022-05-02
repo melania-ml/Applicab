@@ -13,7 +13,8 @@ import {
   setDossiersSearchText,
   getEtapes,
   getDeletedEtapes,
-  setSelectedList
+  setSelectedList,
+  setListObj
 } from "app/store/slices/dossiersSlice";
 import { getFormattedDateTime } from "app/main/common/functions";
 import { CustomTooltip } from "app/main/common/components";
@@ -62,6 +63,9 @@ function EtapeTab() {
       newObj["status"] = name;
     }
     dispatch(setSelectedList(name));
+    dispatch(
+      setListObj(name === "Tous" ? { case_management_id: caseId } : newObj)
+    );
     dispatch(
       getEtapes(name === "Tous" ? { case_management_id: caseId } : newObj)
     );
@@ -258,18 +262,18 @@ function EtapeTab() {
           return value === "Fait" ? (
             <CustomTooltip
               placement="top-start"
-              title={row.original.sub_name || row.original.name}
+              title={row.original?.sub_name || row.original?.name}
             >
               <i>
                 <span className="etape-txt">
-                  {row.original.sub_name || row.original.name}
+                  {row.original?.sub_name || row.original?.name}
                 </span>
               </i>
             </CustomTooltip>
           ) : (
             <CustomTooltip
               placement="top-start"
-              title={row.original.sub_name || row.original.name}
+              title={row.original?.sub_name || row.original?.name}
             >
               <span
                 className="etape-txt"
@@ -277,7 +281,7 @@ function EtapeTab() {
                   color: value === "Archivé" ? "#C4C4C4" : ""
                 }}
               >
-                {row.original.sub_name || row.original.name}
+                {row.original?.sub_name || row.original?.name}
               </span>
             </CustomTooltip>
           );

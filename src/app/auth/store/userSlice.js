@@ -12,10 +12,18 @@ export const setUserData = (user) => async (dispatch, getState) => {
 
 export const logoutUser = () => async (dispatch, getState) => {
   dispatch(loginError());
-
-  history.push({
-    pathname: "/"
-  });
+  const {
+    data: { user_type }
+  } = getState().auth.user;
+  if (user_type === "Admin") {
+    history.push({
+      pathname: "/login_admin"
+    });
+  } else {
+    history.push({
+      pathname: "/login"
+    });
+  }
 
   jwtService.logout();
 

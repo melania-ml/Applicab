@@ -18,11 +18,7 @@ export const restoreEtape = createAsyncThunk(
       .then((data) => {
         if (data.data.status === 200 && data.data.success) {
           dispatch(showMessage({ message: data.data.message }));
-          dispatch(
-            getEtapes({
-              case_management_id: getState().dossiers.editDossierData.data.id
-            })
-          );
+          dispatch(getEtapes(getState().dossiers.listObj));
           dispatch(setIsLoading(false));
         }
       })
@@ -45,11 +41,7 @@ export const removeEtapes = createAsyncThunk(
       .then((data) => {
         if (data.data.status === 200 && data.data.success) {
           dispatch(showMessage({ message: data.data.message }));
-          dispatch(
-            getEtapes({
-              case_management_id: getState().dossiers.editDossierData.data.id
-            })
-          );
+          dispatch(getEtapes(getState().dossiers.listObj));
           dispatch(setIsLoading(false));
         }
       })
@@ -238,11 +230,7 @@ export const updateStatus = createAsyncThunk(
       .then((data) => {
         if (data.data.status === 200 && data.data.success) {
           dispatch(showMessage({ message: data.data.message }));
-          dispatch(
-            getEtapes({
-              case_management_id: getState().dossiers.editDossierData.data.id
-            })
-          );
+          dispatch(getEtapes(getState().dossiers.listObj));
         }
       })
       .catch((error) => {
@@ -262,11 +250,7 @@ export const duplicateEtape = createAsyncThunk(
       .then((data) => {
         if (data.data.status === 201 && data.data.success) {
           dispatch(showMessage({ message: data.data.message }));
-          dispatch(
-            getEtapes({
-              case_management_id: getState().dossiers.editDossierData.data.id
-            })
-          );
+          dispatch(getEtapes(getState().dossiers.listObj));
         }
       })
       .catch((error) => {
@@ -350,12 +334,8 @@ export const addEtapes = createAsyncThunk(
       .then((data) => {
         if (data.data.status === 201 && data.data.success) {
           dispatch(showMessage({ message: data.data.message }));
-          dispatch(
-            getEtapes({
-              case_management_id: getState().dossiers.editDossierData.data.id
-            })
-          );
-          dispatch(getDocuments(getState().dossiers.editDossierData.data.id));
+          dispatch(getEtapes(getState().dossiers.listObj));
+          dispatch(getDocuments(getState().dossiers.caseId));
           dispatch(setIsLoading(false));
         }
       })
@@ -374,12 +354,8 @@ export const updateEtapes = createAsyncThunk(
       .then((data) => {
         if (data.data && data.data.success) {
           dispatch(showMessage({ message: data.data.message }));
-          dispatch(
-            getEtapes({
-              case_management_id: getState().dossiers.editDossierData.data.id
-            })
-          );
-          dispatch(getDocuments(getState().dossiers.editDossierData.data.id));
+          dispatch(getEtapes(getState().dossiers.listObj));
+          dispatch(getDocuments(getState().dossiers.caseId));
           dispatch(
             getMessages(getState().dossiers.caseId, getState().dossiers.groupId)
           );
@@ -457,9 +433,13 @@ const dossiersSlice = createSlice({
     messages: [],
     groupId: null,
     caseId: null,
-    messageHeader: {}
+    messageHeader: {},
+    listObj: {}
   }),
   reducers: {
+    setListObj: (state, action) => {
+      state.listObj = action.payload;
+    },
     setEtapes: (state, action) => {
       state.etapes = action.payload;
     },
@@ -590,6 +570,7 @@ export const {
   setIsCaseAdded,
   setMessageHeader,
   setEtapes,
+  setListObj,
   setEditDossierData,
   setNewDossierData,
   setEtapeTabFromAction,

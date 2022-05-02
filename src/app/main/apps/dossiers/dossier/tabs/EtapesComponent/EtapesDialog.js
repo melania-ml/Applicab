@@ -9,7 +9,8 @@ import {
   closeEditEtapeDialog,
   updateEtapes,
   addEtapes,
-  uploadDocument
+  uploadDocument,
+  getDocuments
 } from "app/store/slices/dossiersSlice";
 
 //material-ui
@@ -61,14 +62,15 @@ function EtapesDialog() {
   const dispatch = useDispatch();
   const {
     etapeDialog: { data, props, type },
-    editDossierData
+    editDossierData,
+    caseId
   } = useSelector(({ dossiers }) => dossiers);
 
   useEffect(() => {
     if (data && Object.keys(data).length !== 0) {
       setAllFields({
         ...allFields,
-        case_name: editDossierData.data.case_name,
+        case_name: editDossierData?.data?.case_name,
         name: data.name,
         status: data.status || "A prévoir",
         sub_name: data.sub_name,
@@ -103,7 +105,8 @@ function EtapesDialog() {
     }
     if (
       (allFields.status === "A faire" || allFields.status === "Fait") &&
-      allFields.client_id.length
+      allFields.client_id.length &&
+      allFields.position
     ) {
       setIsInvite(false);
     } else {
@@ -140,6 +143,7 @@ function EtapesDialog() {
         })
       );
     }
+    dispatch(getDocuments(caseId));
     closeComposeDialog();
   };
 
@@ -217,6 +221,7 @@ function EtapesDialog() {
       formData.append("case_task_id", data.id);
       dispatch(uploadDocument(formData));
     }
+    dispatch(getDocuments(caseId));
     closeComposeDialog();
   };
 
