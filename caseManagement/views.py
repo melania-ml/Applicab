@@ -1,5 +1,3 @@
-import datetime
-
 from django.db.models import Q
 import random
 
@@ -164,11 +162,12 @@ class casesManagement(APIView):
             reqData = request.data
             caseManagementDocuments.objects.filter(case_management_id__in=reqData['case_management_id']).delete()
             caseManagementTask.objects.filter(case_management_id__in=reqData['case_management_id']).hard_delete()
-            groupChat = list(caseManagementChatGroup.objects.filter(case_management_id__in=reqData['case_management_id']).values_list('id',flat=True))
+            groupChat = list(caseManagementChatGroup.objects.filter(
+                case_management_id__in=reqData['case_management_id']).values_list('id', flat=True))
             caseManagementGroupMessage.objects.filter(group_id__in=groupChat).delete()
             caseManagementChatGroup.objects.filter(case_management_id__in=reqData['case_management_id']).delete()
             CaseManagement.objects.filter(id__in=reqData['case_management_id']).delete()
-            res = ResponseInfo([], RECORD_DELETED_SUCCESSFULLY, True,status.HTTP_200_OK)
+            res = ResponseInfo([], RECORD_DELETED_SUCCESSFULLY, True, status.HTTP_200_OK)
             return Response(res.success_payload(), status=status.HTTP_200_OK)
         except Exception as err:
             res = ResponseInfo(err, SOMETHING_WENT_WRONG, False,
@@ -257,15 +256,17 @@ class caseManagementTaskView(APIView):
         try:
             self.serializers_class.Meta.depth = 0  # Adding depth value for Foreign fields
             taskId = request.data.get('id', None)
+            sendNotification = request.data.get('send_notification', None)
             taskList = caseManagementTask.objects.filter(id=taskId).first()
             bodyParams = request.data
-
+            if taskList.send_notification:
+                bodyParams['send_notification'] = True
             serializer = self.serializers_class(taskList, data=bodyParams)
             if serializer.is_valid():
                 serializer.save()
 
                 # prepare Email Notification
-                if bodyParams['send_notification']:
+                if sendNotification:
                     self.taskNotificationEmail(bodyParams['client_id'])
                     self.sendTaskMessage(bodyParams['case_management_id'], request.user, serializer.data['message'])
                 res = ResponseInfo(serializer.data, SUCCESS, True,
@@ -359,8 +360,9 @@ class caseManagementCreateTaskView(APIView):
             serializer.save()
             # prepare Email Notification
             if bodyParams['send_notification'] and 'client_id' in bodyParams:
-                caseManagementTaskView.taskNotificationEmail(self,bodyParams['client_id'])
-                caseManagementTaskView.sendTaskMessage(self, bodyParams['case_management_id'], request.user, serializer.data['message'])
+                caseManagementTaskView.taskNotificationEmail(self, bodyParams['client_id'])
+                caseManagementTaskView.sendTaskMessage(self, bodyParams['case_management_id'], request.user,
+                                                       serializer.data['message'])
 
             res = ResponseInfo(serializer.data, TASK_ADDED_SUCCESSFULLY, True,
                                status.HTTP_201_CREATED)

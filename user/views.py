@@ -366,7 +366,7 @@ class uploadUserCsvViewSet(APIView):
                 User.objects.create(**_dict)
                 successCounter += 1
             except Exception as e:
-                print(e)
+                pass
         res = ResponseInfo(
             {"data": str(successCounter) + " record imported out of " + str(len(csvData))},
             USER_REGISTERED_SUCCESSFULLY, True, 200)
@@ -403,6 +403,5 @@ class clientTypeViewSet(APIView):
             res = ResponseInfo(serializer.data, SUCCESS, True, status.HTTP_200_OK)
             return Response(res.success_payload(), status=status.HTTP_200_OK)
         except Exception as err:
-            print(err)
             res = ResponseInfo([], SOMETHING_WENT_WRONG, False, status.HTTP_401_UNAUTHORIZED)
             return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
