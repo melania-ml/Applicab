@@ -619,6 +619,7 @@ function ContactDialog(props) {
                 label="Adresse"
                 variant="outlined"
                 fullWidth
+                autoComplete="off"
                 value={allFields.address}
                 onChange={(e) =>
                   setAllFields({
@@ -632,6 +633,7 @@ function ContactDialog(props) {
                 label="Ville"
                 variant="outlined"
                 fullWidth
+                autoComplete="off"
                 value={allFields.city}
                 onChange={(e) =>
                   setAllFields({
@@ -646,6 +648,7 @@ function ContactDialog(props) {
                 type="number"
                 variant="outlined"
                 fullWidth
+                autoComplete="off"
                 onKeyPress={(event) => {
                   if (!/[0-9]/.test(event.key)) {
                     event.preventDefault();
@@ -663,6 +666,7 @@ function ContactDialog(props) {
               <TextField
                 className="mt-8 mb-16"
                 label="Capital social"
+                autoComplete="off"
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">€</InputAdornment>
@@ -795,6 +799,7 @@ function ContactDialog(props) {
                 label="Fixe"
                 variant="outlined"
                 fullWidth
+                autoComplete="off"
                 error={errors?.mobile2}
                 helperText={errors?.mobile2}
                 value={allFields.fixe}
@@ -812,6 +817,7 @@ function ContactDialog(props) {
                 variant="outlined"
                 multiline
                 rows={5}
+                autoComplete="off"
                 fullWidth
                 value={allFields.comments}
                 onChange={(e) =>
@@ -825,6 +831,7 @@ function ContactDialog(props) {
                 className="w-full mb-12"
                 multiple
                 freeSolo
+                autoComplete="off"
                 onChange={(event, newValue) => {
                   setAllFields({
                     ...allFields,
@@ -1011,6 +1018,7 @@ function ContactDialog(props) {
                 label="Adresse"
                 variant="outlined"
                 fullWidth
+                autoComplete="off"
                 value={allFields.address}
                 onChange={(e) =>
                   setAllFields({

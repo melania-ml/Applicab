@@ -33,13 +33,13 @@ import {
 } from "@mui/material";
 
 function EtapesDialog() {
-  const defaultData = `<p>Chère Madame, Cher Monsieur,</br>
+  const defaultData = `<p><b>Chère Madame, Cher Monsieur,</b></br>
   Je vous confirme bien volontiers notre rendez-vous du ........... prochain à .. heures.</br></br>
-  Je vous invite à me confirmer le numéro de téléphone sur lequel je pourrai vous joindre
+  <b>Je vous invite à me confirmer le numéro de téléphone sur lequel je pourrai vous joindre
   Voici le lien pour participer à notre visioconférence.</br>
-  Je vous recevrai au (adresse du cabinet)</br></br>
+  Je vous recevrai au (adresse du cabinet)</b></br></br>
   Dans l'intervalle,</br>
-  Je vous prie de croire, Chère Madame, Cher Monsieur, à l'assurance de mes salutations
+  Je vous prie de croire, <b>Chère Madame, Cher Monsieur,</b> à l'assurance de mes salutations
   distinguées.</p>`;
 
   const [allFields, setAllFields] = useState({

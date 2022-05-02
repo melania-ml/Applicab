@@ -160,6 +160,7 @@ function EditProfileDialog(props) {
           label="Fonction"
           variant="outlined"
           fullWidth
+          autoComplete="off"
           value={allFields.function}
           onChange={(e) => {
             setAllFields({
@@ -183,6 +184,7 @@ function EditProfileDialog(props) {
           label="Website"
           variant="outlined"
           fullWidth
+          autoComplete="off"
           value={allFields.website}
           onChange={(e) => {
             setAllFields({
@@ -197,6 +199,7 @@ function EditProfileDialog(props) {
           label="Adresse"
           variant="outlined"
           fullWidth
+          autoComplete="off"
           value={allFields.address}
           onChange={(e) => {
             setAllFields({
@@ -211,6 +214,7 @@ function EditProfileDialog(props) {
           label="Ville"
           variant="outlined"
           fullWidth
+          autoComplete="off"
           value={allFields.city}
           onChange={(e) => {
             setAllFields({
@@ -225,6 +229,7 @@ function EditProfileDialog(props) {
           label="CP"
           variant="outlined"
           fullWidth
+          autoComplete="off"
           value={allFields.postal_code}
           onChange={(e) => {
             setAllFields({
@@ -240,6 +245,7 @@ function EditProfileDialog(props) {
           type="number"
           variant="outlined"
           fullWidth
+          autoComplete="off"
           value={allFields.phone_number}
           onChange={(e) => {
             setAllFields({
@@ -255,6 +261,7 @@ function EditProfileDialog(props) {
           label="Fixe"
           variant="outlined"
           fullWidth
+          autoComplete="off"
           value={allFields.fixe}
           onChange={(e) => {
             setAllFields({

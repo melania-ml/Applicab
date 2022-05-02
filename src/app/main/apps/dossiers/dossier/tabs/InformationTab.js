@@ -124,6 +124,7 @@ function InformationTab() {
           checkIsDisable("case_name", e.target.value);
         }}
         label="Nom*"
+        autoComplete="off"
         autoFocus
         variant="outlined"
         fullWidth
@@ -244,6 +245,7 @@ function InformationTab() {
         label="Lieu"
         variant="outlined"
         fullWidth
+        autoComplete="off"
         value={allFields.location}
         onChange={(e) => {
           setAllFields({
@@ -285,6 +287,7 @@ function InformationTab() {
         multiline
         rows={5}
         fullWidth
+        autoComplete="off"
         value={allFields.internal_comment}
         onChange={(e) => {
           setAllFields({
@@ -299,6 +302,7 @@ function InformationTab() {
         variant="outlined"
         multiline
         rows={5}
+        autoComplete="off"
         fullWidth
         value={allFields.shared_comment}
         onChange={(e) => {
