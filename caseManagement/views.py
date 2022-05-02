@@ -224,6 +224,7 @@ class filterCasesManagement(APIView):
 
 class caseManagementTaskView(APIView):
     serializers_class = CaseTaskSerializer
+    serializers_filter_class = CaseTaskFilterSerializer
 
     # Filter Api
     def post(self, request):
@@ -241,7 +242,7 @@ class caseManagementTaskView(APIView):
                 if not reqData['send_notification']:
                     kwargs['send_notification'] = False
             taskList = caseManagementTask.objects.filter(**kwargs).order_by("position")
-            serializer = self.serializers_class(taskList, many=True)
+            serializer = self.serializers_filter_class(taskList, many=True, context={'request': request})
             # preparing response
             res = ResponseInfo(serializer.data, SUCCESS, True,
                                status.HTTP_200_OK)

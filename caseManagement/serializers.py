@@ -1,8 +1,6 @@
 from rest_framework import serializers
-from rest_framework.fields import Field
 
 from caseManagement.models import *
-from user.serializers import UserSerializer
 
 
 class NatureSerializer(serializers.ModelSerializer):
@@ -24,6 +22,7 @@ class CaseSerializer(serializers.ModelSerializer):
         depth = 0
 
 
+# Used to upload Multiple document's
 class CaseDocumentsSerializer(serializers.ModelSerializer):
     case_document = serializers.ListField(child=serializers.FileField(max_length=100000,
                                                                       allow_empty_file=False,
@@ -41,18 +40,27 @@ class CaseDocumentsSerializer(serializers.ModelSerializer):
         return {"data": "success"}
 
 
-# For-get : Not-in-use
+# For-get : Using for filter foreign key related data
+# REF: CaseTaskFilterSerializer
 class GetCaseDocumentsSerializer(serializers.ModelSerializer):
-    case_document = serializers.SerializerMethodField()
-
     class Meta:
         model = caseManagementDocuments
         fields = '__all__'
 
-    def get_case_document(self, caseDock):
-        request = self.context.get("request")
-        dock_url = caseDock.case_document.url
-        return request.build_absolute_uri(dock_url)
+
+class CaseTaskFilterSerializer(serializers.ModelSerializer):
+    case_documents = GetCaseDocumentsSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = caseManagementTask
+        fields = "__all__"
+        depth = 1
+        read_only_fields = ['case_documents']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # We pass the "upper serializer" context to the "nested one"
+        self.fields['case_documents'].context.update(self.context)
 
 
 class CaseTaskSerializer(serializers.ModelSerializer):
@@ -120,7 +128,6 @@ class GetCaseSerializer(serializers.ModelSerializer):
 
 
 class DashboardTaskSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = caseManagementTask
         fields = '__all__'

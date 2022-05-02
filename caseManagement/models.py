@@ -139,7 +139,7 @@ class caseManagementDocuments(CommonBase):
                                            on_delete=models.DO_NOTHING, db_column='case_management_id')
     case_task_id = models.ForeignKey(caseManagementTask,
                                      blank=True, null=True,
-                                     on_delete=models.SET_NULL, related_name='caseDocuments',
+                                     on_delete=models.SET_NULL, related_name='case_documents',
                                      db_column='case_task_id')
 
     def __str__(self):
