@@ -238,7 +238,9 @@ class caseManagementTaskView(APIView):
             if reqType:
                 kwargs['type__in'] = [kwargs['type'], 'Les deuX']
                 del kwargs['type']
-
+            if 'send_notification' in reqData:
+                if not reqData['send_notification']:
+                    kwargs['send_notification'] = False
             taskList = caseManagementTask.objects.filter(**kwargs).order_by("position")
             serializer = self.serializers_class(taskList, many=True)
             # preparing response

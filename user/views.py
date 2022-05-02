@@ -6,6 +6,7 @@ import pandas
 from datetime import datetime, timedelta
 
 from django.contrib.auth.models import update_last_login
+from django.db.models import Q
 from rest_framework import status, permissions, generics
 from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.response import Response
@@ -24,8 +25,8 @@ class registerClient(APIView):
 
     def post(self, request):
         lawyer = request.user.id  # Taking logged lawyer details from token
-        user = User.objects.filter(email=request.data['email'])
-        if user:
+        user = User.objects.filter(email=request.data['email']).first()
+        if user and user.email is not None:
             res = ResponseInfo({"data": EMAIL_ALREADY_REGISTERED}, EMAIL_ALREADY_REGISTERED, False,
                                status.HTTP_401_UNAUTHORIZED)
             return Response(res.success_payload(), status.HTTP_401_UNAUTHORIZED)
@@ -38,35 +39,29 @@ class registerClient(APIView):
         request.data['password'] = setPasswordToken
         request.data['email_token'] = setPasswordToken.lower()
         request.data['lawyer_id'] = lawyer
-        clientTitle = Client_title.objects.filter(title=request.data['title']).first()
-        clientType = Client_type.objects.filter(client_type=request.data['client_type']).first()
-
+        clientTitle = Client_title.objects.filter(Q(title=request.data['title'], is_default=True) |
+                                                  Q(title=request.data['title'], lawyer_id=lawyer)).first()
+        clientType = Client_type.objects.filter(Q(client_type=request.data['client_type'], is_default=True) |
+                                                Q(client_type=request.data['client_type'], lawyer_id=lawyer)).first()
         if clientType:
             request.data['client_type'] = clientType.id
         else:
-            clientType = Client_type(client_type=request.data['client_type'])
+            clientType = Client_type(client_type=request.data['client_type'], lawyer_id=lawyer)
             clientType.save()
             request.data['client_type'] = clientType.id
 
         if clientTitle:
             request.data['title'] = clientTitle.id
         else:
-            createTitle = Client_title(title=request.data['title'])
+            createTitle = Client_title(title=request.data['title'], legal_status=request.data['legal_status'],
+                                       lawyer_id=lawyer)
             createTitle.save()
             request.data['title'] = createTitle.id
         serializer = self.serializers_class(data=request.data)
         if serializer.is_valid():
             serializer.save()
             if request.data['is_invite']:
-                stPasswordText = emailText.setPassword() | emailText.commonUrls()
-                stPasswordText['otp'] = emailOtp
-                stPasswordText['text1'] = stPasswordText['text1'].format(userName=serializer.data['first_name'])
-                stPasswordText['text2'] = stPasswordText['text2'].format(lawyerName=request.user.first_name)
-                stPasswordText['button_url'] = stPasswordText['button_url'] + str(serializer.data['id'])
-
-                send_email([serializer.data['email']],
-                           'Saisissez ' + str(emailOtp) + ' comme code de confirmation Applicab', 'email.html',
-                           stPasswordText)
+                self.sendSetPasswordOtp(serializer, request.user, emailOtp, request.data['client_type'])
             res = ResponseInfo(serializer.data, USER_REGISTERED_SUCCESSFULLY, True, status.HTTP_201_CREATED)
             return Response(res.success_payload(), status.HTTP_201_CREATED)
         res = ResponseInfo({"data": serializer.errors}, "something went wrong", False,
@@ -85,6 +80,23 @@ class registerClient(APIView):
         except Exception as err:
             res = ResponseInfo(err, SOMETHING_WENT_WRONG, False, status.HTTP_401_UNAUTHORIZED)
             return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
+    def sendSetPasswordOtp(self, serializer, loginUser, emailOtp, clientType):
+        if clientType == "Client":
+            stPasswordText = emailText.setPassword() | emailText.commonUrls()
+            stPasswordText['otp'] = emailOtp
+            stPasswordText['text1'] = stPasswordText['text1'].format(userName=serializer.data['first_name'])
+            stPasswordText['text2'] = stPasswordText['text2'].format(lawyerName=loginUser.first_name)
+            stPasswordText['button_url'] = stPasswordText['button_url'] + str(serializer.data['id'])
+        else:
+            stPasswordText = emailText.setLawyerPassword() | emailText.commonUrls()
+            stPasswordText['otp'] = emailOtp
+            stPasswordText['text1'] = stPasswordText['text1'].format(userName=serializer.data['first_name'])
+            stPasswordText['button_url'] = stPasswordText['button_url'] + str(serializer.data['id'])
+
+        send_email([serializer.data['email']],
+                   'Saisissez ' + str(emailOtp) + ' comme code de confirmation Applicab', 'email.html',
+                   stPasswordText)
 
 
 @authentication_classes([])
@@ -261,8 +273,9 @@ class userUpdateViewSet(generics.RetrieveUpdateDestroyAPIView):
                 request.data['client_type'] = createType.id
 
         if is_invite:
-            first_name = request.data.get('first_name', None)
             user_id = request.data.get('user_id', None)
+            lawyer_data = User.objects.filter(id=user_id).first()
+            lawyerName = lawyer_data.lawyer_id.first_name if lawyer_data.lawyer_id else None
 
             secretsGenerator = secrets.SystemRandom()
             emailOtp = secretsGenerator.randrange(100000, 999999)
@@ -273,7 +286,7 @@ class userUpdateViewSet(generics.RetrieveUpdateDestroyAPIView):
 
             stPasswordText = emailText.setPassword() | emailText.commonUrls()
             stPasswordText['otp'] = emailOtp
-            stPasswordText['text1'] = stPasswordText['text1'].format(userName=first_name)
+            stPasswordText['text1'] = stPasswordText['text1'].format(userName=lawyerName)
             stPasswordText['button_url'] = stPasswordText['button_url'] + str(user_id)
 
             send_email([email],
@@ -288,7 +301,7 @@ class userUpdateViewSet(generics.RetrieveUpdateDestroyAPIView):
 
 class uploadUserCsvViewSet(APIView):
     def post(self, request):
-
+        lawyerId = request.user
         if str(request.data['csv'])[-3:] != 'csv':
             res = ResponseInfo({}, "Please use csv file for importing contacts", False, status.HTTP_204_NO_CONTENT)
             return Response(res.success_payload(), status=status.HTTP_204_NO_CONTENT)
@@ -315,12 +328,16 @@ class uploadUserCsvViewSet(APIView):
 
         for _, row in csvData.iterrows():
             try:
-                _dict = {'email': row["Email"], 'legal_status': row["Legal Status"],
+                _dict = {'lawyer_id': lawyerId,'email': row["Email"], 'legal_status': row["Legal Status"],
                          'company_name': row["Company Name"], 'country': row["Country"], 'address': row["Address"],
                          'city': row["City"], 'RCS_city': row["RCS City"], 'first_name': row["First Name"],
-                         'date_of_birth': datetime.strptime(row["DOB"], '%m/%d/%Y'), 'nationality': row["Nationality"],
+                         'nationality': row["Nationality"],
                          'native_city': row["Native City"], 'department': row["Department"],
                          'profession': row["Profession"], 'comments': row["Comments"], 'fixe': row["Fixe"]}
+                try:
+                    _dict['date_of_birth'] = datetime.strptime(row["DOB"], '%m/%d/%Y')
+                except:
+                    pass
                 try:
                     _dict['capital_social'] = int(row["Capital Social"])
                 except:
@@ -349,8 +366,43 @@ class uploadUserCsvViewSet(APIView):
                 User.objects.create(**_dict)
                 successCounter += 1
             except Exception as e:
-                pass
+                print(e)
         res = ResponseInfo(
             {"data": str(successCounter) + " record imported out of " + str(len(csvData))},
             USER_REGISTERED_SUCCESSFULLY, True, 200)
         return Response(res.success_payload())
+
+
+class clientTitleViewSet(APIView):
+    serializers_class = clientTitleSerializer
+
+    def post(self, request):
+        try:
+            if 'legal_status' in request.data:
+                query = Q(is_default=True, legal_status=request.data['legal_status']) | \
+                        Q(lawyer_id=request.user.id, legal_status=request.data['legal_status'])
+            else:
+                query = Q(is_default=True) | Q(lawyer_id=request.user.id)
+            clientTitle = Client_title.objects.filter(query)
+            serializer = self.serializers_class(clientTitle, many=True)
+            res = ResponseInfo(serializer.data, SUCCESS, True, status.HTTP_200_OK)
+            return Response(res.success_payload(), status=status.HTTP_200_OK)
+        except Exception as err:
+            res = ResponseInfo([], SOMETHING_WENT_WRONG, False, status.HTTP_401_UNAUTHORIZED)
+            return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
+
+class clientTypeViewSet(APIView):
+    serializers_class = clientTypeSerializer
+
+    def get(self, request):
+        try:
+            query = Q(is_default=True) | Q(lawyer_id=request.user.id)
+            clientType = Client_type.objects.filter(query)
+            serializer = self.serializers_class(clientType, many=True)
+            res = ResponseInfo(serializer.data, SUCCESS, True, status.HTTP_200_OK)
+            return Response(res.success_payload(), status=status.HTTP_200_OK)
+        except Exception as err:
+            print(err)
+            res = ResponseInfo([], SOMETHING_WENT_WRONG, False, status.HTTP_401_UNAUTHORIZED)
+            return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)

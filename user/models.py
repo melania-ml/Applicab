@@ -19,6 +19,8 @@ class Client_title(CommonBase):
     title = models.CharField(max_length=100, blank=True, null=True)
     legal_status = models.CharField(max_length=255, choices=staticModelChoiceFields.legalStatusChoiceFields(),
                                     null=True, blank=True)
+    is_default = models.BooleanField(default=False)
+    lawyer_id = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return '{}'.format(self.title)
@@ -38,6 +40,8 @@ def profile_upload_image_to(instance, filename):
 
 class Client_type(CommonBase):
     client_type = models.CharField(max_length=100, blank=True, null=True)
+    is_default = models.BooleanField(default=False)
+    lawyer_id = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return '{}'.format(self.client_type)
@@ -96,6 +100,7 @@ class User(AbstractUser):
     profile = models.ImageField(
         upload_to='user_profile', blank=True, null=True)
     is_locked = models.BooleanField(default=False)
+    is_lawyer = models.BooleanField(default=False)
     created_date = models.DateTimeField(auto_now=False, default=django.utils.timezone.now)
     updated_date = models.DateTimeField(auto_now=True)
     email_otp_date = models.DateTimeField(auto_now=False, default=django.utils.timezone.now)

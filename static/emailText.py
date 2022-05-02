@@ -14,7 +14,22 @@ def setPassword():
         'footer_text1': 'À bientôt,',
         'footer_text2': 'L’équipe Applicab',
         'button_url': Admin_url + 'verifyEmail/'
+    }
+    return textDict
 
+
+def setLawyerPassword():
+    textDict = {
+        'title': 'Confirmez votre adresse e-mail 💌',
+        'text1': 'Bonjour {userName},',
+        'text2': 'Merci de votre inscription à Applicab !',
+        'text3': "Votre code de confirmation pour l'adresse e-mail que vous avez renseignée est le suivant.",
+        'text4': "Copiez collez le simplement ou bien saisissez le dans votre interface Applicab pour poursuivre votre inscription.",
+        'before_button': 'Ce code expirera dans 24 heures.',
+        'button_text': 'Confirmez votre email',
+        'footer_text1': 'À bientôt,',
+        'footer_text2': 'L’équipe Applicab',
+        'button_url': Admin_url + 'verifyEmail/'
     }
     return textDict
 

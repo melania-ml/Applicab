@@ -30,8 +30,8 @@ class LoginSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['password', 'email', 'jwtoken', 'id', 'client_type', 'first_name', 'last_name', 'profile',
-                  'last_login']
+        fields = ['password', 'email', 'jwtoken', 'id', 'first_name', 'last_name', 'profile',
+                  'last_login', 'is_superuser', 'is_lawyer']
         read_only_fields = ['jwtoken']
         depth = 1
 
@@ -44,4 +44,16 @@ class userProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
+        fields = '__all__'
+
+
+class clientTitleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Client_title
+        fields = '__all__'
+
+
+class clientTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Client_type
         fields = '__all__'
