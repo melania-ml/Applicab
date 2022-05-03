@@ -108,7 +108,13 @@ class loginClient(APIView):
         try:
             email = request.data.get('email', None)
             password = request.data.get('password', None)
+            is_admin = request.data.get('is_admin', None)
             user = authenticate(email=email, password=password)
+            if is_admin != user.is_superuser:
+
+                res = ResponseInfo({}, EMAIL_PASSWORD_INCORRECT, False, status.HTTP_401_UNAUTHORIZED)
+                return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
             if user:
                 serializer = self.serializers_class(user, context={'request': request})
                 update_last_login(None, user)
