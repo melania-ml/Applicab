@@ -111,7 +111,6 @@ class loginClient(APIView):
             is_admin = request.data.get('is_admin', None)
             user = authenticate(email=email, password=password)
             if is_admin != user.is_superuser:
-
                 res = ResponseInfo({}, EMAIL_PASSWORD_INCORRECT, False, status.HTTP_401_UNAUTHORIZED)
                 return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
 
