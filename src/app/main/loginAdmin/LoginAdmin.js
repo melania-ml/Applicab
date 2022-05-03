@@ -94,6 +94,7 @@ function LoginAdmin() {
   const {
     data: { user_type }
   } = useSelector(({ auth }) => auth.user);
+  const searchParam = window.location.pathname.split("/")[1];
   const { control, setValue, formState, handleSubmit, reset, trigger } =
     useForm({
       mode: "onChange",
@@ -119,18 +120,11 @@ function LoginAdmin() {
   }, [reset, setValue, trigger]);
 
   useEffect(() => {
+    debugger;
     if (login.success) {
-      if (user_type === "Client") {
-        history.push({
-          pathname: "/apps/client_dashboard"
-        });
-      } else if (user_type === "Admin") {
+      if (user_type === "Admin") {
         history.push({
           pathname: "/apps/lawyers/all"
-        });
-      } else {
-        history.push({
-          pathname: "/apps/dashboard"
         });
       }
     }
@@ -145,7 +139,12 @@ function LoginAdmin() {
       localStorage.setItem("email", "");
       localStorage.setItem("password", "");
     }
-    dispatch(submitLogin(model));
+    dispatch(
+      submitLogin({
+        ...model,
+        is_admin: searchParam === "login_admin" ? true : false
+      })
+    );
   }
   return (
     <Root className="flex flex-col flex-auto items-center shrink-0">

@@ -5,10 +5,10 @@ import { setUserData } from "./userSlice";
 import { setProfileData } from "app/store/slices/userMenuSlice";
 
 export const submitLogin =
-  ({ email, password }) =>
+  ({ email, password, is_admin }) =>
   async (dispatch) => {
     return jwtService
-      .signInWithEmailAndPassword(email, password)
+      .signInWithEmailAndPassword(email, password, is_admin)
       .then((user) => {
         const userName = user.data.is_superuser
           ? "Admin"

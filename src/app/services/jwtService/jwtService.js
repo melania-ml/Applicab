@@ -22,12 +22,13 @@ class JwtService extends FuseUtils.EventEmitter {
     }
   };
 
-  signInWithEmailAndPassword = (email, password) => {
+  signInWithEmailAndPassword = (email, password, is_admin = false) => {
     return new Promise((resolve, reject) => {
       axios
         .post("auth/user/loginClient", {
           email,
-          password
+          password,
+          is_admin
         })
         .then((response) => {
           if (response?.data.status === 200 && response?.data.success) {
