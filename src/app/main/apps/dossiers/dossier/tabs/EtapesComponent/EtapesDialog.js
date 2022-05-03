@@ -531,6 +531,11 @@ function EtapesDialog() {
             />
           </Button>
         </div>
+        {data?.case_documents &&
+          data.case_documents.length > 0 &&
+          data.case_documents.map((doc) => {
+            return <p>{doc.file_name}</p>;
+          })}
       </DialogContent>
       <DialogActions className="justify-between p-4 pb-16">
         <div className="px-16">

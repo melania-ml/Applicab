@@ -150,6 +150,7 @@ export const addCase = createAsyncThunk(
               unique_code: data.data.data.unique_code
             })
           );
+          dispatch(setDocuments([]));
         }
       })
       .catch((error) => {
