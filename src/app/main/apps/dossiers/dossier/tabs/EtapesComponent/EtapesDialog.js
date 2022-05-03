@@ -59,6 +59,7 @@ function EtapesDialog() {
   const [count, setCount] = useState(0);
   const [isInvite, setIsInvite] = useState(false);
   const [isAddNotification, setIsAddNotification] = useState(false);
+  const [isDateAdded, setIsDateAdded] = useState(false);
   const dispatch = useDispatch();
   const {
     etapeDialog: { data, props, type },
@@ -164,16 +165,19 @@ function EtapesDialog() {
     }
   }, [notifications.length]);
 
-  const addNotification = () => {
-    setCount(count + 1);
-    if (notifications.length < 5) {
-      let obj = {};
-      obj["id"] = count;
-      obj["count"] = notifications.length === 0 ? 15 : null;
-      const newArr = [...notifications];
-      newArr.push(obj);
-      setNotifications(newArr);
+  const addNotification = (param) => {
+    if (!isDateAdded || param === "fromButton") {
+      setCount(count + 1);
+      if (notifications.length < 5) {
+        let obj = {};
+        obj["id"] = count;
+        obj["count"] = notifications.length === 0 ? 15 : null;
+        const newArr = [...notifications];
+        newArr.push(obj);
+        setNotifications(newArr);
+      }
     }
+    setIsDateAdded(true);
   };
   const onSubmit = () => {
     if (type === "edit") {
@@ -221,7 +225,9 @@ function EtapesDialog() {
       formData.append("case_task_id", data.id);
       dispatch(uploadDocument(formData));
     }
-    dispatch(getDocuments(caseId));
+    setTimeout(() => {
+      dispatch(getDocuments(caseId));
+    }, 2000);
     closeComposeDialog();
   };
 
@@ -405,7 +411,7 @@ function EtapesDialog() {
               style={{ borderRadius: 5 }}
               color="secondary"
               disabled={isAddNotification}
-              onClick={addNotification}
+              onClick={() => addNotification("fromButton")}
             >
               <Icon
                 style={{

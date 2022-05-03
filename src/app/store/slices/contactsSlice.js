@@ -58,7 +58,7 @@ export const importContacts = (contact) => async (dispatch) => {
       }
     })
     .catch((error) => {
-      dispatch(showMessage({ message: error.response.message }));
+      dispatch(showMessage({ message: error.response.data.message }));
     });
 };
 

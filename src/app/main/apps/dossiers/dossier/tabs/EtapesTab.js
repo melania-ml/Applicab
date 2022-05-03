@@ -246,10 +246,10 @@ function EtapeTab() {
           const value = row.original.status;
           return value === "Fait" ? (
             <i>
-              <span>{row.original.position}</span>
+              <span className="position-txt">{row.original.position}</span>
             </i>
           ) : (
-            <span>{row.original.position || "-"}</span>
+            <span className="position-txt">{row.original.position || "-"}</span>
           );
         },
         sortable: true

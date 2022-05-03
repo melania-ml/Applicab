@@ -276,9 +276,12 @@ input[type="file"]::-webkit-file-upload-button {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  width: 128px;
+  width: 220px;
   max-width: 15rem;
   display: block;
+}
+.position-txt { 
+  width: 15px;
 }
 .rowsPerPage p{
   margin: 0 !important;
