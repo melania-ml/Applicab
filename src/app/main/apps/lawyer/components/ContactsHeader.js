@@ -177,7 +177,7 @@ function ContactsHeader() {
             color="secondary"
             className="w-full rounded"
           >
-            Nouveau contact
+            Nouveau Lawyer
           </Button>
         </div>
       </div>

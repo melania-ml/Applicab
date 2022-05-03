@@ -71,7 +71,9 @@ function DocumentsTab() {
                   }}
                 >
                   <TableCell align="left">{row.file_name}</TableCell>
-                  <TableCell align="left">{row.case_task_id.name}</TableCell>
+                  <TableCell align="left">
+                    {row.case_task_id?.sub_name || row.case_task_id.name}
+                  </TableCell>
                   <TableCell align="left">
                     {getFormattedDateTime({
                       date: row.created_date,

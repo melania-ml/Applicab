@@ -120,7 +120,6 @@ function LoginAdmin() {
   }, [reset, setValue, trigger]);
 
   useEffect(() => {
-    debugger;
     if (login.success) {
       if (user_type === "Admin") {
         history.push({
