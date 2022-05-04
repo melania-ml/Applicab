@@ -109,10 +109,11 @@ const StyledMessageRow = styled("div")(({ theme }) => ({
 function MessageTab(props) {
   const dispatch = useDispatch();
   const {
-    editDossierData: { data },
+    editDossierData: { data, type },
     messages,
     groupId,
-    caseId
+    caseId,
+    messageHeader
   } = useSelector(({ dossiers }) => dossiers);
   const {
     data: { id, profile }
@@ -199,12 +200,19 @@ function MessageTab(props) {
               color="inherit"
               className="messagesTab ml-12 mt-3 mt-md-0"
             >
-              {getWholeCaseName(
-                data?.case_name,
-                data?.procedure.procedure_type,
-                data?.created_date,
-                data?.unique_code
-              )}
+              {type === "edit"
+                ? getWholeCaseName(
+                    data?.case_name,
+                    data?.procedure.procedure_type,
+                    data?.created_date,
+                    data?.unique_code
+                  )
+                : getWholeCaseName(
+                    messageHeader?.case_name,
+                    messageHeader?.procedure,
+                    messageHeader?.created_date,
+                    messageHeader?.unique_code
+                  )}
             </Typography>
           </div>
           <div className="md:mr-24 mt-3 mt-md-0">

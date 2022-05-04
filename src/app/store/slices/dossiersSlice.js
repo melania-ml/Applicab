@@ -129,7 +129,7 @@ export const addCase = createAsyncThunk(
           );
           const procedure = getState().dossiers.procedures;
           const { id } = procedure.filter(
-            (fil) => fil.id === data.data.data.procedure
+            (fil) => fil.id === data.data.data.procedure.id
           )[0];
           dispatch(
             createDefaultEtapes({
@@ -145,7 +145,7 @@ export const addCase = createAsyncThunk(
           dispatch(
             setMessageHeader({
               case_name: data.data.data.case_name,
-              procedure: data.data.data.procedure,
+              procedure: data.data.data.procedure.name,
               created_date: data.data.data.created_date,
               unique_code: data.data.data.unique_code
             })
