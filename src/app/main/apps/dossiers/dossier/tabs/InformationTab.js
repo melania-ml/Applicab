@@ -95,8 +95,6 @@ function InformationTab() {
     if (name === "case_name") {
       if (value) {
         setErrors({ ...errors, case_name: "" });
-      } else {
-        setErrors({ ...errors, case_name: "Must enter a Proper Case name" });
       }
     }
   };
@@ -116,6 +114,7 @@ function InformationTab() {
         value={allFields.case_name}
         error={errors?.case_name}
         helperText={errors?.case_name}
+        inputProps={{ maxLength: 100 }}
         onChange={(e) => {
           setAllFields({
             ...allFields,

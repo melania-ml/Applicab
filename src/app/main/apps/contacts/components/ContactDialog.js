@@ -39,6 +39,7 @@ import {
 } from "@mui/material";
 import DatePicker from "@mui/lab/DatePicker";
 import { createFilterOptions } from "@mui/material/Autocomplete";
+import { getNumericValidation } from "app/main/common/functions/getNumericValidation";
 
 const tags = [];
 const filter = createFilterOptions();
@@ -57,7 +58,7 @@ function ContactDialog(props) {
     number: "",
     last_name: "",
     first_name: "",
-    email: "",
+    email: null,
     phone_number: "",
     fixe: "",
     comments: "",
@@ -95,7 +96,7 @@ function ContactDialog(props) {
         number: data.number,
         last_name: data.last_name,
         first_name: data.first_name,
-        email: data.email,
+        email: data.email ?? null,
         phone_number: data.phone_number,
         fixe: data.fixe,
         comments: data.comments,
@@ -127,7 +128,7 @@ function ContactDialog(props) {
         number: "",
         last_name: "",
         first_name: "",
-        email: "",
+        email: null,
         phone_number: "",
         fixe: "",
         comments: "",
@@ -253,7 +254,7 @@ function ContactDialog(props) {
         number: "",
         last_name: "",
         first_name: "",
-        email: "",
+        email: null,
         phone_number: "",
         fixe: "",
         comments: "",
@@ -501,7 +502,7 @@ function ContactDialog(props) {
                     number: "",
                     last_name: "",
                     first_name: "",
-                    email: "",
+                    email: null,
                     phone_number: "",
                     fixe: "",
                     comments: "",
@@ -649,6 +650,7 @@ function ContactDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
+                onKeyDown={getNumericValidation}
                 onKeyPress={(event) => {
                   if (!/[0-9]/.test(event.key)) {
                     event.preventDefault();
@@ -656,12 +658,13 @@ function ContactDialog(props) {
                 }}
                 //onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57"
                 value={allFields.postal_code}
-                onChange={(e) =>
+                onChange={(e) => {
+                  if (e.target.value < 0) return;
                   setAllFields({
                     ...allFields,
                     postal_code: e.target.value
-                  })
-                }
+                  });
+                }}
               />
               <TextField
                 className="mt-8 mb-16"
@@ -675,18 +678,20 @@ function ContactDialog(props) {
                 type="number"
                 variant="outlined"
                 fullWidth
+                onKeyDown={getNumericValidation}
                 onKeyPress={(event) => {
                   if (!/[0-9]/.test(event.key)) {
                     event.preventDefault();
                   }
                 }}
                 value={allFields.capital_social}
-                onChange={(e) =>
+                onChange={(e) => {
+                  if (e.target.value < 0) return;
                   setAllFields({
                     ...allFields,
                     capital_social: e.target.value
-                  })
-                }
+                  });
+                }}
               />
               <TextField
                 className="mt-8 mb-16"
@@ -709,10 +714,10 @@ function ContactDialog(props) {
                 fullWidth
                 autoComplete="off"
                 type="number"
-                // error={errors?.number}
-                // helperText={errors?.number}
+                onKeyDown={getNumericValidation}
                 value={allFields.number}
                 onChange={(e) => {
+                  if (e.target.value < 0) return;
                   setAllFields({
                     ...allFields,
                     number: e.target.value
@@ -953,6 +958,7 @@ function ContactDialog(props) {
                   allFields.client_type === "Client" ? "Prénom*" : "Prénom"
                 }
                 variant="outlined"
+                autoComplete="off"
                 fullWidth
                 value={allFields.first_name}
                 error={errors?.firstName}
@@ -969,7 +975,9 @@ function ContactDialog(props) {
                 label={allFields.client_type === "Client" ? "Email*" : "Email"}
                 className="mb-12"
                 variant="outlined"
+                autoComplete="off"
                 fullWidth
+                disabled={contactDialog.type === "new" ? false : true}
                 error={errors?.email}
                 helperText={errors?.email}
                 value={allFields.email}
@@ -985,6 +993,7 @@ function ContactDialog(props) {
                 className="mb-12"
                 label="Mobile"
                 variant="outlined"
+                autoComplete="off"
                 fullWidth
                 value={allFields.phone_number}
                 error={errors?.mobile1}
@@ -1001,6 +1010,7 @@ function ContactDialog(props) {
                 className="mb-12"
                 label="Fixe"
                 variant="outlined"
+                autoComplete="off"
                 fullWidth
                 error={errors?.mobile2}
                 helperText={errors?.mobile2}
@@ -1112,6 +1122,7 @@ function ContactDialog(props) {
                 className="flex w-full mb-12"
                 disablePortal
                 style={{ color: "#FFFFFF" }}
+                autoComplete="off"
                 options={Countries}
                 value={allFields.country}
                 onOpen={() => setIsAutoCompleteOpen(true)}
@@ -1128,6 +1139,7 @@ function ContactDialog(props) {
                 className="mb-12"
                 label="Ville de naissance"
                 variant="outlined"
+                autoComplete="off"
                 value={allFields.native_city}
                 onChange={(e) =>
                   setAllFields({
@@ -1159,6 +1171,7 @@ function ContactDialog(props) {
                 className="mb-12"
                 label="Profession"
                 variant="outlined"
+                autoComplete="off"
                 value={allFields.profession}
                 onChange={(e) =>
                   setAllFields({

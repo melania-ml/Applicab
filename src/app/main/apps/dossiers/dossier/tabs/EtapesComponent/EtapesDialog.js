@@ -31,6 +31,7 @@ import {
   Icon,
   Autocomplete
 } from "@mui/material";
+import { getNumericValidation } from "app/main/common/functions/getNumericValidation";
 
 function EtapesDialog() {
   const defaultData = `<p><b>Chère Madame, Cher Monsieur,</b></br>
@@ -85,12 +86,20 @@ function EtapesDialog() {
         position: data.position
       });
       setNotifications(data.lawyer_notification?.map((e) => ({ count: e })));
-    } else {
+    }
+    if (type === "new") {
       setAllFields({
         ...allFields,
-        case_name: editDossierData?.data?.case_name,
-        name: ""
+        position: "",
+        name: "",
+        sub_name: "",
+        status: "",
+        notification_date: null,
+        client_id: [],
+        subject: "",
+        message: ""
       });
+      setNotifications([]);
     }
   }, [data, type]);
 
@@ -261,8 +270,10 @@ function EtapesDialog() {
             required
             fullWidth
             type="number"
+            onKeyDown={getNumericValidation}
             value={allFields.position}
             onChange={(e) => {
+              if (e.target.value < 0) return;
               setAllFields({
                 ...allFields,
                 position: e.target.value
@@ -273,6 +284,7 @@ function EtapesDialog() {
             className="mb-12"
             name="Dossier"
             label="Dossier"
+            autoComplete="off"
             variant="outlined"
             fullWidth
             required
@@ -309,6 +321,7 @@ function EtapesDialog() {
               type="text"
               label="Renommer"
               variant="outlined"
+              autoComplete="off"
               fullWidth
               value={allFields.sub_name}
               onChange={(e) => {
@@ -338,19 +351,28 @@ function EtapesDialog() {
               ))}
             </Select>
           </FormControl>
-          <DateTimePicker
-            label="Date"
-            value={allFields.notification_date}
-            ampm={false}
-            ampmInClock={false}
-            onChange={(newValue) => {
-              setAllFields({ ...allFields, notification_date: newValue });
-            }}
-            onClose={() => addNotification()}
-            renderInput={(params) => (
-              <TextField className="w-full mb-12" {...params} />
-            )}
-          />
+          <div
+            className="flex w-full mb-12"
+            onKeyDownCapture={(e) => e.preventDefault()}
+          >
+            <DateTimePicker
+              label="Date"
+              value={allFields.notification_date}
+              ampm={false}
+              ampmInClock={false}
+              onChange={(newValue) => {
+                setAllFields({ ...allFields, notification_date: newValue });
+              }}
+              onClose={() => addNotification()}
+              renderInput={(params) => (
+                <TextField
+                  className="w-full mb-12"
+                  {...params}
+                  autoComplete="off"
+                />
+              )}
+            />
+          </div>
           {notifications.length > 0 &&
             notifications?.map((notification, index) => (
               <div className="flex w-full mb-12 relative">
@@ -360,7 +382,8 @@ function EtapesDialog() {
                   placeholder=""
                   type="number"
                   variant="filled"
-                  value={notification.count ?? ""}
+                  autoComplete="off"
+                  value={notification.count ?? 0}
                   onChange={(e) => {
                     notifications.map((n) => {
                       if (e.target.value < 0) return;
