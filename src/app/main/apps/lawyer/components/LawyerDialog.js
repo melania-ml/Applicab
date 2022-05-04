@@ -5,7 +5,6 @@ import Countries from "app/main/constants/Countries";
 import Nationalities from "app/main/constants/Nationalities";
 import Departments from "app/main/constants/Departments";
 import Status from "app/main/constants/Status";
-import LawyerType from "app/main/constants/LawyerType";
 import ClientStatus from "app/main/constants/ClientStatus";
 import {
   updateContact,
@@ -413,7 +412,7 @@ function LawyerDialog(props) {
       <AppBar position="static" elevation={0}>
         <Toolbar className="flex w-full">
           <Typography variant="subtitle1" color="inherit">
-            {contactDialog.type === "new" ? "Nouveau contact" : "Edit Contact"}
+            {contactDialog.type === "new" ? "Nouveau lawyer" : "Edit lawyer"}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -422,25 +421,6 @@ function LawyerDialog(props) {
         style={{ overflowY: isAutoCompleteOpen ? "hidden" : "auto" }}
       >
         <div className="row">
-          <FormControl className="flex w-full mb-12" variant="outlined">
-            <InputLabel>Type*</InputLabel>
-            <Select
-              label="Type*"
-              value={allFields.client_type}
-              onChange={(e) =>
-                setAllFields({
-                  ...allFields,
-                  client_type: e.target.value
-                })
-              }
-            >
-              {LawyerType.map((lawyer) => (
-                <MenuItem value={lawyer.value} key={lawyer.id}>
-                  {lawyer.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
           <div className="flex items-center mb-16">
             <b className="min-w-48 pt-20">Forme juridique*:</b>
             <FormControl>
