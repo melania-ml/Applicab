@@ -111,11 +111,12 @@ class loginClient(APIView):
             is_admin = request.data.get('is_admin', None)
             user = User.objects.filter(email=email, is_active=True).first()
 
-            # if not found return
+            # if no email found
             if not user:
                 res = ResponseInfo({}, EMAIL_PASSWORD_INCORRECT, False, status.HTTP_401_UNAUTHORIZED)
                 return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
 
+            # check inactive user's
             if user.status == 'Inactif':
                 res = ResponseInfo({}, USER_INACTIVE, False, status.HTTP_401_UNAUTHORIZED)
                 return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
@@ -125,6 +126,7 @@ class loginClient(APIView):
                 res = ResponseInfo({}, EMAIL_PASSWORD_INCORRECT, False, status.HTTP_401_UNAUTHORIZED)
                 return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
 
+            # authenticate check password
             authenticated = user.check_password(password)
 
             if authenticated:
@@ -291,7 +293,7 @@ class userUpdateViewSet(generics.RetrieveUpdateDestroyAPIView):
                 request.data['client_type'] = createType.id
 
         if is_invite:
-            user_id = request.data.get('user_id', None)
+            user_id = request.data.get('id', None)
             lawyer_data = User.objects.filter(id=user_id).first()
             lawyerName = lawyer_data.lawyer_id.first_name if lawyer_data.lawyer_id else None
 
