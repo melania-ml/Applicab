@@ -86,7 +86,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractUser):
     username = None
-    email = CIEmailField(_('email address'), unique=True, blank=True, null=True)
+    email = CIEmailField(_('email address'), blank=True, null=True)
     password = models.CharField(max_length=256)
     first_name = models.CharField(max_length=40,
                                   help_text='Enter name', blank=True, null=True)
@@ -115,7 +115,7 @@ class User(AbstractUser):
     client_type = models.ForeignKey(Client_type, blank=True, null=True,
                                     on_delete=models.DO_NOTHING, db_column='client_type')
     legal_status = models.CharField(max_length=255, choices=staticModelChoiceFields.legalStatusChoiceFields(),
-                                    null=True, blank=True)
+                                    null=True, blank=True, default='Enterprise')
     title = models.ForeignKey(Client_title, blank=True, null=True,
                               on_delete=models.DO_NOTHING, db_column='title')
     company_name = models.CharField(max_length=255, null=True, blank=True)
@@ -137,9 +137,8 @@ class User(AbstractUser):
                       blank=True)  # models.CharField(max_length=255, null=True, blank=True)
     profession = models.CharField(max_length=255, null=True, blank=True)
     status = models.CharField(max_length=255, choices=staticModelChoiceFields.statusChoiceFields(),
-                              null=True, blank=True)
-    department = models.CharField(max_length=255, choices=staticModelChoiceFields.departmentChoiceFields(),
-                                  null=True, blank=True)
+                              null=True, blank=True, default='Inactif')
+    department = models.CharField(max_length=255,null=True, blank=True)
     lawyer_id = models.ForeignKey('self', blank=True, null=True,
                                   on_delete=models.DO_NOTHING, db_column='lawyer_id')
 

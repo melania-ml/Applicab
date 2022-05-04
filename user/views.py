@@ -12,7 +12,7 @@ from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from common.common_config.responseHandlar import ResponseInfo
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, get_user_model
 
 from common.common_config.sendEmail import send_email
 from user.serializers import *
@@ -26,7 +26,7 @@ class registerClient(APIView):
     def post(self, request):
         lawyer = request.user.id  # Taking logged lawyer details from token
         user = User.objects.filter(email=request.data['email']).first()
-        if user and user.email is not None:
+        if user and user.client_type.client_type == 'Lawyer' or user and user.client_type.client_type == 'Client':
             res = ResponseInfo({"data": EMAIL_ALREADY_REGISTERED}, EMAIL_ALREADY_REGISTERED, False,
                                status.HTTP_401_UNAUTHORIZED)
             return Response(res.success_payload(), status.HTTP_401_UNAUTHORIZED)
@@ -109,12 +109,25 @@ class loginClient(APIView):
             email = request.data.get('email', None)
             password = request.data.get('password', None)
             is_admin = request.data.get('is_admin', None)
-            user = authenticate(email=email, password=password)
+            user = User.objects.filter(email=email, is_active=True).first()
+
+            # if not found return
+            if not user:
+                res = ResponseInfo({}, EMAIL_PASSWORD_INCORRECT, False, status.HTTP_401_UNAUTHORIZED)
+                return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
+            if user.status == 'Inactif':
+                res = ResponseInfo({}, USER_INACTIVE, False, status.HTTP_401_UNAUTHORIZED)
+                return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
+            # check admin login
             if is_admin != user.is_superuser:
                 res = ResponseInfo({}, EMAIL_PASSWORD_INCORRECT, False, status.HTTP_401_UNAUTHORIZED)
                 return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
 
-            if user:
+            authenticated = user.check_password(password)
+
+            if authenticated:
                 serializer = self.serializers_class(user, context={'request': request})
                 update_last_login(None, user)
                 res = ResponseInfo(serializer.data, USER_LOGGED_IN_SUCCESSFULLY, True, status.HTTP_200_OK)

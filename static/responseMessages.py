@@ -3,6 +3,7 @@
 EMAIL_ALREADY_REGISTERED = 'E-mail déjà enregistré'
 USER_REGISTERED_SUCCESSFULLY = "Enregistrement de l'utilisateur avec succès"
 EMAIL_PASSWORD_INCORRECT = "E-mail ou mot de passe incorrect"
+USER_INACTIVE = "votre compte est inactif"
 USER_LOGGED_IN_SUCCESSFULLY = "L'utilisateur s'est connecté avec succès"
 USER_NOT_FOUND = "utilisateur non trouvé"
 OTP_SHARED_SUCCESSFULLY = "le code a été envoyé"
