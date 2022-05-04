@@ -31,7 +31,7 @@ import {
   Icon,
   Autocomplete
 } from "@mui/material";
-import { getNumericValidation } from "app/main/common/functions/getNumericValidation";
+import { getNumericValidation } from "app/main/common/functions";
 
 function EtapesDialog() {
   const defaultData = `<p><b>Chère Madame, Cher Monsieur,</b></br>

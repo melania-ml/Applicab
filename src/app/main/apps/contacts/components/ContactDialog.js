@@ -39,7 +39,7 @@ import {
 } from "@mui/material";
 import DatePicker from "@mui/lab/DatePicker";
 import { createFilterOptions } from "@mui/material/Autocomplete";
-import { getNumericValidation } from "app/main/common/functions/getNumericValidation";
+import { getNumericValidation } from "app/main/common/functions";
 
 const tags = [];
 const filter = createFilterOptions();
@@ -651,12 +651,6 @@ function ContactDialog(props) {
                 fullWidth
                 autoComplete="off"
                 onKeyDown={getNumericValidation}
-                onKeyPress={(event) => {
-                  if (!/[0-9]/.test(event.key)) {
-                    event.preventDefault();
-                  }
-                }}
-                //onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57"
                 value={allFields.postal_code}
                 onChange={(e) => {
                   if (e.target.value < 0) return;
@@ -1058,11 +1052,7 @@ function ContactDialog(props) {
                 autoComplete="off"
                 variant="outlined"
                 fullWidth
-                onKeyPress={(event) => {
-                  if (!/[0-9]/.test(event.key)) {
-                    event.preventDefault();
-                  }
-                }}
+                onKeyDown={getNumericValidation}
                 value={allFields.postal_code}
                 onChange={(e) =>
                   setAllFields({
