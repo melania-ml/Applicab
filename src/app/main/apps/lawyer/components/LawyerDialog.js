@@ -5,6 +5,7 @@ import Countries from "app/main/constants/Countries";
 import Nationalities from "app/main/constants/Nationalities";
 import Departments from "app/main/constants/Departments";
 import Status from "app/main/constants/Status";
+import LawyerType from "app/main/constants/LawyerType";
 import ClientStatus from "app/main/constants/ClientStatus";
 import {
   updateContact,
@@ -42,9 +43,9 @@ import { createFilterOptions } from "@mui/material/Autocomplete";
 
 const tags = [];
 const filter = createFilterOptions();
-function ContactDialog(props) {
+function LawyerDialog(props) {
   const [allFields, setAllFields] = useState({
-    client_type: "Client",
+    client_type: "Lawyer",
     legal_status: "Enterprise",
     title: "",
     company_name: "",
@@ -114,7 +115,7 @@ function ContactDialog(props) {
   useEffect(() => {
     if (success) {
       setAllFields({
-        client_type: "Client",
+        client_type: "Lawyer",
         legal_status: "Enterprise",
         title: "",
         company_name: "",
@@ -173,7 +174,7 @@ function ContactDialog(props) {
     }
     const isEmpty = Object.values(errors).every((x) => x === null || x === "");
     if (
-      allFields.client_type === "Client" &&
+      allFields.client_type === "Lawyer" &&
       allFields.legal_status === "Enterprise"
     ) {
       if (
@@ -191,7 +192,7 @@ function ContactDialog(props) {
         setIsValid(false);
       }
     } else if (
-      allFields.client_type === "Client" &&
+      allFields.client_type === "Lawyer" &&
       allFields.legal_status === "Particulier"
     ) {
       if (
@@ -208,7 +209,7 @@ function ContactDialog(props) {
         setIsValid(false);
       }
     } else if (
-      allFields.client_type !== "Client" &&
+      allFields.client_type !== "Lawyer" &&
       allFields.legal_status === "Particulier"
     ) {
       if (
@@ -240,7 +241,7 @@ function ContactDialog(props) {
       dispatch(closeEditContactDialog());
       setAllFields({
         ...allFields,
-        client_type: "Client",
+        client_type: "Lawyer",
         legal_status: "Enterprise",
         title: "",
         company_name: "",
@@ -274,7 +275,7 @@ function ContactDialog(props) {
   function onSubmit(param) {
     const type = param === "invite" ? true : false;
     if (contactDialog.type === "new") {
-      dispatch(addContact({ ...allFields, is_invite: type }));
+      dispatch(addContact({ ...allFields, is_invite: type, is_lawyer: true }));
     } else {
       const typeObj = types.find(
         (type) => type.client_type === allFields?.client_type
@@ -288,7 +289,8 @@ function ContactDialog(props) {
           is_invite: type,
           client_type: typeObj?.client_type || allFields.client_type,
           title: titleObj?.title || allFields.title,
-          id: contactDialog.data.id
+          id: contactDialog.data.id,
+          is_lawyer: true
         })
       );
     }
@@ -354,7 +356,7 @@ function ContactDialog(props) {
       }
     }
     if (
-      allFields.client_type !== "Client" &&
+      allFields.client_type !== "Lawyer" &&
       allFields.legal_status === "Particulier"
     ) {
       if (name === "last_name") {
@@ -365,7 +367,7 @@ function ContactDialog(props) {
         }
       }
     }
-    if (allFields.client_type === "Client") {
+    if (allFields.client_type === "Lawyer") {
       if (name === "last_name") {
         if (value) {
           setErrors({ ...errors, last_name: "" });
@@ -420,61 +422,25 @@ function ContactDialog(props) {
         style={{ overflowY: isAutoCompleteOpen ? "hidden" : "auto" }}
       >
         <div className="row">
-          <Autocomplete
-            onOpen={() => setIsAutoCompleteOpen(true)}
-            onClose={() => setIsAutoCompleteOpen(false)}
-            className="flex w-full mb-12"
-            value={allFields.client_type}
-            onChange={(event, newValue) => {
-              if (typeof newValue === "string") {
-                setAllFields({ ...allFields, client_type: newValue });
-              } else if (newValue && newValue.inputValue) {
+          <FormControl className="flex w-full mb-12" variant="outlined">
+            <InputLabel>Type*</InputLabel>
+            <Select
+              label="Type*"
+              value={allFields.client_type}
+              onChange={(e) =>
                 setAllFields({
                   ...allFields,
-                  client_type: newValue.inputValue
-                });
-              } else {
-                setAllFields({
-                  ...allFields,
-                  client_type: newValue?.client_type
-                });
+                  client_type: e.target.value
+                })
               }
-            }}
-            filterOptions={(options, params) => {
-              const filtered = filter(options, params);
-              const { inputValue } = params;
-              const isExisting = options.some(
-                (option) => inputValue === option.client_type
-              );
-              if (inputValue.trim() !== "" && !isExisting) {
-                filtered.push({
-                  inputValue: inputValue.trim(),
-                  client_type: `Ajouter "${inputValue.trim()}"`
-                });
-              }
-              return filtered;
-            }}
-            selectOnFocus
-            clearOnBlur
-            error={errors?.client_type}
-            helperText={errors?.client_type}
-            handleHomeEndKeys
-            options={types}
-            getOptionLabel={(option) => {
-              if (typeof option === "string") {
-                return option;
-              }
-              if (option.inputValue) {
-                return option.inputValue;
-              }
-              return option.client_type;
-            }}
-            renderOption={(props, option) => (
-              <li {...props}>{option.client_type}</li>
-            )}
-            freeSolo
-            renderInput={(params) => <TextField {...params} label="Type*" />}
-          />
+            >
+              {LawyerType.map((lawyer) => (
+                <MenuItem value={lawyer.value} key={lawyer.id}>
+                  {lawyer.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
           <div className="flex items-center mb-16">
             <b className="min-w-48 pt-20">Forme juridique*:</b>
             <FormControl>
@@ -722,7 +688,7 @@ function ContactDialog(props) {
               <TextField
                 className="mb-12"
                 name="Name"
-                label={allFields.client_type === "Client" ? "Nom*" : "Nom"}
+                label={allFields.client_type === "Lawyer" ? "Nom*" : "Nom"}
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
@@ -740,7 +706,7 @@ function ContactDialog(props) {
               <TextField
                 className="mb-12"
                 label={
-                  allFields.client_type === "Client" ? "Prénom*" : "Prénom"
+                  allFields.client_type === "Lawyer" ? "Prénom*" : "Prénom"
                 }
                 variant="outlined"
                 fullWidth
@@ -757,7 +723,7 @@ function ContactDialog(props) {
                 }}
               />
               <TextField
-                label={allFields.client_type === "Client" ? "Email*" : "Email"}
+                label={allFields.client_type === "Lawyer" ? "Email*" : "Email"}
                 className="mb-12"
                 variant="outlined"
                 fullWidth
@@ -943,7 +909,7 @@ function ContactDialog(props) {
               <TextField
                 className="mb-12"
                 label={
-                  allFields.client_type === "Client" ? "Prénom*" : "Prénom"
+                  allFields.client_type === "Lawyer" ? "Prénom*" : "Prénom"
                 }
                 variant="outlined"
                 fullWidth
@@ -959,7 +925,7 @@ function ContactDialog(props) {
                 }}
               />
               <TextField
-                label={allFields.client_type === "Client" ? "Email*" : "Email"}
+                label={allFields.client_type === "Lawyer" ? "Email*" : "Email"}
                 className="mb-12"
                 variant="outlined"
                 fullWidth
@@ -1268,7 +1234,7 @@ function ContactDialog(props) {
             disabled={
               !isValid ||
               allFields.status === "Inactif" ||
-              allFields.client_type !== "Client"
+              allFields.client_type !== "Lawyer"
             }
           >
             Envoyer invitation
@@ -1279,4 +1245,4 @@ function ContactDialog(props) {
   );
 }
 
-export default ContactDialog;
+export default LawyerDialog;

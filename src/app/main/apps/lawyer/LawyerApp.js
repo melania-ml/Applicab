@@ -3,14 +3,10 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import FusePageSimple from "@fuse/core/FusePageSimple";
 import { useDeepCompareEffect } from "@fuse/hooks";
-import ContactDialog from "./components/ContactDialog";
-import ContactsHeader from "./components/ContactsHeader";
-import ContactsList from "./components/ContactsList";
-import {
-  getContacts,
-  getAllTitles,
-  getAllTypes
-} from "app/store/slices/contactsSlice";
+import LawyerDialog from "./components/LawyerDialog";
+import LawyersHeader from "./components/LawyersHeader";
+import LawyersList from "./components/LawyersList";
+import { getContacts, getAllTitles } from "app/store/slices/contactsSlice";
 
 //material-ui
 import { styled } from "@mui/material/styles";
@@ -89,19 +85,18 @@ function LawyerApp() {
   useDeepCompareEffect(async () => {
     await dispatch(getContacts(routeParams));
     await dispatch(getAllTitles());
-    await dispatch(getAllTypes());
   }, [dispatch, routeParams]);
 
   return (
     <>
       <Root
-        header={<ContactsHeader pageLayout={pageLayout} />}
-        content={<ContactsList />}
+        header={<LawyersHeader pageLayout={pageLayout} />}
+        content={<LawyersList />}
         sidebarInner
         ref={pageLayout}
         innerScroll
       />
-      <ContactDialog />
+      <LawyerDialog />
     </>
   );
 }

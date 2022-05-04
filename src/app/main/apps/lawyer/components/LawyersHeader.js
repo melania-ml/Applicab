@@ -13,7 +13,7 @@ import Filters from "./Filters";
 import { Icon, Button, Input, Paper, Menu, MenuItem } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 
-function ContactsHeader() {
+function LawyersHeader() {
   const [moreMenuEl, setMoreMenuEl] = useState(null);
   const dispatch = useDispatch();
   const { searchText, contacts } = useSelector(({ contacts }) => contacts);
@@ -185,4 +185,4 @@ function ContactsHeader() {
   );
 }
 
-export default ContactsHeader;
+export default LawyersHeader;

@@ -14,7 +14,7 @@ import {
 //material-ui
 import { Typography, Badge } from "@mui/material";
 
-function ContactsList() {
+function LawyersList() {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
   const { isLoading, searchText } = useSelector(({ contacts }) => contacts);
@@ -184,4 +184,4 @@ function ContactsList() {
   );
 }
 
-export default ContactsList;
+export default LawyersList;
