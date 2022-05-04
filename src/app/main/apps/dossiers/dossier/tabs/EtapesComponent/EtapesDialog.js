@@ -273,10 +273,9 @@ function EtapesDialog() {
             onKeyDown={getNumericValidation}
             value={allFields.position}
             onChange={(e) => {
-              if (e.target.value < 0) return;
               setAllFields({
                 ...allFields,
-                position: e.target.value
+                position: e.target.value > 0 ? e.target.value : ""
               });
             }}
           />
@@ -386,13 +385,15 @@ function EtapesDialog() {
                   value={notification.count ?? 0}
                   onChange={(e) => {
                     notifications.map((n) => {
-                      if (e.target.value < 0) return;
                       setNotifications((prev) =>
                         prev.map((newObject, id) => {
                           if (index === id)
                             return {
                               ...newObject,
-                              count: parseInt(e.target.value)
+                              count:
+                                parseInt(e.target.value) > 0
+                                  ? e.target.value
+                                  : ""
                             };
                           return newObject;
                         })

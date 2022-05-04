@@ -607,12 +607,12 @@ function ContactDialog(props) {
                 value={allFields.country}
                 onOpen={() => setIsAutoCompleteOpen(true)}
                 onClose={() => setIsAutoCompleteOpen(false)}
-                onChange={(e, newValue) =>
+                onChange={(e, newValue) => {
                   setAllFields({
                     ...allFields,
-                    country: newValue?.label
-                  })
-                }
+                    country: newValue?.label ?? ""
+                  });
+                }}
                 renderInput={(params) => <TextField {...params} label="Pays" />}
               />
               <TextField
@@ -653,10 +653,9 @@ function ContactDialog(props) {
                 onKeyDown={getNumericValidation}
                 value={allFields.postal_code}
                 onChange={(e) => {
-                  if (e.target.value < 0) return;
                   setAllFields({
                     ...allFields,
-                    postal_code: e.target.value
+                    postal_code: e.target.value > 0 ? e.target.value : ""
                   });
                 }}
               />
@@ -680,10 +679,9 @@ function ContactDialog(props) {
                 }}
                 value={allFields.capital_social}
                 onChange={(e) => {
-                  if (e.target.value < 0) return;
                   setAllFields({
                     ...allFields,
-                    capital_social: e.target.value
+                    capital_social: e.target.value > 0 ? e.target.value : ""
                   });
                 }}
               />
@@ -711,10 +709,9 @@ function ContactDialog(props) {
                 onKeyDown={getNumericValidation}
                 value={allFields.number}
                 onChange={(e) => {
-                  if (e.target.value < 0) return;
                   setAllFields({
                     ...allFields,
-                    number: e.target.value
+                    number: e.target.value > 0 ? e.target.value : ""
                   });
                   //checkIsDisable("number", e.target.value);
                 }}
@@ -1054,12 +1051,12 @@ function ContactDialog(props) {
                 fullWidth
                 onKeyDown={getNumericValidation}
                 value={allFields.postal_code}
-                onChange={(e) =>
+                onChange={(e) => {
                   setAllFields({
                     ...allFields,
-                    postal_code: e.target.value
-                  })
-                }
+                    postal_code: e.target.value > 0 ? e.target.value : ""
+                  });
+                }}
               />
               <div className="flex mb-14 w-full justify-center">
                 <b>Information complémentaire</b>
