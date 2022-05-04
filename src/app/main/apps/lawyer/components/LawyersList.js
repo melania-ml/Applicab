@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import FuseUtils from "@fuse/utils";
 import FuseLoading from "@fuse/core/FuseLoading";
-import ContactsMultiSelectMenu from "./ContactsMultiSelectMenu";
-import ContactsTable from "./ContactsTable";
+import LawyersMultiSelectMenu from "./LawyersMultiSelectMenu";
+import LawyersTable from "./LawyersTable";
 import { CustomTooltip } from "app/main/common/components";
 import {
   openEditContactDialog,
@@ -29,7 +29,7 @@ function LawyersList() {
 
           return (
             selectedFlatRows.length > 0 && (
-              <ContactsMultiSelectMenu selectedContactIds={selectedRowIds} />
+              <LawyersMultiSelectMenu selectedContactIds={selectedRowIds} />
             )
           );
         },
@@ -171,7 +171,7 @@ function LawyersList() {
       animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}
       className="flex w-full rowsPerPage"
     >
-      <ContactsTable
+      <LawyersTable
         columns={columns}
         data={filteredData}
         onRowClick={(ev, row) => {

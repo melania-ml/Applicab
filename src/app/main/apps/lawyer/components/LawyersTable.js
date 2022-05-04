@@ -7,7 +7,7 @@ import {
   useSortBy,
   useTable
 } from "react-table";
-import ContactsTablePaginationActions from "./ContactsTablePaginationActions";
+import LawyersTablePaginationActions from "./LawyersTablePaginationActions";
 import { IndeterminateCheckbox } from "app/main/common/components";
 
 //material-ui
@@ -146,7 +146,7 @@ const EnhancedTable = ({ columns, data, onRowClick }) => {
         }}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
-        ActionsComponent={ContactsTablePaginationActions}
+        ActionsComponent={LawyersTablePaginationActions}
       />
     </div>
   );

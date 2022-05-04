@@ -14,7 +14,7 @@ import {
   MenuList
 } from "@mui/material";
 
-function ContactsMultiSelectMenu(props) {
+function LawyersMultiSelectMenu(props) {
   const dispatch = useDispatch();
   const { selectedContactIds } = props;
 
@@ -68,10 +68,10 @@ function ContactsMultiSelectMenu(props) {
         open={deleteConfirmation}
         onClose={handleClose}
         onDelete={deleteContact}
-        subTitle={"Voulez-vous vraiment supprimer ce contact ?"}
+        subTitle={"Voulez-vous vraiment supprimer ce lawyer ?"}
       />
     </>
   );
 }
 
-export default ContactsMultiSelectMenu;
+export default LawyersMultiSelectMenu;

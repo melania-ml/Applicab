@@ -10,7 +10,7 @@ import {
 import { IconButton } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
-const ContactsTablePaginationActions = (props) => {
+const LawyersTablePaginationActions = (props) => {
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
 
@@ -76,11 +76,11 @@ const ContactsTablePaginationActions = (props) => {
   );
 };
 
-ContactsTablePaginationActions.propTypes = {
+LawyersTablePaginationActions.propTypes = {
   count: PropTypes.number.isRequired,
   onPageChange: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired
 };
 
-export default ContactsTablePaginationActions;
+export default LawyersTablePaginationActions;

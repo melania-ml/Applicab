@@ -101,6 +101,7 @@ export const addContact = createAsyncThunk(
         }
       })
       .catch((errors) => {
+        dispatch(showMessage({ message: errors.response.data.data.data }));
         return dispatch(addContactError(errors));
       });
     return data;

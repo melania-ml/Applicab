@@ -422,11 +422,10 @@ function LawyerDialog(props) {
       >
         <div className="row">
           <div className="flex items-center mb-16">
-            <b className="min-w-48 pt-20">Forme juridique*:</b>
+            <b className="min-w-48">Forme juridique*:</b>
             <FormControl>
               <RadioGroup
                 style={{ marginLeft: 20 }}
-                className="pt-20"
                 row
                 value={allFields.legal_status}
                 aria-labelledby="demo-radio-buttons-group-label"
@@ -663,7 +662,7 @@ function LawyerDialog(props) {
                 }}
               />
               <div className="flex mb-14 w-full justify-center">
-                <b>Premier contact</b>
+                <b>Premier lawyer</b>
               </div>
               <TextField
                 className="mb-12"

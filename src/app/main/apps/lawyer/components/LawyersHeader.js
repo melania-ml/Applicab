@@ -143,7 +143,7 @@ function LawyersHeader() {
                   src="assets/icons/custom-svgs/import.svg"
                   alt="import"
                 />
-                Importer contacts
+                Importer lawyers
               </MenuItem>
             </label>
             <MenuItem
@@ -157,7 +157,7 @@ function LawyersHeader() {
                 src="assets/icons/custom-svgs/export.svg"
                 alt="export"
               />
-              Exporter contacts
+              Exporter lawyers
             </MenuItem>
           </Menu>
           <input
