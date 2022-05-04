@@ -48,7 +48,7 @@ class CaseManagement(CommonBase):
     type = models.CharField(max_length=100, blank=True, null=True)
     unique_code = models.CharField(max_length=100, blank=True, null=True)
     procedure = models.ForeignKey(Procedure,
-                                  blank=True, null=True,
+                                  blank=True, null=True,related_name="procedure",
                                   on_delete=models.DO_NOTHING, db_column='procedure_id')
     location = models.CharField(max_length=600, blank=True, null=True)  # lieu
     tags = ArrayField(models.CharField(max_length=200), null=True,

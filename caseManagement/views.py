@@ -59,6 +59,7 @@ class procedure(APIView):
 
 class casesManagement(APIView):
     serializers_class = CaseSerializer
+    add_serializers_class = AddCaseSerializer
     get_serializers_class = GetCaseSerializer
     task_serializers_class = CaseTaskSerializer
 
@@ -83,7 +84,7 @@ class casesManagement(APIView):
                 reqData['nature'] = natureData.id
 
             # Prepare serializer
-            serializer = self.serializers_class(data=reqData)
+            serializer = self.add_serializers_class(data=reqData)
             if serializer.is_valid():
                 serializer.save()
                 res = ResponseInfo(serializer.data, CASE_INFORMATION_ADDED, True,

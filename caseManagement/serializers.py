@@ -22,6 +22,18 @@ class CaseSerializer(serializers.ModelSerializer):
         depth = 0
 
 
+class AddCaseSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CaseManagement
+        fields = '__all__'
+
+    def to_representation(self, instance):
+        response = super().to_representation(instance)
+        response["procedure"] = {"id" : instance.procedure.id, "name": instance.procedure.procedure_sub_name}
+        return response
+
+
 # Used to upload Multiple document's
 class CaseDocumentsSerializer(serializers.ModelSerializer):
     case_document = serializers.ListField(child=serializers.FileField(max_length=100000,
