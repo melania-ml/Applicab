@@ -62,6 +62,26 @@ export const importContacts = (contact) => async (dispatch) => {
     });
 };
 
+export const getLawyers = createAsyncThunk(
+  "contactsApp/contacts/getLawyers",
+  async (routeParams, { dispatch, getState }) => {
+    dispatch(setIsLoading(true));
+    routeParams = routeParams || getState().contacts.routeParams;
+    const {
+      data: { id }
+    } = getState().auth.user;
+    const response = await axios.post("api/common/filterData/user/User", {
+      query: {
+        is_lawyer: true
+      }
+    });
+    const data = await response.data;
+    dispatch(setContacts(data.data));
+    dispatch(setIsLoading(false));
+    return { data: data.data, routeParams };
+  }
+);
+
 export const getContacts = createAsyncThunk(
   "contactsApp/contacts/getContacts",
   async (routeParams, { dispatch, getState }) => {
@@ -239,6 +259,12 @@ const contactsSlice = createSlice({
     [removeContacts.fulfilled]: (state, action) =>
       contactsAdapter.removeMany(state, action.payload),
     [getContacts.fulfilled]: (state, action) => {
+      const { data, routeParams } = action.payload;
+      contactsAdapter.setAll(state, data);
+      state.routeParams = routeParams;
+      state.searchText = "";
+    },
+    [getLawyers.fulfilled]: (state, action) => {
       const { data, routeParams } = action.payload;
       contactsAdapter.setAll(state, data);
       state.routeParams = routeParams;

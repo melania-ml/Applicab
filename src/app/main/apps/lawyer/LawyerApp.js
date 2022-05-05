@@ -6,7 +6,7 @@ import { useDeepCompareEffect } from "@fuse/hooks";
 import LawyerDialog from "./components/LawyerDialog";
 import LawyersHeader from "./components/LawyersHeader";
 import LawyersList from "./components/LawyersList";
-import { getContacts, getAllTitles } from "app/store/slices/contactsSlice";
+import { getLawyers, getAllTitles } from "app/store/slices/contactsSlice";
 
 //material-ui
 import { styled } from "@mui/material/styles";
@@ -83,7 +83,7 @@ function LawyerApp() {
   const routeParams = useParams();
 
   useDeepCompareEffect(async () => {
-    await dispatch(getContacts(routeParams));
+    await dispatch(getLawyers(routeParams));
     await dispatch(getAllTitles());
   }, [dispatch, routeParams]);
 

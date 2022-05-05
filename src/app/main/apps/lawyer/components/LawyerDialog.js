@@ -477,6 +477,7 @@ function LawyerDialog(props) {
           {allFields.legal_status === "Enterprise" ? (
             <>
               <Autocomplete
+                autoComplete="off"
                 className="flex w-full mb-12"
                 value={allFields.title}
                 onOpen={() => setIsAutoCompleteOpen(true)}
@@ -532,6 +533,7 @@ function LawyerDialog(props) {
                 label="Nom de la compagnie*"
                 variant="outlined"
                 fullWidth
+                autoComplete="off"
                 value={allFields.company_name}
                 error={errors?.company_name}
                 helperText={errors?.company_name}
@@ -546,6 +548,7 @@ function LawyerDialog(props) {
               <Autocomplete
                 className="flex w-full mb-12"
                 disablePortal
+                autoComplete="off"
                 style={{ color: "#FFFFFF" }}
                 options={Countries}
                 value={allFields.country}
@@ -564,6 +567,7 @@ function LawyerDialog(props) {
                 label="Adresse"
                 variant="outlined"
                 fullWidth
+                autoComplete="off"
                 value={allFields.address}
                 onChange={(e) =>
                   setAllFields({
@@ -577,6 +581,7 @@ function LawyerDialog(props) {
                 label="Ville"
                 variant="outlined"
                 fullWidth
+                autoComplete="off"
                 value={allFields.city}
                 onChange={(e) =>
                   setAllFields({
@@ -591,6 +596,7 @@ function LawyerDialog(props) {
                 type="number"
                 variant="outlined"
                 fullWidth
+                autoComplete="off"
                 onKeyPress={(event) => {
                   if (!/[0-9]/.test(event.key)) {
                     event.preventDefault();
@@ -616,6 +622,7 @@ function LawyerDialog(props) {
                 type="number"
                 variant="outlined"
                 fullWidth
+                autoComplete="off"
                 onKeyPress={(event) => {
                   if (!/[0-9]/.test(event.key)) {
                     event.preventDefault();
@@ -740,6 +747,7 @@ function LawyerDialog(props) {
                 label="Fixe"
                 variant="outlined"
                 fullWidth
+                autoComplete="off"
                 error={errors?.mobile2}
                 helperText={errors?.mobile2}
                 value={allFields.fixe}
@@ -758,6 +766,7 @@ function LawyerDialog(props) {
                 multiline
                 rows={5}
                 fullWidth
+                autoComplete="off"
                 value={allFields.comments}
                 onChange={(e) =>
                   setAllFields({
@@ -770,6 +779,7 @@ function LawyerDialog(props) {
                 className="w-full mb-12"
                 multiple
                 freeSolo
+                autoComplete="off"
                 onChange={(event, newValue) => {
                   setAllFields({
                     ...allFields,
@@ -819,6 +829,7 @@ function LawyerDialog(props) {
           ) : (
             <>
               <Autocomplete
+                autoComplete="off"
                 className="flex w-full mb-12"
                 value={allFields.title}
                 onOpen={() => setIsAutoCompleteOpen(true)}
@@ -864,7 +875,11 @@ function LawyerDialog(props) {
                 )}
                 freeSolo
                 renderInput={(params) => (
-                  <TextField {...params} label="Choisissez un titre*" />
+                  <TextField
+                    autoComplete="off"
+                    {...params}
+                    label="Choisissez un titre*"
+                  />
                 )}
               />
               <TextField
@@ -892,6 +907,7 @@ function LawyerDialog(props) {
                 }
                 variant="outlined"
                 fullWidth
+                autoComplete="off"
                 value={allFields.first_name}
                 error={errors?.firstName}
                 helperText={errors?.firstName}
@@ -908,6 +924,7 @@ function LawyerDialog(props) {
                 className="mb-12"
                 variant="outlined"
                 fullWidth
+                autoComplete="off"
                 error={errors?.email}
                 helperText={errors?.email}
                 value={allFields.email}
@@ -924,6 +941,7 @@ function LawyerDialog(props) {
                 label="Mobile"
                 variant="outlined"
                 fullWidth
+                autoComplete="off"
                 value={allFields.phone_number}
                 error={errors?.mobile1}
                 helperText={errors?.mobile1}
@@ -940,6 +958,7 @@ function LawyerDialog(props) {
                 label="Fixe"
                 variant="outlined"
                 fullWidth
+                autoComplete="off"
                 error={errors?.mobile2}
                 helperText={errors?.mobile2}
                 value={allFields.fixe}
@@ -956,6 +975,7 @@ function LawyerDialog(props) {
                 label="Adresse"
                 variant="outlined"
                 fullWidth
+                autoComplete="off"
                 value={allFields.address}
                 onChange={(e) =>
                   setAllFields({
@@ -1009,6 +1029,7 @@ function LawyerDialog(props) {
                   label="Date de naissance"
                   value={allFields.date_of_birth}
                   maxDate={new Date()}
+                  autoComplete="off"
                   onChange={(newValue) => {
                     setAllFields({
                       ...allFields,
@@ -1024,6 +1045,7 @@ function LawyerDialog(props) {
                 />
               </div>
               <Autocomplete
+                autoComplete="off"
                 className="flex w-full mb-12"
                 disablePortal
                 style={{ color: "#FFFFFF" }}
@@ -1038,7 +1060,11 @@ function LawyerDialog(props) {
                   });
                 }}
                 renderInput={(params) => (
-                  <TextField {...params} label="Nationalité" />
+                  <TextField
+                    autoComplete="off"
+                    {...params}
+                    label="Nationalité"
+                  />
                 )}
               />
               <Autocomplete
@@ -1047,6 +1073,7 @@ function LawyerDialog(props) {
                 style={{ color: "#FFFFFF" }}
                 options={Countries}
                 value={allFields.country}
+                autoComplete="off"
                 onOpen={() => setIsAutoCompleteOpen(true)}
                 onClose={() => setIsAutoCompleteOpen(false)}
                 onChange={(e, newValue) =>
@@ -1055,12 +1082,15 @@ function LawyerDialog(props) {
                     country: newValue?.label
                   })
                 }
-                renderInput={(params) => <TextField {...params} label="Pays" />}
+                renderInput={(params) => (
+                  <TextField autoComplete="off" {...params} label="Pays" />
+                )}
               />
               <TextField
                 className="mb-12"
                 label="Ville de naissance"
                 variant="outlined"
+                autoComplete="off"
                 value={allFields.native_city}
                 onChange={(e) =>
                   setAllFields({
@@ -1075,6 +1105,7 @@ function LawyerDialog(props) {
                 disablePortal
                 style={{ color: "#FFFFFF" }}
                 options={Departments}
+                autoComplete="off"
                 value={allFields.department}
                 onOpen={() => setIsAutoCompleteOpen(true)}
                 onClose={() => setIsAutoCompleteOpen(false)}
@@ -1085,7 +1116,11 @@ function LawyerDialog(props) {
                   })
                 }
                 renderInput={(params) => (
-                  <TextField {...params} label="Département" />
+                  <TextField
+                    autoComplete="off"
+                    {...params}
+                    label="Département"
+                  />
                 )}
               />
               <TextField
@@ -1100,6 +1135,7 @@ function LawyerDialog(props) {
                   })
                 }
                 fullWidth
+                autoComplete="off"
               />
               <FormControl className="flex w-full mb-12" variant="outlined">
                 <InputLabel>état civil</InputLabel>
@@ -1125,6 +1161,7 @@ function LawyerDialog(props) {
                 label="Commentaire"
                 variant="outlined"
                 multiline
+                autoComplete="off"
                 rows={5}
                 fullWidth
                 value={allFields.comments}
@@ -1139,6 +1176,7 @@ function LawyerDialog(props) {
                 className="w-full mb-12"
                 multiple
                 freeSolo
+                autoComplete="off"
                 onChange={(event, newValue) => {
                   setAllFields({
                     ...allFields,
@@ -1159,6 +1197,7 @@ function LawyerDialog(props) {
                 }
                 renderInput={(params) => (
                   <TextField
+                    autoComplete="off"
                     {...params}
                     label="Tags"
                     placeholder="Add your tags"

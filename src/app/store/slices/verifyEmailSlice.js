@@ -15,6 +15,7 @@ export const callVerifyEmail = (otp) => async (dispatch) => {
       }
     })
     .catch((errors) => {
+      dispatch(showMessage({ message: errors.response.data.message }));
       return dispatch(VerifyEmailError(errors));
     });
 };

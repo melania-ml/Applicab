@@ -121,7 +121,7 @@ function LawyersHeader() {
           </ThemeProvider>
         </div>
         <div className="mr-md-5 mr-0 mb-3 mb-md-0 flex items-center">
-          <Button
+          {/* <Button
             onClick={(e) => setMoreMenuEl(e.currentTarget)}
             variant="outlined"
             style={{ borderRadius: 0 }}
@@ -129,7 +129,7 @@ function LawyersHeader() {
             className="w-full"
           >
             Plus d'actions
-          </Button>
+          </Button> */}
           <Menu
             id="chats-more-menu"
             anchorEl={moreMenuEl}
