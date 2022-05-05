@@ -321,30 +321,34 @@ class userUpdateViewSet(generics.RetrieveUpdateDestroyAPIView):
 
 class uploadUserCsvViewSet(APIView):
     def post(self, request):
-        lawyerId = request.user
-        if str(request.data['csv'])[-3:] != 'csv':
-            res = ResponseInfo({}, CSV_VALIDATION, False, status.HTTP_401_UNAUTHORIZED)
-            return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
+        try:
+            lawyerId = request.user
+            if str(request.data['csv'])[-3:] != 'csv':
+                res = ResponseInfo({}, CSV_VALIDATION, False, status.HTTP_401_UNAUTHORIZED)
+                return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
 
-        csvData = pandas.read_csv(request.data['csv'])
-        if len(csvData) > 50:
-            res = ResponseInfo({}, "Cannot import more than 50 records", False, status.HTTP_200_OK)
-            return Response(res.success_payload(), status=status.HTTP_200_OK)
-        successCounter = 0
-        nullData = False
-        resString = CSV_ROW_VALIDATION
-        null = csvData.notnull()
-        for _, row in null.iterrows():
-            if not row['Type'] or not row['Title'] or not row['Capital Social'] or not row['Number'] \
-                    or not row['Mobile'] or not row['Comments'] or not row['Fixe'] or not row['Profession'] \
-                    or not row['Department'] or not row['DOB'] or not row['Nationality'] or not row['Native City'] \
-                    or not row['Legal Status'] or not row['Country'] or not row['Address'] or not row['City'] \
-                    or not row['First Name'] or not row['RCS City'] or not row['Company Name']:
-                resString += str(_) + ','
-                nullData = True
-        if nullData:
-            res = ResponseInfo({}, resString, False, status.HTTP_200_OK)
-            return Response(res.success_payload(), status=status.HTTP_200_OK)
+            csvData = pandas.read_csv(request.data['csv'])
+            if len(csvData) > 50:
+                res = ResponseInfo({}, "Cannot import more than 50 records", False, status.HTTP_200_OK)
+                return Response(res.success_payload(), status=status.HTTP_200_OK)
+            successCounter = 0
+            nullData = False
+            resString = CSV_ROW_VALIDATION
+            null = csvData.notnull()
+            for _, row in null.iterrows():
+                if not row['Type'] or not row['Title'] or not row['Capital Social'] or not row['Number'] \
+                        or not row['Mobile'] or not row['Comments'] or not row['Fixe'] or not row['Profession'] \
+                        or not row['Department'] or not row['DOB'] or not row['Nationality'] or not row['Native City'] \
+                        or not row['Legal Status'] or not row['Country'] or not row['Address'] or not row['City'] \
+                        or not row['First Name'] or not row['RCS City'] or not row['Company Name']:
+                    resString += str(_) + ','
+                    nullData = True
+            if nullData:
+                res = ResponseInfo({}, resString, False, status.HTTP_200_OK)
+                return Response(res.success_payload(), status=status.HTTP_200_OK)
+        except Exception as e:
+            res = ResponseInfo([], UPLOAD_VALID_CSV, False, status.HTTP_401_UNAUTHORIZED)
+            return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
 
         for _, row in csvData.iterrows():
             try:
@@ -386,7 +390,8 @@ class uploadUserCsvViewSet(APIView):
                 User.objects.create(**_dict)
                 successCounter += 1
             except Exception as e:
-                pass
+                print(e)
+                return Response("done...")
         res = ResponseInfo(
             {"data": str(successCounter) + " record imported out of " + str(len(csvData))},
             USER_REGISTERED_SUCCESSFULLY, True, 200)

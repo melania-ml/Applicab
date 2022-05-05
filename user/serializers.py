@@ -15,7 +15,7 @@ class UserSerializer(serializers.ModelSerializer):
                   'last_name', 'phone_number', 'password', 'email_otp', 'email_token', 'client_type', 'legal_status',
                   'title', 'company_name', 'country', 'nationality', 'address', 'city', 'postal_code', 'capital_social',
                   'RCS_city', 'native_city', 'number', 'fixe', 'comments', 'tags', 'profession', 'status', 'department',
-                  'lawyer_id'
+                  'lawyer_id', 'is_lawyer'
                   ]
 
     def create(self, validated_data):
