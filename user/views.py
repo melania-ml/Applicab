@@ -390,8 +390,7 @@ class uploadUserCsvViewSet(APIView):
                 User.objects.create(**_dict)
                 successCounter += 1
             except Exception as e:
-                print(e)
-                return Response("done...")
+                pass
         res = ResponseInfo(
             {"data": str(successCounter) + " record imported out of " + str(len(csvData))},
             USER_REGISTERED_SUCCESSFULLY, True, 200)
