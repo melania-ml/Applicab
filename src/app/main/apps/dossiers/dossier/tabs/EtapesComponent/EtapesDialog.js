@@ -234,6 +234,7 @@ function EtapesDialog() {
       formData.append("case_management_id", editDossierData.data.id);
       formData.append("case_task_id", data.id);
       dispatch(uploadDocument(formData));
+      setFiles(null);
     }
     setTimeout(() => {
       dispatch(getDocuments(caseId));

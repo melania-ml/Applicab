@@ -48,7 +48,7 @@ function ContactsHeader() {
     ];
     for (let i = 0; i < contacts.length; i++) {
       let _tempRow = [];
-      _tempRow.push(contacts[i].user_type);
+      _tempRow.push(contacts[i].client_type.client_type);
       _tempRow.push(contacts[i].legal_status);
       _tempRow.push(contacts[i].title?.title);
       _tempRow.push(contacts[i].company_name);
