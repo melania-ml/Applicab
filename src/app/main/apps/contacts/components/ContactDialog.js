@@ -588,6 +588,7 @@ function ContactDialog(props) {
                 label="Nom de la compagnie*"
                 variant="outlined"
                 fullWidth
+                autoComplete="off"
                 value={allFields.company_name}
                 error={errors?.company_name}
                 helperText={errors?.company_name}
@@ -762,6 +763,7 @@ function ContactDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
+                disabled={contactDialog.type === "new" ? false : true}
                 value={allFields.email}
                 error={errors?.email}
                 helperText={errors?.email}
