@@ -90,6 +90,7 @@ function EtapesDialog() {
     if (type === "new") {
       setAllFields({
         ...allFields,
+        case_name: editDossierData?.data?.case_name,
         position: "",
         name: "",
         sub_name: "",
