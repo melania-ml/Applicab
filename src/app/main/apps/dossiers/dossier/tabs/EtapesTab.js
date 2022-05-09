@@ -469,7 +469,9 @@ function EtapeTab() {
                 data={filteredData}
                 onRowClick={(ev, row) => {
                   if (row) {
-                    dispatch(openEditEtapeDialog(row.original));
+                    if (selectedList !== "Corbeille") {
+                      dispatch(openEditEtapeDialog(row.original));
+                    }
                   }
                 }}
               />

@@ -82,6 +82,7 @@ function EtapesDialog() {
           getFormattedDateTime({
             date: data.notification_date
           }),
+        client_id: [],
         message: data.message,
         position: data.position
       });
@@ -117,7 +118,8 @@ function EtapesDialog() {
     if (
       (allFields.status === "A faire" || allFields.status === "Fait") &&
       allFields.client_id.length &&
-      allFields.position
+      allFields.position &&
+      allFields.message
     ) {
       setIsInvite(false);
     } else {
