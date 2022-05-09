@@ -99,7 +99,7 @@ class caseManagementTask(CommonBase):
     send_notification = models.BooleanField(default=False)
     lawyer_notification = ArrayField(base_field=models.IntegerField(blank=True, null=True), blank=True, default=list)
     case_management_id = models.ForeignKey(CaseManagement,
-                                           blank=True, null=True,
+                                           blank=True, null=True,related_name='case_management_task',
                                            on_delete=models.DO_NOTHING, db_column='case_management_id')
 
     def __str__(self):
@@ -135,7 +135,7 @@ class caseManagementDocuments(CommonBase):
     case_document = models.FileField(upload_to='case_documents', blank=True, null=True)
     file_name = models.CharField(max_length=100, blank=True, null=True)
     case_management_id = models.ForeignKey(CaseManagement,
-                                           blank=True, null=True,
+                                           blank=True, null=True,related_name='case_management_documents',
                                            on_delete=models.DO_NOTHING, db_column='case_management_id')
     case_task_id = models.ForeignKey(caseManagementTask,
                                      blank=True, null=True,

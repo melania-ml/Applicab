@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.fields import SerializerMethodField
 
 from caseManagement.models import *
 
@@ -23,14 +24,13 @@ class CaseSerializer(serializers.ModelSerializer):
 
 
 class AddCaseSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = CaseManagement
         fields = '__all__'
 
     def to_representation(self, instance):
         response = super().to_representation(instance)
-        response["procedure"] = {"id" : instance.procedure.id, "name": instance.procedure.procedure_sub_name}
+        response["procedure"] = {"id": instance.procedure.id, "name": instance.procedure.procedure_sub_name}
         return response
 
 
@@ -152,5 +152,28 @@ class DashboardTaskSerializer(serializers.ModelSerializer):
             'end': response['notification_date'],
             'title': response['sub_name'] if response['sub_name'] else response['name'],
             'task_obj': response
+        }
+        return _dict
+
+
+class DashboardClientCaseSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CaseManagement
+        fields = ["is_deleted", "id", "created_date", "updated_date", "case_name", "status", "type", "unique_code",
+                  "procedure", "shared_comment", "lawyer_id", "case_management_documents"]
+        depth = 1
+
+    def to_representation(self, instance):
+        response = super().to_representation(instance)
+        caseDict = {"id": response["id"], "is_deleted": response["is_deleted"],
+                    "created_date": response["created_date"],
+                    "updated_date": response["updated_date"], "case_name": response["case_name"],
+                    "status": response["status"], "type": response["type"], "unique_code": response["unique_code"],
+                    "procedure": response["procedure"], "shared_comment": response["shared_comment"]}
+        _dict = {
+            'case_management_data': caseDict,
+            'case_management_documents': response['case_management_documents'],
+            "lawyer_data": response["lawyer_id"]
         }
         return _dict
