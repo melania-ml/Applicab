@@ -4,10 +4,10 @@ import reducer from "app/store";
 import FusePageSimple from "@fuse/core/FusePageSimple";
 import Calendar from "./components/Calendar";
 import TodoList from "./components/TodoList";
-import Filters from "./components/Filters";
 import MyDocuments from "./components/MyDocuments";
 import SidebarContent from "./components/SidebarContent";
 import InfoCard from "./components/InfoCard";
+import DashboardHeader from "./components/DashboardHeader";
 
 //material-ui
 import { Box, Grid } from "@mui/material";
@@ -103,7 +103,7 @@ function ClientDashboardApp() {
   return (
     <>
       <Root
-        header={<Filters />}
+        header={<DashboardHeader />}
         content={<MainDashboard />}
         sidebarInner
         ref={pageLayout}
@@ -113,4 +113,4 @@ function ClientDashboardApp() {
   );
 }
 
-export default withReducer("calendarApp", reducer)(ClientDashboardApp);
+export default ClientDashboardApp;

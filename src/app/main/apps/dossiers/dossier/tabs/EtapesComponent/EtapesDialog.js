@@ -34,15 +34,6 @@ import {
 import { getNumericValidation } from "app/main/common/functions";
 
 function EtapesDialog() {
-  const defaultData = `<p><b>Chère Madame, Cher Monsieur,</b></br>
-  Je vous confirme bien volontiers notre rendez-vous du ........... prochain à .. heures.</br></br>
-  <b>Je vous invite à me confirmer le numéro de téléphone sur lequel je pourrai vous joindre
-  Voici le lien pour participer à notre visioconférence.</br>
-  Je vous recevrai au (adresse du cabinet)</b></br></br>
-  Dans l'intervalle,</br>
-  Je vous prie de croire, <b>Chère Madame, Cher Monsieur,</b> à l'assurance de mes salutations
-  distinguées.</p>`;
-
   const [allFields, setAllFields] = useState({
     position: "",
     case_name: "",
@@ -52,7 +43,14 @@ function EtapesDialog() {
     notification_date: null,
     client_id: [],
     subject: "",
-    message: ""
+    message: `<p><b>Chère Madame, Cher Monsieur,</b></br>
+    Je vous confirme bien volontiers notre rendez-vous du ........... prochain à .. heures.</br></br>
+    <b>Je vous invite à me confirmer le numéro de téléphone sur lequel je pourrai vous joindre
+    Voici le lien pour participer à notre visioconférence.</br>
+    Je vous recevrai au (adresse du cabinet)</b></br></br>
+    Dans l'intervalle,</br>
+    Je vous prie de croire, <b>Chère Madame, Cher Monsieur,</b> à l'assurance de mes salutations
+    distinguées.</p>`
   });
   const [files, setFiles] = useState(null);
   const [isValid, setIsValid] = useState(false);
@@ -138,7 +136,7 @@ function EtapesDialog() {
       dispatch(
         updateEtapes({
           ...allFields,
-          message: allFields.message || defaultData,
+          message: allFields.message,
           id: data.id,
           case_management_id: editDossierData.data.id,
           send_notification: true,
@@ -505,7 +503,7 @@ function EtapesDialog() {
             <CKEditor
               className="ckeditor"
               editor={ClassicEditor}
-              data={defaultData}
+              data={data?.message || allFields.message}
               config={{
                 toolbar: [
                   "heading",

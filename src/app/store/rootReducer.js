@@ -9,6 +9,7 @@ import forgotPassword from "./slices/forgotPasswordSlice";
 import createPassword from "./slices/createPasswordSlice";
 import userMenu from "./slices/userMenuSlice";
 import dashboard from "./slices/dashboardSlice";
+import clientDashboard from "./slices/clientDashboardSlice";
 
 const createReducer = () => (state, action) => {
   const combinedReducer = combineReducers({
@@ -21,7 +22,8 @@ const createReducer = () => (state, action) => {
     forgotPassword,
     createPassword,
     userMenu,
-    dashboard
+    dashboard,
+    clientDashboard
   });
   return combinedReducer(state, action);
 };

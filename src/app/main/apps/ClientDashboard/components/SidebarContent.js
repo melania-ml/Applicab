@@ -1,18 +1,22 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import _ from "@lodash";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import { cloneElement, memo } from "react";
 import { motion } from "framer-motion";
+import { getCaseList } from "app/store/slices/clientDashboardSlice";
 
-function SidebarContent() {
-  function generate(element) {
-    return _(5).times((value) =>
-      cloneElement(element, {
-        key: value,
-      })
-    );
-  }
+//material-ui
+import { List, ListItem, ListItemText } from "@mui/material";
+
+const SidebarContent = () => {
+  const dispatch = useDispatch();
+  const {
+    data: { id }
+  } = useSelector(({ auth }) => auth.user);
+  const { caseList } = useSelector(({ clientDashboard }) => clientDashboard);
+
+  useEffect(() => {
+    dispatch(getCaseList(id));
+  }, []);
 
   return (
     <div className="h-full">
@@ -24,15 +28,18 @@ function SidebarContent() {
       >
         <h3 className="py-10 font-semibold text-black">Dossier</h3>
         <List dense>
-          {generate(
-            <ListItem button>
-              <ListItemText primary="Tous Altata" />
-            </ListItem>
-          )}
+          {caseList?.length > 0 &&
+            caseList.map((caseObj) => (
+              <>
+                <ListItem button>
+                  <ListItemText primary={caseObj.case_name} />
+                </ListItem>
+              </>
+            ))}
         </List>
       </motion.div>
     </div>
   );
-}
+};
 
-export default memo(SidebarContent);
+export default SidebarContent;
