@@ -1,20 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import Statut from "app/main/constants/Statut";
-import { getFormattedDateTime } from "app/main/common/functions";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import Statut from 'app/main/constants/Statut';
+import {
+  getFormattedDateTime,
+  getUniqueTags,
+  getNumericValidation,
+} from 'app/main/common/functions';
 import {
   closeNewEtapeDialog,
   closeEditEtapeDialog,
   updateEtapes,
   addEtapes,
   uploadDocument,
-  getDocuments
-} from "app/store/slices/dossiersSlice";
+  getDocuments,
+} from 'app/store/slices/dossiersSlice';
 
-//material-ui
-import DateTimePicker from "@mui/lab/DateTimePicker";
+// material-ui
+import DateTimePicker from '@mui/lab/DateTimePicker';
 import {
   Typography,
   Toolbar,
@@ -29,20 +33,19 @@ import {
   Select,
   TextField,
   Icon,
-  Autocomplete
-} from "@mui/material";
-import { getNumericValidation } from "app/main/common/functions";
+  Autocomplete,
+} from '@mui/material';
 
 function EtapesDialog() {
   const [allFields, setAllFields] = useState({
-    position: "",
-    case_name: "",
-    name: "",
-    sub_name: "",
-    status: "A prévoir",
+    position: '',
+    case_name: '',
+    name: '',
+    sub_name: '',
+    status: 'A prévoir',
     notification_date: null,
     client_id: [],
-    subject: "",
+    subject: '',
     message: `<p><b>Chère Madame, Cher Monsieur,</b></br>
     Je vous confirme bien volontiers notre rendez-vous du ........... prochain à .. heures.</br></br>
     <b>Je vous invite à me confirmer le numéro de téléphone sur lequel je pourrai vous joindre
@@ -50,7 +53,7 @@ function EtapesDialog() {
     Je vous recevrai au (adresse du cabinet)</b></br></br>
     Dans l'intervalle,</br>
     Je vous prie de croire, <b>Chère Madame, Cher Monsieur,</b> à l'assurance de mes salutations
-    distinguées.</p>`
+    distinguées.</p>`,
   });
   const [files, setFiles] = useState(null);
   const [isValid, setIsValid] = useState(false);
@@ -63,7 +66,7 @@ function EtapesDialog() {
   const {
     etapeDialog: { data, props, type },
     editDossierData,
-    caseId
+    caseId,
   } = useSelector(({ dossiers }) => dossiers);
 
   useEffect(() => {
@@ -72,32 +75,32 @@ function EtapesDialog() {
         ...allFields,
         case_name: editDossierData?.data?.case_name,
         name: data.name,
-        status: data.status || "A prévoir",
+        status: data.status || 'A prévoir',
         sub_name: data.sub_name,
         subject: data.subject,
         notification_date:
           data.notification_date &&
           getFormattedDateTime({
-            date: data.notification_date
+            date: data.notification_date,
           }),
         client_id: [],
         message: data.message,
-        position: data.position
+        position: data.position,
       });
       setNotifications(data.lawyer_notification?.map((e) => ({ count: e })));
     }
-    if (type === "new") {
+    if (type === 'new') {
       setAllFields({
         ...allFields,
         case_name: editDossierData?.data?.case_name,
-        position: "",
-        name: "",
-        sub_name: "",
-        status: "",
+        position: '',
+        name: '',
+        sub_name: '',
+        status: '',
         notification_date: null,
         client_id: [],
-        subject: "",
-        message: ""
+        subject: '',
+        message: '',
       });
       setNotifications([]);
     }
@@ -114,7 +117,7 @@ function EtapesDialog() {
       setIsValid(false);
     }
     if (
-      (allFields.status === "A faire" || allFields.status === "Fait") &&
+      (allFields.status === 'A faire' || allFields.status === 'Fait') &&
       allFields.client_id.length &&
       allFields.position &&
       allFields.message
@@ -126,13 +129,11 @@ function EtapesDialog() {
   }, [allFields]);
 
   function closeComposeDialog() {
-    return type === "edit"
-      ? dispatch(closeEditEtapeDialog())
-      : dispatch(closeNewEtapeDialog());
+    return type === 'edit' ? dispatch(closeEditEtapeDialog()) : dispatch(closeNewEtapeDialog());
   }
 
   const sendMessage = () => {
-    if (type === "edit") {
+    if (type === 'edit') {
       dispatch(
         updateEtapes({
           ...allFields,
@@ -140,9 +141,7 @@ function EtapesDialog() {
           id: data.id,
           case_management_id: editDossierData.data.id,
           send_notification: true,
-          lawyer_notification: notifications.map(
-            (notification) => notification.count
-          )
+          lawyer_notification: notifications.map((notification) => notification.count),
         })
       );
     } else {
@@ -150,7 +149,7 @@ function EtapesDialog() {
         addEtapes({
           ...allFields,
           case_management_id: editDossierData.data.id,
-          send_notification: true
+          send_notification: true,
         })
       );
     }
@@ -159,7 +158,7 @@ function EtapesDialog() {
   };
 
   const handleRemoveItem = (e, index) => {
-    let _tempNotification = [...notifications];
+    const _tempNotification = [...notifications];
     _tempNotification.splice(index, 1);
     setNotifications([..._tempNotification]);
     // setNotifications(
@@ -176,12 +175,12 @@ function EtapesDialog() {
   }, [notifications.length]);
 
   const addNotification = (param) => {
-    if (!isDateAdded || param === "fromButton") {
+    if (!isDateAdded || param === 'fromButton') {
       setCount(count + 1);
       if (notifications.length < 5) {
-        let obj = {};
-        obj["id"] = count;
-        obj["count"] = notifications.length === 0 ? 15 : null;
+        const obj = {};
+        obj.id = count;
+        obj.count = notifications.length === 0 ? 15 : null;
         const newArr = [...notifications];
         newArr.push(obj);
         setNotifications(newArr);
@@ -190,16 +189,14 @@ function EtapesDialog() {
     setIsDateAdded(true);
   };
   const onSubmit = () => {
-    if (type === "edit") {
+    if (type === 'edit') {
       dispatch(
         updateEtapes({
           ...allFields,
           id: data.id,
           case_management_id: editDossierData.data.id,
           send_notification: false,
-          lawyer_notification: notifications.map(
-            (notification) => notification.count
-          )
+          lawyer_notification: notifications.map((notification) => notification.count),
         })
       );
     } else {
@@ -208,31 +205,29 @@ function EtapesDialog() {
           ...allFields,
           case_management_id: editDossierData.data.id,
           send_notification: false,
-          lawyer_notification: notifications.map(
-            (notification) => notification.count
-          )
+          lawyer_notification: notifications.map((notification) => notification.count),
         })
       );
       setAllFields({
         ...allFields,
-        position: "",
-        case_name: "",
-        name: "",
-        sub_name: "",
-        status: "A prévoir",
+        position: '',
+        case_name: '',
+        name: '',
+        sub_name: '',
+        status: 'A prévoir',
         notification_date: null,
         client_id: [],
-        subject: "",
-        message: ""
+        subject: '',
+        message: '',
       });
     }
     if (files?.length > 0) {
       const formData = new FormData();
       for (let i = 0; i < files.length; i++) {
-        formData.append("case_document", files[i]);
+        formData.append('case_document', files[i]);
       }
-      formData.append("case_management_id", editDossierData.data.id);
-      formData.append("case_task_id", data.id);
+      formData.append('case_management_id', editDossierData.data.id);
+      formData.append('case_task_id', data.id);
       dispatch(uploadDocument(formData));
       setFiles(null);
     }
@@ -245,7 +240,7 @@ function EtapesDialog() {
   return (
     <Dialog
       classes={{
-        paper: "m-24"
+        paper: 'm-24',
       }}
       {...props}
       onClose={closeComposeDialog}
@@ -255,13 +250,13 @@ function EtapesDialog() {
       <AppBar position="static" elevation={0}>
         <Toolbar className="flex w-full">
           <Typography variant="subtitle1" color="inherit">
-            {type === "new"
-              ? "Ajouter une nouvelle étape"
+            {type === 'new'
+              ? 'Ajouter une nouvelle étape'
               : "Modifier l’étape : Codes d'accès AppliCab envoi au(x) client(s)"}
           </Typography>
         </Toolbar>
       </AppBar>
-      <DialogContent classes={{ root: "p-24" }}>
+      <DialogContent classes={{ root: 'p-24' }}>
         <div className="row">
           <TextField
             className="mb-12"
@@ -277,7 +272,7 @@ function EtapesDialog() {
             onChange={(e) => {
               setAllFields({
                 ...allFields,
-                position: e.target.value > 0 ? e.target.value : ""
+                position: e.target.value > 0 ? e.target.value : '',
               });
             }}
           />
@@ -294,7 +289,7 @@ function EtapesDialog() {
             onChange={(e) => {
               setAllFields({
                 ...allFields,
-                case_name: e.target.value
+                case_name: e.target.value,
               });
             }}
           />
@@ -306,16 +301,16 @@ function EtapesDialog() {
             required
             variant="outlined"
             fullWidth
-            disabled={type === "new" ? false : true}
+            disabled={type !== 'new'}
             value={allFields.name}
             onChange={(e) => {
               setAllFields({
                 ...allFields,
-                name: e.target.value
+                name: e.target.value,
               });
             }}
           />
-          {type === "edit" && (
+          {type === 'edit' && (
             <TextField
               className="mb-12"
               name="Renommer"
@@ -328,7 +323,7 @@ function EtapesDialog() {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  sub_name: e.target.value
+                  sub_name: e.target.value,
                 });
               }}
             />
@@ -341,7 +336,7 @@ function EtapesDialog() {
               onChange={(e) =>
                 setAllFields({
                   ...allFields,
-                  status: e.target.value
+                  status: e.target.value,
                 })
               }
             >
@@ -352,10 +347,7 @@ function EtapesDialog() {
               ))}
             </Select>
           </FormControl>
-          <div
-            className="flex w-full mb-12"
-            onKeyDownCapture={(e) => e.preventDefault()}
-          >
+          <div className="flex w-full mb-12" onKeyDownCapture={(e) => e.preventDefault()}>
             <DateTimePicker
               label="Date"
               value={allFields.notification_date}
@@ -366,11 +358,7 @@ function EtapesDialog() {
               }}
               onClose={() => addNotification()}
               renderInput={(params) => (
-                <TextField
-                  className="w-full mb-12"
-                  {...params}
-                  autoComplete="off"
-                />
+                <TextField className="w-full mb-12" {...params} autoComplete="off" />
               )}
             />
           </div>
@@ -392,10 +380,7 @@ function EtapesDialog() {
                           if (index === id)
                             return {
                               ...newObject,
-                              count:
-                                parseInt(e.target.value) > 0
-                                  ? e.target.value
-                                  : ""
+                              count: parseInt(e.target.value) > 0 ? e.target.value : '',
                             };
                           return newObject;
                         })
@@ -403,11 +388,7 @@ function EtapesDialog() {
                     });
                   }}
                 />
-                <FormControl
-                  className="ml-12 hourscount"
-                  hiddenLabel
-                  variant="filled"
-                >
+                <FormControl className="ml-12 hourscount" hiddenLabel variant="filled">
                   <Select placeholder="Jours" defaultValue="Jours">
                     <MenuItem value="Jours" key="Jours">
                       Jours
@@ -415,12 +396,12 @@ function EtapesDialog() {
                   </Select>
                   <Icon
                     style={{
-                      fontSize: "xx-large",
-                      position: "absolute",
-                      right: "-40px",
-                      top: "10px",
-                      color: "#BABABF",
-                      cursor: "pointer"
+                      fontSize: 'xx-large',
+                      position: 'absolute',
+                      right: '-40px',
+                      top: '10px',
+                      color: '#BABABF',
+                      cursor: 'pointer',
                     }}
                     onClick={(e) => handleRemoveItem(e, index)}
                   >
@@ -437,13 +418,13 @@ function EtapesDialog() {
               style={{ borderRadius: 5 }}
               color="secondary"
               disabled={isAddNotification}
-              onClick={() => addNotification("fromButton")}
+              onClick={() => addNotification('fromButton')}
             >
               <Icon
                 style={{
-                  color: "secondary",
-                  fontSize: "large",
-                  margin: "10px"
+                  color: 'secondary',
+                  fontSize: 'large',
+                  margin: '10px',
                 }}
               >
                 notifications
@@ -460,28 +441,24 @@ function EtapesDialog() {
             className="flex w-full mb-12"
             options={editDossierData?.data?.client_id}
             getOptionLabel={(option) => {
-              if (typeof option === "object") {
-                return `${option.first_name + " " + option.last_name} `;
-              } else {
-                const val = editDossierData?.data?.client_id.filter(
-                  (contact) => contact.id === option
-                );
-                return `${val[0]?.first_name + " " + val[0]?.last_name} `;
+              if (typeof option === 'object') {
+                return `${`${option.first_name} ${option.last_name}`} `;
               }
+              const val = editDossierData?.data?.client_id.filter(
+                (contact) => contact.id === option
+              );
+              return `${`${val[0]?.first_name} ${val[0]?.last_name}`} `;
             }}
             value={allFields.client_id}
             onChange={(event, newValue) => {
               const array = newValue.map((val) => val.id ?? val);
               setAllFields({
                 ...allFields,
-                client_id: array
+                client_id: getUniqueTags(array),
               });
             }}
             renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Choisissez un ou plusieurs clients*"
-              />
+              <TextField {...params} label="Choisissez un ou plusieurs clients*" />
             )}
           />
           <TextField
@@ -495,7 +472,7 @@ function EtapesDialog() {
             onChange={(e) => {
               setAllFields({
                 ...allFields,
-                subject: e.target.value
+                subject: e.target.value,
               });
             }}
           />
@@ -506,22 +483,22 @@ function EtapesDialog() {
               data={data?.message || allFields.message}
               config={{
                 toolbar: [
-                  "heading",
-                  "|",
-                  "bold",
-                  "italic",
+                  'heading',
+                  '|',
+                  'bold',
+                  'italic',
                   // "bulletedList",
                   // "numberedList",
-                  "blockQuote",
-                  "|",
-                  "undo",
-                  "redo"
-                ]
+                  'blockQuote',
+                  '|',
+                  'undo',
+                  'redo',
+                ],
               }}
               onChange={(event, editor) => {
                 setAllFields({
                   ...allFields,
-                  message: editor.getData()
+                  message: editor.getData(),
                 });
               }}
             />
@@ -538,9 +515,9 @@ function EtapesDialog() {
           >
             <Icon
               style={{
-                color: "secondary",
-                fontSize: "large",
-                margin: "10px"
+                color: 'secondary',
+                fontSize: 'large',
+                margin: '10px',
               }}
             >
               attach_file
