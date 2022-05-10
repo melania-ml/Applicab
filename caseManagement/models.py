@@ -157,7 +157,7 @@ class caseManagementChatGroup(CommonBase):
     group_members = models.ManyToManyField(User,
                                            blank=True,
                                            related_name='related_group_member_id',
-                                           db_column='group_member')
+                                           db_column='group_members')
 
     def __str__(self):
         return '{}'.format(self.case_management_id)

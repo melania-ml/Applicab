@@ -157,7 +157,6 @@ class DashboardTaskSerializer(serializers.ModelSerializer):
 
 
 class DashboardClientCaseSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = CaseManagement
         fields = ["is_deleted", "id", "created_date", "updated_date", "case_name", "status", "type", "unique_code",
@@ -177,3 +176,40 @@ class DashboardClientCaseSerializer(serializers.ModelSerializer):
             "lawyer_data": response["lawyer_id"]
         }
         return _dict
+
+
+# Client-case-chat data serializer:
+# Used For Appending data Only for clientGroup:
+class ClientMessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = caseManagementGroupMessage
+        fields = ['message', 'message_read_by']
+
+
+# Used For Appending data Only for clientGroup:
+class clientCaseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CaseManagement
+        fields = ['id', 'case_name', 'lawyer_id']
+        depth = 1
+
+
+class RetrieveClientGroupSerializer(serializers.ModelSerializer):
+    group_message = ClientMessageSerializer(many=True, read_only=True)
+    case_management_id = clientCaseSerializer(read_only=True)
+
+    class Meta:
+        model = caseManagementChatGroup
+        fields = ["id", "group_message", "is_deleted", "created_date", "updated_date", "case_management_id"]
+
+    def to_representation(self, instance):
+        response = super().to_representation(instance)
+        loginUser = self.context['user'].id
+        un_read_count = 0
+        if len(response["group_message"]) > 0:
+            count = sum(loginUser not in groupMessages['message_read_by'] for groupMessages in
+                        response["group_message"])
+            un_read_count = count
+        response["group_message"] = response["group_message"].pop()
+        response["un_read_count"] = un_read_count
+        return response

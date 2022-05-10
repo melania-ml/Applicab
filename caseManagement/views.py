@@ -567,7 +567,7 @@ class clientDashboardViewSet(APIView):
             serializer = self.serializers_class(caseData, context={'request': request})
 
             # for case-task with filtered status
-            caseTaskData = caseManagementTask.objects.filter(Q(case_management_id=case_id),~Q(status="Archivé"))
+            caseTaskData = caseManagementTask.objects.filter(Q(case_management_id=case_id), ~Q(status="Archivé"))
             self.taskSerializers_class.Meta.depth = 0
             taskSerializer = self.taskSerializers_class(caseTaskData, many=True)
 
@@ -577,11 +577,27 @@ class clientDashboardViewSet(APIView):
             calenderSerializer = dashboardViewSet.serializers_class(caseCalender, many=True)
 
             # merging to final response object
-            responseDict = {'case_task':taskSerializer.data, 'calender_data': calenderSerializer.data}
+            responseDict = {'case_task': taskSerializer.data, 'calender_data': calenderSerializer.data}
             responseDict.update(serializer.data)
 
             # prepare for response
             res = ResponseInfo(responseDict, SUCCESS, True, status.HTTP_200_OK)
+            return Response(res.success_payload(), status=status.HTTP_200_OK)
+        except Exception as err:
+            res = ResponseInfo(err, SOMETHING_WENT_WRONG, False, status.HTTP_401_UNAUTHORIZED)
+            return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
+
+class clientChatGroupViewSet(APIView):
+    serializers_class = RetrieveClientGroupSerializer
+
+    def get(self, request):
+        try:
+            userId = request.user
+            groupData = caseManagementChatGroup.objects.filter(group_members__in=[userId])
+            serializer = self.serializers_class(groupData, many=True, context={'request': request, 'user':userId})
+
+            res = ResponseInfo(serializer.data, SUCCESS, True, status.HTTP_200_OK)
             return Response(res.success_payload(), status=status.HTTP_200_OK)
         except Exception as err:
             res = ResponseInfo(err, SOMETHING_WENT_WRONG, False, status.HTTP_401_UNAUTHORIZED)
