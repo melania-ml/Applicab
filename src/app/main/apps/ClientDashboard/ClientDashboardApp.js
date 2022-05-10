@@ -1,13 +1,16 @@
-import { useRef } from "react";
-import withReducer from "app/store/withReducer";
-import reducer from "app/store";
+import { useRef, useEffect } from "react";
 import FusePageSimple from "@fuse/core/FusePageSimple";
+import { useDispatch, useSelector } from "react-redux";
 import Calendar from "./components/Calendar";
 import TodoList from "./components/TodoList";
 import MyDocuments from "./components/MyDocuments";
 import SidebarContent from "./components/SidebarContent";
 import InfoCard from "./components/InfoCard";
 import DashboardHeader from "./components/DashboardHeader";
+import {
+  getCaseList,
+  getClientDashboardData
+} from "app/store/slices/clientDashboardSlice";
 
 //material-ui
 import { Box, Grid } from "@mui/material";
@@ -71,6 +74,17 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
 }));
 
 function MainDashboard() {
+  const dispatch = useDispatch();
+  const {
+    data: { id }
+  } = useSelector(({ auth }) => auth.user);
+  const { caseList } = useSelector(({ clientDashboard }) => clientDashboard);
+
+  useEffect(() => {
+    dispatch(getCaseList(id));
+    dispatch(getClientDashboardData(caseList[0].id));
+  }, []);
+
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>

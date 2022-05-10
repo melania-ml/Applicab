@@ -8,6 +8,7 @@ import {
   importContacts
 } from "app/store/slices/contactsSlice";
 import Filters from "./Filters";
+import { CSVLink } from "react-csv";
 
 //material-ui
 import { Icon, Button, Input, Paper, Menu, MenuItem } from "@mui/material";
@@ -18,73 +19,57 @@ function ContactsHeader() {
   const dispatch = useDispatch();
   const { searchText, contacts } = useSelector(({ contacts }) => contacts);
   const mainTheme = useSelector(selectMainTheme);
-
-  const exportContacts = () => {
-    let rows = [
-      [
-        "Type",
-        "Legal Status",
-        "Title",
-        "Company Name",
-        "Country",
-        "Address",
-        "City",
-        "Capital Social",
-        "RCS City",
-        "Number",
-        "Name",
-        "First Name",
-        "Email",
-        "Mobile",
-        "Fixe",
-        "Comments",
-        "DOB",
-        "Nationality",
-        "Native City",
-        "Department",
-        "Profession",
-        "Civil Status"
-      ]
-    ];
-    for (let i = 0; i < contacts.length; i++) {
-      let _tempRow = [];
-      _tempRow.push(contacts[i].client_type.client_type);
-      _tempRow.push(contacts[i].legal_status);
-      _tempRow.push(contacts[i].title?.title);
-      _tempRow.push(contacts[i].company_name);
-      _tempRow.push(contacts[i].country);
-      _tempRow.push(contacts[i].address);
-      _tempRow.push(contacts[i].city);
-      _tempRow.push(contacts[i].capital_social);
-      _tempRow.push(contacts[i].RCS_city);
-      _tempRow.push(contacts[i].number);
-      _tempRow.push(contacts[i].name);
-      _tempRow.push(contacts[i].first_name);
-      _tempRow.push(contacts[i].email);
-      _tempRow.push(contacts[i].phone_number);
-      _tempRow.push(contacts[i].fixe);
-      _tempRow.push(contacts[i].comments);
-      _tempRow.push(contacts[i].date_of_birth);
-      _tempRow.push(contacts[i].nationality);
-      _tempRow.push(contacts[i].native_city);
-      _tempRow.push(contacts[i].department);
-      _tempRow.push(contacts[i].profession);
-      _tempRow.push(contacts[i].civil_status);
-      rows.push(_tempRow);
-    }
-    let csvContent = "data:text/csv;charset=utf-8,";
-
-    rows.forEach(function (rowArray) {
-      let row = rowArray.join(",");
-      csvContent += row + "\r\n";
-    });
-    var encodedUri = encodeURI(csvContent);
-    var link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `contacts.csv`);
-    document.body.appendChild(link); // Required for FF
-    link.click();
-  };
+  let csvData = [];
+  for (let i = 0; i < contacts.length; i++) {
+    let _tempRow = [];
+    _tempRow.push(contacts[i].client_type.client_type);
+    _tempRow.push(contacts[i].legal_status);
+    _tempRow.push(contacts[i].title?.title);
+    _tempRow.push(contacts[i].company_name);
+    _tempRow.push(contacts[i].country);
+    _tempRow.push(contacts[i].address);
+    _tempRow.push(contacts[i].city);
+    _tempRow.push(contacts[i].capital_social);
+    _tempRow.push(contacts[i].RCS_city);
+    _tempRow.push(contacts[i].number);
+    _tempRow.push(contacts[i].name);
+    _tempRow.push(contacts[i].first_name);
+    _tempRow.push(contacts[i].email);
+    _tempRow.push(contacts[i].phone_number);
+    _tempRow.push(contacts[i].fixe);
+    _tempRow.push(contacts[i].comments);
+    _tempRow.push(contacts[i].date_of_birth);
+    _tempRow.push(contacts[i].nationality);
+    _tempRow.push(contacts[i].native_city);
+    _tempRow.push(contacts[i].department);
+    _tempRow.push(contacts[i].profession);
+    _tempRow.push(contacts[i].civil_status);
+    csvData.push(_tempRow);
+  }
+  const headers = [
+    "Type",
+    "Legal Status",
+    "Title",
+    "Company Name",
+    "Country",
+    "Address",
+    "City",
+    "Capital Social",
+    "RCS City",
+    "Number",
+    "Name",
+    "First Name",
+    "Email",
+    "Mobile",
+    "Fixe",
+    "Comments",
+    "DOB",
+    "Nationality",
+    "Native City",
+    "Department",
+    "Profession",
+    "Civil Status"
+  ];
 
   const onFileUpload = (e) => {
     const formData = new FormData();
@@ -146,18 +131,20 @@ function ContactsHeader() {
                 Importer contacts
               </MenuItem>
             </label>
-            <MenuItem
-              onClick={() => {
-                setMoreMenuEl(null);
-                exportContacts();
-              }}
-            >
-              <img
-                className="mr-3"
-                src="assets/icons/custom-svgs/export.svg"
-                alt="export"
-              />
-              Exporter contacts
+            <MenuItem>
+              <CSVLink
+                data={csvData}
+                style={{ color: "#fff", display: "contents" }}
+                headers={headers}
+                filename="contacts"
+              >
+                <img
+                  className="mr-3"
+                  src="assets/icons/custom-svgs/export.svg"
+                  alt="export"
+                />
+                Exporter contacts
+              </CSVLink>
             </MenuItem>
           </Menu>
           <input

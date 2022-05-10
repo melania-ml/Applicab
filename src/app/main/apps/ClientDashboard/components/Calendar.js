@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -72,9 +72,10 @@ const Root = styled("div")(({ theme }) => ({
 export default function Calendar() {
   const dispatch = useDispatch();
   const calendarRef = useRef();
-  const events = [];
   const [currentDate, setCurrentDate] = useState();
-
+  const { calendarData } = useSelector(
+    ({ clientDashboard }) => clientDashboard
+  );
   const handleDates = (rangeInfo) => {
     setCurrentDate(rangeInfo);
   };
@@ -121,7 +122,7 @@ export default function Calendar() {
             weekends
             datesSet={handleDates}
             select={handleDateSelect}
-            events={events}
+            events={calendarData}
             eventContent={renderEventContent}
             initialDate={new Date()}
             ref={calendarRef}

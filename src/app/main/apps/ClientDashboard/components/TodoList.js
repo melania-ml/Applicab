@@ -1,30 +1,18 @@
 import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
+import { getFormattedDateTime } from "app/main/common/functions";
+
+//material-ui
 import {
   Table,
   TableBody,
   TableCell,
   TableRow,
-  TableHead,
+  TableHead
 } from "@mui/material";
 
-const todos = [
-  {
-    id: 1,
-    Étapes: "Rendez-vous-de travail",
-    client: "Adhoc",
-    status: "A faire",
-    date: "06/01/2022 12:54",
-  },
-  {
-    id: 2,
-    Étapes: "Take a look",
-    client: "Adhoc",
-    status: "A faire",
-    date: "07/01/2022 06:10",
-  },
-];
-
 export default function TodoList() {
+  const { todos } = useSelector(({ clientDashboard }) => clientDashboard);
   return (
     <motion.div
       className="mb-5 mb-md-0 box-shadow-dash for-width-todo dashBoardCard h-full"
@@ -48,9 +36,16 @@ export default function TodoList() {
             {todos.map((item) => {
               return (
                 <TableRow key={item.id} hover className="h-34 todo">
-                  <TableCell className="font-medium">{item.date}</TableCell>
-                  <TableCell className="font-medium">{item.Étapes}</TableCell>
-                  <TableCell className="sm:table-cell">{item.status}</TableCell>
+                  <TableCell className="font-medium">
+                    {getFormattedDateTime({
+                      date: item.created_date,
+                      format: "DD/MM/YYYY HH:mm"
+                    })}
+                  </TableCell>
+                  <TableCell className="font-medium">{item.name}</TableCell>
+                  <TableCell className="sm:table-cell">
+                    {item.status || "-"}
+                  </TableCell>
                 </TableRow>
               );
             })}
@@ -60,33 +55,3 @@ export default function TodoList() {
     </motion.div>
   );
 }
-
-// import * as React from 'react';
-// import { styled } from '@mui/material/styles';
-// import Box from '@mui/material/Box';
-// import Paper from '@mui/material/Paper';
-// import Grid from '@mui/material/Grid';
-
-// const Item = styled(Paper)(({ theme }) => ({
-//   ...theme.typography.body2,
-//   padding: theme.spacing(1),
-//   textAlign: 'center',
-//   color: theme.palette.text.secondary,
-// }));
-
-// export default function VariableWidthGrid() {
-//   return (
-//     <Box sx={{ flexGrow: 1 }}>
-//       <Grid container spacing={3}>
-//         <Grid item xs="auto">
-//           <Item>variable width content</Item>
-//         </Grid>
-//         <Grid item xs={6}>
-//           <Item>xs=6</Item>
-//         </Grid>
-//         <Grid item xs>
-//           <Item>xs</Item>
-//         </Grid>
-//       </Grid>
-//     </Box>
-//   );

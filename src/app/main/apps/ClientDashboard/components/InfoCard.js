@@ -1,22 +1,21 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
+import { getWholeCaseName } from "app/main/common/functions";
+
+//material-ui
+import { Avatar, Button, Paper, Box, Grid } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
-import { Avatar, Button } from "@mui/material";
-import { motion } from "framer-motion";
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(1),
-  // textAlign: "center",
-  color: theme.palette.text.secondary,
+  color: theme.palette.text.secondary
 }));
 
 export default function InfoCard() {
-  const user = useSelector(({ auth }) => auth.user);
-
+  const { lawyerData, caseData } = useSelector(
+    ({ clientDashboard }) => clientDashboard
+  );
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
@@ -24,18 +23,23 @@ export default function InfoCard() {
           <Grid item xs={12} md={6}>
             <Item className="h-full mt-5 mt-md-0 flex items-center justify-center">
               <div>
-              <h1 className="py-1 font-semibold text-base text-black textWidthLimit">
-                Mon dossier
-              </h1>
-              <h4 className="font-medium text-sm text-black textWidthLimit">
-                SAA-BAH-20211217-0065 / Altata
-              </h4>
-              <h4 className="font-medium text-sm text-black textWidthLimit">
-                Juridiction : Tribunal Judiciaire AGEN{" "}
-              </h4>
-              <h4 className="font-medium text-sm text-black textWidthLimit">
-                Gestionnaire : Melania Muñoz
-              </h4>
+                <h1 className="py-1 font-semibold text-base text-black textWidthLimit">
+                  Mon dossier
+                </h1>
+                <h4 className="font-medium text-sm text-black textWidthLimit">
+                  {getWholeCaseName(
+                    caseData.case_name,
+                    caseData.procedure.procedure_type,
+                    caseData.created_date,
+                    caseData.unique_code
+                  )}
+                </h4>
+                <h4 className="font-medium text-sm text-black textWidthLimit">
+                  Juridiction : {caseData.procedure.procedure_type}
+                </h4>
+                <h4 className="font-medium text-sm text-black textWidthLimit">
+                  Gestionnaire : {lawyerData.first_name} {lawyerData.last_name}
+                </h4>
               </div>
             </Item>
           </Grid>
@@ -44,28 +48,25 @@ export default function InfoCard() {
               <Avatar
                 className="avatar w-72 h-72 p-8 box-content mon-avocate"
                 alt="user photo"
-                src={user.data.profile}
+                src={lawyerData?.profile || "assets/images/logos/profile.jpg"}
               />
               <div className="ml-12">
                 <h1 className="py-1 font-semibold text-base text-black textWidthLimit">
                   Mon Avocat
                 </h1>
                 <h4 className="font-medium text-sm text-black textWidthLimit">
-                  Altata Conseil Company Altata Conseil Company Altata Conseil
-                  Company Altata Conseil Company
+                  {lawyerData?.company_name}
                 </h4>
                 <h4 className="font-medium text-sm text-black textWidthLimit">
-                  Avocat - Melania Muñoz Avocat - Melania Muñoz Avocat - Melania
-                  Muñoz Avocat - Melania Muñoz
+                  Avocat - {lawyerData?.first_name}
                 </h4>
-                <h4 className="font-medium text-sm text-black textWidthLimit">
-                  www.altata.tech
-                </h4>
+                {lawyerData?.website && (
+                  <h4 className="font-medium text-sm text-black textWidthLimit">
+                    {lawyerData.website}
+                  </h4>
+                )}
               </div>
               <Button
-                // onClick={() => {
-                //   dispatch(dispatch(openNewContactDialog()));
-                // }}
                 variant="contained"
                 color="secondary"
                 className="mr-16 rounded float-right ml-auto w-auto whitespace-no-wrap"

@@ -1,174 +1,25 @@
 import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
+
+//material-ui
 import {
   Table,
   TableBody,
   TableCell,
   TableRow,
   TableHead,
-  Icon,
-  Card,
+  Icon
 } from "@mui/material";
 
-const docValues = [
-  {
-    id: 1,
-    docType: "PDF lettre-de-mission.pdf",
-    docIcon: (
-      <Icon
-        style={{
-          color: "white",
-          fontSize: "medium",
-          margin: "10px",
-          borderRadius: "25px",
-          backgroundColor: "black",
-        }}
-      >
-        arrow_downward
-      </Icon>
-    ),
-    docName: "PDF",
-  },
-  {
-    id: 2,
-    docType: "PDF tcom-paris.pdf",
-    docIcon: (
-      <Icon
-        style={{
-          color: "white",
-          fontSize: "medium",
-          margin: "10px",
-          borderRadius: "25px",
-          backgroundColor: "black",
-        }}
-      >
-        arrow_downward
-      </Icon>
-    ),
-    docName: "PDF",
-  },
-  {
-    id: 2,
-    docType: "PDF tcom-paris.pdf",
-    docIcon: (
-      <Icon
-        style={{
-          color: "white",
-          fontSize: "medium",
-          margin: "10px",
-          borderRadius: "25px",
-          backgroundColor: "black",
-        }}
-      >
-        arrow_downward
-      </Icon>
-    ),
-    docName: "PDF",
-  },
-  {
-    id: 2,
-    docType: "PDF tcom-paris.pdf",
-    docIcon: (
-      <Icon
-        style={{
-          color: "white",
-          fontSize: "medium",
-          margin: "10px",
-          borderRadius: "25px",
-          backgroundColor: "black",
-        }}
-      >
-        arrow_downward
-      </Icon>
-    ),
-    docName: "PDF",
-  },
-  {
-    id: 2,
-    docType: "PDF tcom-paris.pdf",
-    docIcon: (
-      <Icon
-        style={{
-          color: "white",
-          fontSize: "medium",
-          margin: "10px",
-          borderRadius: "25px",
-          backgroundColor: "black",
-        }}
-      >
-        arrow_downward
-      </Icon>
-    ),
-    docName: "PDF",
-  },
-  {
-    id: 2,
-    docType: "PDF tcom-paris.pdf",
-    docIcon: (
-      <Icon
-        style={{
-          color: "white",
-          fontSize: "medium",
-          margin: "10px",
-          borderRadius: "25px",
-          backgroundColor: "black",
-        }}
-      >
-        arrow_downward
-      </Icon>
-    ),
-    docName: "PDF",
-  },
-  {
-    id: 2,
-    docType: "PDF tcom-paris.pdf",
-    docIcon: (
-      <Icon
-        style={{
-          color: "white",
-          fontSize: "medium",
-          margin: "10px",
-          borderRadius: "25px",
-          backgroundColor: "black",
-        }}
-      >
-        arrow_downward
-      </Icon>
-    ),
-    docName: "PDF",
-  },
-  {
-    id: 2,
-    docType: "PDF tcom-paris.pdf",
-    docIcon: (
-      <Icon
-        style={{
-          color: "white",
-          fontSize: "medium",
-          margin: "10px",
-          borderRadius: "25px",
-          backgroundColor: "black",
-        }}
-      >
-        arrow_downward
-      </Icon>
-    ),
-    docName: "PDF",
-  },
-];
 export default function MyDocuments() {
+  const { documents, caseData } = useSelector(
+    ({ clientDashboard }) => clientDashboard
+  );
+  const onDownload = (documentLink) => {
+    window.location.href = documentLink;
+  };
   return (
     <>
-      {/* <Card>
-        <h1 style={{ padding: 8 }}>
-          <b>Commentire</b>
-        </h1>
-        <textarea>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Nibh
-          mauris cursus mattis molestie. Ligula ullamcorper malesuada proin
-          libero nunc consequat interdum.
-        </textarea>
-      </Card> */}
       <div rowSpacing={1}>
         <motion.div
           className="mb-5 mb-md-0 box-shadow-dash p-5"
@@ -189,21 +40,30 @@ export default function MyDocuments() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {docValues.map((item) => {
-                  return (
-                    <TableRow key={item.id} hover className="max-h-80">
-                      <TableCell className="font-medium">
-                        {item.docName}
-                      </TableCell>
-                      <TableCell className="font-medium">
-                        {item.docType}
-                      </TableCell>
-                      <TableCell className="sm:table-cell">
-                        {item.docIcon}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
+                {documents?.length > 0 ? (
+                  documents.map((item) => {
+                    return (
+                      <TableRow key={item.id} hover className="max-h-80">
+                        <TableCell className="font-medium">
+                          {item.file_name}
+                        </TableCell>
+                        <TableCell className="sm:table-cell">
+                          <Icon
+                            onClick={() => onDownload(item.case_document)}
+                            color="inherit"
+                            size="large"
+                          >
+                            arrow_downward
+                          </Icon>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
+                ) : (
+                  <h5 style={{ paddingTop: 15, color: "#272E41" }}>
+                    No documents
+                  </h5>
+                )}
               </TableBody>
             </Table>
           </div>
@@ -219,10 +79,7 @@ export default function MyDocuments() {
             <b>Commentire</b>
           </h1>
           <textarea className="w-full resize-none" style={{ height: 140 }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Nibh
-            mauris cursus mattis molestie. Ligula ullamcorper malesuada proin
-            libero nunc consequat interdum.
+            {caseData?.shared_comment || "No comments"}
           </textarea>
         </motion.div>
       </div>

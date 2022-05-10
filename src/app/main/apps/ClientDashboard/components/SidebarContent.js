@@ -1,25 +1,19 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import _ from "@lodash";
 import { motion } from "framer-motion";
-import { getCaseList } from "app/store/slices/clientDashboardSlice";
+import { getClientDashboardData } from "app/store/slices/clientDashboardSlice";
 
 //material-ui
 import { List, ListItem, ListItemText } from "@mui/material";
 
 const SidebarContent = () => {
   const dispatch = useDispatch();
-  const {
-    data: { id }
-  } = useSelector(({ auth }) => auth.user);
+  const [selectedListIndex, setSelectedListIndex] = useState(0);
   const { caseList } = useSelector(({ clientDashboard }) => clientDashboard);
 
-  useEffect(() => {
-    dispatch(getCaseList(id));
-  }, []);
-
   return (
-    <div className="h-full">
+    <div>
       <motion.div
         className="mb-5 mb-md-0 mt-5 mt-md-0 box-shadow-dash h-full"
         initial={{ y: 50, opacity: 0.8 }}
@@ -29,9 +23,16 @@ const SidebarContent = () => {
         <h3 className="py-10 font-semibold text-black">Dossier</h3>
         <List dense>
           {caseList?.length > 0 &&
-            caseList.map((caseObj) => (
+            caseList.map((caseObj, id) => (
               <>
-                <ListItem button>
+                <ListItem
+                  button
+                  onClick={() => {
+                    setSelectedListIndex(id);
+                    dispatch(getClientDashboardData(caseObj.id));
+                  }}
+                  style={{ background: id === selectedListIndex && "#C4C4C4" }}
+                >
                   <ListItemText primary={caseObj.case_name} />
                 </ListItem>
               </>
