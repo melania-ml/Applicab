@@ -356,3 +356,10 @@ input[type="file"]::-webkit-file-upload-button {
     height: calc(100vh - 435px);
   }
 }
+.text-message {
+  -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    display: -webkit-box;
+    white-space: nowrap !important;
+}

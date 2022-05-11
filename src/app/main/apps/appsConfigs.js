@@ -4,7 +4,7 @@ import ContactsAppConfig from "./contacts/ContactsAppConfig";
 import LawyerAppConfig from "./lawyer/LawyerAppConfig";
 import Error404PageConfig from "./errors/404/Error404PageConfig";
 import ClientDashboardAppConfig from "./clientDashboard/ClientDashboardAppConfig";
-import ChatAppConfig from "./chat/ChatAppConfig";
+import MessagesAppConfig from "./messages/MessageAppConfig";
 import FaqAppConfig from "./faq/FaqAppConfig";
 
 const appsConfigs = [
@@ -14,7 +14,7 @@ const appsConfigs = [
   LawyerAppConfig,
   Error404PageConfig,
   ClientDashboardAppConfig,
-  ChatAppConfig,
+  MessagesAppConfig,
   FaqAppConfig
 ];
 
