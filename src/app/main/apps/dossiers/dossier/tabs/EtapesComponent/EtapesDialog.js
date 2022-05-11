@@ -7,6 +7,7 @@ import {
   getFormattedDateTime,
   getUniqueTags,
   getNumericValidation,
+  checkIsNumber,
 } from 'app/main/common/functions';
 import {
   closeNewEtapeDialog,
@@ -270,10 +271,11 @@ function EtapesDialog() {
             onKeyDown={getNumericValidation}
             value={allFields.position}
             onChange={(e) => {
-              setAllFields({
-                ...allFields,
-                position: e.target.value > 0 ? e.target.value : '',
-              });
+              if (checkIsNumber(e.target.value))
+                setAllFields({
+                  ...allFields,
+                  position: e.target.value > 0 ? e.target.value : '',
+                });
             }}
           />
           <TextField
