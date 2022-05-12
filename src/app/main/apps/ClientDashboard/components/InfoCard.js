@@ -1,6 +1,8 @@
 import * as React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import history from "@history";
 import { getWholeCaseName } from "app/main/common/functions";
+import { getMessages } from "app/store/slices/messagesSlice";
 
 //material-ui
 import { Avatar, Button, Paper, Box, Grid } from "@mui/material";
@@ -13,6 +15,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function InfoCard() {
+  const dispatch = useDispatch();
   const { lawyerData, caseData } = useSelector(
     ({ clientDashboard }) => clientDashboard
   );
@@ -67,6 +70,17 @@ export default function InfoCard() {
                 )}
               </div>
               <Button
+                onClick={() => {
+                  dispatch(
+                    getMessages({
+                      caseId: caseData.id,
+                      groupId: caseData.case_group.id
+                    })
+                  );
+                  history.push({
+                    pathname: "/apps/messages/all"
+                  });
+                }}
                 variant="contained"
                 color="secondary"
                 className="mr-16 rounded float-right ml-auto w-auto whitespace-no-wrap"

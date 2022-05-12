@@ -36,7 +36,7 @@ const navigationConfig = [
     title: "Messages",
     type: "item",
     icon: "mail",
-    url: "apps/messages",
+    url: "apps/messages/all",
     access: ["Client"]
   },
   {

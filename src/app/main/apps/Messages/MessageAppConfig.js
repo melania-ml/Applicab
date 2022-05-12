@@ -5,7 +5,7 @@ const MessageApp = lazy(() => import("./MessageApp"));
 const MessageAppConfig = {
   routes: [
     {
-      path: "apps/messages",
+      path: "apps/messages/all",
       element: <MessageApp />
     }
   ]
