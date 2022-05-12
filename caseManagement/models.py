@@ -83,7 +83,7 @@ class caseManagementTask(CommonBase):
     name = models.CharField(max_length=525, blank=True, null=True)
     position = models.IntegerField(blank=True, null=True)
     sub_name = models.CharField(max_length=525, blank=True, null=True)
-    message = models.CharField(max_length=525, blank=True, null=True)
+    message = models.CharField(max_length=50000, blank=True, null=True)
     status = models.CharField(max_length=225, blank=True, null=True)
     subject = models.CharField(max_length=225, blank=True, null=True)
     notification_date = models.DateTimeField(auto_now=False, blank=True, null=True)
@@ -111,7 +111,7 @@ class caseManagementTask(CommonBase):
 
 class caseManagementDefaultTask(CommonBase):
     name = models.CharField(max_length=525, blank=True, null=True)
-    message = models.CharField(max_length=525, blank=True, null=True)
+    message = models.CharField(max_length=50000, blank=True, null=True)
     status = models.CharField(max_length=225, blank=True, null=True)
     subject = models.CharField(max_length=225, blank=True, null=True)
     type = models.CharField(max_length=100, blank=True, null=True)
@@ -177,7 +177,7 @@ class caseManagementGroupMessage(CommonBase):
                                         on_delete=models.DO_NOTHING, db_column='message_send_by')
 
     message_read_by = ArrayField(base_field=models.IntegerField(blank=True, null=True), blank=True, default=list)
-    message = models.CharField(max_length=50000, blank=True, null=True)
+    message = models.CharField(max_length=500000, blank=True, null=True)
 
     def __str__(self):
         return '{}'.format(self.group_id)

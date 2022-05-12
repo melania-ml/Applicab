@@ -160,13 +160,14 @@ class DashboardClientCaseSerializer(serializers.ModelSerializer):
     class Meta:
         model = CaseManagement
         fields = ["is_deleted", "id", "created_date", "updated_date", "case_name", "status", "type", "unique_code",
-                  "procedure", "shared_comment", "lawyer_id", "case_management_documents"]
+                  "procedure", "shared_comment", "lawyer_id", "case_management_documents", "case_group"]
         depth = 1
 
     def to_representation(self, instance):
         response = super().to_representation(instance)
         caseDict = {"id": response["id"], "is_deleted": response["is_deleted"],
                     "created_date": response["created_date"],
+                    "case_group": response["case_group"][0] if len(response["case_group"]) > 0 else None,
                     "updated_date": response["updated_date"], "case_name": response["case_name"],
                     "status": response["status"], "type": response["type"], "unique_code": response["unique_code"],
                     "procedure": response["procedure"], "shared_comment": response["shared_comment"]}
@@ -190,7 +191,7 @@ class ClientMessageSerializer(serializers.ModelSerializer):
 class clientCaseSerializer(serializers.ModelSerializer):
     class Meta:
         model = CaseManagement
-        fields = ['id', 'case_name', 'lawyer_id']
+        fields = ['id', 'case_name', 'lawyer_id', 'procedure', 'unique_code', 'created_date']
         depth = 1
 
 
@@ -205,11 +206,11 @@ class RetrieveClientGroupSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         response = super().to_representation(instance)
         loginUser = self.context['user'].id
-        un_read_count = 0
+        un_read_count = None
         if len(response["group_message"]) > 0:
             count = sum(loginUser not in groupMessages['message_read_by'] for groupMessages in
                         response["group_message"])
-            un_read_count = count
+            un_read_count = count if count > 0 else None
         response["group_message"] = response["group_message"].pop()
         response["un_read_count"] = un_read_count
         return response
