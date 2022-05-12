@@ -17,7 +17,7 @@ function DossierHeader() {
     type === "edit"
       ? getWholeCaseName(
           data.case_name,
-          data.procedure.procedure_type,
+          data.procedure?.procedure_type,
           data.created_date,
           data.unique_code
         )

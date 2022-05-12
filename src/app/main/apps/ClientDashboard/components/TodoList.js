@@ -35,7 +35,7 @@ export default function TodoList() {
           <TableBody>
             {todos.map((item) => {
               return (
-                <TableRow key={item.id} hover className="h-34 todo">
+                <TableRow key={item?.id} hover className="h-34 todo">
                   <TableCell className="font-medium">
                     {getFormattedDateTime({
                       date: item.created_date,

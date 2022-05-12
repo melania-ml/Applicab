@@ -29,7 +29,7 @@ const SidebarContent = () => {
                   button
                   onClick={() => {
                     setSelectedListIndex(id);
-                    dispatch(getClientDashboardData(caseObj.id));
+                    dispatch(getClientDashboardData(caseObj?.id));
                   }}
                   style={{ background: id === selectedListIndex && "#C4C4C4" }}
                 >

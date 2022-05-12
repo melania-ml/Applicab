@@ -132,7 +132,7 @@ export const updateContact = createAsyncThunk(
   "contactsApp/contacts/updateContact",
   async (contact, { dispatch }) => {
     await axios
-      .patch(`auth/user/updateUser/${contact.id}`, contact)
+      .patch(`auth/user/updateUser/${contact?.id}`, contact)
       .then((data) => {
         if (data.data.status === 200 && data.data.success) {
           dispatch(showMessage({ message: data.data.message }));

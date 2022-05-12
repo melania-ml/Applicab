@@ -2,7 +2,12 @@ import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import history from "@history";
 import { getWholeCaseName } from "app/main/common/functions";
-import { getMessages } from "app/store/slices/messagesSlice";
+import {
+  getMessages,
+  setCaseNameObj,
+  setCaseId,
+  setGroupId
+} from "app/store/slices/messagesSlice";
 
 //material-ui
 import { Avatar, Button, Paper, Box, Grid } from "@mui/material";
@@ -32,13 +37,13 @@ export default function InfoCard() {
                 <h4 className="font-medium text-sm text-black textWidthLimit">
                   {getWholeCaseName(
                     caseData.case_name,
-                    caseData.procedure.procedure_type,
+                    caseData.procedure?.procedure_type,
                     caseData.created_date,
                     caseData.unique_code
                   )}
                 </h4>
                 <h4 className="font-medium text-sm text-black textWidthLimit">
-                  Juridiction : {caseData.procedure.procedure_type}
+                  Juridiction : {caseData.procedure?.procedure_type}
                 </h4>
                 <h4 className="font-medium text-sm text-black textWidthLimit">
                   Gestionnaire : {lawyerData.first_name} {lawyerData.last_name}
@@ -71,10 +76,13 @@ export default function InfoCard() {
               </div>
               <Button
                 onClick={() => {
+                  dispatch(setCaseNameObj(caseData));
+                  dispatch(setCaseId(caseData?.id));
+                  dispatch(setGroupId(caseData?.case_group?.id));
                   dispatch(
                     getMessages({
-                      caseId: caseData.id,
-                      groupId: caseData.case_group.id
+                      caseId: caseData?.id,
+                      groupId: caseData?.case_group?.id
                     })
                   );
                   history.push({

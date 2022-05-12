@@ -116,7 +116,7 @@ const EnhancedTable = ({ columns, data, onRowClick }) => {
                         {...cell.getCellProps()}
                         className={clsx("p-4 md:p-12", cell.column.className)}
                       >
-                        {cell.column.id === "createddata"
+                        {cell?.column?.id === "createddata"
                           ? "14-09-2017 16:19:56	"
                           : cell.render("Cell")}
                       </TableCell>

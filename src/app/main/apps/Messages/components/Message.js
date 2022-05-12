@@ -129,7 +129,7 @@ function Message(props) {
     return (
       i === 0 ||
       (messages[i - 1] &&
-        messages[i - 1].message_send_by.id !== item.message_send_by.id)
+        messages[i - 1].message_send_by?.id !== item.message_send_by?.id)
     );
   }
 
@@ -137,7 +137,7 @@ function Message(props) {
     return (
       i === messages.length - 1 ||
       (messages[i + 1] &&
-        messages[i + 1].message_send_by.id !== item.message_send_by.id)
+        messages[i + 1].message_send_by?.id !== item.message_send_by?.id)
     );
   }
 
@@ -172,7 +172,7 @@ function Message(props) {
         <Typography color="inherit" className="text-18 font-semibold px-4">
           {getWholeCaseName(
             caseNameObj.case_name,
-            caseNameObj.procedure.procedure_type,
+            caseNameObj.procedure?.procedure_type,
             caseNameObj.created_date,
             caseNameObj.unique_code
           )}
@@ -191,8 +191,8 @@ function Message(props) {
                     key={item.time}
                     className={clsx(
                       "flex flex-col grow-0 shrink-0 items-start justify-end relative px-16 pb-2",
-                      { me: id === item.message_send_by.id },
-                      { contact: id !== item.message_send_by.id },
+                      { me: id === item.message_send_by?.id },
+                      { contact: id !== item.message_send_by?.id },
                       { "first-of-group": isFirstMessageOfGroup(item, i) },
                       { "last-of-group": isLastMessageOfGroup(item, i) },
                       i + 1 === messages.length && "pb-96"
@@ -201,7 +201,7 @@ function Message(props) {
                     {isFirstMessageOfGroup(item, i) && (
                       <div
                         className={
-                          id === item.message_send_by.id
+                          id === item.message_send_by?.id
                             ? "flex items-center w-full justify-end mb-1"
                             : "flex items-center w-full mb-1"
                         }

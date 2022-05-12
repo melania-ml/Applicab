@@ -123,25 +123,27 @@ export const addCase = createAsyncThunk(
         if (data.data.status === 201 && data.data.success) {
           dispatch(
             createChatGroup({
-              case_management_id: data.data.data.id,
+              case_management_id: data.data.data?.id,
               group_members: data.data.data.client_id
             })
           );
           const procedure = getState().dossiers.procedures;
           const { id } = procedure.filter(
-            (fil) => fil.id === data.data.data.procedure.id
+            (fil) => fil?.id === data.data.data.procedure?.id
           )[0];
           dispatch(
             createDefaultEtapes({
               type: data.data.data.type,
               procedure: id,
-              case_management_id: data.data.data.id
+              case_management_id: data.data.data?.id
             })
           );
           dispatch(showMessage({ message: data.data.message }));
           dispatch(setIsCaseAdded(true));
-          dispatch(setCaseId(data.data.data.id));
-          dispatch(getMessages(data.data.data.id, getState().dossiers.groupId));
+          dispatch(setCaseId(data.data.data?.id));
+          dispatch(
+            getMessages(data.data.data?.id, getState().dossiers.groupId)
+          );
           dispatch(
             setMessageHeader({
               case_name: data.data.data.case_name,
@@ -201,7 +203,7 @@ export const createChatGroup = (obj) => async (dispatch) => {
   await axios
     .post(`api/common/listCreate/caseManagement/caseManagementChatGroup`, obj)
     .then((data) => {
-      dispatch(setGroupId(data.data.id));
+      dispatch(setGroupId(data.data?.id));
     })
     .catch((error) => {
       dispatch(showMessage({ message: error.response.message }));
@@ -226,7 +228,7 @@ export const updateStatus = createAsyncThunk(
         update_value: {
           status: updateValue.status
         },
-        case_management_id: getState().dossiers.editDossierData.data.id
+        case_management_id: getState().dossiers.editDossierData.data?.id
       })
       .then((data) => {
         if (data.data.status === 200 && data.data.success) {
@@ -246,7 +248,7 @@ export const duplicateEtape = createAsyncThunk(
     await axios
       .patch(`api/caseManagement/bulkReplicaCaseTask`, {
         task_ids: ids,
-        case_management_id: getState().dossiers.editDossierData.data.id
+        case_management_id: getState().dossiers.editDossierData.data?.id
       })
       .then((data) => {
         if (data.data.status === 201 && data.data.success) {
@@ -264,7 +266,7 @@ export const getDossiers = createAsyncThunk(
   "dossiersApp/dossiers/getDossiers",
   async (routeParams, { dispatch, getState }) => {
     dispatch(setIsLoading(true));
-    const id = getState().auth.user.data.id;
+    const id = getState().auth.user.data?.id;
     routeParams = routeParams || getState().dossiers.routeParams;
     const response = await axios.post("api/caseManagement/filterCases", {
       query: {

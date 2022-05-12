@@ -82,7 +82,7 @@ function MainDashboard() {
 
   useEffect(() => {
     dispatch(getCaseList(id));
-    dispatch(getClientDashboardData(caseList[0].id));
+    dispatch(getClientDashboardData(caseList[0]?.id));
   }, []);
 
   return (

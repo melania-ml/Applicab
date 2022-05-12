@@ -36,7 +36,7 @@ function UserMenu() {
   };
 
   const handleEditProfile = async () => {
-    await dispatch(getProfileData(user.data.id));
+    await dispatch(getProfileData(user?.data?.id));
     setIsEditProfile(true);
     userMenuClose();
   };

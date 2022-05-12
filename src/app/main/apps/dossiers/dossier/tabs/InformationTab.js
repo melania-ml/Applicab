@@ -73,18 +73,18 @@ function InformationTab() {
         status: data.status,
         type: data.type,
         procedure: procedures.filter(
-          (proc) => proc.procedure_type === data.procedure.procedure_type
-        )[0].id,
+          (proc) => proc?.procedure_type === data.procedure?.procedure_type
+        )[0]?.id,
         location: data.location,
         tags: data.tags,
         internal_comment: data.internal_comment,
         shared_comment: data.shared_comment,
-        client_id: data.client_id?.map((clientId) => clientId.id),
+        client_id: data.client_id?.map((clientId) => clientId?.id),
         customer_contact_id: data.customer_contact_id?.map(
-          (customerContactId) => customerContactId.id
+          (customerContactId) => customerContactId?.id
         ),
         opposing_contact_id: data.opposing_contact_id?.map(
-          (opposingContactId) => opposingContactId.id
+          (opposingContactId) => opposingContactId?.id
         )
       });
     }
@@ -103,7 +103,7 @@ function InformationTab() {
     if (type === "new") {
       dispatch(addCase({ ...allFields }));
     } else {
-      dispatch(updateCase({ ...allFields, case_management_id: data.id }));
+      dispatch(updateCase({ ...allFields, case_management_id: data?.id }));
     }
   }
 
@@ -192,7 +192,7 @@ function InformationTab() {
           }}
         >
           {CaseStatus.map((status) => (
-            <MenuItem value={status.value} key={status.id}>
+            <MenuItem value={status.value} key={status?.id}>
               {status.label}
             </MenuItem>
           ))}
@@ -205,17 +205,17 @@ function InformationTab() {
           value={allFields.procedure}
           onChange={(e) => {
             const newVal = procedures.filter(
-              (proc) => proc.id === e.target.value
+              (proc) => proc?.id === e.target.value
             );
             setAllFields({
               ...allFields,
-              procedure: newVal[0].id
+              procedure: newVal[0]?.id
             });
           }}
         >
           {procedures.map((procedure) => (
-            <MenuItem value={procedure.id} key={procedure.id}>
-              {procedure.procedure_type}
+            <MenuItem value={procedure?.id} key={procedure?.id}>
+              {procedure?.procedure_type}
             </MenuItem>
           ))}
         </Select>
@@ -233,7 +233,7 @@ function InformationTab() {
           }}
         >
           {Types.map((type) => (
-            <MenuItem value={type.value} key={type.id}>
+            <MenuItem value={type.value} key={type?.id}>
               {type.label}
             </MenuItem>
           ))}
@@ -322,13 +322,13 @@ function InformationTab() {
           if (typeof option === "object") {
             return `${option.first_name + " " + option.last_name} `;
           } else {
-            const val = contacts.filter((contact) => contact.id === option);
+            const val = contacts.filter((contact) => contact?.id === option);
             return `${val[0]?.first_name + " " + val[0]?.last_name} `;
           }
         }}
         value={allFields.client_id}
         onChange={(event, newValue) => {
-          const array = newValue.map((val) => val.id ?? val);
+          const array = newValue.map((val) => val?.id ?? val);
           setAllFields({
             ...allFields,
             client_id: getUniqueTags(array)
@@ -349,13 +349,13 @@ function InformationTab() {
           if (typeof option === "object") {
             return `${option.first_name + " " + option.last_name} `;
           } else {
-            const val = contacts.filter((contact) => contact.id === option);
+            const val = contacts.filter((contact) => contact?.id === option);
             return `${val[0]?.first_name + " " + val[0]?.last_name} `;
           }
         }}
         value={allFields.customer_contact_id}
         onChange={(event, newValue) => {
-          const array = newValue.map((val) => val.id ?? val);
+          const array = newValue.map((val) => val?.id ?? val);
           setAllFields({
             ...allFields,
             customer_contact_id: getUniqueTags(array)
@@ -376,13 +376,13 @@ function InformationTab() {
           if (typeof option === "object") {
             return `${option.first_name + " " + option.last_name} `;
           } else {
-            const val = contacts.filter((contact) => contact.id === option);
+            const val = contacts.filter((contact) => contact?.id === option);
             return `${val[0]?.first_name + " " + val[0]?.last_name} `;
           }
         }}
         value={allFields.opposing_contact_id}
         onChange={(event, newValue) => {
-          const array = newValue.map((val) => val.id ?? val);
+          const array = newValue.map((val) => val?.id ?? val);
           setAllFields({
             ...allFields,
             opposing_contact_id: getUniqueTags(array)

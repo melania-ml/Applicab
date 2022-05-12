@@ -74,8 +74,7 @@ const StyledSwipeableDrawer = styled(SwipeableDrawer)(({ theme }) => ({
 
 function MessageApp(props) {
   const dispatch = useDispatch();
-  const [isClicked, setIsClicked] = useState(false);
-
+  const { messages } = useSelector(({ messages }) => messages);
   useEffect(() => {
     dispatch(getDossierListForMessage());
   }, []);
@@ -128,11 +127,11 @@ function MessageApp(props) {
             onOpen={(ev) => {}}
             onClose={(ev) => {}}
           >
-            <MessageSidebar setIsClicked={setIsClicked} />
+            <MessageSidebar />
           </StyledSwipeableDrawer>
         </Hidden>
         <main className={clsx("ChatApp-contentWrapper", "z-10")}>
-          {!isClicked ? (
+          {messages?.length < 0 ? (
             <div className="flex flex-col flex-1 items-center justify-center p-24">
               <Paper className="rounded-full p-48 md:p-64 shadow-xl">
                 <Icon className="block text-32 md:text-64" color="secondary">

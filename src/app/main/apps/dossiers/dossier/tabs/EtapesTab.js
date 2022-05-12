@@ -220,7 +220,9 @@ function EtapeTab() {
     () => [
       {
         Header: ({ selectedFlatRows }) => {
-          const selectedRowIds = selectedFlatRows.map((row) => row.original.id);
+          const selectedRowIds = selectedFlatRows.map(
+            (row) => row?.original?.id
+          );
 
           return (
             selectedFlatRows.length > 0 && (

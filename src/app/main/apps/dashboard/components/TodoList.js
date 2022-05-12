@@ -5,7 +5,7 @@ import {
   TableCell,
   TableRow,
   TableHead,
-  Icon,
+  Icon
 } from "@mui/material";
 
 const todos = [
@@ -14,15 +14,15 @@ const todos = [
     Étapes: "Rendez-vous-de travail",
     client: "Adhoc",
     status: "A faire",
-    date: "06/01/2022 12:54",
+    date: "06/01/2022 12:54"
   },
   {
     id: 2,
     Étapes: "Take a look",
     client: "Adhoc",
     status: "A faire",
-    date: "07/01/2022 06:10",
-  },
+    date: "07/01/2022 06:10"
+  }
 ];
 
 export default function TodoList() {
@@ -50,7 +50,7 @@ export default function TodoList() {
           <TableBody>
             {todos.map((item) => {
               return (
-                <TableRow key={item.id} hover className="h-64">
+                <TableRow key={item?.id} hover className="h-64">
                   <TableCell className="font-medium">{item.date}</TableCell>
                   <TableCell className="font-medium">{item.Étapes}</TableCell>
                   <TableCell className="sm:table-cell">{item.client}</TableCell>

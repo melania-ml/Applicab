@@ -18,7 +18,7 @@ function ContactListItem(props) {
     <StyledListItem
       button
       className="px-16 py-12 min-h-92"
-      onClick={() => props.onContactClick(chatData.case_management_id.id)}
+      onClick={() => props.onContactClick(chatData?.case_management_id?.id)}
     >
       <div className="relative">
         <Avatar
@@ -37,7 +37,7 @@ function ContactListItem(props) {
         }}
         primary={getWholeCaseName(
           chatData.case_management_id.case_name,
-          chatData.case_management_id.procedure.procedure_type,
+          chatData.case_management_id.procedure?.procedure_type,
           chatData.case_management_id.created_date,
           chatData.case_management_id.unique_code
         )}

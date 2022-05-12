@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { motion } from 'framer-motion';
-import { getDocuments } from 'app/store/slices/dossiersSlice';
-import { getFormattedDateTime } from 'app/main/common/functions';
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { motion } from "framer-motion";
+import { getDocuments } from "app/store/slices/dossiersSlice";
+import { getFormattedDateTime } from "app/main/common/functions";
 
 // material-ui
 import {
@@ -15,14 +15,14 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
-} from '@mui/material';
+  Paper
+} from "@mui/material";
 
 function DocumentsTab() {
   const dispatch = useDispatch();
   const {
     editDossierData: { data },
-    documents,
+    documents
   } = useSelector(({ dossiers }) => dossiers);
 
   useEffect(() => {
@@ -65,9 +65,9 @@ function DocumentsTab() {
             <TableBody>
               {documents.map((row) => (
                 <TableRow
-                  key={row.id}
+                  key={row?.id}
                   sx={{
-                    '&:last-child td, &:last-child th': { border: 0 },
+                    "&:last-child td, &:last-child th": { border: 0 }
                   }}
                 >
                   <TableCell align="left">{row.file_name}</TableCell>
@@ -77,7 +77,7 @@ function DocumentsTab() {
                   <TableCell align="left">
                     {getFormattedDateTime({
                       date: row.created_date,
-                      format: 'DD MMM. YYYY',
+                      format: "DD MMM. YYYY"
                     })}
                   </TableCell>
                   <TableCell align="center">

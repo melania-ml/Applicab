@@ -288,7 +288,7 @@ function LawyerDialog(props) {
           is_invite: type,
           client_type: typeObj?.client_type || allFields.client_type,
           title: titleObj?.title || allFields.title,
-          id: contactDialog.data.id,
+          id: contactDialog?.data?.id,
           is_lawyer: true
         })
       );
@@ -819,7 +819,7 @@ function LawyerDialog(props) {
                   }
                 >
                   {Status.map((category) => (
-                    <MenuItem value={category.value} key={category.id}>
+                    <MenuItem value={category.value} key={category?.id}>
                       {category.label}
                     </MenuItem>
                   ))}
@@ -1150,7 +1150,7 @@ function LawyerDialog(props) {
                   }
                 >
                   {ClientStatus.map((category) => (
-                    <MenuItem value={category.value} key={category.id}>
+                    <MenuItem value={category.value} key={category?.id}>
                       {category.label}
                     </MenuItem>
                   ))}
@@ -1217,7 +1217,7 @@ function LawyerDialog(props) {
                   }
                 >
                   {Status.map((category) => (
-                    <MenuItem value={category.value} key={category.id}>
+                    <MenuItem value={category.value} key={category?.id}>
                       {category.label}
                     </MenuItem>
                   ))}

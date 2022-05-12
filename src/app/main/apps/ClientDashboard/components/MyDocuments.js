@@ -43,7 +43,7 @@ export default function MyDocuments() {
                 {documents?.length > 0 ? (
                   documents.map((item) => {
                     return (
-                      <TableRow key={item.id} hover className="max-h-80">
+                      <TableRow key={item?.id} hover className="max-h-80">
                         <TableCell className="font-medium">
                           {item.file_name}
                         </TableCell>

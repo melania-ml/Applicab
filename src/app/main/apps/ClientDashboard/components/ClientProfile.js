@@ -60,7 +60,7 @@ function ClientProfile(props) {
   }, [userData]);
 
   const saveProfile = () => {
-    dispatch(updateProfileData(allFields, user.data.id));
+    dispatch(updateProfileData(allFields, user?.data?.id));
     props.onClose();
   };
   const convertBase64 = (file) => {

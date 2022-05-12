@@ -90,18 +90,17 @@ function MessageSidebar(props) {
                 animate="show"
               >
                 {filteredDossiers.map((contact) => (
-                  <motion.div variants={item} key={contact.id}>
+                  <motion.div variants={item} key={contact?.id}>
                     <ContactListItem
                       contact={contact}
                       onContactClick={(id) => {
-                        props.setIsClicked(true);
                         dispatch(setCaseNameObj(contact.case_management_id));
                         dispatch(setCaseId(id));
-                        dispatch(setGroupId(contact.id));
+                        dispatch(setGroupId(contact?.id));
                         dispatch(
                           getMessages({
                             caseId: id,
-                            groupId: contact.id,
+                            groupId: contact?.id,
                             isMobile
                           })
                         );

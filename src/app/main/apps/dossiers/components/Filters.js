@@ -23,7 +23,7 @@ export default function Filters() {
     nature: "",
     inputNature: "",
     dateOfCreation: null,
-    tags: "",
+    tags: ""
   });
 
   const handleRemoveDate = () => {
@@ -39,28 +39,28 @@ export default function Filters() {
             className="autocomplete"
             options={procedures}
             getOptionLabel={(option) => {
-              return option.procedure_type;
+              return option?.procedure_type;
             }}
             onChange={(event, newValue) => {
               const typeObj = procedures.find(
-                (type) => type.id === newValue?.id
+                (type) => type?.id === newValue?.id
               );
               if (typeof newValue === "string") {
                 setAllFields({ ...allFields, procedure: newValue });
               } else if (newValue && newValue.inputValue) {
                 setAllFields({
                   ...allFields,
-                  procedure: newValue.inputValue,
+                  procedure: newValue.inputValue
                 });
               } else if (!newValue) {
                 setAllFields({
                   ...allFields,
-                  procedure: "",
+                  procedure: ""
                 });
               } else {
                 setAllFields({
                   ...allFields,
-                  procedure: typeObj?.id,
+                  procedure: typeObj?.id
                 });
               }
               dispatch(
@@ -89,17 +89,17 @@ export default function Filters() {
               } else if (newValue && newValue.inputValue) {
                 setAllFields({
                   ...allFields,
-                  type: newValue.inputValue,
+                  type: newValue.inputValue
                 });
               } else if (!newValue) {
                 setAllFields({
                   ...allFields,
-                  type: "",
+                  type: ""
                 });
               } else {
                 setAllFields({
                   ...allFields,
-                  type: newValue?.value,
+                  type: newValue?.value
                 });
               }
               dispatch(
@@ -126,17 +126,17 @@ export default function Filters() {
               } else if (newValue && newValue.inputValue) {
                 setAllFields({
                   ...allFields,
-                  status: newValue.inputValue,
+                  status: newValue.inputValue
                 });
               } else if (!newValue) {
                 setAllFields({
                   ...allFields,
-                  status: "",
+                  status: ""
                 });
               } else {
                 setAllFields({
                   ...allFields,
-                  status: newValue.value,
+                  status: newValue.value
                 });
               }
               dispatch(
@@ -159,24 +159,24 @@ export default function Filters() {
             }}
             onChange={(event, newValue) => {
               const natureObj = natures.find(
-                (type) => type.id === newValue?.id
+                (type) => type?.id === newValue?.id
               );
               if (typeof newValue === "string") {
                 setAllFields({ ...allFields, nature: newValue });
               } else if (newValue && newValue.inputValue) {
                 setAllFields({
                   ...allFields,
-                  nature: newValue.inputValue,
+                  nature: newValue.inputValue
                 });
               } else if (!newValue) {
                 setAllFields({
                   ...allFields,
-                  nature: "",
+                  nature: ""
                 });
               } else {
                 setAllFields({
                   ...allFields,
-                  nature: natureObj?.id,
+                  nature: natureObj?.id
                 });
               }
               dispatch(
@@ -221,7 +221,7 @@ export default function Filters() {
                     right: 35,
                     top: 16,
                     color: "#fff",
-                    cursor: "pointer",
+                    cursor: "pointer"
                   }}
                   onClick={handleRemoveDate}
                 >
@@ -238,12 +238,12 @@ export default function Filters() {
               onChange={(e) => {
                 setAllFields({
                   ...allFields,
-                  tags: e.target.value ? [e.target.value] : "",
+                  tags: e.target.value ? [e.target.value] : ""
                 });
                 dispatch(
                   getDossiers({
                     ...allFields,
-                    tags: e.target.value ? [e.target.value] : "",
+                    tags: e.target.value ? [e.target.value] : ""
                   })
                 );
               }}

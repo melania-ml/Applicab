@@ -27,7 +27,7 @@ export default function Filters() {
             return option.case_name;
           }}
           onChange={(event, newValue) => {
-            const caseObj = dossiers.find((type) => type.id === newValue?.id);
+            const caseObj = dossiers.find((type) => type?.id === newValue?.id);
             if (typeof newValue === "string") {
               setDossier(newValue);
             } else if (newValue && newValue.inputValue) {
@@ -35,7 +35,7 @@ export default function Filters() {
             } else if (!newValue) {
               setDossier("");
             } else {
-              setDossier(caseObj.id);
+              setDossier(caseObj?.id);
             }
             dispatch(
               getCalendarData({

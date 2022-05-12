@@ -27,6 +27,9 @@ const createReducer = () => (state, action) => {
     clientDashboard,
     messages
   });
+  if (action.type === "auth/user/userLoggedOut") {
+    return combinedReducer(undefined, action);
+  }
   return combinedReducer(state, action);
 };
 

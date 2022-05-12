@@ -66,7 +66,7 @@ function Dossier() {
   useDeepCompareEffect(async () => {
     await dispatch(getNatures());
     await dispatch(getProcedures());
-    await dispatch(getContacts(user.data.id));
+    await dispatch(getContacts(user?.data?.id));
   }, [dispatch, routeParams]);
 
   const handleTabChange = (event, value) => {

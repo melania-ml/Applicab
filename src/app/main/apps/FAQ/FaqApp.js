@@ -13,42 +13,42 @@ import {
   Icon,
   Input,
   Paper,
-  Typography,
+  Typography
 } from "@mui/material";
 
 const Root = styled("div")(({ theme }) => ({
   "& .FaqPage-header": {
     background: `linear-gradient(to right, ${theme.palette.primary.dark} 0%, ${theme.palette.primary.main} 100%)`,
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.primary.contrastText
   },
 
   "& .FaqPage-panel": {
     margin: 0,
     border: "none",
     "&:before": {
-      display: "none",
+      display: "none"
     },
     "&:first-of-type": {
-      borderRadius: "20px 20px 0 0",
+      borderRadius: "20px 20px 0 0"
     },
     "&:last-of-type": {
-      borderRadius: "0 0 20px 20px",
+      borderRadius: "0 0 20px 20px"
     },
 
     "&.Mui-expanded": {
-      margin: "auto",
-    },
-  },
+      margin: "auto"
+    }
+  }
 }));
 
 function FaqApp() {
   const [data, setData] = useState({
     procedureFAQ: [],
-    vocabularyFAQ: [],
+    vocabularyFAQ: []
   });
   const [filteredData, setFilteredData] = useState({
     procedureFAQ: [],
-    vocabularyFAQ: [],
+    vocabularyFAQ: []
   });
   const [expanded, setExpanded] = useState(null);
   const [searchText, setSearchText] = useState("");
@@ -70,7 +70,7 @@ function FaqApp() {
         vocabularyFAQ: FuseUtils.filterArrayByString(
           arr.vocabularyFAQ,
           _searchText
-        ),
+        )
       };
     }
     setFilteredData(getFilteredArray(data, searchText));
@@ -109,7 +109,7 @@ function FaqApp() {
             disableUnderline
             fullWidth
             inputProps={{
-              "aria-label": "Search",
+              "aria-label": "Search"
             }}
             value={searchText}
             onChange={handleSearch}
@@ -130,14 +130,14 @@ function FaqApp() {
           const container = {
             show: {
               transition: {
-                staggerChildren: 0.05,
-              },
-            },
+                staggerChildren: 0.05
+              }
+            }
           };
 
           const item = {
             hidden: { opacity: 0, y: 20 },
-            show: { opacity: 1, y: 0 },
+            show: { opacity: 1, y: 0 }
           };
           return (
             filteredData.procedureFAQ.length > 0 && (
@@ -151,7 +151,7 @@ function FaqApp() {
                   style={{
                     backgroundColor: "#1b2330",
                     borderTopLeftRadius: 20,
-                    borderTopRightRadius: 20,
+                    borderTopRightRadius: 20
                   }}
                   variant="subtitle1"
                   color="#ffffff"
@@ -163,12 +163,12 @@ function FaqApp() {
                   <Accordion
                     component={motion.div}
                     variants={item}
-                    key={faq.id}
+                    key={faq?.id}
                     classes={{
-                      root: "FaqPage-panel shadow-0",
+                      root: "FaqPage-panel shadow-0"
                     }}
-                    expanded={expanded === faq.id}
-                    onChange={toggleAccordion(faq.id)}
+                    expanded={expanded === faq?.id}
+                    onChange={toggleAccordion(faq?.id)}
                   >
                     <AccordionSummary expandIcon={<Icon>expand_more</Icon>}>
                       <div className="flex items-center">
@@ -195,14 +195,14 @@ function FaqApp() {
           const container = {
             show: {
               transition: {
-                staggerChildren: 0.05,
-              },
-            },
+                staggerChildren: 0.05
+              }
+            }
           };
 
           const item = {
             hidden: { opacity: 0, y: 20 },
-            show: { opacity: 1, y: 0 },
+            show: { opacity: 1, y: 0 }
           };
           return (
             filteredData.vocabularyFAQ.length > 0 && (
@@ -216,7 +216,7 @@ function FaqApp() {
                   style={{
                     backgroundColor: "#1b2330",
                     borderTopLeftRadius: 20,
-                    borderTopRightRadius: 20,
+                    borderTopRightRadius: 20
                   }}
                   variant="subtitle1"
                   color="#ffffff"
@@ -228,12 +228,12 @@ function FaqApp() {
                   <Accordion
                     component={motion.div}
                     variants={item}
-                    key={faq.id}
+                    key={faq?.id}
                     classes={{
-                      root: "FaqPage-panel shadow-0",
+                      root: "FaqPage-panel shadow-0"
                     }}
-                    expanded={expanded === faq.id}
-                    onChange={toggleAccordion(faq.id)}
+                    expanded={expanded === faq?.id}
+                    onChange={toggleAccordion(faq?.id)}
                   >
                     <AccordionSummary expandIcon={<Icon>expand_more</Icon>}>
                       <div className="flex items-center">

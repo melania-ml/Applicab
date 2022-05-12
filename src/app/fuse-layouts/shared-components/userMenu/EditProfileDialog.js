@@ -66,7 +66,7 @@ function EditProfileDialog(props) {
     if (!allFields.image) {
       delete allFields["profile"];
     }
-    dispatch(updateProfileData(allFields, user.data.id));
+    dispatch(updateProfileData(allFields, user?.data?.id));
     props.onClose();
   };
   const convertBase64 = (file) => {

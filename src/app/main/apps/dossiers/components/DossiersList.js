@@ -37,7 +37,9 @@ function DossiersList(props) {
     () => [
       {
         Header: ({ selectedFlatRows }) => {
-          const selectedRowIds = selectedFlatRows.map((row) => row.original.id);
+          const selectedRowIds = selectedFlatRows.map(
+            (row) => row?.original?.id
+          );
 
           return (
             selectedFlatRows.length > 0 && (
@@ -119,13 +121,13 @@ function DossiersList(props) {
               <Fab
                 onClick={(ev) => {
                   ev.stopPropagation();
-                  dispatch(setCaseId(row.original.id));
-                  dispatch(setGroupId(row.original.case_group.id));
+                  dispatch(setCaseId(row?.original?.id));
+                  dispatch(setGroupId(row?.original?.case_group?.id));
                   dispatch(setEtapeTabFromAction(false));
                   dispatch(setMessageTabFromAction(true));
-                  props.navigate(`/apps/dossiers/${row.original.id}`);
-                  dispatch(setEditDossierData(row.original));
-                  dispatch(getMessages(row.original.id, groupId));
+                  props.navigate(`/apps/dossiers/${row?.original?.id}`);
+                  dispatch(setEditDossierData(row?.original));
+                  dispatch(getMessages(row?.original?.id, groupId));
                 }}
                 variant="circular"
                 disableRipple={true}
@@ -156,13 +158,13 @@ function DossiersList(props) {
               <IconButton
                 onClick={(ev) => {
                   ev.stopPropagation();
-                  dispatch(setCaseId(row.original.id));
-                  dispatch(setGroupId(row.original.case_group.id));
+                  dispatch(setCaseId(row?.original?.id));
+                  dispatch(setGroupId(row?.original?.case_group?.id));
                   dispatch(setMessageTabFromAction(false));
                   dispatch(setEtapeTabFromAction(true));
-                  props.navigate(`/apps/dossiers/${row.original.id}`);
-                  dispatch(setEditDossierData(row.original));
-                  dispatch(getMessages(row.original.id, groupId));
+                  props.navigate(`/apps/dossiers/${row?.original?.id}`);
+                  dispatch(setEditDossierData(row?.original));
+                  dispatch(getMessages(row?.original?.id, groupId));
                 }}
                 size="large"
               >
@@ -216,13 +218,13 @@ function DossiersList(props) {
         data={filteredData}
         onRowClick={(ev, row) => {
           if (row) {
-            props.navigate(`/apps/dossiers/${row.original.id}`);
-            dispatch(setCaseId(row.original.id));
-            dispatch(setGroupId(row.original.case_group.id));
+            props.navigate(`/apps/dossiers/${row?.original?.id}`);
+            dispatch(setCaseId(row?.original?.id));
+            dispatch(setGroupId(row?.original?.case_group?.id));
             dispatch(setMessageTabFromAction(false));
             dispatch(setEtapeTabFromAction(false));
-            dispatch(setEditDossierData(row.original));
-            dispatch(getMessages(row.original.id, groupId));
+            dispatch(setEditDossierData(row?.original));
+            dispatch(getMessages(row?.original?.id, groupId));
           }
         }}
       />
