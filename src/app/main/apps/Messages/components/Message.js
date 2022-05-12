@@ -183,7 +183,7 @@ function Message(props) {
         className="flex flex-1 flex-col overflow-y-auto"
       >
         {messages && messages.length > 0 ? (
-          <div className="flex flex-col pt-16 px-16 rtl:pr-56 pb-40">
+          <div className="flex flex-col pt-16 px-16 rtl:pr-56 pb-40 msg-tab-wrapper">
             {messages.map((item, i) => {
               return (
                 <>

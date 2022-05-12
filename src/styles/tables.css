@@ -310,6 +310,10 @@ input[type="file"]::-webkit-file-upload-button {
 .msg-main-section{
   height: calc(100vh - 355px);
 }
+.msg-tab-wrapper{
+	height: calc(100vh - 220px);
+	overflow-y: scroll;
+}
 
 @media screen and (max-width: 1700px) {
 .dash-monavocat-tab{
