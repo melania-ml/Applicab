@@ -6,7 +6,8 @@ import {
   getMessages,
   setCaseNameObj,
   setCaseId,
-  setGroupId
+  setGroupId,
+  getDossierListForMessage
 } from "app/store/slices/messagesSlice";
 
 //material-ui
@@ -76,6 +77,7 @@ export default function InfoCard() {
               </div>
               <Button
                 onClick={() => {
+                  dispatch(getDossierListForMessage());
                   dispatch(setCaseNameObj(caseData));
                   dispatch(setCaseId(caseData?.id));
                   dispatch(setGroupId(caseData?.case_group?.id));

@@ -82,8 +82,13 @@ function MainDashboard() {
 
   useEffect(() => {
     dispatch(getCaseList(id));
-    dispatch(getClientDashboardData(caseList[0]?.id));
   }, []);
+
+  useEffect(() => {
+    if (caseList?.length > 0) {
+      dispatch(getClientDashboardData(caseList[0]?.id));
+    }
+  }, [caseList]);
 
   return (
     <>

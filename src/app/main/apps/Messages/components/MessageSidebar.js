@@ -110,7 +110,7 @@ function MessageSidebar(props) {
                 ))}
               </motion.div>
             );
-          }, [searchText, dispatch, isMobile])}
+          }, [dossierList, searchText, dispatch, isMobile])}
         </List>
       </FuseScrollbars>
     </div>

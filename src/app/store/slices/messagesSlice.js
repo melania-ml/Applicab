@@ -71,7 +71,7 @@ const messagesSlice = createSlice({
   name: "messagesApp/messages",
   initialState: {
     dossierList: [],
-    messages: {},
+    messages: [],
     caseNameObj: {},
     isLoading: false,
     caseId: null,
