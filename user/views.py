@@ -61,7 +61,7 @@ class registerClient(APIView):
         if serializer.is_valid():
             serializer.save()
             if request.data['is_invite']:
-                self.sendSetPasswordOtp(serializer, request.user, emailOtp, request.data['client_type'])
+                self.sendSetPasswordOtp(serializer, emailOtp, request.data['client_type'])
             res = ResponseInfo(serializer.data, USER_REGISTERED_SUCCESSFULLY, True, status.HTTP_201_CREATED)
             return Response(res.success_payload(), status.HTTP_201_CREATED)
         res = ResponseInfo({"data": serializer.errors}, "something went wrong", False,
@@ -81,12 +81,11 @@ class registerClient(APIView):
             res = ResponseInfo(err, SOMETHING_WENT_WRONG, False, status.HTTP_401_UNAUTHORIZED)
             return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
 
-    def sendSetPasswordOtp(self, serializer, loginUser, emailOtp, clientType):
+    def sendSetPasswordOtp(self, serializer, emailOtp, clientType):
         if clientType == "Client":
             stPasswordText = emailText.setPassword() | emailText.commonUrls()
             stPasswordText['otp'] = emailOtp
             stPasswordText['text1'] = stPasswordText['text1'].format(userName=serializer.data['first_name'])
-            stPasswordText['text2'] = stPasswordText['text2'].format(lawyerName=loginUser.first_name)
             stPasswordText['button_url'] = stPasswordText['button_url'] + str(serializer.data['id'])
         else:
             stPasswordText = emailText.setLawyerPassword() | emailText.commonUrls()
@@ -300,7 +299,7 @@ class userUpdateViewSet(generics.RetrieveUpdateDestroyAPIView):
             user_id = request.data.get('id', None)
             lawyer_data = User.objects.filter(id=user_id).first()
             lawyerName = lawyer_data.lawyer_id.first_name if lawyer_data.lawyer_id else None
-
+            is_lawyer = lawyer_data.is_lawyer
             secretsGenerator = secrets.SystemRandom()
             emailOtp = secretsGenerator.randrange(100000, 999999)
             setPasswordToken = ''.join(secrets.choice(string.ascii_uppercase + string.digits)
@@ -308,19 +307,27 @@ class userUpdateViewSet(generics.RetrieveUpdateDestroyAPIView):
             request.data['email_otp'] = emailOtp
             request.data['email_token'] = setPasswordToken.lower()
 
-            stPasswordText = emailText.setPassword() | emailText.commonUrls()
-            stPasswordText['otp'] = emailOtp
-            stPasswordText['text1'] = stPasswordText['text1'].format(userName=lawyerName)
-            stPasswordText['button_url'] = stPasswordText['button_url'] + str(user_id)
-
-            send_email([email],
-                       'Saisissez ' + str(emailOtp) + ' comme code de confirmation Applicab', 'email.html',
-                       stPasswordText)
+            self.sendOtpEmail(emailOtp, email, lawyerName, user_id, is_lawyer)
 
         response = super(userUpdateViewSet, self).partial_update(request)
         # prepare response
         res = ResponseInfo(response.data, PROFILE_UPDATE_SUCCESS, True, status.HTTP_200_OK)
         return Response(res.success_payload(), status=status.HTTP_200_OK)
+
+    def sendOtpEmail(self, emailOtp, email, lawyerName, user_id, is_lawyer):
+        if is_lawyer:
+            stPasswordText = emailText.setLawyerPassword() | emailText.commonUrls()
+            stPasswordText['otp'] = emailOtp
+            stPasswordText['text1'] = stPasswordText['text1'].format(userName=lawyerName)
+            stPasswordText['button_url'] = stPasswordText['button_url'] + str(user_id)
+        else:
+            stPasswordText = emailText.setPassword() | emailText.commonUrls()
+            stPasswordText['otp'] = emailOtp
+            stPasswordText['text1'] = stPasswordText['text1'].format(userName=lawyerName)
+            stPasswordText['button_url'] = stPasswordText['button_url'] + str(user_id)
+        send_email([email],
+                   'Saisissez ' + str(emailOtp) + ' comme code de confirmation Applicab', 'email.html',
+                   stPasswordText)
 
 
 class uploadUserCsvViewSet(APIView):
