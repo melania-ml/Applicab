@@ -81,7 +81,7 @@ def lawyerTaskNotification():
     return textDict
 
 
-def wellcomeText():
+def welcomeClientText():
     textDict = {
         'title': 'Bienvenue sur Applicab 🎉!',
         'title2': 'Accédez à votre espace personnel',
@@ -93,6 +93,22 @@ def wellcomeText():
         'footer_text2': 'L’équipe Applicab',
         'button_url': site_url
 
+    }
+    return textDict
+
+
+def welcomeLawyerText():
+    textDict = {
+        'title': 'Bienvenue sur Applicab 🎉!',
+        'text1': 'Bonjour {userName},',
+        'text2': 'Votre espace personnel a été crée avec succès.',
+        'text3': "Nous sommes ravis de vous accueillir au sein de notre communauté d’avocats.",
+        'text4': "💡 L’idée : vous simplifier la vie et vous aider à réinvente la relation avocat - client.",
+        'text5': "Pour y accéder, cliquez sur le bouton suivant:",
+        'button_text': 'Accéder à mon compte',
+        'footer_text1': 'Bonne navigation !',
+        'footer_text2': 'L’équipe Applicab',
+        'button_url': site_url
     }
     return textDict
 

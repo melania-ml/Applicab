@@ -197,17 +197,21 @@ class setPassword(APIView):
             userData.is_active = True
             userData.save()
             # Send Welcome email
-            welcomeText = emailText.wellcomeText() | emailText.commonUrls()
-            welcomeText['text1'] = welcomeText['text1'].format(userName=userData.first_name)
-
-            send_email([userData.email],
-                       'Bienvenue sur Applicab !', 'email.html',
-                       welcomeText)
+            self.welcomeEmail(userData)
             res = ResponseInfo({"passwordCreated": True}, YOUR_PASSWORD_CHANGED, True, status.HTTP_200_OK)
             return Response(res.success_payload(), status=status.HTTP_200_OK)
         except Exception as err:
             res = ResponseInfo({"passwordCreated": False}, EMAIL_TOKEN_EXPIRES, False, status.HTTP_401_UNAUTHORIZED)
             return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
+    def welcomeEmail(self, userData):
+        if userData.is_lawyer:
+            welcomeText = emailText.welcomeLawyerText() | emailText.commonUrls()
+            welcomeText['text1'] = welcomeText['text1'].format(userName=userData.first_name)
+        else:
+            welcomeText = emailText.welcomeClientText() | emailText.commonUrls()
+            welcomeText['text1'] = welcomeText['text1'].format(userName=userData.first_name)
+        send_email([userData.email], 'Bienvenue sur Applicab !', 'email.html', welcomeText)
 
 
 @authentication_classes([])
