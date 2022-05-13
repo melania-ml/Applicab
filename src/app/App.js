@@ -33,8 +33,8 @@ const App = () => {
     (error) => {
       if (error.response) {
         if (parseInt(error.response.data.status) === 403) {
-          dispatch(showMessage({ message: error.response.data.message }));
           dispatch(logoutUser());
+          return;
         }
       }
       return Promise.reject(error);

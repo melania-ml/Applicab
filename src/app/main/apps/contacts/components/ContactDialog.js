@@ -238,6 +238,7 @@ function ContactDialog(props) {
   function closeComposeDialog() {
     if (contactDialog.type === "edit") {
       dispatch(closeEditContactDialog());
+      setErrors({});
       setAllFields({
         ...allFields,
         client_type: "Client",
