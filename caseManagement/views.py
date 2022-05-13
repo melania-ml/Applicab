@@ -188,6 +188,8 @@ class casesManagement(APIView):
         self.task_serializers_class.Meta.depth = 0
         for task in defaultTask:
             del task['id']
+            del task['created_date']
+            del task['updated_date']
             task['case_management_id'] = caseId
             serializer = self.task_serializers_class(data=task)
             if serializer.is_valid():
@@ -573,7 +575,7 @@ class clientDashboardViewSet(APIView):
             serializer = self.serializers_class(caseData, context={'request': request})
 
             # for case-task with filtered status
-            caseTaskData = caseManagementTask.objects.filter(Q(case_management_id=case_id), ~Q(status="Archivé"))
+            caseTaskData = caseManagementTask.objects.filter(Q(case_management_id=case_id), ~Q(status="Archivé")).order_by("notification_date")
             self.taskSerializers_class.Meta.depth = 0
             taskSerializer = self.taskSerializers_class(caseTaskData, many=True)
 
