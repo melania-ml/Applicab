@@ -6,8 +6,7 @@ import Statut from "app/main/constants/Statut";
 import {
   getFormattedDateTime,
   getUniqueTags,
-  getNumericValidation,
-  checkIsNumber
+  getNumericValidation
 } from "app/main/common/functions";
 import {
   closeNewEtapeDialog,
@@ -279,7 +278,7 @@ function EtapesDialog() {
             onKeyDown={getNumericValidation}
             value={allFields.position}
             onChange={(e) => {
-              if (checkIsNumber(e.target.value) && e.target.value.length < 4) {
+              if (e.target.value.length < 4) {
                 setAllFields({
                   ...allFields,
                   position: e.target.value > 0 ? e.target.value : ""
