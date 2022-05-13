@@ -235,7 +235,8 @@ table.simple.borderless thead tr th {
 
 input#icon-button-file {
   color: #43daf1;
-  margin: 0rem -22rem 0rem -5rem;
+  position: absolute;
+  left: 150px;
 }
 input[type="file"]::-webkit-file-upload-button {
   visibility: hidden;
@@ -280,54 +281,53 @@ input[type="file"]::-webkit-file-upload-button {
   max-width: 15rem;
   display: block;
 }
-.position-txt { 
+.position-txt {
   width: 15px;
 }
-.rowsPerPage p{
+.rowsPerPage p {
   margin: 0 !important;
 }
 .muiltr-ub5i9i-MuiInputBase-input-MuiOutlinedInput-input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 100px #1f2836 inset;
 }
-.search-bar-msg{
+.search-bar-msg {
   border-radius: 68px;
 }
-.msg-send-btn{
+.msg-send-btn {
   top: 20px;
   right: 20px;
-  
 }
-.time{
+.time {
   right: 32px;
   bottom: 0px;
 }
-.msg-emoji-selction:hover{
+.msg-emoji-selction:hover {
   background-color: transparent;
 }
-.smily-icon:hover{
+.smily-icon:hover {
   opacity: 0.8;
 }
-.msg-main-section{
+.msg-main-section {
   height: calc(100vh - 355px);
 }
-.msg-tab-wrapper{
-	height: calc(100vh - 220px);
-	overflow-y: scroll;
+.msg-tab-wrapper {
+  height: calc(100vh - 220px);
+  overflow-y: scroll;
 }
 .contact.last-of-group {
-	padding-bottom: 30px !important;
+  padding-bottom: 30px !important;
 }
-input[type=file]::file-selector-button{
+input[type="file"]::file-selector-button {
   visibility: hidden;
 }
 
 @media screen and (max-width: 1700px) {
-.dash-monavocat-tab{
-  flex-direction: column;
-}
-.dash-monavocat-tab button {
-	margin: 10px 0px !important;
-}
+  .dash-monavocat-tab {
+    flex-direction: column;
+  }
+  .dash-monavocat-tab button {
+    margin: 10px 0px !important;
+  }
 }
 
 @media screen and (max-width: 767px) {
@@ -368,8 +368,8 @@ input[type=file]::file-selector-button{
 }
 .text-message {
   -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    display: -webkit-box;
-    white-space: nowrap !important;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  display: -webkit-box;
+  white-space: nowrap !important;
 }
