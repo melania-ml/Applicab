@@ -144,6 +144,12 @@ class casesManagement(APIView):
             serializer = self.serializers_class(caseInformation, data=reqData)
             if serializer.is_valid():
                 serializer.save()
+
+                # update : Chat-member's
+                chatGroup = caseManagementChatGroup.objects.filter(case_management_id=serializer.data['id']).first()
+                chatGroup.group_members.set(serializer.data['client_id'])
+                chatGroup.save()
+
                 if createDefaultTask:
                     self.addDefaultTask(case_id, caseInformation.procedure.procedure_sub_name, reqType)
                 res = ResponseInfo(serializer.data, RECORD_UPDATED_SUCCESSFULLY, True,
