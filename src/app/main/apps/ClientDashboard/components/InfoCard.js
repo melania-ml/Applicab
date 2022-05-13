@@ -37,17 +37,18 @@ export default function InfoCard() {
                 </h1>
                 <h4 className="font-medium text-sm text-black textWidthLimit">
                   {getWholeCaseName(
-                    caseData.case_name,
-                    caseData.procedure?.procedure_type,
-                    caseData.created_date,
-                    caseData.unique_code
+                    caseData?.case_name,
+                    caseData?.procedure?.procedure_type,
+                    caseData?.created_date,
+                    caseData?.unique_code
                   )}
                 </h4>
                 <h4 className="font-medium text-sm text-black textWidthLimit">
-                  Juridiction : {caseData.procedure?.procedure_type}
+                  Juridiction : {caseData?.procedure?.procedure_type}
                 </h4>
                 <h4 className="font-medium text-sm text-black textWidthLimit">
-                  Gestionnaire : {lawyerData.first_name} {lawyerData.last_name}
+                  Gestionnaire : {lawyerData?.first_name}{" "}
+                  {lawyerData?.last_name}
                 </h4>
               </div>
             </Item>

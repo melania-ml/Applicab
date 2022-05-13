@@ -32,7 +32,7 @@ function ContactsHeader() {
     _tempRow.push(contacts[i].capital_social);
     _tempRow.push(contacts[i].RCS_city);
     _tempRow.push(contacts[i].number);
-    _tempRow.push(contacts[i].name);
+    _tempRow.push(contacts[i].last_name);
     _tempRow.push(contacts[i].first_name);
     _tempRow.push(contacts[i].email);
     _tempRow.push(contacts[i].phone_number);
@@ -57,7 +57,7 @@ function ContactsHeader() {
     "Capital Social",
     "RCS City",
     "Number",
-    "Name",
+    "Last Name",
     "First Name",
     "Email",
     "Mobile",

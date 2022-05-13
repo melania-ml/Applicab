@@ -13,6 +13,7 @@ import {
   getWholeCaseName,
   getFormattedDateTime
 } from "app/main/common/functions";
+import { getMessages } from "app/store/slices/dossiersSlice";
 
 //material-ui
 import {
@@ -22,7 +23,6 @@ import {
   Paper,
   Icon,
   Input,
-  Button,
   InputBase,
   IconButton
 } from "@mui/material";
@@ -129,6 +129,10 @@ function MessageTab(props) {
       scrollToBottom();
     }
   }, [messages]);
+
+  useEffect(() => {
+    dispatch(getMessages(caseId, groupId));
+  }, []);
 
   useEffect(() => {
     function getFilteredArray(entities, _searchText) {

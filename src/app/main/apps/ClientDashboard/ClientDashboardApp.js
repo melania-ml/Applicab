@@ -92,27 +92,29 @@ function MainDashboard() {
 
   return (
     <>
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={5}>
-          <Grid item xs={12} md={2}>
-            <SidebarContent />
-          </Grid>
-          <Grid item xs={12} md={10}>
-            <InfoCard />
-            <Grid container spacing={5} className="mt-2">
-              <Grid item xs={12} md={4}>
-                <MyDocuments />
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <Calendar />
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <TodoList />
+      {caseList?.length > 0 && (
+        <Box sx={{ flexGrow: 1 }}>
+          <Grid container spacing={5}>
+            <Grid item xs={12} md={2}>
+              <SidebarContent />
+            </Grid>
+            <Grid item xs={12} md={10}>
+              <InfoCard />
+              <Grid container spacing={5} className="mt-2">
+                <Grid item xs={12} md={4}>
+                  <MyDocuments />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Calendar />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <TodoList />
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
-        </Grid>
-      </Box>
+        </Box>
+      )}
     </>
   );
 }

@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useEffect } from "react";
 import FuseScrollbars from "@fuse/core/FuseScrollbars";
 import FuseUtils from "@fuse/utils";
 import { motion } from "framer-motion";
@@ -18,7 +18,9 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 function MessageSidebar(props) {
-  const { dossierList } = useSelector(({ messages }) => messages);
+  const { dossierList, caseId, groupId } = useSelector(
+    ({ messages }) => messages
+  );
   const dispatch = useDispatch();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
@@ -28,6 +30,10 @@ function MessageSidebar(props) {
   function handleSearchText(event) {
     setSearchText(event.target.value);
   }
+
+  useEffect(() => {
+    dispatch(getMessages({ caseId, groupId }));
+  }, []);
 
   return (
     <div className="flex flex-col flex-auto h-full">
