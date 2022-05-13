@@ -37,10 +37,12 @@ export default function TodoList() {
               return (
                 <TableRow key={item?.id} hover className="h-34 todo">
                   <TableCell className="font-medium">
-                    {getFormattedDateTime({
-                      date: item.created_date,
-                      format: "DD/MM/YYYY HH:mm"
-                    })}
+                    {item.notification_date
+                      ? getFormattedDateTime({
+                          date: item.notification_date,
+                          format: "DD/MM/YYYY HH:mm"
+                        })
+                      : "-"}
                   </TableCell>
                   <TableCell className="font-medium">{item.name}</TableCell>
                   <TableCell className="sm:table-cell">

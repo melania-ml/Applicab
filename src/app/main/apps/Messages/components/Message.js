@@ -164,20 +164,22 @@ function Message(props) {
   }
   return (
     <div className={clsx("flex flex-col relative", props.className)}>
-      <AppBar
-        position="static"
-        elevation={0}
-        className="rounded-t-lg h-96 justify-center px-16"
-      >
-        <Typography color="inherit" className="text-18 font-semibold px-4">
-          {getWholeCaseName(
-            caseNameObj.case_name,
-            caseNameObj.procedure?.procedure_type,
-            caseNameObj.created_date,
-            caseNameObj.unique_code
-          )}
-        </Typography>
-      </AppBar>
+      {messages && messages.length > 0 && (
+        <AppBar
+          position="static"
+          elevation={0}
+          className="rounded-t-lg h-96 justify-center px-16"
+        >
+          <Typography color="inherit" className="text-18 font-semibold px-4">
+            {getWholeCaseName(
+              caseNameObj.case_name,
+              caseNameObj.procedure?.procedure_type,
+              caseNameObj.created_date,
+              caseNameObj.unique_code
+            )}
+          </Typography>
+        </AppBar>
+      )}
       <FuseScrollbars
         ref={chatRef}
         className="flex flex-1 flex-col overflow-y-auto"
@@ -258,12 +260,12 @@ function Message(props) {
               className="px-16 pb-24 text-center"
               color="textSecondary"
             >
-              Start a conversation by typing your message below.
+              aucun message
             </Typography>
           </div>
         )}
       </FuseScrollbars>
-      {messages && (
+      {messages && messages.length > 0 && (
         <form
           onSubmit={onSubmitMessage}
           className="absolute bottom-0 right-0 left-0 py-16 px-8"

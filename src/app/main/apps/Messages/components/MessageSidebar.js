@@ -32,7 +32,9 @@ function MessageSidebar(props) {
   }
 
   useEffect(() => {
-    dispatch(getMessages({ caseId, groupId }));
+    if (caseId && groupId) {
+      dispatch(getMessages({ caseId, groupId }));
+    }
   }, []);
 
   return (
