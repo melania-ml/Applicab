@@ -336,10 +336,10 @@ export const addEtapes = createAsyncThunk(
       .post("api/caseManagement/createCaseTask", allfields)
       .then((data) => {
         if (data.data.status === 201 && data.data.success) {
-          dispatch(showMessage({ message: data.data.message }));
           dispatch(getEtapes(getState().dossiers.listObj));
           dispatch(getDocuments(getState().dossiers.caseId));
           dispatch(setIsLoading(false));
+          dispatch(showMessage({ message: data.data.message }));
         }
       })
       .catch((error) => {
