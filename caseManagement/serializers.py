@@ -211,6 +211,6 @@ class RetrieveClientGroupSerializer(serializers.ModelSerializer):
             count = sum(loginUser not in groupMessages['message_read_by'] for groupMessages in
                         response["group_message"])
             un_read_count = count if count > 0 else None
-        response["group_message"] = response["group_message"].pop()
+        response["group_message"] = response["group_message"].pop() if len(response["group_message"]) > 0 else {"message": ""}
         response["un_read_count"] = un_read_count
         return response

@@ -594,7 +594,7 @@ class clientChatGroupViewSet(APIView):
     def get(self, request):
         try:
             userId = request.user
-            groupData = caseManagementChatGroup.objects.filter(group_members__in=[userId])
+            groupData = caseManagementChatGroup.objects.filter(case_management_id__status__in=["Ouvert","A ouvrir"],group_members__in=[userId])
             serializer = self.serializers_class(groupData, many=True, context={'request': request, 'user':userId})
 
             res = ResponseInfo(serializer.data, SUCCESS, True, status.HTTP_200_OK)
