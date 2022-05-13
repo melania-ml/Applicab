@@ -87,7 +87,16 @@ function DossiersList(props) {
         Header: "Nature",
         accessor: "nature",
         Cell: ({ row }) => {
-          return <span>{row.original.nature?.nature_title}</span>;
+          return (
+            <CustomTooltip
+              placement="top-start"
+              title={row.original.nature?.nature_title}
+            >
+              <span className="etape-txt">
+                {row.original.nature?.nature_title}
+              </span>
+            </CustomTooltip>
+          );
         },
         sortable: true
       },

@@ -131,7 +131,9 @@ function MessageTab(props) {
   }, [messages]);
 
   useEffect(() => {
-    dispatch(getMessages(caseId, groupId));
+    if (caseId && groupId) {
+      dispatch(getMessages(caseId, groupId));
+    }
   }, []);
 
   useEffect(() => {
