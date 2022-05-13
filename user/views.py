@@ -11,6 +11,8 @@ from rest_framework import status, permissions, generics
 from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
+from caseManagement.models import *
 from common.common_config.responseHandlar import ResponseInfo
 from django.contrib.auth import authenticate, get_user_model
 
@@ -72,7 +74,12 @@ class registerClient(APIView):
         try:
             ids = request.data.get('user_ids', None)
             if ids:
-                User.objects.filter(id__in=ids).delete()
+                userData = User.objects.filter(id__in=ids)  # .delete()
+                for user in userData:
+                    if user.is_lawyer:
+                        self.deleteLawyer(user)
+                    else:
+                        self.deleteOtherTypeUser(user)
                 res = ResponseInfo({}, CONTACT_DELETED, True, status.HTTP_200_OK)
                 return Response(res.success_payload(), status=status.HTTP_200_OK)
             res = ResponseInfo({}, USER_NOT_FOUND, False, status.HTTP_401_UNAUTHORIZED)
@@ -80,6 +87,26 @@ class registerClient(APIView):
         except Exception as err:
             res = ResponseInfo(err, SOMETHING_WENT_WRONG, False, status.HTTP_401_UNAUTHORIZED)
             return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
+    def deleteOtherTypeUser(self, user):
+        user.delete()
+
+    def deleteLawyer(self, user):
+        caseData = list(CaseManagement.objects.filter(lawyer_id=user.id).values_list('id', flat=True))
+        caseManagementDocuments.objects.filter(case_management_id__in=caseData).hard_delete()
+        caseManagementTask.objects.filter(case_management_id__in=caseData).hard_delete()
+        groupChat = list(caseManagementChatGroup.objects.filter(
+            case_management_id__in=caseData).values_list('id', flat=True))
+        caseManagementGroupMessage.objects.filter(group_id__in=groupChat).hard_delete()
+        caseManagementChatGroup.objects.filter(case_management_id__in=caseData).hard_delete()
+        CaseManagement.objects.filter(id__in=caseData).hard_delete()
+
+        # User-table-records
+        Client_type.objects.filter(lawyer_id=user.id).hard_delete()
+        Client_title.objects.filter(lawyer_id=user.id).hard_delete()
+        Nature.objects.filter(user_id=user.id).hard_delete()
+        User.objects.filter(lawyer_id=user.id).delete()
+        User.objects.filter(id=user.id).delete()
 
     def sendSetPasswordOtp(self, serializer, emailOtp, clientType):
         if clientType == "Client":
