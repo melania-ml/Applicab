@@ -304,12 +304,13 @@ class userUpdateViewSet(generics.RetrieveUpdateDestroyAPIView):
         client_type = request.data.get('client_type', None)
         is_invite = request.data.get('is_invite', False)
         email = request.data.get('email', None)
+        lawyer = request.user.id
         if title is not None:
             clientTitle = Client_title.objects.filter(title=request.data['title']).first()
             if clientTitle:
                 request.data['title'] = clientTitle.id
             else:
-                createTitle = Client_title(title=request.data['title'])
+                createTitle = Client_title(title=request.data['title'], lawyer_id=lawyer)
                 createTitle.save()
                 request.data['title'] = createTitle.id
 
@@ -318,7 +319,7 @@ class userUpdateViewSet(generics.RetrieveUpdateDestroyAPIView):
             if clientType:
                 request.data['client_type'] = clientType.id
             else:
-                createType = Client_type(client_type=client_type)
+                createType = Client_type(client_type=client_type, lawyer_id=lawyer)
                 createType.save()
                 request.data['client_type'] = createType.id
 
