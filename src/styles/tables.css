@@ -314,6 +314,12 @@ input[type="file"]::-webkit-file-upload-button {
 	height: calc(100vh - 220px);
 	overflow-y: scroll;
 }
+.contact.last-of-group {
+	padding-bottom: 30px !important;
+}
+input[type=file]::file-selector-button{
+  visibility: hidden;
+}
 
 @media screen and (max-width: 1700px) {
 .dash-monavocat-tab{

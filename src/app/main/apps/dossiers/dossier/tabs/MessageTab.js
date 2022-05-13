@@ -249,7 +249,7 @@ function MessageTab(props) {
           className="flex flex-1 flex-col overflow-y-auto"
         >
           {filteredData && filteredData.length > 0 ? (
-            <div className="flex flex-col pt-16 px-16 rtl:pr-56 pb-40 msg-tab-wrapper">
+            <div className="flex flex-col pt-16 px-16 rtl:pr-56 pb-40">
               {filteredData.map((item, i) => {
                 return (
                   <>
