@@ -79,7 +79,7 @@ export default function MyDocuments() {
             <b>Commentire</b>
           </h1>
           <p className="w-full resize-none" style={{ height: 140 }}>
-            {caseData.shared_comment || "No comments"}
+            {caseData?.shared_comment || "No comments"}
           </p>
         </motion.div>
       </div>
