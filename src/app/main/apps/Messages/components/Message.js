@@ -225,6 +225,7 @@ function Message(props) {
                     )}
                     <div className="bubble flex relative items-center justify-center p-12 max-w-full shadow">
                       <div className="leading-tight whitespace-pre-wrap">
+                        {item.object && <b>{item.object}</b>}
                         {parse(item.message)}
                       </div>
                       <Typography

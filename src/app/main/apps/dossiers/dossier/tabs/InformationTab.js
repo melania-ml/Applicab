@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import CaseStatus from 'app/main/constants/CaseStatus';
-import Types from 'app/main/constants/Types';
-import { openNewContactDialog } from 'app/store/slices/contactsSlice';
-import { addCase, updateCase } from 'app/store/slices/dossiersSlice';
-import ContactDialog from 'app/main/apps/contacts/components/ContactDialog';
-import { getUniqueTags } from 'app/main/common/functions';
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import CaseStatus from "app/main/constants/CaseStatus";
+import Types from "app/main/constants/Types";
+import { openNewContactDialog } from "app/store/slices/contactsSlice";
+import { addCase, updateCase } from "app/store/slices/dossiersSlice";
+import ContactDialog from "app/main/apps/contacts/components/ContactDialog";
+import { getUniqueTags } from "app/main/common/functions";
 
 // material-ui
 import {
@@ -16,10 +16,9 @@ import {
   MenuItem,
   Autocomplete,
   Chip,
-  Button,
-  DialogContent,
-} from '@mui/material';
-import { createFilterOptions } from '@mui/material/Autocomplete';
+  Button
+} from "@mui/material";
+import { createFilterOptions } from "@mui/material/Autocomplete";
 
 const tags = [];
 function InformationTab() {
@@ -28,29 +27,28 @@ function InformationTab() {
     natures,
     procedures,
     contacts,
-    editDossierData: { data, type },
+    editDossierData: { data, type }
   } = useSelector(({ dossiers }) => dossiers);
   const filter = createFilterOptions();
-  const [isAutoCompleteOpen, setIsAutoCompleteOpen] = useState(false);
   const [isValid, setIsValid] = useState(false);
   const [errors, setErrors] = useState({});
   const [allFields, setAllFields] = useState({
-    case_name: '',
-    nature: '',
-    status: 'A ouvrir',
-    type: '',
-    procedure: '',
-    location: '',
+    case_name: "",
+    nature: "",
+    status: "A ouvrir",
+    type: "",
+    procedure: "",
+    location: "",
     tags: [],
-    internal_comment: '',
-    shared_comment: '',
+    internal_comment: "",
+    shared_comment: "",
     client_id: [],
     customer_contact_id: [],
-    opposing_contact_id: [],
+    opposing_contact_id: []
   });
 
   useEffect(() => {
-    const isEmpty = Object.values(errors).every((x) => x === null || x === '');
+    const isEmpty = Object.values(errors).every((x) => x === null || x === "");
     if (
       allFields.case_name &&
       allFields.nature &&
@@ -87,22 +85,22 @@ function InformationTab() {
         ),
         opposing_contact_id: data.opposing_contact_id?.map(
           (opposingContactId) => opposingContactId?.id
-        ),
+        )
       });
     }
   }, [data]);
 
   const checkIsDisable = (name, val) => {
-    const value = typeof val === 'string' ? val.trim() : val;
-    if (name === 'case_name') {
+    const value = typeof val === "string" ? val.trim() : val;
+    if (name === "case_name") {
       if (value) {
-        setErrors({ ...errors, case_name: '' });
+        setErrors({ ...errors, case_name: "" });
       }
     }
   };
 
   function onSubmit(param) {
-    if (type === 'new') {
+    if (type === "new") {
       dispatch(addCase({ ...allFields }));
     } else {
       dispatch(updateCase({ ...allFields, case_management_id: data?.id }));
@@ -110,11 +108,7 @@ function InformationTab() {
   }
 
   return (
-    <DialogContent
-      classes={{ root: 'p-24' }}
-      style={{ overflowY: isAutoCompleteOpen ? 'hidden' : 'auto' }}
-    >
-      {/* <div> */}
+    <div classes={{ root: "p-24" }}>
       <TextField
         className="mt-8 mb-16"
         value={allFields.case_name}
@@ -124,9 +118,9 @@ function InformationTab() {
         onChange={(e) => {
           setAllFields({
             ...allFields,
-            case_name: e.target.value,
+            case_name: e.target.value
           });
-          checkIsDisable('case_name', e.target.value);
+          checkIsDisable("case_name", e.target.value);
         }}
         label="Nom*"
         autoComplete="off"
@@ -137,31 +131,31 @@ function InformationTab() {
       <Autocomplete
         className="flex w-full mb-12"
         value={allFields.nature}
-        onOpen={() => setIsAutoCompleteOpen(true)}
-        onClose={() => setIsAutoCompleteOpen(false)}
         onChange={(event, newValue) => {
-          if (typeof newValue === 'string') {
+          if (typeof newValue === "string") {
             setAllFields({ ...allFields, nature: newValue });
           } else if (newValue && newValue.inputValue) {
             setAllFields({
               ...allFields,
-              nature: newValue.inputValue,
+              nature: newValue.inputValue
             });
           } else {
             setAllFields({
               ...allFields,
-              nature: newValue?.nature_title,
+              nature: newValue?.nature_title
             });
           }
         }}
         filterOptions={(options, params) => {
           const filtered = filter(options, params);
           const { inputValue } = params;
-          const isExisting = options.some((option) => inputValue === option.nature_title);
-          if (inputValue.trim() !== '' && !isExisting) {
+          const isExisting = options.some(
+            (option) => inputValue === option.nature_title
+          );
+          if (inputValue.trim() !== "" && !isExisting) {
             filtered.push({
               inputValue: inputValue.trim(),
-              nature_title: `Ajouter "${inputValue.trim()}"`,
+              nature_title: `Ajouter "${inputValue.trim()}"`
             });
           }
           return filtered;
@@ -171,7 +165,7 @@ function InformationTab() {
         handleHomeEndKeys
         options={natures}
         getOptionLabel={(option) => {
-          if (typeof option === 'string') {
+          if (typeof option === "string") {
             return option;
           }
           if (option.inputValue) {
@@ -179,7 +173,9 @@ function InformationTab() {
           }
           return option.nature_title;
         }}
-        renderOption={(props, option) => <li {...props}>{option.nature_title}</li>}
+        renderOption={(props, option) => (
+          <li {...props}>{option.nature_title}</li>
+        )}
         freeSolo
         renderInput={(params) => <TextField {...params} label="Nature*" />}
       />
@@ -191,7 +187,7 @@ function InformationTab() {
           onChange={(e) => {
             setAllFields({
               ...allFields,
-              status: e.target.value,
+              status: e.target.value
             });
           }}
         >
@@ -208,10 +204,12 @@ function InformationTab() {
           label="Procédure*"
           value={allFields.procedure}
           onChange={(e) => {
-            const newVal = procedures.filter((proc) => proc?.id === e.target.value);
+            const newVal = procedures.filter(
+              (proc) => proc?.id === e.target.value
+            );
             setAllFields({
               ...allFields,
-              procedure: newVal[0]?.id,
+              procedure: newVal[0]?.id
             });
           }}
         >
@@ -230,7 +228,7 @@ function InformationTab() {
           onChange={(e) => {
             setAllFields({
               ...allFields,
-              type: e.target.value,
+              type: e.target.value
             });
           }}
         >
@@ -251,7 +249,7 @@ function InformationTab() {
         onChange={(e) => {
           setAllFields({
             ...allFields,
-            location: e.target.value,
+            location: e.target.value
           });
         }}
       />
@@ -262,7 +260,7 @@ function InformationTab() {
         onChange={(event, newValue) => {
           setAllFields({
             ...allFields,
-            tags: [...newValue],
+            tags: [...newValue]
           });
         }}
         options={tags}
@@ -277,7 +275,9 @@ function InformationTab() {
             />
           ))
         }
-        renderInput={(params) => <TextField {...params} label="Tags" placeholder="Add your tags" />}
+        renderInput={(params) => (
+          <TextField {...params} label="Tags" placeholder="Add your tags" />
+        )}
       />
       <TextField
         className="mb-12"
@@ -291,7 +291,7 @@ function InformationTab() {
         onChange={(e) => {
           setAllFields({
             ...allFields,
-            internal_comment: e.target.value,
+            internal_comment: e.target.value
           });
         }}
       />
@@ -307,7 +307,7 @@ function InformationTab() {
         onChange={(e) => {
           setAllFields({
             ...allFields,
-            shared_comment: e.target.value,
+            shared_comment: e.target.value
           });
         }}
       />
@@ -319,7 +319,7 @@ function InformationTab() {
         className="flex w-full mb-12"
         options={contacts}
         getOptionLabel={(option) => {
-          if (typeof option === 'object') {
+          if (typeof option === "object") {
             return `${`${option.first_name} ${option.last_name}`} `;
           }
           const val = contacts.filter((contact) => contact?.id === option);
@@ -330,10 +330,12 @@ function InformationTab() {
           const array = newValue.map((val) => val?.id ?? val);
           setAllFields({
             ...allFields,
-            client_id: getUniqueTags(array),
+            client_id: getUniqueTags(array)
           });
         }}
-        renderInput={(params) => <TextField {...params} label="Choisissez un client*" />}
+        renderInput={(params) => (
+          <TextField {...params} label="Choisissez un client*" />
+        )}
       />
       <div className="mb-10">
         <b>Ajouter un contact client au dossier</b>
@@ -343,7 +345,7 @@ function InformationTab() {
         className="flex w-full mb-12"
         options={contacts}
         getOptionLabel={(option) => {
-          if (typeof option === 'object') {
+          if (typeof option === "object") {
             return `${`${option.first_name} ${option.last_name}`} `;
           }
           const val = contacts.filter((contact) => contact?.id === option);
@@ -354,10 +356,12 @@ function InformationTab() {
           const array = newValue.map((val) => val?.id ?? val);
           setAllFields({
             ...allFields,
-            customer_contact_id: getUniqueTags(array),
+            customer_contact_id: getUniqueTags(array)
           });
         }}
-        renderInput={(params) => <TextField {...params} label="Choisissez un contact" />}
+        renderInput={(params) => (
+          <TextField {...params} label="Choisissez un contact" />
+        )}
       />
       <div className="mb-10">
         <b>Ajouter un contact adverse au dossier</b>
@@ -367,7 +371,7 @@ function InformationTab() {
         className="flex w-full mb-12"
         options={contacts}
         getOptionLabel={(option) => {
-          if (typeof option === 'object') {
+          if (typeof option === "object") {
             return `${`${option.first_name} ${option.last_name}`} `;
           }
           const val = contacts.filter((contact) => contact?.id === option);
@@ -378,10 +382,12 @@ function InformationTab() {
           const array = newValue.map((val) => val?.id ?? val);
           setAllFields({
             ...allFields,
-            opposing_contact_id: getUniqueTags(array),
+            opposing_contact_id: getUniqueTags(array)
           });
         }}
-        renderInput={(params) => <TextField {...params} label="Choisissez un contact" />}
+        renderInput={(params) => (
+          <TextField {...params} label="Choisissez un contact" />
+        )}
       />
       <br />
       <div className="flex justify-between">
@@ -390,7 +396,7 @@ function InformationTab() {
           color="secondary"
           style={{ borderRadius: 0 }}
           disabled={!isValid}
-          onClick={() => onSubmit('submit')}
+          onClick={() => onSubmit("submit")}
         >
           Enregistrer
         </Button>
@@ -406,8 +412,7 @@ function InformationTab() {
         </Button>
       </div>
       <ContactDialog />
-      {/* </div> */}
-    </DialogContent>
+    </div>
   );
 }
 

@@ -78,9 +78,9 @@ export default function MyDocuments() {
           <h1 style={{ paddingBottom: 5, color: "#272E41" }}>
             <b>Commentire</b>
           </h1>
-          <textarea className="w-full resize-none" style={{ height: 140 }}>
-            {caseData?.shared_comment || "No comments"}
-          </textarea>
+          <p className="w-full resize-none" style={{ height: 140 }}>
+            {caseData.shared_comment || "No comments"}
+          </p>
         </motion.div>
       </div>
     </>
