@@ -294,6 +294,22 @@ function MessageTab(props) {
                       )}
                       <div className="bubble flex relative items-center justify-center p-12 max-w-full shadow">
                         <div className="leading-tight whitespace-pre-wrap">
+                          {item.subject && (
+                            <>
+                              <b>Object : {item.subject}</b>
+                              <br />
+                            </>
+                          )}
+                          {item.notification_date && (
+                            <b>
+                              Date :{" "}
+                              {getFormattedDateTime({
+                                date: item.notification_date,
+                                format: "DD/MM/YYYY HH:mm:ss"
+                              })}
+                            </b>
+                          )}
+                          {(item.subject || item.notification_date) && <hr />}
                           {parse(item.message)}
                         </div>
                         <Typography
