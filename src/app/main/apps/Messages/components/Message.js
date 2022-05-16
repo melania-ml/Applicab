@@ -19,10 +19,7 @@ import {
   AppBar,
   Icon,
   IconButton,
-  Input,
-  List,
-  Paper,
-  Toolbar
+  Paper
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
@@ -107,7 +104,7 @@ const StyledMessageRow = styled("div")(({ theme }) => ({
 function Message(props) {
   const dispatch = useDispatch();
   const {
-    data: { id, profile }
+    data: { id }
   } = useSelector(({ auth }) => auth.user);
   const { messages, caseNameObj, isLoading, groupId, caseId } = useSelector(
     ({ messages }) => messages

@@ -136,7 +136,7 @@ function ContactsHeader() {
                 data={csvData}
                 style={{ color: "#fff", display: "contents" }}
                 headers={headers}
-                filename="contacts"
+                filename="contacts.csv"
               >
                 <img
                   className="mr-3"
