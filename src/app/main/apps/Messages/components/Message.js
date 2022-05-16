@@ -253,43 +253,41 @@ function Message(props) {
               <Icon className="text-128" color="disabled">
                 chat
               </Icon>
+              <Typography
+                className="px-16 pb-24 text-center"
+                color="textSecondary"
+              >
+                aucun message
+              </Typography>
             </div>
-            <Typography
-              className="px-16 pb-24 text-center"
-              color="textSecondary"
-            >
-              aucun message
-            </Typography>
           </div>
         )}
       </FuseScrollbars>
-      {messages && messages.length > 0 && (
-        <form
-          onSubmit={onSubmitMessage}
-          className="absolute bottom-0 right-0 left-0 py-16 px-8"
-        >
-          <Paper className="flex items-center relative rounded-24 shadow">
-            <InputBase
-              autoFocus={false}
-              id="message-input"
-              className="flex-1 flex grow shrink-0 mx-16 ltr:mr-48 rtl:ml-48 my-8"
-              placeholder="Type your message"
-              autoComplete="off"
-              onChange={onInputChange}
-              value={messageText}
-            />
-            <IconButton
-              className="absolute ltr:right-0 rtl:left-0 top-0"
-              type="submit"
-              size="large"
-            >
-              <Icon className="text-24" color="action">
-                send
-              </Icon>
-            </IconButton>
-          </Paper>
-        </form>
-      )}
+      <form
+        onSubmit={onSubmitMessage}
+        className="absolute bottom-0 right-0 left-0 py-16 px-8"
+      >
+        <Paper className="flex items-center relative rounded-24 shadow">
+          <InputBase
+            autoFocus={false}
+            id="message-input"
+            className="flex-1 flex grow shrink-0 mx-16 ltr:mr-48 rtl:ml-48 my-8"
+            placeholder="Type your message"
+            autoComplete="off"
+            onChange={onInputChange}
+            value={messageText}
+          />
+          <IconButton
+            className="absolute ltr:right-0 rtl:left-0 top-0"
+            type="submit"
+            size="large"
+          >
+            <Icon className="text-24" color="action">
+              send
+            </Icon>
+          </IconButton>
+        </Paper>
+      </form>
     </div>
   );
 }
