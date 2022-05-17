@@ -178,6 +178,8 @@ class caseManagementGroupMessage(CommonBase):
 
     message_read_by = ArrayField(base_field=models.IntegerField(blank=True, null=True), blank=True, default=list)
     message = models.CharField(max_length=500000, blank=True, null=True)
+    subject = models.CharField(max_length=500000, blank=True, null=True)
+    notification_date = models.DateTimeField(auto_now=False, blank=True, null=True)
 
     def __str__(self):
         return '{}'.format(self.group_id)

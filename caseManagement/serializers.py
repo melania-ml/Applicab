@@ -92,7 +92,7 @@ class CaseGroupMessageSerializer(serializers.ModelSerializer):
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = caseManagementGroupMessage
-        fields = ['id', 'message', 'created_date', 'message_send_by', 'message_read_by']
+        fields = ['id', 'message','subject', 'notification_date','created_date', 'message_send_by', 'message_read_by']
         depth = 1
 
 
