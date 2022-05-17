@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { getDocuments } from "app/store/slices/dossiersSlice";
 import { getFormattedDateTime } from "app/main/common/functions";
 
-// material-ui
+//material-ui
 import {
   Icon,
   IconButton,
