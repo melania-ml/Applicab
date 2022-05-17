@@ -766,7 +766,9 @@ function ContactDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
-                disabled={contactDialog.type !== "new"}
+                disabled={
+                  contactDialog.type !== "new" && contactDialog?.data?.email
+                }
                 value={allFields.email}
                 error={errors?.email}
                 helperText={errors?.email}
@@ -974,7 +976,9 @@ function ContactDialog(props) {
                 autoComplete="off"
                 key="email"
                 fullWidth
-                disabled={contactDialog.type !== "new"}
+                disabled={
+                  contactDialog.type !== "new" && contactDialog?.data?.email
+                }
                 error={errors?.email}
                 helperText={errors?.email}
                 value={allFields.email}

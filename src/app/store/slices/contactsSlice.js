@@ -67,9 +67,6 @@ export const getLawyers = createAsyncThunk(
   async (routeParams, { dispatch, getState }) => {
     dispatch(setIsLoading(true));
     routeParams = routeParams || getState().contacts.routeParams;
-    const {
-      data: { id }
-    } = getState().auth.user;
     const response = await axios.post("api/common/filterData/user/User", {
       query: {
         is_lawyer: true

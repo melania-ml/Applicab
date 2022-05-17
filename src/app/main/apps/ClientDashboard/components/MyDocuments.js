@@ -79,7 +79,7 @@ export default function MyDocuments() {
           style={{ background: "#FFFFFF", padding: 15, borderRadius: 10 }}
         >
           <h1 style={{ paddingBottom: 5, color: "#272E41" }}>
-            <b>Commentire</b>
+            <b>Commentaire</b>
           </h1>
           <p className="w-full resize-none" style={{ height: 140 }}>
             {caseData?.shared_comment || "No comments"}

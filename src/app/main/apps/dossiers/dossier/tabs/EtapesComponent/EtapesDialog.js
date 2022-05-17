@@ -497,10 +497,12 @@ function EtapesDialog() {
             fullWidth
             value={allFields.subject}
             onChange={(e) => {
-              setAllFields({
-                ...allFields,
-                subject: e.target.value
-              });
+              if (e.target.value.length <= 100) {
+                setAllFields({
+                  ...allFields,
+                  subject: e.target.value
+                });
+              }
             }}
           />
           <div className="flex mb-14 w-full">
