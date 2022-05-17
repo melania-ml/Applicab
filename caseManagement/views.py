@@ -345,7 +345,7 @@ class caseManagementTaskView(APIView):
         userData = User.objects.filter(id__in=client_id)
         for user in userData:
             notificationEmailText = emailText.taskNotification() | emailText.commonUrls()
-            notificationEmailText['text1'] = notificationEmailText['text1'].format(userName=user.first_name)
+            notificationEmailText['text1'] = notificationEmailText['text1'].format(userName=user.last_name+" "+user.first_name)
             send_email([user.email],
                        'Altata - Notification 🔔 Nom du dossier -  Objet du message', 'email.html',
                        notificationEmailText)
@@ -603,7 +603,7 @@ class clientChatGroupViewSet(APIView):
     def get(self, request):
         try:
             userId = request.user
-            groupData = caseManagementChatGroup.objects.filter(case_management_id__status__in=["Ouvert","A ouvrir"],group_members__in=[userId])
+            groupData = caseManagementChatGroup.objects.filter(case_management_id__status__in=["Ouvert","En attente"],group_members__in=[userId])
             serializer = self.serializers_class(groupData, many=True, context={'request': request, 'user':userId})
 
             res = ResponseInfo(serializer.data, SUCCESS, True, status.HTTP_200_OK)

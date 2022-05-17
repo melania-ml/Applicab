@@ -112,12 +112,14 @@ class registerClient(APIView):
         if clientType == "Client":
             stPasswordText = emailText.setPassword() | emailText.commonUrls()
             stPasswordText['otp'] = emailOtp
-            stPasswordText['text1'] = stPasswordText['text1'].format(userName=serializer.data['first_name'])
+            stPasswordText['text1'] = stPasswordText['text1'].format(
+                userName=serializer.data['last_name'] + " " + serializer.data['first_name'])
             stPasswordText['button_url'] = stPasswordText['button_url'] + str(serializer.data['id'])
         else:
             stPasswordText = emailText.setLawyerPassword() | emailText.commonUrls()
             stPasswordText['otp'] = emailOtp
-            stPasswordText['text1'] = stPasswordText['text1'].format(userName=serializer.data['first_name'])
+            stPasswordText['text1'] = stPasswordText['text1'].format(
+                userName=serializer.data['last_name'] + " " + serializer.data['first_name'])
             stPasswordText['button_url'] = stPasswordText['button_url'] + str(serializer.data['id'])
 
         send_email([serializer.data['email']],
@@ -198,7 +200,8 @@ class validateEmailOtp(APIView):
             userData.save()
             stPasswordText = emailText.setPassword() | emailText.commonUrls()
             stPasswordText['otp'] = emailOtp
-            stPasswordText['text1'] = stPasswordText['text1'].format(userName=userData.first_name)
+            stPasswordText['text1'] = stPasswordText['text1'].format(
+                userName=userData.last_name + " " + userData.first_name)
             stPasswordText['button_url'] = stPasswordText['button_url'] + str(userData.id)
             send_email([userData.email],
                        'Saisissez ' + str(emailOtp) + ' comme code de confirmation Applicab', 'email.html',
@@ -233,10 +236,10 @@ class setPassword(APIView):
     def welcomeEmail(self, userData):
         if userData.is_lawyer:
             welcomeText = emailText.welcomeLawyerText() | emailText.commonUrls()
-            welcomeText['text1'] = welcomeText['text1'].format(userName=userData.first_name)
+            welcomeText['text1'] = welcomeText['text1'].format(userName=userData.last_name + " " + userData.first_name)
         else:
             welcomeText = emailText.welcomeClientText() | emailText.commonUrls()
-            welcomeText['text1'] = welcomeText['text1'].format(userName=userData.first_name)
+            welcomeText['text1'] = welcomeText['text1'].format(userName=userData.last_name + " " + userData.first_name)
         send_email([userData.email], 'Bienvenue sur Applicab !', 'email.html', welcomeText)
 
 
@@ -253,7 +256,8 @@ class forgotPassword(APIView):
             userData.save()
 
             forgotPasswordText = emailText.forgotPassword() | emailText.commonUrls()
-            forgotPasswordText['text1'] = forgotPasswordText['text1'].format(userName=userData.first_name)
+            forgotPasswordText['text1'] = forgotPasswordText['text1'].format(
+                userName=userData.last_name + " " + userData.first_name)
             forgotPasswordText['text4'] = forgotPasswordText['text4'].format(userEmail=userData.email)
             forgotPasswordText['button_url'] = forgotPasswordText['button_url'] + forgotPasswordToken
             send_email([userData.email],
@@ -326,7 +330,7 @@ class userUpdateViewSet(generics.RetrieveUpdateDestroyAPIView):
         if is_invite:
             user_id = request.data.get('id', None)
             lawyer_data = User.objects.filter(id=user_id).first()
-            lawyerName = lawyer_data.lawyer_id.first_name if lawyer_data.lawyer_id else None
+            lawyerName = lawyer_data.lawyer_id.first_name + " " + lawyer_data.lawyer_id.last_name if lawyer_data.lawyer_id else None
             is_lawyer = lawyer_data.is_lawyer
             secretsGenerator = secrets.SystemRandom()
             emailOtp = secretsGenerator.randrange(100000, 999999)
