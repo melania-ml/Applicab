@@ -21,9 +21,9 @@ export default function TodoList() {
       style={{ background: "#FFFFFF", padding: 15, borderRadius: 10 }}
     >
       <h1 style={{ padding: 8, color: "#272E41" }}>
-        <b>To do</b>
+        <b>Etapes</b>
       </h1>
-      <div className="table-responsive">
+      <div className="table-responsive-todo">
         <Table>
           <TableHead>
             <TableRow>

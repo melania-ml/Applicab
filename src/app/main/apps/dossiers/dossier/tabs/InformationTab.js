@@ -35,7 +35,7 @@ function InformationTab() {
   const [allFields, setAllFields] = useState({
     case_name: "",
     nature: "",
-    status: "A ouvrir",
+    status: "En attente",
     type: "",
     procedure: "",
     location: "",
@@ -338,7 +338,7 @@ function InformationTab() {
         )}
       />
       <div className="mb-10">
-        <b>Ajouter un contact client au dossier</b>
+        <b>Ajouter un contact au dossier (postulant, huissier, etc.)</b>
       </div>
       <Autocomplete
         multiple
@@ -364,7 +364,7 @@ function InformationTab() {
         )}
       />
       <div className="mb-10">
-        <b>Ajouter un contact adverse au dossier</b>
+        <b>Ajouter une partie adverse au dossier</b>
       </div>
       <Autocomplete
         multiple

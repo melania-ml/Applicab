@@ -587,7 +587,7 @@ function ContactDialog(props) {
               />
               <TextField
                 className="mb-12"
-                label="Nom de la compagnie*"
+                label="Dénomination*"
                 variant="outlined"
                 fullWidth
                 autoComplete="off"

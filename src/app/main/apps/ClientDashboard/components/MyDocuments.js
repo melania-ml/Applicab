@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
+import { downloadFile } from "app/main/common/functions";
 
 //material-ui
 import {
@@ -15,8 +16,8 @@ export default function MyDocuments() {
   const { documents, caseData } = useSelector(
     ({ clientDashboard }) => clientDashboard
   );
-  const onDownload = (documentLink) => {
-    window.location.href = documentLink;
+  const onDownload = (documentLink, fileName) => {
+    downloadFile(documentLink, fileName);
   };
   return (
     <>
@@ -49,7 +50,9 @@ export default function MyDocuments() {
                         </TableCell>
                         <TableCell className="sm:table-cell">
                           <Icon
-                            onClick={() => onDownload(item.case_document)}
+                            onClick={() =>
+                              onDownload(item.case_document, item.file_name)
+                            }
                             color="inherit"
                             size="large"
                           >

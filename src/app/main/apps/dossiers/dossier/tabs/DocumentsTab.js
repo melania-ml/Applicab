@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { getDocuments } from "app/store/slices/dossiersSlice";
-import { getFormattedDateTime } from "app/main/common/functions";
+import { getFormattedDateTime, downloadFile } from "app/main/common/functions";
 
 //material-ui
 import {
@@ -31,8 +31,8 @@ function DocumentsTab() {
     }
   }, [data]);
 
-  const onDownload = (documentLink) => {
-    window.location.href = documentLink;
+  const onDownload = async (documentLink, fileName) => {
+    downloadFile(documentLink, fileName);
   };
 
   if (documents.length === 0) {
@@ -82,7 +82,9 @@ function DocumentsTab() {
                   </TableCell>
                   <TableCell align="center">
                     <IconButton
-                      onClick={() => onDownload(row.case_document)}
+                      onClick={() => {
+                        onDownload(row.case_document, row.file_name);
+                      }}
                       color="inherit"
                       size="large"
                     >

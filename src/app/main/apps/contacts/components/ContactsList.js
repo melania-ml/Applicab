@@ -78,6 +78,19 @@ function ContactsList() {
         sortable: true
       },
       {
+        Header: "Company Name",
+        accessor: "company_name",
+        Cell: ({ row }) => {
+          return (
+            <span className="etape-txt">
+              {row.original.company_name || "-"}
+            </span>
+          );
+        },
+        className: "font-medium",
+        sortable: true
+      },
+      {
         Header: "Nom",
         accessor: "last_name",
         Cell: ({ row }) => {

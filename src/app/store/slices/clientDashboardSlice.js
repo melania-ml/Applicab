@@ -7,7 +7,7 @@ export const getCaseList = (id) => async (dispatch) => {
     .post(`api/common/filterData/caseManagement/CaseManagement`, {
       query: {
         client_id: id,
-        status__in: ["Ouvert", "A ouvrir"]
+        status__in: ["Ouvert", "En attente"]
       },
       orderBy: "-created_date"
     })

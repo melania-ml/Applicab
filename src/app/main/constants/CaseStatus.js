@@ -1,8 +1,8 @@
 const CaseStatus = [
   {
     id: 1,
-    value: "A ouvrir",
-    label: "A ouvrir"
+    value: "En attente",
+    label: "En attente"
   },
   {
     id: 2,
@@ -11,8 +11,8 @@ const CaseStatus = [
   },
   {
     id: 3,
-    value: "Clôture",
-    label: "Clôture"
+    value: "Archivé",
+    label: "Archivé"
   }
 ];
 export default CaseStatus;

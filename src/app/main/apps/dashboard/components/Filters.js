@@ -44,7 +44,7 @@ export default function Filters() {
               })
             );
           }}
-          renderInput={(params) => <TextField {...params} label="Dossiers" />}
+          renderInput={(params) => <TextField {...params} label="Dossier" />}
         />
         <Autocomplete
           className="w-full sm:w-320 mx-16 autocomplete"
@@ -69,7 +69,7 @@ export default function Filters() {
               })
             );
           }}
-          renderInput={(params) => <TextField {...params} label="Status" />}
+          renderInput={(params) => <TextField {...params} label="Statut" />}
         />
       </div>
     </div>
