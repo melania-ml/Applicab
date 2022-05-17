@@ -47,5 +47,5 @@ def taskLawyerNotification():
 def start():
     scheduler = BackgroundScheduler(timezone="Asia/Kolkata")
     scheduler.add_job(otpExpiration, "interval", minutes=2, id="otpRemove_001", replace_existing=True)
-    scheduler.add_job(taskLawyerNotification, "interval", minutes=30, id="taskNotification_001", replace_existing=True)
+    scheduler.add_job(taskLawyerNotification, "interval", minutes=2, id="taskNotification_001", replace_existing=True)
     scheduler.start()

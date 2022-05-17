@@ -92,7 +92,7 @@ class CaseGroupMessageSerializer(serializers.ModelSerializer):
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = caseManagementGroupMessage
-        fields = ['id', 'message','subject', 'notification_date','created_date', 'message_send_by', 'message_read_by']
+        fields = ['id', 'message', 'subject', 'notification_date', 'created_date', 'message_send_by', 'message_read_by']
         depth = 1
 
 
@@ -184,7 +184,7 @@ class DashboardClientCaseSerializer(serializers.ModelSerializer):
 class ClientMessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = caseManagementGroupMessage
-        fields = ['message', 'message_read_by']
+        fields = ['message', 'message_read_by', 'id']
 
 
 # Used For Appending data Only for clientGroup:
@@ -211,6 +211,7 @@ class RetrieveClientGroupSerializer(serializers.ModelSerializer):
             count = sum(loginUser not in groupMessages['message_read_by'] for groupMessages in
                         response["group_message"])
             un_read_count = count if count > 0 else None
+        response["group_message"] = sorted(response["group_message"], key=lambda x: x["id"])
         response["group_message"] = response["group_message"].pop() if len(response["group_message"]) > 0 else {"message": ""}
         response["un_read_count"] = un_read_count
         return response
