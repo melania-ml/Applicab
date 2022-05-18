@@ -1,7 +1,6 @@
-import { forwardRef, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
-import PropTypes from "prop-types";
 import clsx from "clsx";
+import PropTypes from "prop-types";
 import FuseLoading from "@fuse/core/FuseLoading";
 import {
   useGlobalFilter,
@@ -22,7 +21,6 @@ import {
   TablePagination,
   TableRow,
   TableSortLabel,
-  Checkbox,
   Table
 } from "@mui/material";
 

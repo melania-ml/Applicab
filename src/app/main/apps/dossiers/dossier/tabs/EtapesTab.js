@@ -375,7 +375,6 @@ function EtapeTab() {
         }
       }
     ],
-
     [dispatch]
   );
 
