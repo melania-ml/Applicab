@@ -11,7 +11,7 @@ function Navigation(props) {
   const {
     data: { user_type }
   } = useSelector(({ auth }) => auth.user);
-  const navigation = navigationConfig.filter((config) =>
+  const navigation = navigationConfig?.filter((config) =>
     config.access.includes(user_type)
   );
   const theme = useTheme();

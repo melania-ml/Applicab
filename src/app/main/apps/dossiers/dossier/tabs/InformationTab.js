@@ -72,7 +72,7 @@ function InformationTab() {
         nature: data.nature.nature_title,
         status: data.status,
         type: data.type,
-        procedure: procedures.filter(
+        procedure: procedures?.filter(
           (proc) => proc?.procedure_type === data.procedure?.procedure_type
         )[0]?.id,
         location: data.location,
@@ -204,7 +204,7 @@ function InformationTab() {
           label="Procédure*"
           value={allFields.procedure}
           onChange={(e) => {
-            const newVal = procedures.filter(
+            const newVal = procedures?.filter(
               (proc) => proc?.id === e.target.value
             );
             setAllFields({
@@ -322,7 +322,7 @@ function InformationTab() {
           if (typeof option === "object") {
             return `${`${option.first_name} ${option.last_name}`} `;
           }
-          const val = contacts.filter((contact) => contact?.id === option);
+          const val = contacts?.filter((contact) => contact?.id === option);
           return `${`${val[0]?.first_name} ${val[0]?.last_name}`} `;
         }}
         value={allFields.client_id}
@@ -348,7 +348,7 @@ function InformationTab() {
           if (typeof option === "object") {
             return `${`${option.first_name} ${option.last_name}`} `;
           }
-          const val = contacts.filter((contact) => contact?.id === option);
+          const val = contacts?.filter((contact) => contact?.id === option);
           return `${`${val[0]?.first_name} ${val[0]?.last_name}`} `;
         }}
         value={allFields.customer_contact_id}
@@ -374,7 +374,7 @@ function InformationTab() {
           if (typeof option === "object") {
             return `${`${option.first_name} ${option.last_name}`} `;
           }
-          const val = contacts.filter((contact) => contact?.id === option);
+          const val = contacts?.filter((contact) => contact?.id === option);
           return `${`${val[0]?.first_name} ${val[0]?.last_name}`} `;
         }}
         value={allFields.opposing_contact_id}

@@ -165,9 +165,6 @@ function EtapesDialog() {
     const _tempNotification = [...notifications];
     _tempNotification.splice(index, 1);
     setNotifications([..._tempNotification]);
-    // setNotifications(
-    //   notifications.filter((notification) => notification.id !== value)
-    // );
   };
 
   useEffect(() => {
@@ -197,10 +194,10 @@ function EtapesDialog() {
       dispatch(
         updateEtapes({
           ...allFields,
-          id: data.id,
-          case_management_id: editDossierData.data.id,
+          id: data?.id,
+          case_management_id: editDossierData?.data?.id,
           send_notification: false,
-          lawyer_notification: notifications.map(
+          lawyer_notification: notifications?.map(
             (notification) => notification.count
           )
         })
@@ -468,7 +465,7 @@ function EtapesDialog() {
               if (typeof option === "object") {
                 return `${`${option.first_name} ${option.last_name}`} `;
               }
-              const val = editDossierData?.data?.client_id.filter(
+              const val = editDossierData?.data?.client_id?.filter(
                 (contact) => contact.id === option
               );
               return `${`${val[0]?.first_name} ${val[0]?.last_name}`} `;

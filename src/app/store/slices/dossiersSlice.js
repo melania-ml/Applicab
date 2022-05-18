@@ -128,7 +128,7 @@ export const addCase = createAsyncThunk(
             })
           );
           const procedure = getState().dossiers.procedures;
-          const { id } = procedure.filter(
+          const { id } = procedure?.filter(
             (fil) => fil?.id === data.data.data.procedure?.id
           )[0];
           dispatch(
