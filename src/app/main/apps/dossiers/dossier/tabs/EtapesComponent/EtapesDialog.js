@@ -160,7 +160,19 @@ function EtapesDialog() {
         })
       );
     }
-    dispatch(getDocuments(caseId));
+    if (files?.length > 0) {
+      const formData = new FormData();
+      for (let i = 0; i < files.length; i++) {
+        formData.append("case_document", files[i]);
+      }
+      formData.append("case_management_id", editDossierData.data.id);
+      formData.append("case_task_id", data.id);
+      dispatch(uploadDocument(formData));
+      setFiles(null);
+    }
+    setTimeout(() => {
+      dispatch(getDocuments(caseId));
+    }, 2000);
     closeComposeDialog();
   };
 

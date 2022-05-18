@@ -386,6 +386,7 @@ function EtapeTab() {
 
   useEffect(() => {
     dispatch(setSelectedList("Tous"));
+    dispatch(setListObj({ case_management_id: caseId }));
   }, []);
 
   useEffect(() => {
