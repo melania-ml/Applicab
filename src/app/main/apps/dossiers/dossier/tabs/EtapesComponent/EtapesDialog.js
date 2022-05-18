@@ -35,6 +35,9 @@ import {
   Icon,
   Autocomplete
 } from "@mui/material";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import { DesktopDateTimePicker } from "@mui/lab";
 
 function EtapesDialog() {
   const [allFields, setAllFields] = useState({
@@ -358,23 +361,45 @@ function EtapesDialog() {
             className="flex w-full mb-12"
             onKeyDownCapture={(e) => e.preventDefault()}
           >
-            <DateTimePicker
-              label="Date"
-              value={allFields.notification_date}
-              ampm={false}
-              ampmInClock={false}
-              onChange={(newValue) => {
-                setAllFields({ ...allFields, notification_date: newValue });
-              }}
-              onClose={() => addNotification()}
-              renderInput={(params) => (
-                <TextField
-                  className="w-full mb-12"
-                  {...params}
-                  autoComplete="off"
+            <FormControl className="w-full for-date" variant="outlined">
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DesktopDateTimePicker
+                  label="Date"
+                  value={allFields.notification_date}
+                  onChange={(newValue) => {
+                    setAllFields({
+                      ...allFields,
+                      notification_date: newValue
+                    });
+                  }}
+                  ampm={false}
+                  ampmInClock={false}
+                  renderInput={(params) => (
+                    <TextField
+                      autoComplete="off"
+                      className="w-full mb-12"
+                      {...params}
+                    />
+                  )}
                 />
-              )}
-            />
+                {allFields.notification_date && (
+                  <Icon
+                    style={{
+                      fontSize: "large",
+                      position: "absolute",
+                      right: 35,
+                      top: 16,
+                      cursor: "pointer"
+                    }}
+                    onClick={() =>
+                      setAllFields({ ...allFields, notification_date: null })
+                    }
+                  >
+                    clear
+                  </Icon>
+                )}
+              </LocalizationProvider>
+            </FormControl>
           </div>
           {notifications.length > 0 &&
             notifications?.map((notification, index) => (
