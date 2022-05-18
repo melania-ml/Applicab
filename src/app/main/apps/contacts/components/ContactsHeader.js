@@ -21,54 +21,54 @@ function ContactsHeader() {
   const mainTheme = useSelector(selectMainTheme);
   let csvData = [];
   for (let i = 0; i < contacts.length; i++) {
-    let _tempRow = [];
-    _tempRow.push(contacts[i].client_type.client_type);
-    _tempRow.push(contacts[i].legal_status);
-    _tempRow.push(contacts[i].title?.title);
-    _tempRow.push(contacts[i].company_name);
-    _tempRow.push(contacts[i].country);
-    _tempRow.push(contacts[i].address);
-    _tempRow.push(contacts[i].city);
-    _tempRow.push(contacts[i].capital_social);
-    _tempRow.push(contacts[i].RCS_city);
-    _tempRow.push(contacts[i].number);
-    _tempRow.push(contacts[i].last_name);
-    _tempRow.push(contacts[i].first_name);
-    _tempRow.push(contacts[i].email);
-    _tempRow.push(contacts[i].phone_number);
-    _tempRow.push(contacts[i].fixe);
-    _tempRow.push(contacts[i].comments);
-    _tempRow.push(contacts[i].date_of_birth);
-    _tempRow.push(contacts[i].nationality);
-    _tempRow.push(contacts[i].native_city);
-    _tempRow.push(contacts[i].department);
-    _tempRow.push(contacts[i].profession);
-    _tempRow.push(contacts[i].civil_status);
-    csvData.push(_tempRow);
+    let obj = {};
+    obj.client_type = contacts[i].client_type.client_type;
+    obj.legal_status = contacts[i].legal_status;
+    obj.title = contacts[i].title?.title;
+    obj.company_name = contacts[i].company_name;
+    obj.country = contacts[i].country;
+    obj.address = contacts[i].address;
+    obj.city = contacts[i].city;
+    obj.capital_social = contacts[i].capital_social;
+    obj.RCS_city = contacts[i].RCS_city;
+    obj.number = contacts[i].number;
+    obj.last_name = contacts[i].last_name;
+    obj.first_name = contacts[i].first_name;
+    obj.email = contacts[i].email;
+    obj.phone_number = contacts[i].phone_number;
+    obj.fixe = contacts[i].fixe;
+    obj.comments = contacts[i].comments;
+    obj.date_of_birth = contacts[i].date_of_birth;
+    obj.nationality = contacts[i].nationality;
+    obj.native_city = contacts[i].native_city;
+    obj.department = contacts[i].department;
+    obj.profession = contacts[i].profession;
+    obj.civil_status = contacts[i].civil_status;
+    csvData.push(obj);
   }
   const headers = [
-    "Type",
-    "Legal Status",
-    "Title",
-    "Company Name",
-    "Country",
-    "Address",
-    "City",
-    "Capital Social",
-    "RCS City",
-    "Number",
-    "Last Name",
-    "First Name",
-    "Email",
-    "Mobile",
-    "Fixe",
-    "Comments",
-    "DOB",
-    "Nationality",
-    "Native City",
-    "Department",
-    "Profession",
-    "Civil Status"
+    { label: "Type", key: "client_type" },
+    { label: "Legal Status", key: "legal_status" },
+    { label: "Title", key: "title" },
+    { label: "Company Name", key: "company_name" },
+    { label: "Country", key: "country" },
+    { label: "Address", key: "address" },
+    { label: "City", key: "city" },
+    { label: "Capital Social", key: "capital_social" },
+    { label: "RCS City", key: "RCS_city" },
+    { label: "Number", key: "number" },
+    { label: "Last Name", key: "last_name" },
+    { label: "First Name", key: "first_name" },
+    { label: "Email", key: "email" },
+    { label: "Mobile", key: "phone_number" },
+    { label: "Fixe", key: "fixe" },
+    { label: "Comments", key: "comments" },
+    { label: "DOB", key: "date_of_birth" },
+    { label: "Nationality", key: "nationality" },
+    { label: "Native City", key: "native_city" },
+    { label: "Department", key: "department" },
+    { label: "Profession", key: "profession" },
+    { label: "Civil Status", key: "civil_status" }
   ];
 
   const onFileUpload = (e) => {
