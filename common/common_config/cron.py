@@ -26,12 +26,10 @@ def taskLawyerNotification():
                     if sendInviteData.date() == datetime.now().date():
                         if case.case_management_id and case.case_management_id.lawyer_id:
                             notificationEmailText = emailText.lawyerTaskNotification() | emailText.commonUrls()
-                            notificationEmailText['text1'] = notificationEmailText['text1'].format(
-                                userName=case.case_management_id.lawyer_id.first_name)
                             notificationEmailText['text2'] = notificationEmailText['text2'].format(
                                 taskName=case.name)
                             send_email([case.case_management_id.lawyer_id.email],
-                                       'Altata - Accord du client sur le devis  🔔 Nom du client - Task',
+                                       'Altata - Accord du client sur le devis  🔔',
                                        'email.html',
                                        notificationEmailText)
                         case.lawyer_notification.remove(days)
@@ -47,5 +45,5 @@ def taskLawyerNotification():
 def start():
     scheduler = BackgroundScheduler(timezone="Asia/Kolkata")
     scheduler.add_job(otpExpiration, "interval", minutes=2, id="otpRemove_001", replace_existing=True)
-    scheduler.add_job(taskLawyerNotification, "interval", minutes=2, id="taskNotification_001", replace_existing=True)
+    scheduler.add_job(taskLawyerNotification, "interval", minutes=20, id="taskNotification_001", replace_existing=True)
     scheduler.start()

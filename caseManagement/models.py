@@ -48,7 +48,7 @@ class CaseManagement(CommonBase):
     type = models.CharField(max_length=100, blank=True, null=True)
     unique_code = models.CharField(max_length=100, blank=True, null=True)
     procedure = models.ForeignKey(Procedure,
-                                  blank=True, null=True,related_name="procedure",
+                                  blank=True, null=True, related_name="procedure",
                                   on_delete=models.DO_NOTHING, db_column='procedure_id')
     location = models.CharField(max_length=600, blank=True, null=True)  # lieu
     tags = ArrayField(models.CharField(max_length=200), null=True,
@@ -99,8 +99,13 @@ class caseManagementTask(CommonBase):
     send_notification = models.BooleanField(default=False)
     lawyer_notification = ArrayField(base_field=models.IntegerField(blank=True, null=True), blank=True, default=list)
     case_management_id = models.ForeignKey(CaseManagement,
-                                           blank=True, null=True,related_name='case_management_task',
+                                           blank=True, null=True, related_name='case_management_task',
                                            on_delete=models.DO_NOTHING, db_column='case_management_id')
+
+    client_id = models.ManyToManyField(User,
+                                       blank=True,
+                                       related_name='task_client_id',
+                                       db_column='client_id')
 
     def __str__(self):
         return '{}'.format(self.name)
@@ -135,7 +140,7 @@ class caseManagementDocuments(CommonBase):
     case_document = models.FileField(upload_to='case_documents', blank=True, null=True)
     file_name = models.CharField(max_length=100, blank=True, null=True)
     case_management_id = models.ForeignKey(CaseManagement,
-                                           blank=True, null=True,related_name='case_management_documents',
+                                           blank=True, null=True, related_name='case_management_documents',
                                            on_delete=models.DO_NOTHING, db_column='case_management_id')
     case_task_id = models.ForeignKey(caseManagementTask,
                                      blank=True, null=True,
@@ -186,6 +191,3 @@ class caseManagementGroupMessage(CommonBase):
 
     class Meta:
         db_table = 'case_management_group_message'
-
-
-

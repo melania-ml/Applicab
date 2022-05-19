@@ -345,9 +345,8 @@ class caseManagementTaskView(APIView):
         userData = User.objects.filter(id__in=client_id)
         for user in userData:
             notificationEmailText = emailText.taskNotification() | emailText.commonUrls()
-            notificationEmailText['text1'] = notificationEmailText['text1'].format(userName=user.last_name+" "+user.first_name)
             send_email([user.email],
-                       'Altata - Notification 🔔 Nom du dossier -  Objet du message', 'email.html',
+                       'Altata - Notification 🔔', 'email.html',
                        notificationEmailText)
 
     def sendTaskMessage(self, caseId, lawyerId, message, subject, notificationDate):

@@ -53,7 +53,7 @@ def forgotPassword():
 def taskNotification():
     textDict = {
         'title': 'Notification 📥',
-        'text1': 'Bonjour {userName},',
+        'text1': 'Bonjour,',
         'text2': 'Un nouveau message est disponible dans votre',
         'text3': 'espace client, nous vos invitons à le consulter en',
         'text4': 'cliquant ici 👇.',
@@ -69,7 +69,7 @@ def taskNotification():
 def lawyerTaskNotification():
     textDict = {
         'title': 'Notification 📥',
-        'text1': 'Bonjour APPLICAB {userName},',
+        'text1': 'Bonjour,',
         'text2': 'Ceci est une notification afin de vous rappeler que l''étape {taskName} est « à faire ».',
         'text3': 'Accès direct en cliquant ici 👇.',
         'button_text': 'Votre espace client',
