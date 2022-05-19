@@ -86,7 +86,9 @@ function EtapesDialog() {
           getFormattedDateTime({
             date: data.notification_date
           }),
-        client_id: [],
+        client_id: editDossierData?.data?.client_id?.map(
+          (clientId) => clientId?.id
+        ),
         message: data.message,
         position: data.position
       });
