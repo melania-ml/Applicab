@@ -292,7 +292,7 @@ function MessageTab(props) {
                           </Typography>
                         </div>
                       )}
-                      <div className="bubble flex relative items-center justify-center p-12 max-w-full shadow">
+                      <div className="bubble block relative items-center justify-center p-12 max-w-full shadow w-auto break-words whitespace-normal	">
                         <div className="leading-tight whitespace-pre-wrap">
                           {item.subject && (
                             <>

@@ -327,6 +327,7 @@ function EtapesDialog() {
             required
             variant="outlined"
             fullWidth
+            inputProps={{ maxLength: 100 }}
             disabled={type !== "new"}
             value={allFields.name}
             onChange={(e) => {
@@ -345,6 +346,7 @@ function EtapesDialog() {
               variant="outlined"
               autoComplete="off"
               fullWidth
+              inputProps={{ maxLength: 100 }}
               value={allFields.sub_name}
               onChange={(e) => {
                 setAllFields({
@@ -523,6 +525,7 @@ function EtapesDialog() {
               <TextField
                 {...params}
                 label="Choisissez un ou plusieurs clients*"
+                inputProps={{ ...params.inputProps, maxLength: 100 }}
               />
             )}
           />
@@ -533,14 +536,13 @@ function EtapesDialog() {
             variant="outlined"
             autoComplete="off"
             fullWidth
+            inputProps={{ maxLength: 100 }}
             value={allFields.subject}
             onChange={(e) => {
-              if (e.target.value.length <= 100) {
-                setAllFields({
-                  ...allFields,
-                  subject: e.target.value
-                });
-              }
+              setAllFields({
+                ...allFields,
+                subject: e.target.value
+              });
             }}
           />
           <div className="flex mb-14 w-full">

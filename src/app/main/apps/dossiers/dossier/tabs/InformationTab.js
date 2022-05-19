@@ -177,7 +177,13 @@ function InformationTab() {
           <li {...props}>{option.nature_title}</li>
         )}
         freeSolo
-        renderInput={(params) => <TextField {...params} label="Nature*" />}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Nature*"
+            inputProps={{ ...params.inputProps, maxLength: 100 }}
+          />
+        )}
       />
       <FormControl className="flex w-full mb-12" variant="outlined">
         <InputLabel>Statut*</InputLabel>
@@ -245,6 +251,7 @@ function InformationTab() {
         variant="outlined"
         fullWidth
         autoComplete="off"
+        inputProps={{ maxLength: 100 }}
         value={allFields.location}
         onChange={(e) => {
           setAllFields({
@@ -258,10 +265,13 @@ function InformationTab() {
         multiple
         freeSolo
         onChange={(event, newValue) => {
-          setAllFields({
-            ...allFields,
-            tags: [...newValue]
-          });
+          if (newValue.toString().length <= 100) {
+            setAllFields({
+              ...allFields,
+              tags: [...newValue]
+            });
+            return;
+          }
         }}
         options={tags}
         value={allFields.tags}
@@ -287,6 +297,7 @@ function InformationTab() {
         rows={5}
         fullWidth
         autoComplete="off"
+        inputProps={{ maxLength: 100 }}
         value={allFields.internal_comment}
         onChange={(e) => {
           setAllFields({
@@ -303,6 +314,7 @@ function InformationTab() {
         rows={5}
         autoComplete="off"
         fullWidth
+        inputProps={{ maxLength: 100 }}
         value={allFields.shared_comment}
         onChange={(e) => {
           setAllFields({
@@ -334,7 +346,11 @@ function InformationTab() {
           });
         }}
         renderInput={(params) => (
-          <TextField {...params} label="Choisissez un client*" />
+          <TextField
+            {...params}
+            label="Choisissez un client*"
+            inputProps={{ ...params.inputProps, maxLength: 100 }}
+          />
         )}
       />
       <div className="mb-10">
@@ -360,7 +376,11 @@ function InformationTab() {
           });
         }}
         renderInput={(params) => (
-          <TextField {...params} label="Choisissez un contact" />
+          <TextField
+            {...params}
+            label="Choisissez un contact"
+            inputProps={{ ...params.inputProps, maxLength: 100 }}
+          />
         )}
       />
       <div className="mb-10">
@@ -386,7 +406,11 @@ function InformationTab() {
           });
         }}
         renderInput={(params) => (
-          <TextField {...params} label="Choisissez un contact" />
+          <TextField
+            {...params}
+            label="Choisissez un contact"
+            inputProps={{ ...params.inputProps, maxLength: 100 }}
+          />
         )}
       />
       <br />

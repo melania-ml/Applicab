@@ -476,7 +476,13 @@ function ContactDialog(props) {
               <li {...props}>{option.client_type}</li>
             )}
             freeSolo
-            renderInput={(params) => <TextField {...params} label="Type*" />}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Type*"
+                inputProps={{ ...params.inputProps, maxLength: 100 }}
+              />
+            )}
           />
           <div className="flex items-center mb-16">
             <b className="min-w-48 pt-20">Forme juridique*:</b>
@@ -582,7 +588,11 @@ function ContactDialog(props) {
                 )}
                 freeSolo
                 renderInput={(params) => (
-                  <TextField {...params} label="Choisissez un titre*" />
+                  <TextField
+                    {...params}
+                    label="Choisissez un titre*"
+                    inputProps={{ ...params.inputProps, maxLength: 100 }}
+                  />
                 )}
               />
               <TextField
@@ -591,6 +601,7 @@ function ContactDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 value={allFields.company_name}
                 error={errors?.company_name}
                 helperText={errors?.company_name}
@@ -616,7 +627,13 @@ function ContactDialog(props) {
                     country: newValue?.label ?? ""
                   });
                 }}
-                renderInput={(params) => <TextField {...params} label="Pays" />}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Pays"
+                    inputProps={{ ...params.inputProps, maxLength: 100 }}
+                  />
+                )}
               />
               <TextField
                 className="mb-12"
@@ -625,6 +642,7 @@ function ContactDialog(props) {
                 fullWidth
                 key="address"
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 value={allFields.address}
                 onChange={(e) =>
                   setAllFields({
@@ -639,6 +657,7 @@ function ContactDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 value={allFields.city}
                 onChange={(e) =>
                   setAllFields({
@@ -654,6 +673,7 @@ function ContactDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 onKeyDown={getNumericValidation}
                 value={allFields.postal_code}
                 onChange={(e) => {
@@ -667,6 +687,7 @@ function ContactDialog(props) {
                 className="mt-8 mb-16"
                 label="Capital social"
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">€</InputAdornment>
@@ -695,6 +716,7 @@ function ContactDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 value={allFields.RCS_city}
                 onChange={(e) =>
                   setAllFields({
@@ -710,6 +732,7 @@ function ContactDialog(props) {
                 fullWidth
                 autoComplete="off"
                 type="number"
+                inputProps={{ maxLength: 100 }}
                 onKeyDown={getNumericValidation}
                 value={allFields.number}
                 onChange={(e) => {
@@ -730,6 +753,7 @@ function ContactDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 value={allFields.last_name}
                 error={errors?.last_name}
                 helperText={errors?.last_name}
@@ -749,6 +773,7 @@ function ContactDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 value={allFields.first_name}
                 error={errors?.firstName}
                 helperText={errors?.firstName}
@@ -766,6 +791,7 @@ function ContactDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 disabled={
                   contactDialog.type !== "new" && contactDialog?.data?.email
                 }
@@ -786,6 +812,7 @@ function ContactDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 error={errors?.mobile1}
                 helperText={errors?.mobile1}
                 value={allFields.phone_number}
@@ -803,6 +830,7 @@ function ContactDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 error={errors?.mobile2}
                 helperText={errors?.mobile2}
                 value={allFields.fixe}
@@ -822,6 +850,7 @@ function ContactDialog(props) {
                 rows={5}
                 autoComplete="off"
                 fullWidth
+                inputProps={{ maxLength: 100 }}
                 value={allFields.comments}
                 onChange={(e) =>
                   setAllFields({
@@ -836,10 +865,12 @@ function ContactDialog(props) {
                 freeSolo
                 autoComplete="off"
                 onChange={(event, newValue) => {
-                  setAllFields({
-                    ...allFields,
-                    tags: [...newValue]
-                  });
+                  if (newValue.toString().length <= 100) {
+                    setAllFields({
+                      ...allFields,
+                      tags: [...newValue]
+                    });
+                  }
                 }}
                 options={tags}
                 value={allFields.tags}
@@ -858,6 +889,7 @@ function ContactDialog(props) {
                     {...params}
                     label="Tags"
                     placeholder="Add your tags"
+                    inputProps={{ ...params.inputProps, maxLength: 100 }}
                   />
                 )}
               />
@@ -929,7 +961,11 @@ function ContactDialog(props) {
                 )}
                 freeSolo
                 renderInput={(params) => (
-                  <TextField {...params} label="Choisissez un titre*" />
+                  <TextField
+                    {...params}
+                    label="Choisissez un titre*"
+                    inputProps={{ ...params.inputProps, maxLength: 100 }}
+                  />
                 )}
               />
               <TextField
@@ -939,6 +975,7 @@ function ContactDialog(props) {
                 autoComplete="off"
                 variant="outlined"
                 fullWidth
+                inputProps={{ maxLength: 100 }}
                 value={allFields.last_name}
                 error={errors?.last_name}
                 helperText={errors?.last_name}
@@ -958,6 +995,7 @@ function ContactDialog(props) {
                 variant="outlined"
                 autoComplete="off"
                 fullWidth
+                inputProps={{ maxLength: 100 }}
                 value={allFields.first_name}
                 error={errors?.firstName}
                 helperText={errors?.firstName}
@@ -976,6 +1014,7 @@ function ContactDialog(props) {
                 autoComplete="off"
                 key="email"
                 fullWidth
+                inputProps={{ maxLength: 100 }}
                 disabled={
                   contactDialog.type !== "new" && contactDialog?.data?.email
                 }
@@ -996,6 +1035,7 @@ function ContactDialog(props) {
                 variant="outlined"
                 autoComplete="off"
                 fullWidth
+                inputProps={{ maxLength: 100 }}
                 value={allFields.phone_number}
                 error={errors?.mobile1}
                 helperText={errors?.mobile1}
@@ -1013,6 +1053,7 @@ function ContactDialog(props) {
                 variant="outlined"
                 autoComplete="off"
                 fullWidth
+                inputProps={{ maxLength: 100 }}
                 error={errors?.mobile2}
                 helperText={errors?.mobile2}
                 value={allFields.fixe}
@@ -1030,6 +1071,7 @@ function ContactDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 value={allFields.address}
                 onChange={(e) =>
                   setAllFields({
@@ -1044,6 +1086,7 @@ function ContactDialog(props) {
                 variant="outlined"
                 autoComplete="off"
                 fullWidth
+                inputProps={{ maxLength: 100 }}
                 value={allFields.city}
                 onChange={(e) =>
                   setAllFields({
@@ -1059,6 +1102,7 @@ function ContactDialog(props) {
                 autoComplete="off"
                 variant="outlined"
                 fullWidth
+                inputProps={{ maxLength: 100 }}
                 onKeyDown={getNumericValidation}
                 value={allFields.postal_code}
                 onChange={(e) => {
@@ -1126,7 +1170,11 @@ function ContactDialog(props) {
                   });
                 }}
                 renderInput={(params) => (
-                  <TextField {...params} label="Nationalité" />
+                  <TextField
+                    {...params}
+                    label="Nationalité"
+                    inputProps={{ ...params.inputProps, maxLength: 100 }}
+                  />
                 )}
               />
               <Autocomplete
@@ -1144,13 +1192,20 @@ function ContactDialog(props) {
                     country: newValue?.label
                   })
                 }
-                renderInput={(params) => <TextField {...params} label="Pays" />}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Pays"
+                    inputProps={{ ...params.inputProps, maxLength: 100 }}
+                  />
+                )}
               />
               <TextField
                 className="mb-12"
                 label="Ville de naissance"
                 variant="outlined"
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 value={allFields.native_city}
                 onChange={(e) =>
                   setAllFields({
@@ -1175,7 +1230,11 @@ function ContactDialog(props) {
                   })
                 }
                 renderInput={(params) => (
-                  <TextField {...params} label="Département" />
+                  <TextField
+                    {...params}
+                    label="Département"
+                    inputProps={{ ...params.inputProps, maxLength: 100 }}
+                  />
                 )}
               />
               <TextField
@@ -1183,6 +1242,7 @@ function ContactDialog(props) {
                 label="Profession"
                 variant="outlined"
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 value={allFields.profession}
                 onChange={(e) =>
                   setAllFields({
@@ -1218,6 +1278,7 @@ function ContactDialog(props) {
                 multiline
                 rows={5}
                 fullWidth
+                inputProps={{ maxLength: 100 }}
                 value={allFields.comments}
                 onChange={(e) =>
                   setAllFields({
@@ -1230,11 +1291,14 @@ function ContactDialog(props) {
                 className="w-full mb-12"
                 multiple
                 freeSolo
+                inputProps={{ maxLength: 100 }}
                 onChange={(event, newValue) => {
-                  setAllFields({
-                    ...allFields,
-                    tags: [...newValue]
-                  });
+                  if (newValue.toString().length <= 100) {
+                    setAllFields({
+                      ...allFields,
+                      tags: [...newValue]
+                    });
+                  }
                 }}
                 options={tags}
                 value={allFields.tags}
@@ -1253,6 +1317,7 @@ function ContactDialog(props) {
                     {...params}
                     label="Tags"
                     placeholder="Add your tags"
+                    inputProps={{ ...params.inputProps, maxLength: 100 }}
                   />
                 )}
               />
