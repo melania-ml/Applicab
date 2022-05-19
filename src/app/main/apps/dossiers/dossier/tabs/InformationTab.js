@@ -394,7 +394,7 @@ function InformationTab() {
         <Button
           variant="contained"
           color="secondary"
-          style={{ borderRadius: 0 }}
+          style={{ borderRadius: 0, marginLeft: 50 }}
           disabled={!isValid}
           onClick={() => onSubmit("submit")}
         >
@@ -403,7 +403,7 @@ function InformationTab() {
         <Button
           variant="contained"
           color="secondary"
-          style={{ borderRadius: 2 }}
+          style={{ borderRadius: 0, marginRight: 50 }}
           onClick={() => {
             dispatch(openNewContactDialog());
           }}
