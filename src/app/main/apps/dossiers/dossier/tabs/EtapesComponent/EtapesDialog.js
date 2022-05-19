@@ -290,7 +290,7 @@ function EtapesDialog() {
             autoComplete="off"
             required
             fullWidth
-            type="number"
+            type="text"
             onKeyDown={getNumericValidation}
             value={allFields.position}
             onChange={(e) => {
