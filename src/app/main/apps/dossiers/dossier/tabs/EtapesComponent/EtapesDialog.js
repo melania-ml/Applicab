@@ -135,6 +135,7 @@ function EtapesDialog() {
   }, [allFields]);
 
   function closeComposeDialog() {
+    setIsDateAdded(false);
     return type === "edit"
       ? dispatch(closeEditEtapeDialog())
       : dispatch(closeNewEtapeDialog());
@@ -389,6 +390,7 @@ function EtapesDialog() {
                       notification_date: newValue
                     });
                   }}
+                  onClose={() => addNotification()}
                   ampm={false}
                   ampmInClock={false}
                   renderInput={(params) => (
@@ -408,9 +410,11 @@ function EtapesDialog() {
                       top: 16,
                       cursor: "pointer"
                     }}
-                    onClick={() =>
-                      setAllFields({ ...allFields, notification_date: null })
-                    }
+                    onClick={() => {
+                      setAllFields({ ...allFields, notification_date: null });
+                      setIsDateAdded(false);
+                      setNotifications([]);
+                    }}
                   >
                     clear
                   </Icon>

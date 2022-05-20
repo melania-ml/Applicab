@@ -102,11 +102,26 @@ export const getProcedures = () => async (dispatch) => {
 export const getContacts = (id) => async (dispatch) => {
   await axios
     .post(`api/common/filterData/user/User`, {
-      query: { client_type: 1, lawyer_id: id }
+      query: { client_type: 1, lawyer_id: id, status: "Actif" }
     })
     .then((data) => {
       if (data.data.status === 200 && data.data.success) {
         dispatch(setContacts(data.data.data));
+      }
+    })
+    .catch((error) => {
+      dispatch(showMessage({ message: error.response.message }));
+    });
+};
+
+export const getAllContacts = (id) => async (dispatch) => {
+  await axios
+    .post(`api/common/filterData/user/User`, {
+      query: { lawyer_id: id, status: "Actif" }
+    })
+    .then((data) => {
+      if (data.data.status === 200 && data.data.success) {
+        dispatch(setAllContacts(data.data.data));
       }
     })
     .catch((error) => {
@@ -423,6 +438,7 @@ const dossiersSlice = createSlice({
     natures: [],
     procedures: [],
     contacts: [],
+    allContacts: [],
     isCaseAdded: false,
     etapes: [],
     editDossierData: {
@@ -475,6 +491,9 @@ const dossiersSlice = createSlice({
     },
     setContacts: (state, action) => {
       state.contacts = action.payload;
+    },
+    setAllContacts: (state, action) => {
+      state.allContacts = action.payload;
     },
     setMessageHeader: (state, action) => {
       state.messageHeader = action.payload;
@@ -570,6 +589,7 @@ export const {
   setDocuments,
   setProcedures,
   setContacts,
+  setAllContacts,
   setIsCaseAdded,
   setMessageHeader,
   setEtapes,

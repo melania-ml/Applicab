@@ -110,6 +110,13 @@ function ContactsList() {
       {
         Header: "Téléphone",
         accessor: "phone_number",
+        Cell: ({ row }) => {
+          return (
+            <span className="etape-txt">
+              {row.original.phone_number || "-"}
+            </span>
+          );
+        },
         sortable: true
       },
       {

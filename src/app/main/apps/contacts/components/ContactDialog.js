@@ -457,6 +457,10 @@ function ContactDialog(props) {
               }
               return filtered;
             }}
+            disabled={
+              contactDialog.type === "edit" &&
+              contactDialog?.data?.client_type?.client_type === "Client"
+            }
             selectOnFocus
             clearOnBlur
             error={errors?.client_type}

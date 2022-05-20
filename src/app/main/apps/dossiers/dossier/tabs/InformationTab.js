@@ -27,6 +27,7 @@ function InformationTab() {
     natures,
     procedures,
     contacts,
+    allContacts,
     editDossierData: { data, type }
   } = useSelector(({ dossiers }) => dossiers);
   const filter = createFilterOptions();
@@ -66,6 +67,7 @@ function InformationTab() {
 
   useEffect(() => {
     if (data && Object.keys(data).length !== 0) {
+      debugger;
       setAllFields({
         ...allFields,
         case_name: data.case_name,
@@ -359,12 +361,12 @@ function InformationTab() {
       <Autocomplete
         multiple
         className="flex w-full mb-12"
-        options={contacts}
+        options={allContacts}
         getOptionLabel={(option) => {
           if (typeof option === "object") {
             return `${`${option.first_name} ${option.last_name}`} `;
           }
-          const val = contacts?.filter((contact) => contact?.id === option);
+          const val = allContacts?.filter((contact) => contact?.id === option);
           return `${`${val[0]?.first_name} ${val[0]?.last_name}`} `;
         }}
         value={allFields.customer_contact_id}
@@ -389,12 +391,12 @@ function InformationTab() {
       <Autocomplete
         multiple
         className="flex w-full mb-12"
-        options={contacts}
+        options={allContacts}
         getOptionLabel={(option) => {
           if (typeof option === "object") {
             return `${`${option.first_name} ${option.last_name}`} `;
           }
-          const val = contacts?.filter((contact) => contact?.id === option);
+          const val = allContacts?.filter((contact) => contact?.id === option);
           return `${`${val[0]?.first_name} ${val[0]?.last_name}`} `;
         }}
         value={allFields.opposing_contact_id}

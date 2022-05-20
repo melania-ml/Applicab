@@ -7,6 +7,7 @@ import _ from "@lodash";
 import { FormProvider } from "react-hook-form";
 import {
   getContacts,
+  getAllContacts,
   getNatures,
   getProcedures
 } from "app/store/slices/dossiersSlice";
@@ -67,6 +68,7 @@ function Dossier() {
     await dispatch(getNatures());
     await dispatch(getProcedures());
     await dispatch(getContacts(user?.data?.id));
+    await dispatch(getAllContacts(user?.data?.id));
   }, [dispatch, routeParams]);
 
   const handleTabChange = (event, value) => {
