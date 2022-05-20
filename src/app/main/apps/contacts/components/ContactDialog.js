@@ -13,7 +13,10 @@ import {
   getFormTitles,
   getAllTypes
 } from "app/store/slices/contactsSlice";
-import { getNumericValidation } from "app/main/common/functions";
+import {
+  checkIsMobileNumber,
+  getNumericValidation
+} from "app/main/common/functions";
 
 //material-ui
 import {
@@ -326,6 +329,8 @@ function ContactDialog(props) {
         } else {
           setErrors({ ...errors, mobile1: "" });
         }
+      } else {
+        setErrors({ ...errors, mobile1: "" });
       }
     }
     if (name === "mobile2") {
@@ -340,6 +345,8 @@ function ContactDialog(props) {
         } else {
           setErrors({ ...errors, mobile2: "" });
         }
+      } else {
+        setErrors({ ...errors, mobile2: "" });
       }
     }
     if (name === "title") {
@@ -812,6 +819,7 @@ function ContactDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
+                onKeyDown={checkIsMobileNumber}
                 inputProps={{ maxLength: 100 }}
                 error={errors?.mobile1}
                 helperText={errors?.mobile1}
@@ -831,6 +839,7 @@ function ContactDialog(props) {
                 fullWidth
                 autoComplete="off"
                 inputProps={{ maxLength: 100 }}
+                onKeyDown={checkIsMobileNumber}
                 error={errors?.mobile2}
                 helperText={errors?.mobile2}
                 value={allFields.fixe}
@@ -1035,6 +1044,7 @@ function ContactDialog(props) {
                 variant="outlined"
                 autoComplete="off"
                 fullWidth
+                onKeyDown={checkIsMobileNumber}
                 inputProps={{ maxLength: 100 }}
                 value={allFields.phone_number}
                 error={errors?.mobile1}

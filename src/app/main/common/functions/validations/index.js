@@ -1,2 +1,2 @@
-export * from './getNumericValidation';
-export * from './checkIsNumber';
+export * from "./getNumericValidation";
+export * from "./checkIsMobileNumber";
