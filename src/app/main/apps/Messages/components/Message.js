@@ -277,7 +277,7 @@ function Message(props) {
                 className="px-16 pb-24 text-center"
                 color="textSecondary"
               >
-                aucun message
+                Aucun message
               </Typography>
             </div>
           </div>

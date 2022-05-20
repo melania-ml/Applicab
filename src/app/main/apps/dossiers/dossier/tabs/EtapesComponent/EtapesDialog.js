@@ -74,8 +74,9 @@ function EtapesDialog() {
 
   useEffect(() => {
     if (data && Object.keys(data).length !== 0) {
-      let arr = [];
-      data?.client_id.map((a) => arr.push(a.id));
+      const clientIdArr = data?.client_id?.map((a) => {
+        return a.id;
+      });
       setAllFields({
         ...allFields,
         case_name: editDossierData?.data?.case_name,
@@ -88,9 +89,7 @@ function EtapesDialog() {
           getFormattedDateTime({
             date: data.notification_date
           }),
-        client_id: editDossierData?.data?.client_id?.filter((clientId) =>
-          arr.includes(clientId.id)
-        ),
+        client_id: clientIdArr || [],
         message: data.message,
         position: data.position
       });

@@ -122,7 +122,7 @@ function FaqApp() {
           filteredData.vocabularyFAQ.length === 0 && (
             <div className="flex flex-auto items-center justify-center w-full h-full">
               <Typography color="textSecondary" variant="h5">
-                There are no faqs!
+                No FAQ!
               </Typography>
             </div>
           )}

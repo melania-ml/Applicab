@@ -342,7 +342,8 @@ function MessageTab(props) {
                 className="px-16 pb-24 text-center"
                 color="textSecondary"
               >
-                Start a conversation by typing your message below.
+                Démarrer une conversation, tapez votre message dans le champ
+                inférieur
               </Typography>
             </div>
           )}

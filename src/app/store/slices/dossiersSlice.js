@@ -366,7 +366,7 @@ export const updateEtapes = createAsyncThunk(
         }
       })
       .catch((errors) => {
-        return dispatch(showMessage(errors));
+        return dispatch(showMessage({ message: errors.response.data.message }));
       });
   }
 );
