@@ -15,11 +15,13 @@ import {
   TextField,
   Avatar
 } from "@mui/material";
+import { checkIsMobileNumber } from "app/main/common/functions";
 
 function EditProfileDialog(props) {
   const dispatch = useDispatch();
-  const user = useSelector(({ auth }) => auth.user);
+  const user = useSelector(({ user }) => user);
   const { userData } = useSelector(({ userMenu }) => userMenu);
+  const [errors, setErrors] = useState({});
   const [allFields, setAllFields] = useState({
     image: "",
     profile: "",
@@ -86,6 +88,43 @@ function EditProfileDialog(props) {
     const base64 = await convertBase64(file);
     setAllFields({ ...allFields, profile: base64, image: file });
   };
+
+  const checkIsDisable = (name, val) => {
+    const value = val.trim();
+    if (name === "mobile1") {
+      const regex =
+        /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
+      if (value) {
+        if (regex.test(value) === false) {
+          setErrors({
+            ...errors,
+            mobile1: "Please enter valid Mobile number"
+          });
+        } else {
+          setErrors({ ...errors, mobile1: "" });
+        }
+      } else {
+        setErrors({ ...errors, mobile1: "" });
+      }
+    }
+    if (name === "mobile2") {
+      const regex =
+        /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
+      if (value) {
+        if (regex.test(value) === false) {
+          setErrors({
+            ...errors,
+            mobile2: "Please enter valid Mobile number"
+          });
+        } else {
+          setErrors({ ...errors, mobile2: "" });
+        }
+      } else {
+        setErrors({ ...errors, mobile2: "" });
+      }
+    }
+  };
+
   return (
     <Dialog
       classes={{
@@ -135,6 +174,7 @@ function EditProfileDialog(props) {
           variant="outlined"
           fullWidth
           disabled
+          inputProps={{ maxLength: 100 }}
           value={allFields.enterPriseName}
         />
         <TextField
@@ -144,6 +184,7 @@ function EditProfileDialog(props) {
           variant="outlined"
           fullWidth
           disabled
+          inputProps={{ maxLength: 100 }}
           value={allFields.name}
         />
         <TextField
@@ -152,6 +193,7 @@ function EditProfileDialog(props) {
           variant="outlined"
           fullWidth
           disabled
+          inputProps={{ maxLength: 100 }}
           value={allFields.firstName}
         />
         <TextField
@@ -161,6 +203,7 @@ function EditProfileDialog(props) {
           variant="outlined"
           fullWidth
           autoComplete="off"
+          inputProps={{ maxLength: 100 }}
           value={allFields.function}
           onChange={(e) => {
             setAllFields({
@@ -176,6 +219,7 @@ function EditProfileDialog(props) {
           variant="outlined"
           fullWidth
           disabled
+          inputProps={{ maxLength: 100 }}
           value={allFields.email}
         />
         <TextField
@@ -185,6 +229,7 @@ function EditProfileDialog(props) {
           variant="outlined"
           fullWidth
           autoComplete="off"
+          inputProps={{ maxLength: 100 }}
           value={allFields.website}
           onChange={(e) => {
             setAllFields({
@@ -200,6 +245,7 @@ function EditProfileDialog(props) {
           variant="outlined"
           fullWidth
           autoComplete="off"
+          inputProps={{ maxLength: 100 }}
           value={allFields.address}
           onChange={(e) => {
             setAllFields({
@@ -215,6 +261,7 @@ function EditProfileDialog(props) {
           variant="outlined"
           fullWidth
           autoComplete="off"
+          inputProps={{ maxLength: 100 }}
           value={allFields.city}
           onChange={(e) => {
             setAllFields({
@@ -230,11 +277,12 @@ function EditProfileDialog(props) {
           variant="outlined"
           fullWidth
           autoComplete="off"
+          inputProps={{ maxLength: 100 }}
           value={allFields.postal_code}
           onChange={(e) => {
             setAllFields({
               ...allFields,
-              postal_code: e.target.value
+              postal_code: e.target.value > 0 ? e.target.value : ""
             });
           }}
         />
@@ -246,12 +294,16 @@ function EditProfileDialog(props) {
           variant="outlined"
           fullWidth
           autoComplete="off"
+          error={errors?.mobile1}
+          helperText={errors?.mobile1}
+          onKeyDown={checkIsMobileNumber}
           value={allFields.phone_number}
           onChange={(e) => {
             setAllFields({
               ...allFields,
-              phone_number: e.target.value
+              phone_number: e.target.value > 0 ? e.target.value : ""
             });
+            checkIsDisable("mobile1", e.target.value);
           }}
         />
         <TextField
@@ -262,12 +314,16 @@ function EditProfileDialog(props) {
           variant="outlined"
           fullWidth
           autoComplete="off"
+          error={errors?.mobile2}
+          helperText={errors?.mobile2}
+          onKeyDown={checkIsMobileNumber}
           value={allFields.fixe}
           onChange={(e) => {
             setAllFields({
               ...allFields,
-              fixe: e.target.value
+              fixe: e.target.value > 0 ? e.target.value : ""
             });
+            checkIsDisable("mobile2", e.target.value);
           }}
         />
       </DialogContent>
