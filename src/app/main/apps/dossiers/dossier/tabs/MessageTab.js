@@ -351,6 +351,7 @@ function MessageTab(props) {
         <form
           onSubmit={onSubmitMessage}
           className="relative bottom-0 right-0 left-0 py-16 px-8"
+          style={{ marginRight: 50 }}
         >
           <Paper className="flex items-center rounded-24 shadow">
             {/* <Button

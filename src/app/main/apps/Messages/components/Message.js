@@ -286,6 +286,7 @@ function Message(props) {
       <form
         onSubmit={onSubmitMessage}
         className="absolute bottom-0 right-0 left-0 py-16 px-8"
+        style={{ marginRight: 80 }}
       >
         <Paper className="flex items-center relative rounded-24 shadow">
           <InputBase
