@@ -91,7 +91,7 @@ class User(AbstractUser):
     first_name = models.CharField(max_length=40,
                                   help_text='Enter name', blank=True, null=True)
     last_name = models.CharField(max_length=40,
-                                 help_text='Enter name', blank=True, null=True)
+                                 help_text='Enter name', blank=True, null=True , default="")
     phone_number = models.CharField(max_length=40,
                                     validators=[RegexValidator(r'^[0-9 ]*$', 'Only numbers are allowed.')],
                                     verbose_name='phone_number', blank=True, null=True)

@@ -6,6 +6,7 @@ from caseManagement.models import *
 from common.common_config.sendEmail import send_email
 from static import emailText
 from user.models import User
+import pytz
 
 
 def otpExpiration():
@@ -18,12 +19,16 @@ def otpExpiration():
 
 def taskLawyerNotification():
     try:
+        print("Cron for lawyer")
         caseData = caseManagementTask.objects.exclude(lawyer_notification__exact=[])
         for case in caseData:
             for days in case.lawyer_notification:
                 if days is not None and case.notification_date is not None:
                     sendInviteData = case.notification_date - timedelta(days=days)
-                    if sendInviteData.date() == datetime.now().date():
+                    currantDate = datetime.now().astimezone(pytz.utc).strftime("%m/%d/%Y, %H:%M")
+                    inviteDate = sendInviteData.strftime("%m/%d/%Y, %H:%M")
+                    if inviteDate == currantDate:
+                        print(inviteDate, currantDate)
                         if case.case_management_id and case.case_management_id.lawyer_id:
                             notificationEmailText = emailText.lawyerTaskNotification() | emailText.commonUrls()
                             notificationEmailText['text2'] = notificationEmailText['text2'].format(
@@ -39,11 +44,11 @@ def taskLawyerNotification():
                 else:
                     pass
     except Exception as e:
-        print("Lawyer Notification Crone error")
+        print("Lawyer Notification Crone error: ", e)
 
 
 def start():
     scheduler = BackgroundScheduler(timezone="Asia/Kolkata")
     scheduler.add_job(otpExpiration, "interval", minutes=2, id="otpRemove_001", replace_existing=True)
-    scheduler.add_job(taskLawyerNotification, "interval", minutes=20, id="taskNotification_001", replace_existing=True)
+    scheduler.add_job(taskLawyerNotification, "interval", minutes=1, id="taskNotification_001", replace_existing=True)
     scheduler.start()

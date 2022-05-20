@@ -383,7 +383,7 @@ class uploadUserCsvViewSet(APIView):
                         or not row['Mobile'] or not row['Comments'] or not row['Fixe'] or not row['Profession'] \
                         or not row['Department'] or not row['DOB'] or not row['Nationality'] or not row['Native City'] \
                         or not row['Legal Status'] or not row['Country'] or not row['Address'] or not row['City'] \
-                        or not row['First Name'] or not row['RCS City'] or not row['Company Name']:
+                        or not row['First Name'] or not row['Last Name'] or not row['RCS City'] or not row['Company Name']:
                     resString += str(_) + ','
                     nullData = True
             if nullData:

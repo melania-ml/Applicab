@@ -278,7 +278,8 @@ class caseManagementTaskView(APIView):
                 # prepare Email Notification
                 if sendNotification:
                     self.taskNotificationEmail(bodyParams['client_id'])
-                    self.sendTaskMessage(bodyParams['case_management_id'], request.user, serializer.data['message'], serializer.data['subject'], serializer.data['notification_date'])
+                    self.sendTaskMessage(bodyParams['case_management_id'], request.user, serializer.data['message'],
+                                         serializer.data['subject'], serializer.data['notification_date'])
                 res = ResponseInfo(serializer.data, SUCCESS, True,
                                    status.HTTP_201_CREATED)
                 return Response(res.success_payload(), status=status.HTTP_201_CREATED)
@@ -354,7 +355,8 @@ class caseManagementTaskView(APIView):
         notificationDate = notificationDate if notificationDate else None
         if not message or message == "":
             message = "<Blank-message-from-task-make-sure-to-add-message>"
-        caseManagementGroupMessage.objects.create(notification_date=notificationDate,subject=subject,message_read_by=[lawyerId.id], message=message, group_id=groupId,
+        caseManagementGroupMessage.objects.create(notification_date=notificationDate, subject=subject,
+                                                  message_read_by=[lawyerId.id], message=message, group_id=groupId,
                                                   message_send_by=lawyerId)
 
 
@@ -372,7 +374,8 @@ class caseManagementCreateTaskView(APIView):
             if bodyParams['send_notification'] and 'client_id' in bodyParams:
                 caseManagementTaskView.taskNotificationEmail(self, bodyParams['client_id'])
                 caseManagementTaskView.sendTaskMessage(self, bodyParams['case_management_id'], request.user,
-                                                       serializer.data['message'], serializer.data['subject'], serializer.data['notification_date'])
+                                                       serializer.data['message'], serializer.data['subject'],
+                                                       serializer.data['notification_date'])
 
             res = ResponseInfo(serializer.data, TASK_ADDED_SUCCESSFULLY, True,
                                status.HTTP_201_CREATED)
@@ -575,7 +578,8 @@ class clientDashboardViewSet(APIView):
             serializer = self.serializers_class(caseData, context={'request': request})
 
             # for case-task with filtered status
-            caseTaskData = caseManagementTask.objects.filter(Q(case_management_id=case_id), ~Q(status="Archivé")).order_by("notification_date")
+            caseTaskData = caseManagementTask.objects.filter(Q(case_management_id=case_id),
+                                                             ~Q(status="Archivé")).order_by("notification_date")
             self.taskSerializers_class.Meta.depth = 0
             taskSerializer = self.taskSerializers_class(caseTaskData, many=True)
 
@@ -602,8 +606,9 @@ class clientChatGroupViewSet(APIView):
     def get(self, request):
         try:
             userId = request.user
-            groupData = caseManagementChatGroup.objects.filter(case_management_id__status__in=["Ouvert","En attente"],group_members__in=[userId])
-            serializer = self.serializers_class(groupData, many=True, context={'request': request, 'user':userId})
+            groupData = caseManagementChatGroup.objects.filter(case_management_id__status__in=["Ouvert", "En attente"],
+                                                               group_members__in=[userId])
+            serializer = self.serializers_class(groupData, many=True, context={'request': request, 'user': userId})
 
             res = ResponseInfo(serializer.data, SUCCESS, True, status.HTTP_200_OK)
             return Response(res.success_payload(), status=status.HTTP_200_OK)

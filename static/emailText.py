@@ -68,9 +68,9 @@ def taskNotification():
 
 def lawyerTaskNotification():
     textDict = {
-        'title': 'Notification 📥',
+        'title': 'Notification 🔔',
         'text1': 'Bonjour,',
-        'text2': 'Ceci est une notification afin de vous rappeler que l''étape {taskName} est « à faire ».',
+        'text2': "Ceci est une notification afin de vous rappeler que l'étape {taskName} est « à faire ».",
         'text3': 'Accès direct en cliquant ici 👇.',
         'button_text': 'Votre espace client',
         'footer_text1': 'Bonne journée,',
