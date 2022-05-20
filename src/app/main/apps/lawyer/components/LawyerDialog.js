@@ -14,7 +14,7 @@ import {
   getFormTitles,
   getAllTypes
 } from "app/store/slices/contactsSlice";
-import { getFormattedDateTime } from "app/main/common/functions";
+import { getNumericValidation } from "app/main/common/functions";
 
 //material-ui
 import {
@@ -35,10 +35,12 @@ import {
   TextField,
   Autocomplete,
   InputAdornment,
-  Chip
+  Chip,
+  Icon
 } from "@mui/material";
-import DatePicker from "@mui/lab/DatePicker";
 import { createFilterOptions } from "@mui/material/Autocomplete";
+import { DesktopDatePicker, LocalizationProvider } from "@mui/lab";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
 
 const tags = [];
 const filter = createFilterOptions();
@@ -270,6 +272,10 @@ function LawyerDialog(props) {
       dispatch(closeNewContactDialog());
     }
   }
+
+  const handleRemoveDate = () => {
+    setAllFields({ ...allFields, date_of_birth: null });
+  };
 
   function onSubmit(param) {
     const type = param === "invite" ? true : false;
@@ -525,7 +531,11 @@ function LawyerDialog(props) {
                 )}
                 freeSolo
                 renderInput={(params) => (
-                  <TextField {...params} label="Choisissez un titre*" />
+                  <TextField
+                    {...params}
+                    label="Choisissez un titre*"
+                    inputProps={{ ...params.inputProps, maxLength: 100 }}
+                  />
                 )}
               />
               <TextField
@@ -534,6 +544,7 @@ function LawyerDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 value={allFields.company_name}
                 error={errors?.company_name}
                 helperText={errors?.company_name}
@@ -560,7 +571,13 @@ function LawyerDialog(props) {
                     country: newValue?.label
                   })
                 }
-                renderInput={(params) => <TextField {...params} label="Pays" />}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Pays"
+                    inputProps={{ ...params.inputProps, maxLength: 100 }}
+                  />
+                )}
               />
               <TextField
                 className="mb-12"
@@ -568,6 +585,7 @@ function LawyerDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 value={allFields.address}
                 onChange={(e) =>
                   setAllFields({
@@ -582,6 +600,7 @@ function LawyerDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 value={allFields.city}
                 onChange={(e) =>
                   setAllFields({
@@ -597,17 +616,13 @@ function LawyerDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
-                onKeyPress={(event) => {
-                  if (!/[0-9]/.test(event.key)) {
-                    event.preventDefault();
-                  }
-                }}
-                //onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57"
+                inputProps={{ maxLength: 100 }}
+                onKeyDown={getNumericValidation}
                 value={allFields.postal_code}
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    postal_code: e.target.value
+                    postal_code: e.target.value > 0 ? e.target.value : ""
                   })
                 }
               />
@@ -623,6 +638,7 @@ function LawyerDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
+                onKeyDown={getNumericValidation}
                 onKeyPress={(event) => {
                   if (!/[0-9]/.test(event.key)) {
                     event.preventDefault();
@@ -632,7 +648,7 @@ function LawyerDialog(props) {
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    capital_social: e.target.value
+                    capital_social: e.target.value > 0 ? e.target.value : ""
                   })
                 }
               />
@@ -642,6 +658,7 @@ function LawyerDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 value={allFields.RCS_city}
                 onChange={(e) =>
                   setAllFields({
@@ -657,15 +674,13 @@ function LawyerDialog(props) {
                 fullWidth
                 autoComplete="off"
                 type="number"
-                // error={errors?.number}
-                // helperText={errors?.number}
+                onKeyDown={getNumericValidation}
                 value={allFields.number}
                 onChange={(e) => {
                   setAllFields({
                     ...allFields,
-                    number: e.target.value
+                    number: e.target.value > 0 ? e.target.value : ""
                   });
-                  //checkIsDisable("number", e.target.value);
                 }}
               />
               <div className="flex mb-14 w-full justify-center">
@@ -678,6 +693,7 @@ function LawyerDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 value={allFields.last_name}
                 error={errors?.last_name}
                 helperText={errors?.last_name}
@@ -697,6 +713,7 @@ function LawyerDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 value={allFields.first_name}
                 error={errors?.firstName}
                 helperText={errors?.firstName}
@@ -714,6 +731,7 @@ function LawyerDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 value={allFields.email}
                 error={errors?.email}
                 helperText={errors?.email}
@@ -731,6 +749,7 @@ function LawyerDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 error={errors?.mobile1}
                 helperText={errors?.mobile1}
                 value={allFields.phone_number}
@@ -748,6 +767,7 @@ function LawyerDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 error={errors?.mobile2}
                 helperText={errors?.mobile2}
                 value={allFields.fixe}
@@ -767,6 +787,7 @@ function LawyerDialog(props) {
                 rows={5}
                 fullWidth
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 value={allFields.comments}
                 onChange={(e) =>
                   setAllFields({
@@ -781,10 +802,12 @@ function LawyerDialog(props) {
                 freeSolo
                 autoComplete="off"
                 onChange={(event, newValue) => {
-                  setAllFields({
-                    ...allFields,
-                    tags: [...newValue]
-                  });
+                  if (newValue.toString().length <= 100) {
+                    setAllFields({
+                      ...allFields,
+                      tags: [...newValue]
+                    });
+                  }
                 }}
                 options={tags}
                 value={allFields.tags}
@@ -803,6 +826,7 @@ function LawyerDialog(props) {
                     {...params}
                     label="Tags"
                     placeholder="Add your tags"
+                    inputProps={{ ...params.inputProps, maxLength: 100 }}
                   />
                 )}
               />
@@ -879,6 +903,7 @@ function LawyerDialog(props) {
                     autoComplete="off"
                     {...params}
                     label="Choisissez un titre*"
+                    inputProps={{ ...params.inputProps, maxLength: 100 }}
                   />
                 )}
               />
@@ -889,6 +914,7 @@ function LawyerDialog(props) {
                 autoComplete="off"
                 variant="outlined"
                 fullWidth
+                inputProps={{ maxLength: 100 }}
                 value={allFields.last_name}
                 error={errors?.last_name}
                 helperText={errors?.last_name}
@@ -908,6 +934,7 @@ function LawyerDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 value={allFields.first_name}
                 error={errors?.firstName}
                 helperText={errors?.firstName}
@@ -925,6 +952,7 @@ function LawyerDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 error={errors?.email}
                 helperText={errors?.email}
                 value={allFields.email}
@@ -942,6 +970,7 @@ function LawyerDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 value={allFields.phone_number}
                 error={errors?.mobile1}
                 helperText={errors?.mobile1}
@@ -959,6 +988,7 @@ function LawyerDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 error={errors?.mobile2}
                 helperText={errors?.mobile2}
                 value={allFields.fixe}
@@ -976,6 +1006,7 @@ function LawyerDialog(props) {
                 variant="outlined"
                 fullWidth
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 value={allFields.address}
                 onChange={(e) =>
                   setAllFields({
@@ -990,6 +1021,7 @@ function LawyerDialog(props) {
                 variant="outlined"
                 autoComplete="off"
                 fullWidth
+                inputProps={{ maxLength: 100 }}
                 value={allFields.city}
                 onChange={(e) =>
                   setAllFields({
@@ -1005,16 +1037,13 @@ function LawyerDialog(props) {
                 autoComplete="off"
                 variant="outlined"
                 fullWidth
-                onKeyPress={(event) => {
-                  if (!/[0-9]/.test(event.key)) {
-                    event.preventDefault();
-                  }
-                }}
+                inputProps={{ maxLength: 100 }}
+                onKeyDown={getNumericValidation}
                 value={allFields.postal_code}
                 onChange={(e) =>
                   setAllFields({
                     ...allFields,
-                    postal_code: e.target.value
+                    postal_code: e.target.value > 0 ? e.target.value : ""
                   })
                 }
               />
@@ -1025,7 +1054,43 @@ function LawyerDialog(props) {
                 className="flex w-full mb-12"
                 onKeyDownCapture={(e) => e.preventDefault()}
               >
-                <DatePicker
+                <FormControl className="w-full for-date" variant="outlined">
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <DesktopDatePicker
+                      label="Date de naissance"
+                      value={allFields.date_of_birth}
+                      onChange={(newValue) => {
+                        setAllFields({
+                          ...allFields,
+                          date_of_birth: newValue
+                        });
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          autoComplete="off"
+                          className="w-full mb-12"
+                          {...params}
+                        />
+                      )}
+                    />
+                    {allFields.date_of_birth && (
+                      <Icon
+                        style={{
+                          fontSize: "large",
+                          position: "absolute",
+                          right: 35,
+                          top: 16,
+                          cursor: "pointer"
+                        }}
+                        onClick={handleRemoveDate}
+                      >
+                        clear
+                      </Icon>
+                    )}
+                  </LocalizationProvider>
+                </FormControl>
+
+                {/* <DatePicker
                   label="Date de naissance"
                   value={allFields.date_of_birth}
                   maxDate={new Date()}
@@ -1042,7 +1107,7 @@ function LawyerDialog(props) {
                   renderInput={(params) => (
                     <TextField className="w-full mb-12" {...params} />
                   )}
-                />
+                /> */}
               </div>
               <Autocomplete
                 autoComplete="off"
@@ -1064,6 +1129,7 @@ function LawyerDialog(props) {
                     autoComplete="off"
                     {...params}
                     label="Nationalité"
+                    inputProps={{ ...params.inputProps, maxLength: 100 }}
                   />
                 )}
               />
@@ -1083,7 +1149,12 @@ function LawyerDialog(props) {
                   })
                 }
                 renderInput={(params) => (
-                  <TextField autoComplete="off" {...params} label="Pays" />
+                  <TextField
+                    autoComplete="off"
+                    {...params}
+                    label="Pays"
+                    inputProps={{ ...params.inputProps, maxLength: 100 }}
+                  />
                 )}
               />
               <TextField
@@ -1091,6 +1162,7 @@ function LawyerDialog(props) {
                 label="Ville de naissance"
                 variant="outlined"
                 autoComplete="off"
+                inputProps={{ maxLength: 100 }}
                 value={allFields.native_city}
                 onChange={(e) =>
                   setAllFields({
@@ -1120,6 +1192,7 @@ function LawyerDialog(props) {
                     autoComplete="off"
                     {...params}
                     label="Département"
+                    inputProps={{ ...params.inputProps, maxLength: 100 }}
                   />
                 )}
               />
@@ -1127,6 +1200,7 @@ function LawyerDialog(props) {
                 className="mb-12"
                 label="Profession"
                 variant="outlined"
+                inputProps={{ maxLength: 100 }}
                 value={allFields.profession}
                 onChange={(e) =>
                   setAllFields({
@@ -1164,6 +1238,7 @@ function LawyerDialog(props) {
                 autoComplete="off"
                 rows={5}
                 fullWidth
+                inputProps={{ maxLength: 100 }}
                 value={allFields.comments}
                 onChange={(e) =>
                   setAllFields({
@@ -1178,10 +1253,12 @@ function LawyerDialog(props) {
                 freeSolo
                 autoComplete="off"
                 onChange={(event, newValue) => {
-                  setAllFields({
-                    ...allFields,
-                    tags: [...newValue]
-                  });
+                  if (newValue.toString().length <= 100) {
+                    setAllFields({
+                      ...allFields,
+                      tags: [...newValue]
+                    });
+                  }
                 }}
                 options={tags}
                 value={allFields.tags}
@@ -1201,6 +1278,7 @@ function LawyerDialog(props) {
                     {...params}
                     label="Tags"
                     placeholder="Add your tags"
+                    inputProps={{ ...params.inputProps, maxLength: 100 }}
                   />
                 )}
               />
