@@ -279,7 +279,7 @@ export const getDossiers = createAsyncThunk(
           routeParams.dateOfCreation &&
           getFormattedDateTime({
             date: routeParams.dateOfCreation,
-            format: "YYYY-MM-DD"
+            format: "DD-MM-YYYY"
           }),
         tags__contains: routeParams.tags
       },

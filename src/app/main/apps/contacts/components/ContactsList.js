@@ -78,7 +78,7 @@ function ContactsList() {
         sortable: true
       },
       {
-        Header: "Company Name",
+        Header: "Dénomination",
         accessor: "company_name",
         Cell: ({ row }) => {
           return (
