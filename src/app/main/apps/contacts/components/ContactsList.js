@@ -125,7 +125,7 @@ function ContactsList() {
         sortable: true
       },
       {
-        Header: "Status",
+        Header: "Statut",
         accessor: "status",
         Cell: ({ row }) => {
           return (

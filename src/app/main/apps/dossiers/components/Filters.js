@@ -147,7 +147,7 @@ export default function Filters() {
             onInputChange={(event, newInputValue) => {
               setAllFields({ ...allFields, inputStatus: newInputValue });
             }}
-            renderInput={(params) => <TextField {...params} label="Status" />}
+            renderInput={(params) => <TextField {...params} label="Statut" />}
           />
         </div>
         <div className="col-md-4 col-lg-4 col-12 col-xl-2 mb-3 mb-xl-0">

@@ -50,7 +50,7 @@ function ContactsHeader() {
     { label: "Type", key: "client_type" },
     { label: "Legal Status", key: "legal_status" },
     { label: "Title", key: "title" },
-    { label: "Company Name", key: "company_name" },
+    { label: "Dénomination", key: "company_name" },
     { label: "Country", key: "country" },
     { label: "Address", key: "address" },
     { label: "City", key: "city" },
