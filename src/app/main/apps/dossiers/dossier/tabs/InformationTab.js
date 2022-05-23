@@ -67,7 +67,6 @@ function InformationTab() {
 
   useEffect(() => {
     if (data && Object.keys(data).length !== 0) {
-      debugger;
       setAllFields({
         ...allFields,
         case_name: data.case_name,

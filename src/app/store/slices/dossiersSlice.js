@@ -427,6 +427,7 @@ const dossiersSlice = createSlice({
     isLoading: false,
     dossiers: [],
     searchText: "",
+    searchTextEtape: "",
     routeParams: {},
     etapeDialog: {
       type: "new",
@@ -505,6 +506,12 @@ const dossiersSlice = createSlice({
       },
       prepare: (event) => ({ payload: event.target.value || "" })
     },
+    setEtapesSearchText: {
+      reducer: (state, action) => {
+        state.searchTextEtape = action.payload;
+      },
+      prepare: (event) => ({ payload: event.target?.value || "" })
+    },
     openNewEtapeDialog: (state, action) => {
       state.etapeDialog = {
         type: "new",
@@ -581,6 +588,7 @@ export const {
   setCaseId,
   resetDossier,
   setDossiersSearchText,
+  setEtapesSearchText,
   openNewEtapeDialog,
   closeNewEtapeDialog,
   openEditEtapeDialog,

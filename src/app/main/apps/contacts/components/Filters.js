@@ -119,7 +119,7 @@ export default function Filters() {
                 getContacts({ ...allFields, status: newValue?.value || "" })
               );
             }}
-            renderInput={(params) => <TextField {...params} label="Status" />}
+            renderInput={(params) => <TextField {...params} label="Statut" />}
           />
         </div>
         <div className="col-md-3 col-lg-3 col-12 col-xl-3 mb-3 mb-xl-0">

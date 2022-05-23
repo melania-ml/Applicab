@@ -120,6 +120,7 @@ export default function Calendar() {
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             headerToolbar={false}
             initialView="dayGridMonth"
+            locale={"fr"}
             selectable
             selectMirror
             dayMaxEvents

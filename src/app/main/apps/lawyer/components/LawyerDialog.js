@@ -435,10 +435,8 @@ function LawyerDialog(props) {
       >
         <div className="row">
           <div className="flex items-center mb-16">
-            <b className="min-w-48">Forme juridique*:</b>
             <FormControl>
               <RadioGroup
-                style={{ marginLeft: 20 }}
                 row
                 value={allFields.legal_status}
                 aria-labelledby="demo-radio-buttons-group-label"
@@ -1188,25 +1186,10 @@ function LawyerDialog(props) {
                   />
                 )}
               />
-              <TextField
-                className="mb-12"
-                label="Profession"
-                variant="outlined"
-                inputProps={{ maxLength: 100 }}
-                value={allFields.profession}
-                onChange={(e) =>
-                  setAllFields({
-                    ...allFields,
-                    profession: e.target.value
-                  })
-                }
-                fullWidth
-                autoComplete="off"
-              />
               <FormControl className="flex w-full mb-12" variant="outlined">
-                <InputLabel>état civil</InputLabel>
+                <InputLabel>Statut matrimonial</InputLabel>
                 <Select
-                  label="état civil"
+                  label="Statut matrimonial"
                   value={allFields.civil_status}
                   onChange={(e) =>
                     setAllFields({
@@ -1222,6 +1205,21 @@ function LawyerDialog(props) {
                   ))}
                 </Select>
               </FormControl>
+              <TextField
+                className="mb-12"
+                label="Profession"
+                variant="outlined"
+                inputProps={{ maxLength: 100 }}
+                value={allFields.profession}
+                onChange={(e) =>
+                  setAllFields({
+                    ...allFields,
+                    profession: e.target.value
+                  })
+                }
+                fullWidth
+                autoComplete="off"
+              />
               <TextField
                 className="mb-12"
                 label="Commentaire"

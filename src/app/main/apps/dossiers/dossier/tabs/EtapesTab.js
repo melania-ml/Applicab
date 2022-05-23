@@ -10,7 +10,7 @@ import EtapesMultiSelectMenu from "./EtapesComponent/EtapesMultiSelectMenu";
 import {
   openNewEtapeDialog,
   openEditEtapeDialog,
-  setDossiersSearchText,
+  setEtapesSearchText,
   getEtapes,
   getDeletedEtapes,
   setSelectedList,
@@ -42,12 +42,11 @@ function EtapeTab() {
     etapes,
     editDossierData: { data, type },
     selectedList,
-    caseId
+    caseId,
+    searchTextEtape
   } = useSelector(({ dossiers }) => dossiers);
 
   const [openEtape, setOpenEtape] = useState(false);
-
-  const searchText = useSelector(({ dossiers }) => dossiers.searchText);
 
   const [filteredData, setFilteredData] = useState(null);
   const mainTheme = useSelector(selectMainTheme);
@@ -385,6 +384,10 @@ function EtapeTab() {
   }, [data, type]);
 
   useEffect(() => {
+    dispatch(setEtapesSearchText(""));
+  }, []);
+
+  useEffect(() => {
     dispatch(setSelectedList("Tous"));
     dispatch(setListObj({ case_management_id: caseId }));
   }, []);
@@ -397,17 +400,17 @@ function EtapeTab() {
   }, [caseId, type]);
 
   useEffect(() => {
-    function getFilteredArray(entities, _searchText) {
-      if (_searchText.length === 0) {
+    function getFilteredArray(entities, _searchTextEtape) {
+      if (_searchTextEtape?.length === 0) {
         return etapes;
       }
-      return FuseUtils.filterArrayByString(etapes, _searchText);
+      return FuseUtils.filterArrayByString(etapes, _searchTextEtape);
     }
 
     if (etapes) {
-      setFilteredData(getFilteredArray(etapes, searchText));
+      setFilteredData(getFilteredArray(etapes, searchTextEtape));
     }
-  }, [etapes, searchText]);
+  }, [etapes, searchTextEtape]);
 
   if (!filteredData) {
     return null;
@@ -442,11 +445,11 @@ function EtapeTab() {
                     className="flex flex-1 px-16"
                     disableUnderline
                     fullWidth
-                    value={searchText}
+                    value={searchTextEtape}
                     inputProps={{
                       "aria-label": "Search"
                     }}
-                    onChange={(ev) => dispatch(setDossiersSearchText(ev))}
+                    onChange={(ev) => dispatch(setEtapesSearchText(ev))}
                   />
                 </Paper>
               </ThemeProvider>

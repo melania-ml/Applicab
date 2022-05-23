@@ -73,6 +73,22 @@ function EtapesDialog() {
   } = useSelector(({ dossiers }) => dossiers);
 
   useEffect(() => {
+    debugger;
+    if (type === "new") {
+      setAllFields({
+        ...allFields,
+        case_name: editDossierData?.data?.case_name,
+        position: "",
+        name: "",
+        sub_name: "",
+        status: "A prévoir",
+        notification_date: null,
+        client_id: [],
+        subject: "",
+        message: ""
+      });
+      setNotifications([]);
+    }
     if (data && Object.keys(data).length !== 0) {
       const clientIdArr = data?.client_id?.map((a) => {
         return a.id;
@@ -94,21 +110,6 @@ function EtapesDialog() {
         position: data.position
       });
       setNotifications(data.lawyer_notification?.map((e) => ({ count: e })));
-    }
-    if (type === "new") {
-      setAllFields({
-        ...allFields,
-        case_name: editDossierData?.data?.case_name,
-        position: "",
-        name: "",
-        sub_name: "",
-        status: "A prévoir",
-        notification_date: null,
-        client_id: [],
-        subject: "",
-        message: ""
-      });
-      setNotifications([]);
     }
   }, [data, type]);
 
@@ -276,7 +277,7 @@ function EtapesDialog() {
           <Typography variant="subtitle1" color="inherit">
             {type === "new"
               ? "Ajouter une nouvelle étape"
-              : "Modifier l’étape : Codes d'accès AppliCab envoi au(x) client(s)"}
+              : `Modifier l’étape : ${allFields?.name}`}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -384,6 +385,7 @@ function EtapesDialog() {
                 <DesktopDateTimePicker
                   label="Date"
                   value={allFields.notification_date}
+                  inputFormat={"dd/MM/yyyy HH:mm"}
                   onChange={(newValue) => {
                     setAllFields({
                       ...allFields,
@@ -496,7 +498,7 @@ function EtapesDialog() {
               >
                 notifications
               </Icon>
-              Ajouter une notification
+              Ajouter un rappel
             </Button>
             <br />
             <div className="flex mb-14 w-full">
@@ -534,8 +536,8 @@ function EtapesDialog() {
           />
           <TextField
             className="mb-12"
-            name="Object"
-            label="Object"
+            name="Subject"
+            label="Subject"
             variant="outlined"
             autoComplete="off"
             fullWidth

@@ -19,7 +19,7 @@ import { checkIsMobileNumber } from "app/main/common/functions";
 
 function EditProfileDialog(props) {
   const dispatch = useDispatch();
-  const user = useSelector(({ user }) => user);
+  const user = useSelector(({ auth }) => auth.user);
   const { userData } = useSelector(({ userMenu }) => userMenu);
   const [errors, setErrors] = useState({});
   const [allFields, setAllFields] = useState({
