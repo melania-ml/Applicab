@@ -43,7 +43,7 @@ export default function TodoList() {
               <TableCell>Date</TableCell>
               <TableCell>Étapes</TableCell>
               <TableCell className="sm:table-cell">Client</TableCell>
-              <TableCell className="sm:table-cell">Status</TableCell>
+              <TableCell className="sm:table-cell">Statut</TableCell>
               <TableCell className="sm:table-cell"></TableCell>
             </TableRow>
           </TableHead>
