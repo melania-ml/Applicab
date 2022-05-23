@@ -351,10 +351,11 @@ export const addEtapes = createAsyncThunk(
       .post("api/caseManagement/createCaseTask", allfields)
       .then((data) => {
         if (data.data.status === 201 && data.data.success) {
+          dispatch(setEtapeId(data.data.data.id));
           dispatch(getEtapes(getState().dossiers.listObj));
           dispatch(getDocuments(getState().dossiers.caseId));
-          dispatch(setIsLoading(false));
           dispatch(showMessage({ message: data.data.message }));
+          dispatch(setIsLoading(false));
         }
       })
       .catch((error) => {
@@ -454,9 +455,13 @@ const dossiersSlice = createSlice({
     groupId: null,
     caseId: null,
     messageHeader: {},
-    listObj: {}
+    listObj: {},
+    etapeId: null
   }),
   reducers: {
+    setEtapeId: (state, action) => {
+      state.etapeId = action.payload;
+    },
     setListObj: (state, action) => {
       state.listObj = action.payload;
     },
@@ -581,6 +586,7 @@ const dossiersSlice = createSlice({
 });
 
 export const {
+  setEtapeId,
   setIsLoading,
   setDossiers,
   setMessages,

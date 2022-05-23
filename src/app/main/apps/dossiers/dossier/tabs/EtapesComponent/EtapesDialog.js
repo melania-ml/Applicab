@@ -69,11 +69,11 @@ function EtapesDialog() {
   const {
     etapeDialog: { data, props, type },
     editDossierData,
-    caseId
+    caseId,
+    etapeId
   } = useSelector(({ dossiers }) => dossiers);
 
   useEffect(() => {
-    debugger;
     if (type === "new") {
       setAllFields({
         ...allFields,
@@ -142,9 +142,9 @@ function EtapesDialog() {
       : dispatch(closeNewEtapeDialog());
   }
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (type === "edit") {
-      dispatch(
+      await dispatch(
         updateEtapes({
           ...allFields,
           message: allFields.message,
@@ -157,7 +157,7 @@ function EtapesDialog() {
         })
       );
     } else {
-      dispatch(
+      await dispatch(
         addEtapes({
           ...allFields,
           case_management_id: editDossierData.data.id,
@@ -171,8 +171,8 @@ function EtapesDialog() {
         formData.append("case_document", files[i]);
       }
       formData.append("case_management_id", editDossierData.data.id);
-      formData.append("case_task_id", data.id);
-      dispatch(uploadDocument(formData));
+      formData.append("case_task_id", type === "new" ? etapeId : data.id);
+      await dispatch(uploadDocument(formData));
       setFiles(null);
     }
     setTimeout(() => {
@@ -252,7 +252,7 @@ function EtapesDialog() {
         formData.append("case_document", files[i]);
       }
       formData.append("case_management_id", editDossierData.data.id);
-      formData.append("case_task_id", data.id);
+      formData.append("case_task_id", type === "new" ? etapeId : data.id);
       dispatch(uploadDocument(formData));
       setFiles(null);
     }
