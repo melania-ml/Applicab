@@ -41,7 +41,7 @@ class procedure(APIView):
     def get(self, request):
         try:
             userId = request.user
-            procedureData = Procedure.objects.filter(Q(user_id=userId) | Q(is_default=True))
+            procedureData = Procedure.objects.filter(Q(user_id=userId) | Q(is_default=True)).order_by('id')
             if not procedureData:
                 res = ResponseInfo([], USER_NOT_FOUND, False,
                                    status.HTTP_204_NO_CONTENT)
@@ -184,13 +184,16 @@ class casesManagement(APIView):
     def addDefaultTask(self, caseId, procedure, type):
         caseManagementTask.objects.filter(case_management_id=caseId).hard_delete()
         _dict = {'type__in': [type, 'Les deuX'], procedure: True}
-        defaultTask = caseManagementDefaultTask.objects.filter(**_dict).values()
+        defaultTask = caseManagementDefaultTask.objects.filter(**_dict).order_by('id').values()
         self.task_serializers_class.Meta.depth = 0
+        position = 0
         for task in defaultTask:
             del task['id']
             del task['created_date']
             del task['updated_date']
             task['case_management_id'] = caseId
+            position += 1
+            task['position'] = position
             serializer = self.task_serializers_class(data=task)
             if serializer.is_valid():
                 serializer.save()
@@ -397,9 +400,12 @@ class caseManagementCreateTaskView(APIView):
             reqData.pop('procedure')
             reqData.pop('case_management_id')
             reqData[procedureType.procedure_sub_name] = True
-            defaultTask = caseManagementDefaultTask.objects.filter(**reqData).values()
+            defaultTask = caseManagementDefaultTask.objects.filter(**reqData).order_by('id').values()
+            position = 0
             for task in defaultTask:
                 del task['id']
+                position += 1
+                task['position'] = position
                 task['case_management_id'] = caseId
                 serializer = self.serializers_class(data=task)
                 if serializer.is_valid():
