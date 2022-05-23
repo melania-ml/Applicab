@@ -44,7 +44,9 @@ export default function TodoList() {
                         })
                       : "-"}
                   </TableCell>
-                  <TableCell className="font-medium">{item.name}</TableCell>
+                  <TableCell className="font-medium">
+                    {item.sub_name || item.name}
+                  </TableCell>
                   <TableCell className="sm:table-cell">
                     {item.status || "-"}
                   </TableCell>
