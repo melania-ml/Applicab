@@ -557,18 +557,7 @@ function EtapesDialog() {
               editor={ClassicEditor}
               data={data?.message || allFields.message}
               config={{
-                toolbar: [
-                  "heading",
-                  "|",
-                  "bold",
-                  "italic",
-                  // "bulletedList",
-                  // "numberedList",
-                  "blockQuote",
-                  "|",
-                  "undo",
-                  "redo"
-                ]
+                toolbar: ["heading", "|", "bold", "italic", "|", "undo", "redo"]
               }}
               onChange={(event, editor) => {
                 setAllFields({

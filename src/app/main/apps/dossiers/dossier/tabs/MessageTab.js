@@ -296,7 +296,7 @@ function MessageTab(props) {
                         <div className="leading-tight whitespace-pre-wrap">
                           {item.subject && (
                             <>
-                              <b>Object : {item.subject}</b>
+                              <b>Objet : {item.subject}</b>
                               <br />
                             </>
                           )}

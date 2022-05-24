@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { showMessage } from "app/store/fuse/messageSlice";
+import { getFormattedDateTime } from "app/main/common/functions";
 
 export const getCaseList = (id) => async (dispatch) => {
   await axios
@@ -30,7 +31,18 @@ export const getClientDashboardData = (id) => async (dispatch) => {
         dispatch(setLawyerData(data.data.data.lawyer_data));
         dispatch(setDocuments(data.data.data.case_management_documents));
         dispatch(setTodos(data.data.data.case_task));
-        dispatch(setCalendarData(data.data.data.calender_data));
+        let calendarData = data.data.data.calender_data;
+        calendarData =
+          calendarData?.length > 0
+            ? calendarData.map((calendar) => {
+                calendar.start = getFormattedDateTime({
+                  date: calendar.start
+                });
+                calendar.end = getFormattedDateTime({ date: calendar.end });
+                return calendar;
+              })
+            : calendarData;
+        dispatch(setCalendarData(calendarData));
       }
     })
     .catch((error) => {
