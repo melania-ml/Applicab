@@ -96,7 +96,6 @@ class User(AbstractUser):
                                     validators=[RegexValidator(r'^[0-9 ]*$', 'Only numbers are allowed.')],
                                     verbose_name='phone_number', blank=True, null=True)
     date_of_birth = models.DateTimeField(blank=True, null=True)
-    city_of_birth = models.DateTimeField(blank=True, null=True)
     profile = models.ImageField(
         upload_to='user_profile', blank=True, null=True)
     is_locked = models.BooleanField(default=False)

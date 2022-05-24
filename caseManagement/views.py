@@ -1,7 +1,10 @@
+from datetime import datetime
+
 from django.db.models import Q
 import random
 
 # Create your views here.
+from django.utils.dateparse import parse_date
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -216,6 +219,10 @@ class filterCasesManagement(APIView):
             # Adding pagination if needed
             limit = None if reqLimit == 0 and reqOffset == 0 else reqLimit + reqOffset
             offset = None if reqOffset == 0 else reqOffset
+
+            # formatting filtered date format
+            if 'created_date__date' in reqData:
+                reqData['created_date__date'] = datetime.strptime(reqData['created_date__date'], '%d-%m-%Y').date()
 
             # Remove blank data from dictionary
             kwargs = dict((k, v) for k, v in reqData.items() if v)
