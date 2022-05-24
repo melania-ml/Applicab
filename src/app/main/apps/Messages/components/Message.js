@@ -114,10 +114,10 @@ function Message(props) {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  });
 
   function scrollToBottom() {
-    if (chatRef.current) {
+    if (chatRef.current && messages.length > 0) {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
   }
@@ -177,12 +177,12 @@ function Message(props) {
           </Typography>
         </AppBar>
       )}
-      <FuseScrollbars
-        ref={chatRef}
-        className="flex flex-1 flex-col overflow-y-auto"
-      >
+      <FuseScrollbars className="flex flex-1 flex-col overflow-y-auto">
         {messages && messages.length > 0 ? (
-          <div className="flex flex-col pt-16 px-16 rtl:pr-56 pb-40 msg-tab-wrapper">
+          <div
+            ref={chatRef}
+            className="flex flex-col pt-16 px-16 rtl:pr-56 pb-40 msg-tab-wrapper"
+          >
             {messages.map((item, i) => {
               return (
                 <>

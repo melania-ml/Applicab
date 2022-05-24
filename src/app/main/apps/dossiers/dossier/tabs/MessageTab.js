@@ -125,10 +125,8 @@ function MessageTab(props) {
   const [filteredData, setFilteredData] = useState(null);
 
   useEffect(() => {
-    if (messages) {
-      scrollToBottom();
-    }
-  }, [messages]);
+    scrollToBottom();
+  });
 
   useEffect(() => {
     if (caseId && groupId) {
@@ -150,7 +148,9 @@ function MessageTab(props) {
   }, [messages, searchText]);
 
   function scrollToBottom() {
-    chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    if (chatRef.current && messages.length > 0) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    }
   }
 
   const onSubmitMessage = (e) => {
