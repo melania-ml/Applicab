@@ -1010,6 +1010,30 @@ function LawyerDialog(props) {
                   checkIsDisable("mobile2", e.target.value);
                 }}
               />
+              <Autocomplete
+                className="flex w-full mb-12"
+                disablePortal
+                style={{ color: "#FFFFFF" }}
+                options={Countries}
+                value={allFields.country}
+                autoComplete="off"
+                onOpen={() => setIsAutoCompleteOpen(true)}
+                onClose={() => setIsAutoCompleteOpen(false)}
+                onChange={(e, newValue) =>
+                  setAllFields({
+                    ...allFields,
+                    country: newValue?.label
+                  })
+                }
+                renderInput={(params) => (
+                  <TextField
+                    autoComplete="off"
+                    {...params}
+                    label="Pays"
+                    inputProps={{ ...params.inputProps, maxLength: 100 }}
+                  />
+                )}
+              />
               <TextField
                 className="mb-12"
                 label="Adresse"
@@ -1124,30 +1148,6 @@ function LawyerDialog(props) {
                     autoComplete="off"
                     {...params}
                     label="Nationalité"
-                    inputProps={{ ...params.inputProps, maxLength: 100 }}
-                  />
-                )}
-              />
-              <Autocomplete
-                className="flex w-full mb-12"
-                disablePortal
-                style={{ color: "#FFFFFF" }}
-                options={Countries}
-                value={allFields.country}
-                autoComplete="off"
-                onOpen={() => setIsAutoCompleteOpen(true)}
-                onClose={() => setIsAutoCompleteOpen(false)}
-                onChange={(e, newValue) =>
-                  setAllFields({
-                    ...allFields,
-                    country: newValue?.label
-                  })
-                }
-                renderInput={(params) => (
-                  <TextField
-                    autoComplete="off"
-                    {...params}
-                    label="Pays"
                     inputProps={{ ...params.inputProps, maxLength: 100 }}
                   />
                 )}
