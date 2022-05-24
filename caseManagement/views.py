@@ -170,13 +170,13 @@ class casesManagement(APIView):
     def delete(self, request):
         try:
             reqData = request.data
-            caseManagementDocuments.objects.filter(case_management_id__in=reqData['case_management_id']).delete()
+            caseManagementDocuments.objects.filter(case_management_id__in=reqData['case_management_id']).hard_delete()
             caseManagementTask.objects.filter(case_management_id__in=reqData['case_management_id']).hard_delete()
             groupChat = list(caseManagementChatGroup.objects.filter(
                 case_management_id__in=reqData['case_management_id']).values_list('id', flat=True))
-            caseManagementGroupMessage.objects.filter(group_id__in=groupChat).delete()
-            caseManagementChatGroup.objects.filter(case_management_id__in=reqData['case_management_id']).delete()
-            CaseManagement.objects.filter(id__in=reqData['case_management_id']).delete()
+            caseManagementGroupMessage.objects.filter(group_id__in=groupChat).hard_delete()
+            caseManagementChatGroup.objects.filter(case_management_id__in=reqData['case_management_id']).hard_delete()
+            CaseManagement.objects.filter(id__in=reqData['case_management_id']).hard_delete()
             res = ResponseInfo([], RECORD_DELETED_SUCCESSFULLY, True, status.HTTP_200_OK)
             return Response(res.success_payload(), status=status.HTTP_200_OK)
         except Exception as err:
