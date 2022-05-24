@@ -333,10 +333,16 @@ function InformationTab() {
         options={contacts}
         getOptionLabel={(option) => {
           if (typeof option === "object") {
-            return `${`${option.first_name} ${option.last_name}`} `;
+            const companyName = option.company_name
+              ? `- (${option.company_name})`
+              : "";
+            return `${option.first_name} ${option.last_name} ${companyName}`;
           }
           const val = contacts?.filter((contact) => contact?.id === option);
-          return `${`${val[0]?.first_name} ${val[0]?.last_name}`} `;
+          const filteredCompanyName = val[0]?.company_name
+            ? `- (${val[0].company_name})`
+            : "";
+          return `${val[0]?.first_name} ${val[0]?.last_name} ${filteredCompanyName}`;
         }}
         value={allFields.client_id}
         onChange={(event, newValue) => {
@@ -363,10 +369,16 @@ function InformationTab() {
         options={allContacts}
         getOptionLabel={(option) => {
           if (typeof option === "object") {
-            return `${`${option.first_name} ${option.last_name}`} `;
+            const companyName = option.company_name
+              ? `- (${option.company_name})`
+              : "";
+            return `${option.first_name} ${option.last_name} ${companyName}`;
           }
           const val = allContacts?.filter((contact) => contact?.id === option);
-          return `${`${val[0]?.first_name} ${val[0]?.last_name}`} `;
+          const filteredCompanyName = val[0]?.company_name
+            ? `- (${val[0].company_name})`
+            : "";
+          return `${val[0]?.first_name} ${val[0]?.last_name} ${filteredCompanyName}`;
         }}
         value={allFields.customer_contact_id}
         onChange={(event, newValue) => {
@@ -393,10 +405,16 @@ function InformationTab() {
         options={allContacts}
         getOptionLabel={(option) => {
           if (typeof option === "object") {
-            return `${`${option.first_name} ${option.last_name}`} `;
+            const companyName = option.company_name
+              ? `- (${option.company_name})`
+              : "";
+            return `${option.first_name} ${option.last_name} ${companyName}`;
           }
           const val = allContacts?.filter((contact) => contact?.id === option);
-          return `${`${val[0]?.first_name} ${val[0]?.last_name}`} `;
+          const filteredCompanyName = val[0]?.company_name
+            ? `- (${val[0].company_name})`
+            : "";
+          return `${val[0]?.first_name} ${val[0]?.last_name} ${filteredCompanyName}`;
         }}
         value={allFields.opposing_contact_id}
         onChange={(event, newValue) => {

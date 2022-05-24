@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { fr } from "date-fns/locale";
 import Countries from "app/main/constants/Countries";
 import Nationalities from "app/main/constants/Nationalities";
 import Departments from "app/main/constants/Departments";
@@ -1077,6 +1078,29 @@ function ContactDialog(props) {
                   checkIsDisable("mobile2", e.target.value);
                 }}
               />
+              <Autocomplete
+                className="flex w-full mb-12"
+                disablePortal
+                style={{ color: "#FFFFFF" }}
+                autoComplete="off"
+                options={Countries}
+                value={allFields.country}
+                onOpen={() => setIsAutoCompleteOpen(true)}
+                onClose={() => setIsAutoCompleteOpen(false)}
+                onChange={(e, newValue) =>
+                  setAllFields({
+                    ...allFields,
+                    country: newValue?.label
+                  })
+                }
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Pays"
+                    inputProps={{ ...params.inputProps, maxLength: 100 }}
+                  />
+                )}
+              />
               <TextField
                 className="mb-12"
                 label="Adresse"
@@ -1132,10 +1156,14 @@ function ContactDialog(props) {
                 onKeyDownCapture={(e) => e.preventDefault()}
               >
                 <FormControl className="w-full for-date" variant="outlined">
-                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <LocalizationProvider
+                    locale={fr}
+                    dateAdapter={AdapterDateFns}
+                  >
                     <DesktopDatePicker
                       label="Date de naissance"
                       value={allFields.date_of_birth}
+                      inputFormat={"dd/MM/yyyy"}
                       onChange={(newValue) => {
                         setAllFields({
                           ...allFields,
@@ -1185,29 +1213,6 @@ function ContactDialog(props) {
                   <TextField
                     {...params}
                     label="Nationalité"
-                    inputProps={{ ...params.inputProps, maxLength: 100 }}
-                  />
-                )}
-              />
-              <Autocomplete
-                className="flex w-full mb-12"
-                disablePortal
-                style={{ color: "#FFFFFF" }}
-                autoComplete="off"
-                options={Countries}
-                value={allFields.country}
-                onOpen={() => setIsAutoCompleteOpen(true)}
-                onClose={() => setIsAutoCompleteOpen(false)}
-                onChange={(e, newValue) =>
-                  setAllFields({
-                    ...allFields,
-                    country: newValue?.label
-                  })
-                }
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Pays"
                     inputProps={{ ...params.inputProps, maxLength: 100 }}
                   />
                 )}

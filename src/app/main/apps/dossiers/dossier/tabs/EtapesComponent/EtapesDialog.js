@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { fr } from "date-fns/locale";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Statut from "app/main/constants/Statut";
@@ -381,7 +382,7 @@ function EtapesDialog() {
             onKeyDownCapture={(e) => e.preventDefault()}
           >
             <FormControl className="w-full for-date" variant="outlined">
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <LocalizationProvider locale={fr} dateAdapter={AdapterDateFns}>
                 <DesktopDateTimePicker
                   label="Date"
                   value={allFields.notification_date}
@@ -536,8 +537,8 @@ function EtapesDialog() {
           />
           <TextField
             className="mb-12"
-            name="Subject"
-            label="Subject"
+            name="Objet"
+            label="Objet"
             variant="outlined"
             autoComplete="off"
             fullWidth

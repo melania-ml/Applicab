@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { fr } from "date-fns/locale";
 import Types from "app/main/constants/Types";
 import CaseStatus from "app/main/constants/CaseStatus";
 import { getDossiers } from "app/store/slices/dossiersSlice";
@@ -195,10 +196,11 @@ export default function Filters() {
           onKeyDownCapture={(e) => e.preventDefault()}
         >
           <FormControl className="w-full for-date" variant="outlined">
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <LocalizationProvider locale={fr} dateAdapter={AdapterDateFns}>
               <DesktopDatePicker
                 label="Date de création"
                 value={allFields.dateOfCreation}
+                inputFormat={"dd/MM/yyyy"}
                 onChange={(newValue) => {
                   setAllFields({ ...allFields, dateOfCreation: newValue });
                   dispatch(

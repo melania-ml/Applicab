@@ -12,7 +12,6 @@ import withAppProviders from "./withAppProviders";
 import { Auth } from "./auth";
 import store, { persistor } from "./store";
 import { logoutUser } from "app/auth/store/userSlice";
-import { showMessage } from "app/store/fuse/messageSlice";
 
 const emotionCacheOptions = {
   ltr: {

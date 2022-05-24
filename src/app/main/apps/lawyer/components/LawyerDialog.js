@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import _ from "@lodash";
+import { fr } from "date-fns/locale";
 import Countries from "app/main/constants/Countries";
 import Nationalities from "app/main/constants/Nationalities";
 import Departments from "app/main/constants/Departments";
@@ -1064,10 +1065,14 @@ function LawyerDialog(props) {
                 onKeyDownCapture={(e) => e.preventDefault()}
               >
                 <FormControl className="w-full for-date" variant="outlined">
-                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <LocalizationProvider
+                    locale={fr}
+                    dateAdapter={AdapterDateFns}
+                  >
                     <DesktopDatePicker
                       label="Date de naissance"
                       value={allFields.date_of_birth}
+                      inputFormat={"dd/MM/yyyy"}
                       onChange={(newValue) => {
                         setAllFields({
                           ...allFields,
