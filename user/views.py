@@ -85,6 +85,7 @@ class registerClient(APIView):
             res = ResponseInfo({}, USER_NOT_FOUND, False, status.HTTP_401_UNAUTHORIZED)
             return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
         except Exception as err:
+            print(err)
             res = ResponseInfo([], SOMETHING_WENT_WRONG, False, status.HTTP_401_UNAUTHORIZED)
             return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
 
@@ -105,6 +106,12 @@ class registerClient(APIView):
         Client_type.objects.filter(lawyer_id=user.id).hard_delete()
         Client_title.objects.filter(lawyer_id=user.id).hard_delete()
         Nature.objects.filter(user_id=user.id).hard_delete()
+
+        # Removing client's messages
+        clients = list(User.objects.filter(lawyer_id=user.id).values_list('id', flat=True)) #.delete()
+        clients.append(user.id)
+        caseManagementGroupMessage.objects.filter(message_send_by__in=clients).hard_delete()
+
         User.objects.filter(lawyer_id=user.id).delete()
         User.objects.filter(id=user.id).delete()
 
