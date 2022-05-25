@@ -31,6 +31,9 @@ const Root = styled(FusePageCarded)(({ theme }) => ({
       height: 100
     }
   },
+  "& .FusePageCarded-topBg": {
+    background: theme.palette.primary.main
+  },
   "& .FusePageCarded-contentWrapper": {
     padding: 0
   },

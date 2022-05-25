@@ -55,7 +55,7 @@ const Root = styled("div")(({ theme }) => ({
     fontWeight: 500
   },
   "& .fc-event": {
-    backgroundColor: `${theme.palette.primary.dark}!important`,
+    backgroundColor: theme.palette.primary.main,
     color: `${theme.palette.primary.contrastText}!important`,
     border: 0,
     padding: "0 6px",
