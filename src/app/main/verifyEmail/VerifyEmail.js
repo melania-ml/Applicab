@@ -32,9 +32,7 @@ const Root = styled("div")(({ theme }) => ({
     }
   },
   "& .email-rightSection": {
-    background: `linear-gradient(to right, ${
-      theme.palette.primary.dark
-    } 0%, ${darken(theme.palette.primary.dark, 0.5)} 100%)`,
+    background: theme.palette.primary.main,
     color: theme.palette.primary.contrastText,
     "@media (max-width: 767px)": {
       padding: "30px"
