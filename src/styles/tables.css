@@ -284,8 +284,8 @@ input[type="file"]::-webkit-file-upload-button {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  width: 220px;
-  max-width: 15rem;
+  width: 300px;
+  max-width: 24rem;
   display: block;
 }
 .position-txt {
