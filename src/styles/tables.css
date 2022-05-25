@@ -256,8 +256,8 @@ input[type="file"]::-webkit-file-upload-button {
   width: 100%;
 }
 
-.dossierLinkButton:hover {
-  background-color: #0cb7e2;
+.linkButton:hover {
+  background-color: #85D1F2;
   color: black;
 }
 .daycount {

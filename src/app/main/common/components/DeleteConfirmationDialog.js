@@ -51,6 +51,7 @@ export const DeleteConfirmationDialog = (props) => {
           </div>
           <div>
             <Button
+              className="linkButton"
               variant="contained"
               color="secondary"
               style={{ borderRadius: 5 }}

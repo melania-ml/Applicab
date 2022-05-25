@@ -94,7 +94,7 @@ export default function InfoCard() {
                 }}
                 variant="contained"
                 color="secondary"
-                className="mr-16 rounded float-right ml-auto w-auto whitespace-no-wrap"
+                className="mr-16 rounded float-right ml-auto w-auto whitespace-no-wrap linkButton"
               >
                 Nouveau message
               </Button>

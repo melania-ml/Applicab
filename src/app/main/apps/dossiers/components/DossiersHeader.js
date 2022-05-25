@@ -58,7 +58,7 @@ function DossiersHeader() {
             to="/apps/dossiers/new"
             variant="contained"
             color="secondary"
-            className="w-full rounded dossierLinkButton"
+            className="w-full rounded linkButton"
           >
             Nouveau dossier
           </Button>

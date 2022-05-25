@@ -1304,6 +1304,7 @@ function LawyerDialog(props) {
       <DialogActions className="justify-between p-4 pb-16">
         <div className="px-16">
           <Button
+            className="linkButton"
             variant="contained"
             color="secondary"
             type="submit"
@@ -1317,6 +1318,7 @@ function LawyerDialog(props) {
         </div>
         <div className="px-16">
           <Button
+            className="linkButton"
             variant="contained"
             color="secondary"
             type="submit"

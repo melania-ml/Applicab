@@ -175,7 +175,7 @@ function LawyersHeader() {
             }}
             variant="contained"
             color="secondary"
-            className="w-full rounded"
+            className="w-full rounded linkButton"
           >
             Nouveau Lawyer
           </Button>

@@ -143,8 +143,8 @@ function DossiersList(props) {
                 size="small"
                 sx={{
                   boxShadow: 0,
-                  backgroundColor: "#22d3ee",
-                  "&:hover": { backgroundColor: "#22d3ee" }
+                  backgroundColor: "#BCD5E1",
+                  "&:hover": { backgroundColor: "#85D1F2" }
                 }}
                 aria-label="add"
               >

@@ -1,17 +1,17 @@
 const settingsConfig = {
   layout: {
-    style: 'layout1', // layout1 layout2 layout3
-    config: {}, // checkout default layout configs at app/fuse-layouts for example  app/fuse-layouts/layout1/Layout1Config.js
+    style: "layout1", // layout1 layout2 layout3
+    config: {} // checkout default layout configs at app/fuse-layouts for example  app/fuse-layouts/layout1/Layout1Config.js
   },
   customScrollbars: true,
-  direction: 'ltr', // rtl, ltr
+  direction: "ltr", // rtl, ltr
   theme: {
-    main: 'default',
-    navbar: 'greyDark',
-    toolbar: 'mainThemeLight',
-    footer: 'mainThemeDark',
+    main: "light10",
+    navbar: "light10",
+    toolbar: "light10",
+    footer: "light10"
   },
-  loginRedirectUrl: '/', // Default redirect url for the logged-in user
+  loginRedirectUrl: "/" // Default redirect url for the logged-in user
 };
 
 export default settingsConfig;

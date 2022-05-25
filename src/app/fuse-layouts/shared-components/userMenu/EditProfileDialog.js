@@ -330,6 +330,7 @@ function EditProfileDialog(props) {
       <DialogActions className="justify-between p-4 pb-16">
         <div>
           <Button
+            className="linkButton"
             variant="contained"
             color="secondary"
             style={{ borderRadius: 0 }}

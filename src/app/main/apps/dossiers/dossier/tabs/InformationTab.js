@@ -435,6 +435,7 @@ function InformationTab() {
       <br />
       <div className="flex justify-between">
         <Button
+          className="linkButton"
           variant="contained"
           color="secondary"
           style={{ borderRadius: 0, marginLeft: 50 }}
@@ -444,6 +445,7 @@ function InformationTab() {
           Enregistrer
         </Button>
         <Button
+          className="linkButton"
           variant="contained"
           color="secondary"
           style={{ borderRadius: 0, marginRight: 50 }}

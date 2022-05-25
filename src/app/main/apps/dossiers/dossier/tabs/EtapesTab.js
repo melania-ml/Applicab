@@ -459,7 +459,7 @@ function EtapeTab() {
                 }}
                 variant="contained"
                 color="secondary"
-                className="w-full rounded"
+                className="w-full rounded linkButton"
               >
                 Nouvelle étape
               </Button>

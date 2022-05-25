@@ -1365,6 +1365,7 @@ function ContactDialog(props) {
       <DialogActions className="justify-between p-4 pb-16">
         <div className="px-16">
           <Button
+            className="linkButton"
             variant="contained"
             color="secondary"
             type="submit"
@@ -1378,6 +1379,7 @@ function ContactDialog(props) {
         </div>
         <div className="px-16">
           <Button
+            className="linkButton"
             variant="contained"
             color="secondary"
             type="submit"

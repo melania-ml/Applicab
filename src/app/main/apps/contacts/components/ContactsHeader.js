@@ -162,7 +162,7 @@ function ContactsHeader() {
             }}
             variant="contained"
             color="secondary"
-            className="w-full rounded"
+            className="w-full rounded linkButton"
           >
             Nouveau contact
           </Button>

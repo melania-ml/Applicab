@@ -5,7 +5,7 @@ import ProcedureFAQs from "app/main/constants/ProcedureFAQs";
 import VocabularyFAQs from "app/main/constants/VocabularyFAQs";
 
 //material-ui
-import { styled } from "@mui/material/styles";
+import { useTheme, styled } from "@mui/material/styles";
 import {
   Accordion,
   AccordionDetails,
@@ -18,7 +18,7 @@ import {
 
 const Root = styled("div")(({ theme }) => ({
   "& .FaqPage-header": {
-    background: `linear-gradient(to right, ${theme.palette.primary.dark} 0%, ${theme.palette.primary.main} 100%)`,
+    background: theme.palette.primary.main,
     color: theme.palette.primary.contrastText
   },
 
@@ -56,6 +56,8 @@ function FaqApp() {
   useEffect(() => {
     setData({ procedureFAQ: ProcedureFAQs, vocabularyFAQ: VocabularyFAQs });
   }, []);
+
+  const theme = useTheme();
 
   useEffect(() => {
     function getFilteredArray(arr, _searchText) {
@@ -149,7 +151,7 @@ function FaqApp() {
               >
                 <Typography
                   style={{
-                    backgroundColor: "#1b2330",
+                    backgroundColor: theme.palette.primary.main,
                     borderTopLeftRadius: 20,
                     borderTopRightRadius: 20
                   }}
@@ -214,7 +216,7 @@ function FaqApp() {
               >
                 <Typography
                   style={{
-                    backgroundColor: "#1b2330",
+                    backgroundColor: theme.palette.primary.main,
                     borderTopLeftRadius: 20,
                     borderTopRightRadius: 20
                   }}
