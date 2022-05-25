@@ -83,7 +83,7 @@ function EtapeTab() {
           button
           onClick={() => listClick("Tous")}
         >
-          <ListItemIcon></ListItemIcon>
+          <ListItemIcon className="min-w-[20%]"></ListItemIcon>
           <ListItemText primary="Tous" />
         </ListItem>
         <ListItem
@@ -91,7 +91,7 @@ function EtapeTab() {
           style={{ background: selectedList === "A prévoir" && "#C4C4C4" }}
           onClick={() => listClick("A prévoir")}
         >
-          <ListItemIcon>
+          <ListItemIcon className="min-w-[20%]">
             <Icon
               style={{
                 color: "#C4C4C4",
@@ -108,7 +108,7 @@ function EtapeTab() {
           style={{ background: selectedList === "A faire" && "#C4C4C4" }}
           onClick={() => listClick("A faire")}
         >
-          <ListItemIcon>
+          <ListItemIcon className="min-w-[20%]">
             <Icon
               style={{
                 color: "#1BD7EF",
@@ -125,7 +125,7 @@ function EtapeTab() {
           style={{ background: selectedList === "Fait" && "#C4C4C4" }}
           onClick={() => listClick("Fait")}
         >
-          <ListItemIcon>
+          <ListItemIcon className="min-w-[20%]">
             <Icon
               style={{
                 color: "#78C5A0",
@@ -142,7 +142,7 @@ function EtapeTab() {
           style={{ background: selectedList === "Archivé" && "#C4C4C4" }}
           onClick={() => listClick("Archivé")}
         >
-          <ListItemIcon>
+          <ListItemIcon className="min-w-[20%]">
             <Icon
               style={{
                 color: "#E5E5E5",
@@ -162,7 +162,7 @@ function EtapeTab() {
           style={{ background: selectedList === "Message envoyé" && "#C4C4C4" }}
           onClick={() => listClick("Message envoyé")}
         >
-          <ListItemIcon>
+          <ListItemIcon className="min-w-[20%]">
             <Icon
               style={{
                 color: "#BABABF",
@@ -179,7 +179,7 @@ function EtapeTab() {
           style={{ background: selectedList === "Brouillon" && "#C4C4C4" }}
           onClick={() => listClick("Brouillon")}
         >
-          <ListItemIcon>
+          <ListItemIcon className="min-w-[20%]">
             <Icon
               style={{
                 color: "#BABABF",
@@ -199,7 +199,7 @@ function EtapeTab() {
           style={{ background: selectedList === "Corbeille" && "#C4C4C4" }}
           onClick={deleteEtapes}
         >
-          <ListItemIcon>
+          <ListItemIcon className="min-w-[20%]">
             <Icon
               style={{
                 color: "#BABABF",
@@ -423,8 +423,8 @@ function EtapeTab() {
       className="mb-5 mb-md-0 box-shadow-dash h-full"
     >
       <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={5}>
-          <Grid item xs={12} md={3}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={2.5}>
             <motion.div
               className="mb-5 mb-md-0 box-shadow-dash "
               initial={{ y: 50, opacity: 0.8 }}
@@ -467,7 +467,7 @@ function EtapeTab() {
               {drawer}
             </motion.div>
           </Grid>
-          <Grid item xs={12} md={9}>
+          <Grid item xs={12} md={9.5}>
             {filteredData.length ? (
               <EtapesTable
                 columns={columns}
