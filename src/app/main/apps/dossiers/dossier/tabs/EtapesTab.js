@@ -266,7 +266,7 @@ function EtapeTab() {
               title={row.original?.sub_name || row.original?.name}
             >
               <i>
-                <span className="etape-txt">
+                <span className="etapeTab-txt">
                   {row.original?.sub_name || row.original?.name}
                 </span>
               </i>
@@ -277,7 +277,7 @@ function EtapeTab() {
               title={row.original?.sub_name || row.original?.name}
             >
               <span
-                className="etape-txt"
+                className="etapeTab-txt"
                 style={{
                   color: value === "Archivé" ? "#C4C4C4" : ""
                 }}
