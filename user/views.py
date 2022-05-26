@@ -85,7 +85,6 @@ class registerClient(APIView):
             res = ResponseInfo({}, USER_NOT_FOUND, False, status.HTTP_401_UNAUTHORIZED)
             return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
         except Exception as err:
-            print(err)
             res = ResponseInfo([], SOMETHING_WENT_WRONG, False, status.HTTP_401_UNAUTHORIZED)
             return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
 
