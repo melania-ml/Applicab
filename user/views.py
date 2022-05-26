@@ -268,7 +268,7 @@ class forgotPassword(APIView):
             forgotPasswordText['text4'] = forgotPasswordText['text4'].format(userEmail=userData.email)
             forgotPasswordText['button_url'] = forgotPasswordText['button_url'] + forgotPasswordToken
             send_email([userData.email],
-                       'Réinitialisation de ton mot de passe', 'email.html', forgotPasswordText)
+                       'Réinitialisation de votre mot de passe', 'email.html', forgotPasswordText)
             res = ResponseInfo({'email_shared': True}, "Forgot password email send successfully", True,
                                status.HTTP_201_CREATED)
             return Response(res.success_payload(), status.HTTP_201_CREATED)

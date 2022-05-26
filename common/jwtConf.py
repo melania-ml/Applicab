@@ -3,7 +3,7 @@ from django.conf import settings
 from rest_framework import exceptions
 from rest_framework.authentication import get_authorization_header, BaseAuthentication
 
-from user.models import User
+from user.models import *
 
 
 class jwtBaseAuthentication(BaseAuthentication):
@@ -17,7 +17,8 @@ class jwtBaseAuthentication(BaseAuthentication):
         try:
             payload = jwt.decode(token, settings.SECRET_KEY, algorithms="HS256")
             userEmail = payload['email']
-            user = User.objects.get(email=userEmail)
+            clientType = list(Client_type.objects.filter(client_type__in=['Client', 'Lawyer']).values_list('id', flat=True))
+            user = User.objects.get(email=userEmail, client_type__in=clientType)
             if not user:
                 raise exceptions.AuthenticationFailed({'status': 403,'message': 'No user Found from this token','success': False})
             return user, token

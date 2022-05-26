@@ -507,6 +507,14 @@ class caseGroupMessageViewSet(APIView):
 
             if serializer.is_valid():
                 serializer.save()
+
+                # sending email to lawyer if client sends a message
+                group_details = caseManagementChatGroup.objects.get(id=reqData['group_id'])
+                if request.user.is_lawyer is False and group_details.case_management_id and group_details.case_management_id.lawyer_id:
+                    lawyer_email = group_details.case_management_id.lawyer_id.email
+                    case_name = group_details.case_management_id.case_name
+                    self.messageEmailNotification(lawyer_email, case_name)
+
                 # Preparing response
                 res = ResponseInfo(serializer.data, SUCCESS, True,
                                    status.HTTP_201_CREATED)
@@ -532,6 +540,12 @@ class caseGroupMessageViewSet(APIView):
         except Exception as err:
             res = ResponseInfo(err, SOMETHING_WENT_WRONG, False, status.HTTP_401_UNAUTHORIZED)
             return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
+    def messageEmailNotification(self, lawyer_email, case_name):
+        notificationEmailText = emailText.MessageLawyerNotification() | emailText.commonUrls()
+        send_email([lawyer_email],
+                   case_name + ' - Notification 🔔', 'email.html',
+                   notificationEmailText)
 
 
 class retrieveCaseGroupMessageViewSet(APIView):
