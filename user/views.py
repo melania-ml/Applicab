@@ -90,7 +90,6 @@ class registerClient(APIView):
             return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
 
     def deleteOtherTypeUser(self, user):
-        print('Coming....',user.id)
         caseManagementGroupMessage.objects.filter(message_send_by=user.id).hard_delete()
         caseManagementGroupMessage.deleted_objects.filter(message_send_by=user.id).hard_delete()
         user.delete()
