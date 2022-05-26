@@ -49,7 +49,7 @@ const navigationConfig = [
   },
   {
     id: "lawyer",
-    title: "Lawyers",
+    title: "Avocats",
     type: "item",
     icon: "account_box",
     url: "apps/lawyers/all",

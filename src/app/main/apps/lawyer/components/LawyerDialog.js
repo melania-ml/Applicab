@@ -442,7 +442,7 @@ function LawyerDialog(props) {
       <AppBar position="static" elevation={0}>
         <Toolbar className="flex w-full">
           <Typography variant="subtitle1" color="inherit">
-            {contactDialog.type === "new" ? "Nouveau lawyer" : "Edit lawyer"}
+            {contactDialog.type === "new" ? "Ajouter un avocat" : "Edit lawyer"}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -708,7 +708,7 @@ function LawyerDialog(props) {
                 }}
               />
               <div className="flex mb-14 w-full justify-center">
-                <b>Premier lawyer</b>
+                <b>Premier avocat</b>
               </div>
               <TextField
                 className="mb-12"

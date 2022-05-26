@@ -177,7 +177,7 @@ function LawyersHeader() {
             color="secondary"
             className="w-full rounded linkButton"
           >
-            Nouveau Lawyer
+            Ajouter un avocat
           </Button>
         </div>
       </div>
