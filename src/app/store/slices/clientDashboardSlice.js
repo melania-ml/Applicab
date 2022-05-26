@@ -1,95 +1,39 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { showMessage } from "app/store/fuse/messageSlice";
-import { getFormattedDateTime } from "app/main/common/functions";
 
-export const getCaseList = (id) => async (dispatch) => {
-  await axios
-    .post(`api/common/filterData/caseManagement/CaseManagement`, {
-      query: {
-        client_id: id,
-        status__in: ["Ouvert", "En attente"]
-      },
-      orderBy: "-created_date"
-    })
-    .then((data) => {
-      if (data.data.status === 200 && data.data.success) {
-        dispatch(setCaseList(data.data.data));
+export const getCaseList = createAsyncThunk(
+  "clientDashboard/getCaseList",
+  async (id) => {
+    const response = await axios.post(
+      `api/common/filterData/caseManagement/CaseManagement`,
+      {
+        query: { client_id: id, status__in: ["Ouvert", "En attente"] },
+        orderBy: "-created_date"
       }
-    })
-    .catch((error) => {
-      dispatch(showMessage({ message: error.response.message }));
-    });
-};
+    );
+    const data = await response.data;
+    return { data: data.data };
+  }
+);
 
-export const getClientDashboardData = (id) => async (dispatch) => {
-  await axios
-    .get(`api/caseManagement/clientDashboardData/${id}`)
-    .then((data) => {
-      if (data.data.status === 200 && data.data.success) {
-        dispatch(setCaseData(data.data.data.case_management_data));
-        dispatch(setLawyerData(data.data.data.lawyer_data));
-        dispatch(setDocuments(data.data.data.case_management_documents));
-        dispatch(setTodos(data.data.data.case_task));
-        let calendarData = data.data.data.calender_data;
-        calendarData =
-          calendarData?.length > 0
-            ? calendarData.map((calendar) => {
-                calendar.start = getFormattedDateTime({
-                  date: calendar.start
-                });
-                calendar.end = getFormattedDateTime({ date: calendar.end });
-                return calendar;
-              })
-            : calendarData;
-        dispatch(setCalendarData(calendarData));
-      }
-    })
-    .catch((error) => {
-      dispatch(showMessage({ message: error.response.message }));
-    });
-};
+export const getClientDashboardData = createAsyncThunk(
+  "clientDashboard/getClientDashboardData",
+  async (id) => {
+    const response = await axios.get(
+      `api/caseManagement/clientDashboardData/${id}`
+    );
+    const data = await response.data;
+    return { data: data.data };
+  }
+);
 
 const clientDashboardSlice = createSlice({
   name: "clientDashboard",
-  initialState: {
-    caseList: [],
-    lawyerData: {},
-    caseData: {},
-    documents: [],
-    todos: [],
-    calendarData: []
-  },
-  reducers: {
-    setCaseList: (state, action) => {
-      state.caseList = action.payload;
-    },
-    setLawyerData: (state, action) => {
-      state.lawyerData = action.payload;
-    },
-    setCaseData: (state, action) => {
-      state.caseData = action.payload;
-    },
-    setDocuments: (state, action) => {
-      state.documents = action.payload;
-    },
-    setTodos: (state, action) => {
-      state.todos = action.payload;
-    },
-    setCalendarData: (state, action) => {
-      state.calendarData = action.payload;
-    }
-  },
+  initialState: {},
+  reducers: {},
   extraReducers: {}
 });
 
-export const {
-  setCaseList,
-  setLawyerData,
-  setCaseData,
-  setDocuments,
-  setTodos,
-  setCalendarData
-} = clientDashboardSlice.actions;
+export const {} = clientDashboardSlice.actions;
 
 export default clientDashboardSlice.reducer;

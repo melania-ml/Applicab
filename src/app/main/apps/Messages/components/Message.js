@@ -101,12 +101,12 @@ const StyledMessageRow = styled("div")(({ theme }) => ({
   }
 }));
 
-function Message(props) {
+function Message({ className, messages, callGetMessages }) {
   const dispatch = useDispatch();
   const {
     data: { id }
   } = useSelector(({ auth }) => auth.user);
-  const { messages, caseNameObj, isLoading, groupId, caseId } = useSelector(
+  const { caseNameObj, isLoading, groupId, caseId } = useSelector(
     ({ messages }) => messages
   );
   const chatRef = useRef(null);
@@ -142,25 +142,26 @@ function Message(props) {
     setMessageText(ev.target.value);
   }
 
-  const onSubmitMessage = (e) => {
+  const onSubmitMessage = async (e) => {
     e.preventDefault();
     if (messageText.trim() === "") {
       return;
     }
-    dispatch(
+    await dispatch(
       sendMessage({
         message: messageText,
         groupId,
         caseId
       })
     );
+    await callGetMessages({ caseId, groupId, fromChat: true });
     setMessageText("");
   };
   if (isLoading) {
     return <FuseLoading />;
   }
   return (
-    <div className={clsx("flex flex-col relative", props.className)}>
+    <div className={clsx("flex flex-col relative", className)}>
       {messages && messages.length > 0 && (
         <AppBar
           position="static"

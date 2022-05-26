@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { useSelector } from "react-redux";
 import { getFormattedDateTime } from "app/main/common/functions";
 
 //material-ui
@@ -11,8 +10,7 @@ import {
   TableHead
 } from "@mui/material";
 
-export default function TodoList() {
-  const { todos } = useSelector(({ clientDashboard }) => clientDashboard);
+export default function TodoList({ etapes }) {
   return (
     <motion.div
       className="mb-5 mb-md-0 box-shadow-dash for-width-todo dashBoardCard h-full"
@@ -33,26 +31,28 @@ export default function TodoList() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {todos.map((item) => {
-              return (
-                <TableRow key={item?.id} hover className="h-34 todo">
-                  <TableCell className="font-medium">
-                    {item.notification_date
-                      ? getFormattedDateTime({
-                          date: item.notification_date,
-                          format: "DD/MM/YYYY HH:mm"
-                        })
-                      : "-"}
-                  </TableCell>
-                  <TableCell className="font-medium">
-                    {item.sub_name || item.name}
-                  </TableCell>
-                  <TableCell className="sm:table-cell">
-                    {item.status || "-"}
-                  </TableCell>
-                </TableRow>
-              );
-            })}
+            {etapes &&
+              etapes.length > 0 &&
+              etapes.map((item) => {
+                return (
+                  <TableRow key={item?.id} hover className="h-34 todo">
+                    <TableCell className="font-medium">
+                      {item.notification_date
+                        ? getFormattedDateTime({
+                            date: item.notification_date,
+                            format: "DD/MM/YYYY HH:mm"
+                          })
+                        : "-"}
+                    </TableCell>
+                    <TableCell className="font-medium">
+                      {item.sub_name || item.name}
+                    </TableCell>
+                    <TableCell className="sm:table-cell">
+                      {item.status || "-"}
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
           </TableBody>
         </Table>
       </div>

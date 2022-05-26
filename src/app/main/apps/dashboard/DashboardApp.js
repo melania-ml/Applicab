@@ -1,7 +1,10 @@
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import FusePageSimple from "@fuse/core/FusePageSimple";
 import Calendar from "./components/Calendar";
 import Filters from "./components/Filters";
+import { getCalendarData } from "app/store/slices/dashboardSlice";
+import { getFormattedDateTime } from "app/main/common/functions";
 
 //material-ui
 import { styled } from "@mui/material/styles";
@@ -52,17 +55,39 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
   }
 }));
 
-function MainDashboard() {
-  return <Calendar />;
-}
-
 function DashboardApp() {
+  const [calendarData, setCalendarData] = useState([]);
+  const dispatch = useDispatch();
   const pageLayout = useRef(null);
+
+  const callGetCalendarData = (obj) => {
+    dispatch(getCalendarData(obj))
+      .unwrap()
+      .then((data) => {
+        let calendarData = data.data;
+        calendarData =
+          calendarData?.length > 0
+            ? calendarData.map((calendar) => {
+                calendar.start = getFormattedDateTime({
+                  date: calendar.start
+                });
+                calendar.end = getFormattedDateTime({ date: calendar.end });
+                return calendar;
+              })
+            : calendarData;
+        setCalendarData(calendarData);
+      });
+  };
+
+  useEffect(() => {
+    callGetCalendarData({});
+  }, [dispatch]);
+
   return (
     <>
       <Root
-        header={<Filters />}
-        content={<MainDashboard />}
+        header={<Filters callGetCalendarData={callGetCalendarData} />}
+        content={<Calendar calendarData={calendarData} />}
         sidebarInner
         ref={pageLayout}
         innerScroll

@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import FusePageSimple from "@fuse/core/FusePageSimple";
 import { useDispatch, useSelector } from "react-redux";
 import Calendar from "./components/Calendar";
@@ -11,6 +11,7 @@ import {
   getCaseList,
   getClientDashboardData
 } from "app/store/slices/clientDashboardSlice";
+import { getFormattedDateTime } from "app/main/common/functions";
 
 //material-ui
 import { Box, Grid } from "@mui/material";
@@ -74,19 +75,51 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
 }));
 
 function MainDashboard() {
+  const [caseList, setCaseList] = useState([]);
+  const [caseData, setCaseData] = useState({});
+  const [lawyerData, setLawyerData] = useState({});
+  const [documents, setDocuments] = useState([]);
+  const [etapes, setEtapes] = useState([]);
+  const [calendarData, setCalendarData] = useState([]);
   const dispatch = useDispatch();
   const {
     data: { id }
   } = useSelector(({ auth }) => auth.user);
-  const { caseList } = useSelector(({ clientDashboard }) => clientDashboard);
 
   useEffect(() => {
-    dispatch(getCaseList(id));
-  }, []);
+    dispatch(getCaseList(id))
+      .unwrap()
+      .then((data) => {
+        setCaseList(data.data);
+      });
+  }, [dispatch]);
+
+  const getCallClientDashboard = (id) => {
+    dispatch(getClientDashboardData(id))
+      .unwrap()
+      .then(({ data }) => {
+        setCaseData(data.case_management_data);
+        setLawyerData(data.lawyer_data);
+        setDocuments(data.case_management_documents);
+        setEtapes(data.case_task);
+        let calendarData = data.calender_data;
+        calendarData =
+          calendarData?.length > 0
+            ? calendarData.map((calendar) => {
+                calendar.start = getFormattedDateTime({
+                  date: calendar.start
+                });
+                calendar.end = getFormattedDateTime({ date: calendar.end });
+                return calendar;
+              })
+            : calendarData;
+        setCalendarData(calendarData);
+      });
+  };
 
   useEffect(() => {
     if (caseList?.length > 0) {
-      dispatch(getClientDashboardData(caseList[0]?.id));
+      getCallClientDashboard(caseList[0]?.id);
     }
   }, [caseList]);
 
@@ -96,19 +129,22 @@ function MainDashboard() {
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={5}>
             <Grid item xs={12} md={2}>
-              <SidebarContent />
+              <SidebarContent
+                caseList={caseList}
+                getCallClientDashboard={getCallClientDashboard}
+              />
             </Grid>
             <Grid item xs={12} md={10}>
-              <InfoCard />
+              <InfoCard caseData={caseData} lawyerData={lawyerData} />
               <Grid container spacing={5} className="mt-2">
                 <Grid item xs={12} md={4}>
-                  <MyDocuments />
+                  <MyDocuments documents={documents} caseData={caseData} />
                 </Grid>
                 <Grid item xs={12} md={4}>
-                  <Calendar />
+                  <Calendar calendarData={calendarData} />
                 </Grid>
                 <Grid item xs={12} md={4}>
-                  <TodoList />
+                  <TodoList etapes={etapes} />
                 </Grid>
               </Grid>
             </Grid>

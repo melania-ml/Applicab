@@ -3,7 +3,10 @@ import clsx from "clsx";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "./components/Message";
 import MessageSidebar from "./components/MessageSidebar";
-import { getDossierListForMessage } from "app/store/slices/messagesSlice";
+import {
+  getDossierListForMessage,
+  getMessages
+} from "app/store/slices/messagesSlice";
 
 //material-ui
 import {
@@ -73,11 +76,26 @@ const StyledSwipeableDrawer = styled(SwipeableDrawer)(({ theme }) => ({
 }));
 
 function MessageApp(props) {
+  const [dossierList, setDossierList] = useState([]);
+  const [messages, setMessages] = useState([]);
   const dispatch = useDispatch();
-  const { messages } = useSelector(({ messages }) => messages);
+
+  const callGetMessages = (obj) => {
+    dispatch(getMessages(obj))
+      .unwrap()
+      .then((data) => {
+        setMessages(data?.group_message);
+      });
+  };
+
   useEffect(() => {
-    dispatch(getDossierListForMessage());
-  }, []);
+    dispatch(getDossierListForMessage())
+      .unwrap()
+      .then((data) => {
+        setDossierList(data.data);
+      });
+    callGetMessages();
+  }, [dispatch]);
 
   const mobileChatsSidebarOpen = useSelector(
     ({ chatApp }) => chatApp?.sidebars.mobileChatsSidebarOpen
@@ -116,7 +134,10 @@ function MessageApp(props) {
               }
             }}
           >
-            <MessageSidebar />
+            <MessageSidebar
+              dossierList={dossierList}
+              callGetMessages={callGetMessages}
+            />
           </StyledSwipeableDrawer>
         </Hidden>
         <Hidden mdDown>
@@ -127,7 +148,10 @@ function MessageApp(props) {
             onOpen={(ev) => {}}
             onClose={(ev) => {}}
           >
-            <MessageSidebar />
+            <MessageSidebar
+              dossierList={dossierList}
+              callGetMessages={callGetMessages}
+            />
           </StyledSwipeableDrawer>
         </Hidden>
         <main className={clsx("ChatApp-contentWrapper", "z-10")}>
@@ -158,7 +182,11 @@ function MessageApp(props) {
             </div>
           ) : (
             <div className="ChatApp-content">
-              <Message className="flex flex-1 z-10" />
+              <Message
+                className="flex flex-1 z-10"
+                messages={messages}
+                callGetMessages={callGetMessages}
+              />
             </div>
           )}
         </main>

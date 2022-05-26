@@ -1,17 +1,12 @@
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import _ from "@lodash";
 import { motion } from "framer-motion";
-import { getClientDashboardData } from "app/store/slices/clientDashboardSlice";
 
 //material-ui
 import { List, ListItem, ListItemText } from "@mui/material";
 
-const SidebarContent = () => {
-  const dispatch = useDispatch();
+const SidebarContent = ({ caseList, getCallClientDashboard }) => {
   const [selectedListIndex, setSelectedListIndex] = useState(0);
-  const { caseList } = useSelector(({ clientDashboard }) => clientDashboard);
-
   return (
     <div>
       <motion.div
@@ -29,7 +24,7 @@ const SidebarContent = () => {
                   button
                   onClick={() => {
                     setSelectedListIndex(id);
-                    dispatch(getClientDashboardData(caseObj?.id));
+                    getCallClientDashboard(caseObj?.id);
                   }}
                   style={{ background: id === selectedListIndex && "#C4C4C4" }}
                 >

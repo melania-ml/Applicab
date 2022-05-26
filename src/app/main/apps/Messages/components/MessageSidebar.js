@@ -17,10 +17,8 @@ import { AppBar, Icon, Input, List, Paper, Toolbar } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
-function MessageSidebar(props) {
-  const { dossierList, caseId, groupId } = useSelector(
-    ({ messages }) => messages
-  );
+function MessageSidebar({ dossierList, callGetMessages }) {
+  const { caseId, groupId } = useSelector(({ messages }) => messages);
   const dispatch = useDispatch();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
@@ -33,7 +31,7 @@ function MessageSidebar(props) {
 
   useEffect(() => {
     if (caseId && groupId) {
-      dispatch(getMessages({ caseId, groupId }));
+      callGetMessages({ caseId, groupId });
     }
   }, []);
 
@@ -102,16 +100,14 @@ function MessageSidebar(props) {
                     <ContactListItem
                       contact={contact}
                       onContactClick={(id) => {
+                        callGetMessages({
+                          caseId: id,
+                          groupId: contact?.id,
+                          isMobile
+                        });
                         dispatch(setCaseNameObj(contact.case_management_id));
                         dispatch(setCaseId(id));
                         dispatch(setGroupId(contact?.id));
-                        dispatch(
-                          getMessages({
-                            caseId: id,
-                            groupId: contact?.id,
-                            isMobile
-                          })
-                        );
                       }}
                     />
                   </motion.div>

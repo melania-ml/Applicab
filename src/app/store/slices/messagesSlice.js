@@ -8,15 +8,7 @@ export const sendMessage = (obj) => async (dispatch) => {
       message: obj.message,
       group_id: obj.groupId
     })
-    .then((data) => {
-      dispatch(
-        getMessages({
-          caseId: obj.caseId,
-          groupId: obj.groupId,
-          fromChat: true
-        })
-      );
-    })
+    .then(() => {})
     .catch((error) => {
       dispatch(showMessage({ message: error.response.message }));
     });
@@ -24,16 +16,17 @@ export const sendMessage = (obj) => async (dispatch) => {
 
 export const getMessages = createAsyncThunk(
   "messagesApp/messages/getMessages",
-  async ({ caseId, groupId, fromChat }, { dispatch, getState }) => {
-    !fromChat && dispatch(setIsLoading(true));
-    const response = await axios.get(
-      `api/caseManagement/caseGroupMessages/${caseId}`
-    );
-    const data = await response.data;
-    await dispatch(readGroupMessages({ groupId }));
-    dispatch(setMessages(data.data.group_message));
-    dispatch(setIsLoading(false));
-    return data.data;
+  async (obj, { dispatch, getState }) => {
+    if (obj?.caseId) {
+      !obj.fromChat && dispatch(setIsLoading(true));
+      const response = await axios.get(
+        `api/caseManagement/caseGroupMessages/${obj.caseId}`
+      );
+      const data = await response.data;
+      await dispatch(readGroupMessages({ groupId: obj.groupId }));
+      dispatch(setIsLoading(false));
+      return data.data;
+    }
   }
 );
 
@@ -54,36 +47,24 @@ export const readGroupMessages =
       });
   };
 
-export const getDossierListForMessage = () => async (dispatch) => {
-  await axios
-    .get(`api/caseManagement/clientChatGroup`)
-    .then((data) => {
-      if (data.data.status === 200 && data.data.success) {
-        dispatch(setDossiersList(data.data.data));
-      }
-    })
-    .catch((error) => {
-      dispatch(showMessage({ message: error.response.message }));
-    });
-};
+export const getDossierListForMessage = createAsyncThunk(
+  "messagesApp/getDossierListForMessage",
+  async () => {
+    const response = await axios.get(`api/caseManagement/clientChatGroup`);
+    const data = await response.data;
+    return { data: data.data };
+  }
+);
 
 const messagesSlice = createSlice({
   name: "messagesApp/messages",
   initialState: {
-    dossierList: [],
-    messages: [],
     caseNameObj: {},
     isLoading: false,
     caseId: null,
     groupId: null
   },
   reducers: {
-    setDossiersList: (state, action) => {
-      state.dossierList = action.payload;
-    },
-    setMessages: (state, action) => {
-      state.messages = action.payload;
-    },
     setCaseNameObj: (state, action) => {
       state.caseNameObj = action.payload;
     },
@@ -102,7 +83,6 @@ const messagesSlice = createSlice({
 
 export const {
   setDossiersList,
-  setMessages,
   setCaseNameObj,
   setIsLoading,
   setCaseId,

@@ -543,7 +543,7 @@ function EtapesDialog() {
             autoComplete="off"
             fullWidth
             inputProps={{ maxLength: 100 }}
-            value={allFields.subject}
+            value={allFields.subject || data?.name}
             onChange={(e) => {
               setAllFields({
                 ...allFields,
@@ -607,7 +607,7 @@ function EtapesDialog() {
       <DialogActions className="justify-between p-4 pb-16">
         <div className="px-16">
           <Button
-          className="linkButton"
+            className="linkButton"
             variant="contained"
             color="secondary"
             type="submit"
@@ -620,7 +620,7 @@ function EtapesDialog() {
         </div>
         <div className="px-16">
           <Button
-          className="linkButton"
+            className="linkButton"
             variant="contained"
             color="secondary"
             type="submit"

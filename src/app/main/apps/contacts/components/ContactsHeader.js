@@ -20,7 +20,7 @@ function ContactsHeader() {
   const { searchText, contacts } = useSelector(({ contacts }) => contacts);
   const mainTheme = useSelector(selectMainTheme);
   let csvData = [];
-  for (let i = 0; i < contacts.length; i++) {
+  for (let i = 0; i < contacts?.length; i++) {
     let obj = {};
     obj.client_type = contacts[i].client_type.client_type;
     obj.legal_status = contacts[i].legal_status;

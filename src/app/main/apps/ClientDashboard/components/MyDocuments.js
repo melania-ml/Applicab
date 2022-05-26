@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { useSelector } from "react-redux";
 import { downloadFile } from "app/main/common/functions";
 
 //material-ui
@@ -12,10 +11,7 @@ import {
   Icon
 } from "@mui/material";
 
-export default function MyDocuments() {
-  const { documents, caseData } = useSelector(
-    ({ clientDashboard }) => clientDashboard
-  );
+export default function MyDocuments({ documents, caseData }) {
   const onDownload = (documentLink, fileName) => {
     downloadFile(documentLink, fileName);
   };

@@ -1,12 +1,11 @@
-import React, { useRef, useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { motion } from "framer-motion";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import CalendarHeader from "./CalendarHeader";
-import { getCalendarData } from "app/store/slices/dashboardSlice";
 import { CustomTooltip } from "app/main/common/components";
 
 //material-ui
@@ -70,15 +69,11 @@ const Root = styled("div")(({ theme }) => ({
   }
 }));
 
-export default function Calendar() {
+export default function Calendar({ calendarData }) {
   const [currentDate, setCurrentDate] = useState();
   const dispatch = useDispatch();
-  const { calendarData } = useSelector(({ dashboard }) => dashboard);
-  const calendarRef = useRef();
 
-  useEffect(() => {
-    dispatch(getCalendarData({}));
-  }, []);
+  const calendarRef = useRef();
 
   const handleDates = (rangeInfo) => {
     setCurrentDate(rangeInfo);

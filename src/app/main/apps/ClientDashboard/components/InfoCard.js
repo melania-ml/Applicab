@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import history from "@history";
 import { getWholeCaseName } from "app/main/common/functions";
 import {
@@ -20,11 +20,8 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary
 }));
 
-export default function InfoCard() {
+export default function InfoCard({ caseData, lawyerData }) {
   const dispatch = useDispatch();
-  const { lawyerData, caseData } = useSelector(
-    ({ clientDashboard }) => clientDashboard
-  );
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>

@@ -78,11 +78,11 @@ function ContactDialog(props) {
   });
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
+  const [formTitles, setFormTitles] = useState([]);
+  const [types, setTypes] = useState([]);
   const [isAutoCompleteOpen, setIsAutoCompleteOpen] = useState(false);
   const dispatch = useDispatch();
-  const { success, contactDialog, types, formTitles } = useSelector(
-    ({ contacts }) => contacts
-  );
+  const { success, contactDialog } = useSelector(({ contacts }) => contacts);
   const initDialog = useCallback(() => {
     if (contactDialog.type === "edit" && contactDialog.type) {
       const { data } = contactDialog;
@@ -157,9 +157,17 @@ function ContactDialog(props) {
 
   useEffect(() => {
     if (contactDialog.props.open) {
-      dispatch(getAllTypes());
+      dispatch(getAllTypes())
+        .unwrap()
+        .then((data) => {
+          setTypes(data.data);
+        });
       if (allFields.legal_status) {
-        dispatch(getFormTitles(allFields.legal_status));
+        dispatch(getFormTitles(allFields.legal_status))
+          .unwrap()
+          .then((data) => {
+            setFormTitles(data.data);
+          });
       }
     }
   }, [contactDialog.props.open, allFields.legal_status]);

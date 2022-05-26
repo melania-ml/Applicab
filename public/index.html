@@ -242,6 +242,24 @@
     })();
   </script>
   <!--End of Tawk.to Script-->
+  <script>
+    // Broadcast that you're opening a page.
+    localStorage.openpages = Date.now();
+    window.addEventListener(
+      "storage",
+      function (e) {
+        if (e.key == "openpages") {
+          localStorage.page_available = Date.now();
+        }
+        if (e.key == "page_available") {
+          alert("One more page already open");
+          window.open("about:blank", "_self");
+          window.close();
+        }
+      },
+      false
+    );
+  </script>
   <body>
     <noscript> You need to enable JavaScript to run this app. </noscript>
     <div id="root" class="flex">

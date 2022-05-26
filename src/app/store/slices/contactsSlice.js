@@ -6,46 +6,34 @@ import {
 import axios from "axios";
 import { showMessage } from "app/store/fuse/messageSlice";
 
-export const getAllTitles = () => async (dispatch) => {
-  await axios
-    .post(`auth/user/getClientTitle`)
-    .then((data) => {
-      if (data.data.status === 200 && data.data.success) {
-        dispatch(setAllTitles(data.data.data));
-      }
-    })
-    .catch((error) => {
-      dispatch(showMessage({ message: error.response.message }));
-    });
-};
+export const getAllTitles = createAsyncThunk(
+  "contactsApp/contacts/getAllTitles",
+  async () => {
+    const response = await axios.post(`auth/user/getClientTitle`);
+    const data = await response.data;
+    return { data: data.data };
+  }
+);
 
-export const getFormTitles = (legal_status) => async (dispatch) => {
-  await axios
-    .post(`auth/user/getClientTitle`, {
+export const getFormTitles = createAsyncThunk(
+  "contactsApp/contacts/getFormTitles",
+  async (legal_status) => {
+    const response = await axios.post(`auth/user/getClientTitle`, {
       legal_status
-    })
-    .then((data) => {
-      if (data.data.status === 200 && data.data.success) {
-        dispatch(setFormTitles(data.data.data));
-      }
-    })
-    .catch((error) => {
-      dispatch(showMessage({ message: error.response.message }));
     });
-};
+    const data = await response.data;
+    return { data: data.data };
+  }
+);
 
-export const getAllTypes = () => async (dispatch) => {
-  await axios
-    .get(`auth/user/getClientType`)
-    .then((data) => {
-      if (data.data.status === 200 && data.data.success) {
-        dispatch(setAllTypes(data.data.data));
-      }
-    })
-    .catch((error) => {
-      dispatch(showMessage({ message: error.response.message }));
-    });
-};
+export const getAllTypes = createAsyncThunk(
+  "contactsApp/contacts/getAllTypes",
+  async () => {
+    const response = await axios.get(`auth/user/getClientType`);
+    const data = await response.data;
+    return { data: data.data };
+  }
+);
 
 export const importContacts = (contact) => async (dispatch) => {
   await axios
@@ -73,7 +61,6 @@ export const getLawyers = createAsyncThunk(
       }
     });
     const data = await response.data;
-    dispatch(setContacts(data.data));
     dispatch(setIsLoading(false));
     return { data: data.data, routeParams };
   }
@@ -97,7 +84,6 @@ export const getContacts = createAsyncThunk(
       }
     });
     const data = await response.data;
-    dispatch(setContacts(data.data));
     dispatch(setIsLoading(false));
     return { data: data.data, routeParams };
   }
@@ -163,8 +149,9 @@ export const removeContacts = createAsyncThunk(
 
 const contactsAdapter = createEntityAdapter({});
 
-export const { selectAll: selectContacts, selectById: selectContactsById } =
-  contactsAdapter.getSelectors((state) => state.contacts);
+export const { selectAll: selectContacts } = contactsAdapter.getSelectors(
+  (state) => state.contacts
+);
 
 const contactsSlice = createSlice({
   name: "contactsApp/contacts",
@@ -179,27 +166,11 @@ const contactsSlice = createSlice({
       },
       data: null
     },
-    titles: [],
-    formTitles: [],
-    types: [],
-    contacts: [],
     success: false
   }),
   reducers: {
     setIsLoading: (state, action) => {
       state.isLoading = action.payload;
-    },
-    setContacts: (state, action) => {
-      state.contacts = action.payload;
-    },
-    setAllTitles: (state, action) => {
-      state.titles = action.payload;
-    },
-    setFormTitles: (state, action) => {
-      state.formTitles = action.payload;
-    },
-    setAllTypes: (state, action) => {
-      state.types = action.payload;
     },
     addContactSuccess: (state, action) => {
       state.success = true;
@@ -278,11 +249,7 @@ export const {
   closeEditContactDialog,
   addContactSuccess,
   addContactError,
-  setAllTitles,
-  setFormTitles,
-  setAllTypes,
-  setIsLoading,
-  setContacts
+  setIsLoading
 } = contactsSlice.actions;
 
 export default contactsSlice.reducer;
