@@ -90,6 +90,9 @@ class registerClient(APIView):
             return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
 
     def deleteOtherTypeUser(self, user):
+        print('Coming....',user.id)
+        caseManagementGroupMessage.objects.filter(message_send_by=user.id).hard_delete()
+        caseManagementGroupMessage.deleted_objects.filter(message_send_by=user.id).hard_delete()
         user.delete()
 
     def deleteLawyer(self, user):
@@ -99,6 +102,7 @@ class registerClient(APIView):
         groupChat = list(caseManagementChatGroup.objects.filter(
             case_management_id__in=caseData).values_list('id', flat=True))
         caseManagementGroupMessage.objects.filter(group_id__in=groupChat).hard_delete()
+        caseManagementGroupMessage.deleted_objects.filter(group_id__in=groupChat).hard_delete()
         caseManagementChatGroup.objects.filter(case_management_id__in=caseData).hard_delete()
         CaseManagement.objects.filter(id__in=caseData).hard_delete()
 
@@ -111,6 +115,7 @@ class registerClient(APIView):
         clients = list(User.objects.filter(lawyer_id=user.id).values_list('id', flat=True)) #.delete()
         clients.append(user.id)
         caseManagementGroupMessage.objects.filter(message_send_by__in=clients).hard_delete()
+        caseManagementGroupMessage.deleted_objects.filter(message_send_by__in=clients).hard_delete()
 
         User.objects.filter(lawyer_id=user.id).delete()
         User.objects.filter(id=user.id).delete()
