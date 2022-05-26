@@ -94,19 +94,26 @@ class registerClient(APIView):
         user.delete()
 
     def deleteLawyer(self, user):
-        caseData = list(CaseManagement.objects.filter(lawyer_id=user.id).values_list('id', flat=True))
+        caseUndeletedData = list(CaseManagement.objects.filter(lawyer_id=user.id).values_list('id', flat=True))
+        caseDeletedData = list(CaseManagement.deleted_objects.filter(lawyer_id=user.id).values_list('id', flat=True))
+        caseData = caseUndeletedData + caseDeletedData
         caseManagementDocuments.objects.filter(case_management_id__in=caseData).hard_delete()
+        caseManagementDocuments.deleted_objects.filter(case_management_id__in=caseData).hard_delete()
+        caseManagementTask.deleted_objects.filter(case_management_id__in=caseData).hard_delete()
         caseManagementTask.objects.filter(case_management_id__in=caseData).hard_delete()
-        groupChat = list(caseManagementChatGroup.objects.filter(
+        groupDeletedChat = list(caseManagementChatGroup.deleted_objects.filter(
             case_management_id__in=caseData).values_list('id', flat=True))
+        groupUnDeletedChat = list(caseManagementChatGroup.objects.filter(
+            case_management_id__in=caseData).values_list('id', flat=True))
+        groupChat = groupDeletedChat+groupUnDeletedChat
         caseManagementGroupMessage.objects.filter(group_id__in=groupChat).hard_delete()
         caseManagementGroupMessage.deleted_objects.filter(group_id__in=groupChat).hard_delete()
         caseManagementChatGroup.objects.filter(case_management_id__in=caseData).hard_delete()
+        caseManagementChatGroup.deleted_objects.filter(case_management_id__in=caseData).hard_delete()
         CaseManagement.objects.filter(id__in=caseData).hard_delete()
+        CaseManagement.deleted_objects.filter(id__in=caseData).hard_delete()
 
         # User-table-records
-        Client_type.objects.filter(lawyer_id=user.id).hard_delete()
-        Client_title.objects.filter(lawyer_id=user.id).hard_delete()
         Nature.objects.filter(user_id=user.id).hard_delete()
 
         # Removing client's messages
