@@ -266,7 +266,7 @@ class forgotPassword(APIView):
     def post(self, request):
         try:
             userEmail = request.data.get('email', None)
-            userData = User.objects.get(email=userEmail)
+            userData = User.objects.get(email=userEmail, is_active=True)
             forgotPasswordToken = ''.join(secrets.choice(string.ascii_uppercase + string.digits)
                                           for i in range(16))
             userData.forgot_password_token = forgotPasswordToken
