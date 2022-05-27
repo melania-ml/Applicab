@@ -23,29 +23,35 @@ export const getMessages = createAsyncThunk(
         `api/caseManagement/caseGroupMessages/${obj.caseId}`
       );
       const data = await response.data;
-      await dispatch(readGroupMessages({ groupId: obj.groupId }));
+      //await dispatch(readGroupMessages({ groupId: obj.groupId }));
       dispatch(setIsLoading(false));
       return data.data;
     }
   }
 );
 
-export const readGroupMessages =
-  ({ groupId }) =>
-  async (dispatch) => {
-    await axios
-      .put(`api/caseManagement/readGroupMessages`, {
-        group_id: groupId
-      })
-      .then((data) => {
-        if (data.data.status === 200 && data.data.success) {
-          dispatch(getDossierListForMessage());
-        }
-      })
-      .catch((error) => {
-        dispatch(showMessage({ message: error.response.message }));
-      });
-  };
+export const readGroupMessages = createAsyncThunk(
+  "messagesApp/readGroupMessages",
+  async ({ groupId }) => {
+    const response = await axios.put(`api/caseManagement/readGroupMessages`, {
+      group_id: groupId
+    });
+    const data = await response.data;
+    return { data: data.data };
+  }
+);
+// export const readGroupMessages =
+//   ({ groupId }) =>
+//   async (dispatch) => {
+//     await axios
+//       .put(`api/caseManagement/readGroupMessages`, {
+//         group_id: groupId
+//       })
+//       .then(() => {})
+//       .catch((error) => {
+//         dispatch(showMessage({ message: error.response.message }));
+//       });
+//   };
 
 export const getDossierListForMessage = createAsyncThunk(
   "messagesApp/getDossierListForMessage",

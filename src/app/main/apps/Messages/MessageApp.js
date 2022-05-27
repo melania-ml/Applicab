@@ -5,7 +5,8 @@ import Message from "./components/Message";
 import MessageSidebar from "./components/MessageSidebar";
 import {
   getDossierListForMessage,
-  getMessages
+  getMessages,
+  readGroupMessages
 } from "app/store/slices/messagesSlice";
 
 //material-ui
@@ -80,22 +81,32 @@ function MessageApp(props) {
   const [messages, setMessages] = useState([]);
   const dispatch = useDispatch();
 
-  const callGetMessages = (obj) => {
-    dispatch(getMessages(obj))
+  const callGetMessages = async (obj) => {
+    await dispatch(getMessages(obj))
       .unwrap()
       .then((data) => {
         setMessages(data?.group_message);
       });
+    await dispatch(readGroupMessages({ groupId: obj.groupId }))
+      .unwrap()
+      .then(() => {});
+    await dispatch(getDossierListForMessage())
+      .unwrap()
+      .then((data) => {
+        setDossierList(data.data);
+      });
   };
 
-  useEffect(() => {
+  const callGetDossierListForMessage = () => {
     dispatch(getDossierListForMessage())
       .unwrap()
       .then((data) => {
         setDossierList(data.data);
       });
-    callGetMessages();
-  }, [dispatch]);
+  };
+  useEffect(() => {
+    callGetDossierListForMessage();
+  }, []);
 
   const mobileChatsSidebarOpen = useSelector(
     ({ chatApp }) => chatApp?.sidebars.mobileChatsSidebarOpen

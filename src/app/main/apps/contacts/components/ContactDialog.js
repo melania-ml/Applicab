@@ -206,7 +206,7 @@ function ContactDialog(props) {
       }
     } else if (
       allFields.client_type === "Client" &&
-      allFields.legal_status === "Particulier"
+      allFields.legal_status === "Individuel"
     ) {
       if (
         allFields.client_type &&
@@ -223,7 +223,7 @@ function ContactDialog(props) {
       }
     } else if (
       allFields.client_type !== "Client" &&
-      allFields.legal_status === "Particulier"
+      allFields.legal_status === "Individuel"
     ) {
       if (
         allFields.client_type &&
@@ -374,7 +374,7 @@ function ContactDialog(props) {
     }
     if (
       allFields.client_type !== "Client" &&
-      allFields.legal_status === "Particulier"
+      allFields.legal_status === "Individuel"
     ) {
       if (name === "last_name") {
         if (value) {
@@ -549,9 +549,9 @@ function ContactDialog(props) {
                   label="Enterprise"
                 />
                 <FormControlLabel
-                  value="Particulier"
+                  value="Individuel"
                   control={<Radio />}
-                  label="Particulier"
+                  label="Individuel"
                 />
               </RadioGroup>
             </FormControl>
