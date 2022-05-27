@@ -5,7 +5,7 @@ const ContactsApp = lazy(() => import("./ContactsApp"));
 const ContactsAppConfig = {
   routes: [
     {
-      path: "apps/contacts/all",
+      path: "apps/contacts",
       element: <ContactsApp />
     }
   ]

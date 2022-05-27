@@ -6,7 +6,7 @@ const NewDossier = lazy(() => import("./dossier/Dossier"));
 const DossiersAppConfig = {
   routes: [
     {
-      path: "apps/dossiers/all",
+      path: "apps/dossiers",
       element: <DossiersApp />
     },
     {

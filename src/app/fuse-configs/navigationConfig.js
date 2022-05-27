@@ -12,7 +12,7 @@ const navigationConfig = [
     title: "Contacts",
     type: "item",
     icon: "account_box",
-    url: "apps/contacts/all",
+    url: "apps/contacts",
     access: ["Lawyer"]
   },
   {
@@ -20,7 +20,7 @@ const navigationConfig = [
     title: "Dossiers",
     type: "item",
     icon: "view_column",
-    url: "apps/dossiers/all",
+    url: "apps/dossiers",
     access: ["Lawyer"]
   },
   {
@@ -52,7 +52,7 @@ const navigationConfig = [
     title: "Avocats",
     type: "item",
     icon: "account_box",
-    url: "apps/lawyers/all",
+    url: "apps/lawyers",
     access: ["Admin"]
   }
 ];

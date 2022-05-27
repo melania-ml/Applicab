@@ -34,7 +34,7 @@ function DossierHeader() {
             className="flex items-center sm:mb-12"
             component={Link}
             role="button"
-            to="/apps/dossiers/all"
+            to="/apps/dossiers"
             color="inherit"
           >
             <Icon className="text-20">

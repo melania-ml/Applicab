@@ -120,7 +120,7 @@ function LoginAdmin() {
     if (login.success) {
       if (user_type === "Admin") {
         history.push({
-          pathname: "/apps/lawyers/all"
+          pathname: "/apps/lawyers"
         });
       }
     }
