@@ -158,6 +158,7 @@ function MessageTab(props) {
     if (message.trim() === "") {
       return;
     }
+    setMessage("");
     dispatch(
       sendMessage({
         message,
@@ -165,7 +166,6 @@ function MessageTab(props) {
         caseId
       })
     );
-    setMessage("");
   };
 
   const onEmojiClick = (event, emojiObject) => {

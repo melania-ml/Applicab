@@ -289,6 +289,7 @@ function ContactDialog(props) {
   };
 
   function onSubmit(param) {
+    closeComposeDialog();
     const type = param === "invite";
     if (contactDialog.type === "new") {
       dispatch(addContact({ ...allFields, is_invite: type }));
@@ -309,7 +310,6 @@ function ContactDialog(props) {
         })
       );
     }
-    closeComposeDialog();
   }
 
   const validateEmail = (value) => {

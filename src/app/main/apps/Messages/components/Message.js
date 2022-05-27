@@ -147,6 +147,7 @@ function Message({ className, messages, callGetMessages }) {
     if (messageText.trim() === "") {
       return;
     }
+    setMessageText("");
     await dispatch(
       sendMessage({
         message: messageText,
@@ -155,7 +156,6 @@ function Message({ className, messages, callGetMessages }) {
       })
     );
     await callGetMessages({ caseId, groupId, fromChat: true });
-    setMessageText("");
   };
   if (isLoading) {
     return <FuseLoading />;
