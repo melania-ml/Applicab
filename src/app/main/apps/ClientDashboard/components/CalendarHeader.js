@@ -56,7 +56,7 @@ function CalendarHeader(props) {
           <div className="flex flex-col items-center justify-between sm:flex-row">
             <div className="flex items-center sm:mb-0">
               <h1 style={{ padding: 8 }}>
-                <b>Calendar</b>{" "}
+                <b>Calendrier</b>{" "}
               </h1>
             </div>
             {/* <div className="flex items-center">

@@ -99,15 +99,15 @@ function MessageSidebar({ dossierList, callGetMessages }) {
                   <motion.div variants={item} key={contact?.id}>
                     <ContactListItem
                       contact={contact}
-                      onContactClick={(id) => {
-                        callGetMessages({
+                      onContactClick={async (id) => {
+                        dispatch(setCaseNameObj(contact.case_management_id));
+                        dispatch(setCaseId(id));
+                        dispatch(setGroupId(contact?.id));
+                        await callGetMessages({
                           caseId: id,
                           groupId: contact?.id,
                           isMobile
                         });
-                        dispatch(setCaseNameObj(contact.case_management_id));
-                        dispatch(setCaseId(id));
-                        dispatch(setGroupId(contact?.id));
                       }}
                     />
                   </motion.div>
