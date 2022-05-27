@@ -28,13 +28,12 @@ def taskLawyerNotification():
                     currantDate = datetime.now().astimezone(pytz.utc).strftime("%m/%d/%Y, %H:%M")
                     inviteDate = sendInviteData.strftime("%m/%d/%Y, %H:%M")
                     if inviteDate == currantDate:
-                        print(inviteDate, currantDate)
                         if case.case_management_id and case.case_management_id.lawyer_id:
                             notificationEmailText = emailText.lawyerTaskNotification() | emailText.commonUrls()
                             notificationEmailText['text2'] = notificationEmailText['text2'].format(
-                                taskName=case.name)
+                                taskName=case.name, taskStatus=case.status)
                             send_email([case.case_management_id.lawyer_id.email],
-                                       'Altata - Accord du client sur le devis  🔔',
+                                       case.case_management_id.lawyer_id.first_name + " " + case.case_management_id.lawyer_id.last_name + ' - ' + case.case_management_id.case_name,
                                        'email.html',
                                        notificationEmailText)
                         case.lawyer_notification.remove(days)
