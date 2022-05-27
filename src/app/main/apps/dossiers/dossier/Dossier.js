@@ -93,22 +93,22 @@ function Dossier() {
             classes={{ root: "w-full h-94 caseManagementTabs" }}
           >
             <Tab
-              className="h-64 w-1/4 max-w-full"
+              className="h-64 w-1/4 max-w-full tab-button"
               label="Informations"
               disabled={type === "new" && isCaseAdded}
             />
             <Tab
-              className="h-64 w-1/4 max-w-full"
+              className="h-64 w-1/4 max-w-full tab-button"
               label="Étapes"
               disabled={type === "new" && !isCaseAdded}
             />
             <Tab
-              className="h-64 w-1/4 max-w-full"
+              className="h-64 w-1/4 max-w-full tab-button"
               label="Messages"
               disabled={type === "new" && !isCaseAdded}
             />
             <Tab
-              className="h-64 w-1/4 max-w-full"
+              className="h-64 w-1/4 max-w-full tab-button"
               label="Documents"
               disabled={type === "new" && !isCaseAdded}
             />

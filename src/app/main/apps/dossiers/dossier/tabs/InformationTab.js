@@ -433,12 +433,12 @@ function InformationTab() {
         )}
       />
       <br />
-      <div className="flex justify-between">
+      <div className="flex justify-between linkButton-box">
         <Button
           className="linkButton"
           variant="contained"
           color="secondary"
-          style={{ borderRadius: 0, marginLeft: 50 }}
+          style={{ borderRadius: 0, marginLeft: 0 }}
           disabled={!isValid}
           onClick={() => onSubmit("submit")}
         >
@@ -448,7 +448,7 @@ function InformationTab() {
           className="linkButton"
           variant="contained"
           color="secondary"
-          style={{ borderRadius: 0, marginRight: 50 }}
+          style={{ borderRadius: 0, marginRight: 0 }}
           onClick={() => {
             dispatch(openNewContactDialog());
           }}

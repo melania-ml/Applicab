@@ -380,6 +380,19 @@ input[type="file"]::file-selector-button {
   .msg-main-section {
     height: calc(100vh - 435px);
   }
+  .tab-button {
+    width: auto !important;
+    min-width: auto;
+    padding: 0 6px;
+    font-size: 12px;
+  }
+  div.linkButton-box {
+    display: block;
+    text-align: center;
+  }
+  div.linkButton-box button {
+    margin: 0 10px 10px !important;
+  }
 }
 .text-message {
   -webkit-line-clamp: 1;
