@@ -71,7 +71,8 @@ function EtapesDialog() {
     etapeDialog: { data, props, type },
     editDossierData,
     caseId,
-    etapeId
+    etapeId,
+    clientId
   } = useSelector(({ dossiers }) => dossiers);
 
   useEffect(() => {
@@ -509,7 +510,7 @@ function EtapesDialog() {
           <Autocomplete
             multiple
             className="flex w-full mb-12"
-            options={editDossierData?.data?.client_id}
+            options={clientId}
             getOptionLabel={(option) => {
               if (typeof option === "object") {
                 const companyName = option.company_name
@@ -517,9 +518,7 @@ function EtapesDialog() {
                   : "";
                 return `${option.first_name} ${option.last_name} ${companyName}`;
               }
-              const val = editDossierData?.data?.client_id?.filter(
-                (contact) => contact?.id === option
-              );
+              const val = clientId?.filter((contact) => contact?.id === option);
               const filteredCompanyName = val[0]?.company_name
                 ? `- (${val[0].company_name})`
                 : "";

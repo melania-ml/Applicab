@@ -456,7 +456,8 @@ const dossiersSlice = createSlice({
     caseId: null,
     messageHeader: {},
     listObj: {},
-    etapeId: null
+    etapeId: null,
+    clientId: []
   }),
   reducers: {
     setEtapeId: (state, action) => {
@@ -573,6 +574,9 @@ const dossiersSlice = createSlice({
     },
     setSelectedList: (state, action) => {
       state.selectedList = action.payload;
+    },
+    setClientId: (state, action) => {
+      state.clientId = action.payload;
     }
   },
   extraReducers: {
@@ -612,7 +616,8 @@ export const {
   setNewDossierData,
   setEtapeTabFromAction,
   setMessageTabFromAction,
-  setSelectedList
+  setSelectedList,
+  setClientId
 } = dossiersSlice.actions;
 
 export default dossiersSlice.reducer;

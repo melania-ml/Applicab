@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import CaseStatus from "app/main/constants/CaseStatus";
 import Types from "app/main/constants/Types";
 import { openNewContactDialog } from "app/store/slices/contactsSlice";
-import { addCase, updateCase } from "app/store/slices/dossiersSlice";
+import {
+  addCase,
+  updateCase,
+  setClientId
+} from "app/store/slices/dossiersSlice";
 import ContactDialog from "app/main/apps/contacts/components/ContactDialog";
 import { getUniqueTags } from "app/main/common/functions";
 
@@ -101,6 +105,10 @@ function InformationTab() {
   };
 
   function onSubmit(param) {
+    const clientIdVal = contacts.filter((contact) =>
+      allFields.client_id.includes(contact.id)
+    );
+    dispatch(setClientId(clientIdVal));
     if (type === "new") {
       dispatch(addCase({ ...allFields }));
     } else {

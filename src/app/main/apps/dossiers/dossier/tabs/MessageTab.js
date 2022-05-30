@@ -148,7 +148,7 @@ function MessageTab(props) {
   }, [messages, searchText]);
 
   function scrollToBottom() {
-    if (chatRef.current && messages.length > 0) {
+    if (chatRef.current && messages?.length > 0) {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
   }

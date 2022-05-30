@@ -17,7 +17,8 @@ import {
   setMessageTabFromAction,
   setGroupId,
   setCaseId,
-  getMessages
+  getMessages,
+  setClientId
 } from "app/store/slices/dossiersSlice";
 import { CustomTooltip } from "app/main/common/components";
 
@@ -234,6 +235,7 @@ function DossiersList(props) {
             dispatch(setEtapeTabFromAction(false));
             dispatch(setEditDossierData(row?.original));
             dispatch(getMessages(row?.original?.id, groupId));
+            dispatch(setClientId(row?.original?.client_id));
           }
         }}
       />
