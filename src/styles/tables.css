@@ -405,3 +405,6 @@ input[type="file"]::file-selector-button {
   display: -webkit-box;
   white-space: nowrap !important;
 }
+.linkButton-box{
+  margin: 0 50px 0px 0px;
+}
