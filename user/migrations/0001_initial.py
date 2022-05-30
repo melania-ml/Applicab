@@ -2,6 +2,7 @@
 
 import django.contrib.postgres.fields.citext
 import django.core.validators
+from django.contrib.postgres.operations import CITextExtension
 from django.db import migrations, models
 import django.utils.timezone
 import user.models
@@ -16,6 +17,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        CITextExtension(),
         migrations.CreateModel(
             name='User',
             fields=[

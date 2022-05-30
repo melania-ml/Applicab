@@ -73,7 +73,7 @@ def MessageLawyerNotification():
         'text2': 'Un nouveau message est disponible dans votre',
         'text3': 'espace, nous vos invitons à le consulter en',
         'text4': 'cliquant ici 👇.',
-        'button_text': 'Votre espace client',
+        'button_text': 'Votre espace Avocat',
         'footer_text1': 'Bonne journée,',
         'footer_text2': 'L’équipe Applicab',
         'button_url': site_url
@@ -88,7 +88,7 @@ def lawyerTaskNotification():
         'text1': 'Bonjour,',
         'text2': "Ceci est une notification afin de vous rappeler que l'étape {taskName} est « {taskStatus} ».",
         'text3': 'Accès direct en cliquant ici 👇.',
-        'button_text': 'Votre espace client',
+        'button_text': 'Votre espace Avocat',
         'footer_text1': 'Bonne journée,',
         'footer_text2': 'L’équipe Applicab',
         'button_url': site_url
