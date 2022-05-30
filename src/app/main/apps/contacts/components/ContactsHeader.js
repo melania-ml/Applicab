@@ -5,7 +5,8 @@ import { selectMainTheme } from "app/store/fuse/settingsSlice";
 import {
   setContactsSearchText,
   openNewContactDialog,
-  importContacts
+  importContacts,
+  selectContacts
 } from "app/store/slices/contactsSlice";
 import Filters from "./Filters";
 import { CSVLink } from "react-csv";
@@ -17,7 +18,8 @@ import { ThemeProvider } from "@mui/material/styles";
 function ContactsHeader() {
   const [moreMenuEl, setMoreMenuEl] = useState(null);
   const dispatch = useDispatch();
-  const { searchText, contacts } = useSelector(({ contacts }) => contacts);
+  const contacts = useSelector(selectContacts);
+  const { searchText } = useSelector(({ contacts }) => contacts);
   const mainTheme = useSelector(selectMainTheme);
   let csvData = [];
   for (let i = 0; i < contacts?.length; i++) {
