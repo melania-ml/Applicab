@@ -71,7 +71,7 @@ def MessageLawyerNotification():
         'title': 'Notification 📥',
         'text1': 'Bonjour,',
         'text2': 'Un nouveau message est disponible dans votre',
-        'text3': 'espace, nous vos invitons à le consulter en',
+        'text3': 'espace Avocat, nous vos invitons à le consulter en',
         'text4': 'cliquant ici 👇.',
         'button_text': 'Votre espace Avocat',
         'footer_text1': 'Bonne journée,',
