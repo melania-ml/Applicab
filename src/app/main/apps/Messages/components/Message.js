@@ -1,12 +1,12 @@
 import FuseScrollbars from "@fuse/core/FuseScrollbars";
 import clsx from "clsx";
-import parse from "html-react-parser";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getFormattedDateTime,
-  getWholeCaseName
+  getWholeCaseName,
+  ReadMoreMessage
 } from "app/main/common/functions";
 import FuseLoading from "@fuse/core/FuseLoading";
 import { sendMessage } from "app/store/slices/messagesSlice";
@@ -247,7 +247,7 @@ function Message({ className, messages, callGetMessages }) {
                             <br />
                           </>
                         )}
-                        {parse(item.message)}
+                        <ReadMoreMessage str={item.message} />
                       </div>
                       <Typography
                         className="time absolute w-full hidden text-11 mt-8 -mb-24 ltr:left-0 rtl:right-0 bottom-0 whitespace-nowrap"

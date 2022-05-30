@@ -299,6 +299,10 @@ input[type="file"]::-webkit-file-upload-button {
 .position-txt {
   width: 15px;
 }
+.read-more-link{
+  cursor: pointer;
+  color: rgb(105, 188, 251)
+}
 .rowsPerPage p {
   margin: 0 !important;
 }

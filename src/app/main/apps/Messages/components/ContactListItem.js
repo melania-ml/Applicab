@@ -33,7 +33,7 @@ function ContactListItem(props) {
         classes={{
           root: "min-w-px px-16",
           primary: "font-medium text-14",
-          secondary: "text-message"
+          secondary: "text-message h-20 w-auto"
         }}
         primary={getWholeCaseName(
           chatData.case_management_id.case_name,
