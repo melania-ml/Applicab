@@ -12,6 +12,7 @@ import withAppProviders from "./withAppProviders";
 import { Auth } from "./auth";
 import store, { persistor } from "./store";
 import { logoutUser } from "app/auth/store/userSlice";
+import { BASE_URL } from "app/config";
 
 const emotionCacheOptions = {
   ltr: {
@@ -23,7 +24,7 @@ const emotionCacheOptions = {
 
 const App = () => {
   const dispatch = useDispatch();
-  axios.defaults.baseURL = "http://178.79.138.121:8080/";
+  axios.defaults.baseURL = BASE_URL;
 
   axios.interceptors.response.use(
     (response) => {
