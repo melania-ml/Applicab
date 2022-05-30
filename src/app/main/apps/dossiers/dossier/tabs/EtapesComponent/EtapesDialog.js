@@ -100,7 +100,7 @@ function EtapesDialog() {
         name: data.name,
         status: data.status || "A prévoir",
         sub_name: data.sub_name,
-        subject: data.subject,
+        subject: data.subject || data.name, //client requiremnt to put name if subject is not there
         notification_date:
           data.notification_date &&
           getFormattedDateTime({
@@ -512,12 +512,18 @@ function EtapesDialog() {
             options={editDossierData?.data?.client_id}
             getOptionLabel={(option) => {
               if (typeof option === "object") {
-                return `${`${option.first_name} ${option.last_name}`} `;
+                const companyName = option.company_name
+                  ? `- (${option.company_name})`
+                  : "";
+                return `${option.first_name} ${option.last_name} ${companyName}`;
               }
               const val = editDossierData?.data?.client_id?.filter(
-                (contact) => contact.id === option
+                (contact) => contact?.id === option
               );
-              return `${`${val[0]?.first_name} ${val[0]?.last_name}`} `;
+              const filteredCompanyName = val[0]?.company_name
+                ? `- (${val[0].company_name})`
+                : "";
+              return `${val[0]?.first_name} ${val[0]?.last_name} ${filteredCompanyName}`;
             }}
             value={allFields.client_id}
             onChange={(event, newValue) => {

@@ -294,7 +294,7 @@ function EtapeTab() {
         accessor: "notification_date",
         Cell: ({ row }) => {
           if (!row.original.notification_date) {
-            return "A RENSEIGNER";
+            return "-";
           }
           const value = row.original.status;
           return value === "Fait" ? (
