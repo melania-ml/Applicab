@@ -320,20 +320,6 @@ input[type="file"]::-webkit-file-upload-button {
 .muiltr-1dozdou {
   margin-top: 0rem;
 }
-.muiltr-negr19-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
-  height: 2rem;
-  width: 2rem;
-  margin-top: 7px;
-}
-.muiltr-1lvzwbs-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
-  color: #fff;
-  height: 2rem;
-  width: 2rem;
-  margin-top: 7px;
-  background-color: #404B57;
-  font-weight: 500;
-  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-}
 .rowsPerPage p {
   margin: 0 !important;
 }

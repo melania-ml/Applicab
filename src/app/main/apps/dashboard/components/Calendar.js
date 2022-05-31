@@ -6,7 +6,9 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import CalendarHeader from "./CalendarHeader";
+import EtapesDialog from "app/main/apps/dossiers/dossier/tabs/EtapesComponent/EtapesDialog";
 import { CustomTooltip } from "app/main/common/components";
+import { openEditEtapeDialog } from "app/store/slices/dossiersSlice";
 
 //material-ui
 import { styled } from "@mui/material/styles";
@@ -59,7 +61,8 @@ const Root = styled("div")(({ theme }) => ({
     color: `${theme.palette.primary.contrastText}!important`,
     border: 0,
     padding: "0 6px",
-    borderRadius: "16px!important"
+    borderRadius: "16px!important",
+    cursor: "pointer"
   },
   "& .for-width-cal": {
     width: "50%",
@@ -69,7 +72,7 @@ const Root = styled("div")(({ theme }) => ({
   }
 }));
 
-export default function Calendar({ calendarData }) {
+export default function Calendar({ calendarData, callGetCalendarData }) {
   const [currentDate, setCurrentDate] = useState();
   const dispatch = useDispatch();
 
@@ -98,6 +101,12 @@ export default function Calendar({ calendarData }) {
       </CustomTooltip>
     );
   }
+
+  const handleEventClick = (clickInfo) => {
+    const { extendedProps: task_obj } = clickInfo.event;
+    dispatch(openEditEtapeDialog(task_obj.task_obj));
+  };
+
   return (
     <Root
       className="flex flex-col flex-auto relative p-5 my-5 my-lg-0 box-shadow-dash for-width-cal"
@@ -123,12 +132,17 @@ export default function Calendar({ calendarData }) {
             datesSet={handleDates}
             select={handleDateSelect}
             events={calendarData}
+            eventClick={handleEventClick}
             eventContent={renderEventContent}
             initialDate={new Date()}
             ref={calendarRef}
           />
         </motion.div>
       </div>
+      <EtapesDialog
+        fromDashboard={true}
+        callGetCalendarData={callGetCalendarData}
+      />
     </Root>
   );
 }

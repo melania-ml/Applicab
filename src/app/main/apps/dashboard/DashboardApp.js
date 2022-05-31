@@ -87,7 +87,12 @@ function DashboardApp() {
     <>
       <Root
         header={<Filters callGetCalendarData={callGetCalendarData} />}
-        content={<Calendar calendarData={calendarData} />}
+        content={
+          <Calendar
+            calendarData={calendarData}
+            callGetCalendarData={callGetCalendarData}
+          />
+        }
         sidebarInner
         ref={pageLayout}
         innerScroll
