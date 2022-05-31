@@ -15,7 +15,12 @@ const SidebarContent = ({ caseList, getCallClientDashboard }) => {
         animate={{ y: 0, opacity: 1, transition: { delay: 0.3 } }}
         style={{ background: "#FFFFFF", padding: 15, borderRadius: 10 }}
       >
-        <h3 className="py-10 font-semibold text-black">Dossier</h3>
+        <h3
+          className="py-10 font-semibold"
+          style={{ padding: 5, color: "#272E41" }}
+        >
+          Dossier
+        </h3>
         <List dense>
           {caseList?.length > 0 &&
             caseList.map((caseObj, id) => (

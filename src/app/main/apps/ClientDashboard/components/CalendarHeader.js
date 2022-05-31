@@ -55,7 +55,7 @@ function CalendarHeader(props) {
         <div className="flex flex-1 flex-col justify-between z-10 container">
           <div className="flex flex-col items-center justify-between sm:flex-row">
             <div className="flex items-center sm:mb-0">
-              <h1 style={{ padding: 8 }}>
+              <h1 style={{ paddingTop: 27, color: "#272E41" }}>
                 <b>Calendrier</b>{" "}
               </h1>
             </div>
