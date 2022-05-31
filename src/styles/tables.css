@@ -414,6 +414,16 @@ input[type="file"]::file-selector-button {
   div.linkButton-box button {
     margin: 0 10px 10px !important;
   }
+  input#icon-button-file {
+    left: 0px;
+    top: 50px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+  .doc-button{
+    width: 100%;
+  }
 }
 .text-message {
   -webkit-line-clamp: 1;

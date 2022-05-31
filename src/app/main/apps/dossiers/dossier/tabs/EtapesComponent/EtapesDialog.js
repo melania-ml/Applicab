@@ -591,6 +591,7 @@ function EtapesDialog({ fromDashboard, callGetCalendarData, caseName }) {
           </div>
           <br />
           <Button
+            className="doc-button"
             variant="outlined"
             component="span"
             style={{ borderRadius: 5, marginRight: 7 }}
@@ -623,10 +624,10 @@ function EtapesDialog({ fromDashboard, callGetCalendarData, caseName }) {
             return <p>{doc.file_name}</p>;
           })}
       </DialogContent>
-      <DialogActions className="justify-between p-4 pb-16">
+      <DialogActions className="justify-between p-4 pb-16 res-flex-direction res-flex-direction">
         <div className="px-16">
           <Button
-            className="linkButton"
+            className="linkButton mb-3"
             variant="contained"
             color="secondary"
             type="submit"
