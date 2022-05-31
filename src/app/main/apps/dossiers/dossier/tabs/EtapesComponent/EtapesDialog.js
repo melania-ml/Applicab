@@ -40,7 +40,7 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import { DesktopDateTimePicker } from "@mui/lab";
 
-function EtapesDialog({ fromDashboard, callGetCalendarData }) {
+function EtapesDialog({ fromDashboard, callGetCalendarData, caseName }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [allFields, setAllFields] = useState({
     position: "",
@@ -98,7 +98,7 @@ function EtapesDialog({ fromDashboard, callGetCalendarData }) {
       });
       setAllFields({
         ...allFields,
-        case_name: editDossierData?.data?.case_name,
+        case_name: caseName || editDossierData?.data?.case_name,
         name: data.name,
         status: data.status || "A prévoir",
         sub_name: data.sub_name,
