@@ -58,7 +58,8 @@ export const getLawyers = createAsyncThunk(
     const response = await axios.post("api/common/filterData/user/User", {
       query: {
         is_lawyer: true
-      }
+      },
+      orderBy: "-created_date"
     });
     const data = await response.data;
     dispatch(setIsLoading(false));
@@ -81,7 +82,8 @@ export const getContacts = createAsyncThunk(
         status: routeParams.status,
         tags__contains: routeParams.tags,
         lawyer_id: id
-      }
+      },
+      orderBy: "-created_date"
     });
     const data = await response.data;
     dispatch(setIsLoading(false));

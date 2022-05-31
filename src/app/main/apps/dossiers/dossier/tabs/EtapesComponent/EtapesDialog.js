@@ -40,7 +40,7 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import { DesktopDateTimePicker } from "@mui/lab";
 
-function EtapesDialog() {
+function EtapesDialog({ fromDashboard, callGetCalendarData }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [allFields, setAllFields] = useState({
     position: "",
@@ -181,6 +181,9 @@ function EtapesDialog() {
     setTimeout(() => {
       dispatch(getDocuments(caseId));
     }, 2000);
+    if (fromDashboard) {
+      callGetCalendarData();
+    }
     closeComposeDialog();
   };
 
@@ -263,6 +266,9 @@ function EtapesDialog() {
       dispatch(getDocuments(caseId));
     }, 2000);
     closeComposeDialog();
+    if (fromDashboard) {
+      callGetCalendarData();
+    }
   };
 
   return (
