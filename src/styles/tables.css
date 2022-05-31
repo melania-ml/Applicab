@@ -314,7 +314,8 @@ input[type="file"]::-webkit-file-upload-button {
   margin-top: -16px;
 }
 .muiltr-mvmu1r {
-  margin-top: -1rem;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 .muiltr-1dozdou {
   margin-top: 0rem;
@@ -436,5 +437,5 @@ input[type="file"]::file-selector-button {
   white-space: nowrap !important;
 }
 .linkButton-box{
-  margin: 0 50px 0px 0px;
+  margin: 0 50px;
 }
