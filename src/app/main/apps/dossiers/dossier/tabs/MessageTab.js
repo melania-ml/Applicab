@@ -11,7 +11,8 @@ import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { sendMessage } from "app/store/slices/dossiersSlice";
 import {
   getWholeCaseName,
-  getFormattedDateTime
+  getFormattedDateTime,
+  ReadMoreMessage
 } from "app/main/common/functions";
 import { getMessages } from "app/store/slices/dossiersSlice";
 
@@ -310,7 +311,7 @@ function MessageTab(props) {
                             </b>
                           )}
                           {(item.subject || item.notification_date) && <hr />}
-                          {parse(item.message)}
+                          <ReadMoreMessage str={item.message} />
                         </div>
                         <Typography
                           className="time absolute w-full hidden text-11 mt-8 -mb-24 ltr:left-0 rtl:right-0 bottom-0 whitespace-nowrap"
