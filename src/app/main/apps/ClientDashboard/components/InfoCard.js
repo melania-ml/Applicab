@@ -29,7 +29,7 @@ export default function InfoCard({ caseData, lawyerData }) {
           <Grid item xs={12} md={6}>
             <Item className="h-full mt-5 mt-md-0 flex items-center justify-center">
               <div>
-                <h1 className="py-1 font-semibold text-base text-black textWidthLimit">
+                <h1 className="py-1 font-semibold text-base textWidthLimit">
                   Mon dossier
                 </h1>
                 <h4 className="font-medium text-sm text-black textWidthLimit">
@@ -58,7 +58,7 @@ export default function InfoCard({ caseData, lawyerData }) {
                 src={lawyerData?.profile || "assets/images/logos/profile.jpg"}
               />
               <div className="ml-12">
-                <h1 className="py-1 font-semibold text-base text-black textWidthLimit">
+                <h1 className="py-1 font-semibold text-base textWidthLimit">
                   Mon Avocat
                 </h1>
                 <h4 className="font-medium text-sm text-black textWidthLimit">

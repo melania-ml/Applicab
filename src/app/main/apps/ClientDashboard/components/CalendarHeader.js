@@ -6,7 +6,7 @@ import format from "date-fns/format";
 
 //material-ui
 import { Icon, IconButton, Tooltip, Typography } from "@mui/material";
-import { styled, ThemeProvider } from "@mui/material/styles";
+import { styled, ThemeProvider, useTheme } from "@mui/material/styles";
 
 const Root = styled("div")(({ theme }) => ({
   color: "#000000",
@@ -44,6 +44,7 @@ function CalendarHeader(props) {
 
   const mainThemeDark = useSelector(selectMainThemeDark);
   const calendarApi = () => calendarRef.current?.getApi();
+  const theme = useTheme();
   return (
     <ThemeProvider theme={mainThemeDark}>
       <Root
@@ -55,7 +56,7 @@ function CalendarHeader(props) {
         <div className="flex flex-1 flex-col justify-between z-10 container">
           <div className="flex flex-col items-center justify-between sm:flex-row">
             <div className="flex items-center sm:mb-0">
-              <h1 style={{ padding: 8 }}>
+              <h1 style={{ paddingTop: 27, color: theme.palette.primary.main }}>
                 <b>Calendrier</b>{" "}
               </h1>
             </div>

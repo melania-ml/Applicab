@@ -18,7 +18,7 @@ export default function TodoList({ etapes }) {
       animate={{ y: 0, opacity: 1, transition: { delay: 0.3 } }}
       style={{ background: "#FFFFFF", padding: 15, borderRadius: 10 }}
     >
-      <h1 style={{ padding: 8, color: "#272E41" }}>
+      <h1 style={{ padding: 8 }}>
         <b>Etapes</b>
       </h1>
       <div className="table-responsive-todo">

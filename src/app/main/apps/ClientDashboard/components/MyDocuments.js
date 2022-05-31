@@ -24,7 +24,7 @@ export default function MyDocuments({ documents, caseData }) {
           animate={{ y: 0, opacity: 1, transition: { delay: 0.3 } }}
           style={{ background: "#FFFFFF", padding: 5, borderRadius: 10 }}
         >
-          <h1 style={{ paddingBottom: 5, color: "#272E41" }}>
+          <h1 style={{ paddingBottom: 5 }}>
             <b>Mes documents</b>
           </h1>
           <div className="table-responsive">
@@ -74,7 +74,7 @@ export default function MyDocuments({ documents, caseData }) {
           animate={{ y: 0, opacity: 1, transition: { delay: 0.3 } }}
           style={{ background: "#FFFFFF", padding: 15, borderRadius: 10 }}
         >
-          <h1 style={{ paddingBottom: 5, color: "#272E41" }}>
+          <h1 style={{ paddingBottom: 5 }}>
             <b>Commentaire</b>
           </h1>
           <p className="w-full resize-none" style={{ height: 140 }}>
