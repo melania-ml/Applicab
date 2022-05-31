@@ -41,6 +41,7 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import { DesktopDateTimePicker } from "@mui/lab";
 
 function EtapesDialog() {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [allFields, setAllFields] = useState({
     position: "",
     case_name: "",
@@ -283,7 +284,11 @@ function EtapesDialog() {
           </Typography>
         </Toolbar>
       </AppBar>
-      <DialogContent classes={{ root: "p-24" }}>
+
+      <DialogContent
+        classes={{ root: "p-24" }}
+        style={{ overflowY: isDialogOpen ? "hidden" : "auto" }}
+      >
         <div className="row">
           <TextField
             className="mb-12"
@@ -394,7 +399,8 @@ function EtapesDialog() {
                       notification_date: newValue
                     });
                   }}
-                  onClose={() => addNotification()}
+                  onOpen={() => setIsDialogOpen(true)}
+                  onClose={() => addNotification() || setIsDialogOpen(false)}
                   ampm={false}
                   ampmInClock={false}
                   renderInput={(params) => (
@@ -509,6 +515,8 @@ function EtapesDialog() {
           </div>
           <Autocomplete
             multiple
+            onOpen={() => setIsDialogOpen(true)}
+            onClose={() => setIsDialogOpen(false)}
             className="flex w-full mb-12"
             options={clientId}
             getOptionLabel={(option) => {
