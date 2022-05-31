@@ -1,7 +1,7 @@
 def legalStatusChoiceFields():
     LEGAL_STATUS_CHOICES = (
         ('Enterprise', 'Enterprise'),
-        ('Particulier', 'Particulier'),
+        ('Individuel', 'Individuel'),
     )
     return LEGAL_STATUS_CHOICES
 

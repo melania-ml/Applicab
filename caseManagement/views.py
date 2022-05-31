@@ -220,12 +220,12 @@ class filterCasesManagement(APIView):
             limit = None if reqLimit == 0 and reqOffset == 0 else reqLimit + reqOffset
             offset = None if reqOffset == 0 else reqOffset
 
-            # formatting filtered date format
-            if 'created_date__date' in reqData:
-                reqData['created_date__date'] = datetime.strptime(reqData['created_date__date'], '%d-%m-%Y').date()
-
             # Remove blank data from dictionary
             kwargs = dict((k, v) for k, v in reqData.items() if v)
+
+            # formatting filtered date format
+            if 'created_date__date' in kwargs:
+                reqData['created_date__date'] = datetime.strptime(reqData['created_date__date'], '%d-%m-%Y').date()
 
             # Database Query and serializer call
             data = CaseManagement.objects.filter(**kwargs).order_by(orderBy)[offset:limit]
