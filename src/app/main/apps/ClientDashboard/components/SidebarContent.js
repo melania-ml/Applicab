@@ -4,8 +4,10 @@ import { motion } from "framer-motion";
 
 //material-ui
 import { List, ListItem, ListItemText } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 const SidebarContent = ({ caseList, getCallClientDashboard }) => {
+  const theme = useTheme();
   const [selectedListIndex, setSelectedListIndex] = useState(0);
   return (
     <div>
@@ -15,7 +17,12 @@ const SidebarContent = ({ caseList, getCallClientDashboard }) => {
         animate={{ y: 0, opacity: 1, transition: { delay: 0.3 } }}
         style={{ background: "#FFFFFF", padding: 15, borderRadius: 10 }}
       >
-        <h3 className="py-10 font-semibold">Dossier</h3>
+        <h3
+          className="py-10 font-semibold"
+          style={{ color: theme.palette.primary.main }}
+        >
+          Dossier
+        </h3>
         <List dense>
           {caseList?.length > 0 &&
             caseList.map((caseObj, id) => (

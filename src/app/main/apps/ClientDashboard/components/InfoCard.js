@@ -12,7 +12,7 @@ import {
 
 //material-ui
 import { Avatar, Button, Paper, Box, Grid } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -21,6 +21,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function InfoCard({ caseData, lawyerData }) {
+  const theme = useTheme();
   const dispatch = useDispatch();
   return (
     <>
@@ -29,7 +30,10 @@ export default function InfoCard({ caseData, lawyerData }) {
           <Grid item xs={12} md={6}>
             <Item className="h-full mt-5 mt-md-0 flex items-center justify-center">
               <div>
-                <h1 className="py-1 font-semibold text-base textWidthLimit">
+                <h1
+                  className="py-1 font-semibold text-base textWidthLimit"
+                  style={{ color: theme.palette.primary.main }}
+                >
                   Mon dossier
                 </h1>
                 <h4 className="font-medium text-sm text-black textWidthLimit">
@@ -58,7 +62,10 @@ export default function InfoCard({ caseData, lawyerData }) {
                 src={lawyerData?.profile || "assets/images/logos/profile.jpg"}
               />
               <div className="ml-12">
-                <h1 className="py-1 font-semibold text-base textWidthLimit">
+                <h1
+                  className="py-1 font-semibold text-base textWidthLimit"
+                  style={{ color: theme.palette.primary.main }}
+                >
                   Mon Avocat
                 </h1>
                 <h4 className="font-medium text-sm text-black textWidthLimit">

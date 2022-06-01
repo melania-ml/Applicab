@@ -9,8 +9,10 @@ import {
   TableRow,
   TableHead
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 export default function TodoList({ etapes }) {
+  const theme = useTheme();
   return (
     <motion.div
       className="mb-5 mb-md-0 box-shadow-dash for-width-todo dashBoardCard h-full"
@@ -18,7 +20,7 @@ export default function TodoList({ etapes }) {
       animate={{ y: 0, opacity: 1, transition: { delay: 0.3 } }}
       style={{ background: "#FFFFFF", padding: 15, borderRadius: 10 }}
     >
-      <h1 style={{ padding: 8 }}>
+      <h1 style={{ padding: 8, color: theme.palette.primary.main }}>
         <b>Etapes</b>
       </h1>
       <div className="table-responsive-todo">

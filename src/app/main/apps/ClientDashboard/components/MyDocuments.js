@@ -10,8 +10,10 @@ import {
   TableHead,
   Icon
 } from "@mui/material";
+import { useTheme } from "@mui/styles";
 
 export default function MyDocuments({ documents, caseData }) {
+  const theme = useTheme();
   const onDownload = (documentLink, fileName) => {
     downloadFile(documentLink, fileName);
   };
@@ -24,7 +26,7 @@ export default function MyDocuments({ documents, caseData }) {
           animate={{ y: 0, opacity: 1, transition: { delay: 0.3 } }}
           style={{ background: "#FFFFFF", padding: 5, borderRadius: 10 }}
         >
-          <h1 style={{ paddingBottom: 5 }}>
+          <h1 style={{ paddingBottom: 5, color: theme.palette.primary.main }}>
             <b>Mes documents</b>
           </h1>
           <div className="table-responsive">
@@ -74,7 +76,7 @@ export default function MyDocuments({ documents, caseData }) {
           animate={{ y: 0, opacity: 1, transition: { delay: 0.3 } }}
           style={{ background: "#FFFFFF", padding: 15, borderRadius: 10 }}
         >
-          <h1 style={{ paddingBottom: 5 }}>
+          <h1 style={{ paddingBottom: 5, color: theme.palette.primary.main }}>
             <b>Commentaire</b>
           </h1>
           <p className="w-full resize-none" style={{ height: 140 }}>
