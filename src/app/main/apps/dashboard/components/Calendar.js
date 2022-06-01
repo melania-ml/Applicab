@@ -8,7 +8,10 @@ import interactionPlugin from "@fullcalendar/interaction";
 import CalendarHeader from "./CalendarHeader";
 import EtapesDialog from "app/main/apps/dossiers/dossier/tabs/EtapesComponent/EtapesDialog";
 import { CustomTooltip } from "app/main/common/components";
-import { openEditEtapeDialog } from "app/store/slices/dossiersSlice";
+import {
+  openEditEtapeDialog,
+  setClientId
+} from "app/store/slices/dossiersSlice";
 
 //material-ui
 import { styled } from "@mui/material/styles";
@@ -105,6 +108,7 @@ export default function Calendar({ calendarData, callGetCalendarData }) {
 
   const handleEventClick = (clickInfo) => {
     const { extendedProps: task_obj } = clickInfo.event;
+    dispatch(setClientId(task_obj?.task_obj?.case_management_id?.client_id));
     setCaseName(task_obj?.task_obj?.case_management_id?.case_name);
     dispatch(openEditEtapeDialog(task_obj.task_obj));
   };

@@ -98,7 +98,7 @@ function EtapesDialog({ fromDashboard, callGetCalendarData, caseName }) {
       });
       setAllFields({
         ...allFields,
-        case_name: caseName || editDossierData?.data?.case_name,
+        case_name: fromDashboard ? caseName : editDossierData?.data?.case_name,
         name: data.name,
         status: data.status || "A prévoir",
         sub_name: data.sub_name,
