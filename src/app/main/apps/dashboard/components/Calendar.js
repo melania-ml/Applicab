@@ -78,6 +78,7 @@ const Root = styled("div")(({ theme }) => ({
 export default function Calendar({ calendarData, callGetCalendarData }) {
   const [currentDate, setCurrentDate] = useState();
   const [caseName, setCaseName] = useState("");
+  const [caseId, setCaseId] = useState(null);
   const dispatch = useDispatch();
 
   const calendarRef = useRef();
@@ -110,6 +111,7 @@ export default function Calendar({ calendarData, callGetCalendarData }) {
     const { extendedProps: task_obj } = clickInfo.event;
     dispatch(setClientId(task_obj?.task_obj?.case_management_id?.client_id));
     setCaseName(task_obj?.task_obj?.case_management_id?.case_name);
+    setCaseId(task_obj?.task_obj?.case_management_id?.id);
     dispatch(openEditEtapeDialog(task_obj.task_obj));
   };
 
@@ -149,6 +151,7 @@ export default function Calendar({ calendarData, callGetCalendarData }) {
         fromDashboard={true}
         callGetCalendarData={callGetCalendarData}
         caseName={caseName}
+        caseIdDashboard={caseId}
       />
     </Root>
   );

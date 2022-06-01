@@ -40,7 +40,12 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import { DesktopDateTimePicker } from "@mui/lab";
 
-function EtapesDialog({ fromDashboard, callGetCalendarData, caseName }) {
+function EtapesDialog({
+  fromDashboard,
+  callGetCalendarData,
+  caseName,
+  caseIdDashboard
+}) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [allFields, setAllFields] = useState({
     position: "",
@@ -152,7 +157,9 @@ function EtapesDialog({ fromDashboard, callGetCalendarData, caseName }) {
           ...allFields,
           message: allFields.message,
           id: data.id,
-          case_management_id: editDossierData.data.id,
+          case_management_id: fromDashboard
+            ? caseIdDashboard
+            : editDossierData.data.id,
           send_notification: true,
           lawyer_notification: notifications.map(
             (notification) => notification.count
@@ -163,7 +170,9 @@ function EtapesDialog({ fromDashboard, callGetCalendarData, caseName }) {
       await dispatch(
         addEtapes({
           ...allFields,
-          case_management_id: editDossierData.data.id,
+          case_management_id: fromDashboard
+            ? caseIdDashboard
+            : editDossierData.data.id,
           send_notification: true
         })
       );
@@ -173,7 +182,10 @@ function EtapesDialog({ fromDashboard, callGetCalendarData, caseName }) {
       for (let i = 0; i < files.length; i++) {
         formData.append("case_document", files[i]);
       }
-      formData.append("case_management_id", editDossierData.data.id);
+      formData.append(
+        "case_management_id",
+        fromDashboard ? caseIdDashboard : editDossierData.data.id
+      );
       formData.append("case_task_id", type === "new" ? etapeId : data.id);
       await dispatch(uploadDocument(formData));
       setFiles(null);
@@ -221,7 +233,9 @@ function EtapesDialog({ fromDashboard, callGetCalendarData, caseName }) {
         updateEtapes({
           ...allFields,
           id: data?.id,
-          case_management_id: editDossierData?.data?.id,
+          case_management_id: fromDashboard
+            ? caseIdDashboard
+            : editDossierData?.data?.id,
           send_notification: false,
           lawyer_notification: notifications?.map(
             (notification) => notification.count
@@ -232,7 +246,9 @@ function EtapesDialog({ fromDashboard, callGetCalendarData, caseName }) {
       dispatch(
         addEtapes({
           ...allFields,
-          case_management_id: editDossierData.data.id,
+          case_management_id: fromDashboard
+            ? caseIdDashboard
+            : editDossierData.data.id,
           send_notification: false,
           lawyer_notification: notifications.map(
             (notification) => notification.count
@@ -257,7 +273,10 @@ function EtapesDialog({ fromDashboard, callGetCalendarData, caseName }) {
       for (let i = 0; i < files.length; i++) {
         formData.append("case_document", files[i]);
       }
-      formData.append("case_management_id", editDossierData.data.id);
+      formData.append(
+        "case_management_id",
+        fromDashboard ? caseIdDashboard : editDossierData.data.id
+      );
       formData.append("case_task_id", type === "new" ? etapeId : data.id);
       dispatch(uploadDocument(formData));
       setFiles(null);
