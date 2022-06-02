@@ -19,7 +19,6 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 
 function MessageSidebar({ dossierList, callGetMessages }) {
   const { caseId, groupId } = useSelector(({ messages }) => messages);
-  const [contactId, setContactId] = useState(null);
   const dispatch = useDispatch();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
@@ -97,7 +96,6 @@ function MessageSidebar({ dossierList, callGetMessages }) {
                 <ContactListItem
                   contact={contact}
                   onContactClick={async (id) => {
-                    setContactId(contact?.id);
                     dispatch(setCaseNameObj(contact.case_management_id));
                     dispatch(setCaseId(id));
                     dispatch(setGroupId(contact?.id));
@@ -107,7 +105,6 @@ function MessageSidebar({ dossierList, callGetMessages }) {
                       isMobile
                     });
                   }}
-                  contactId={contactId}
                 />
               </motion.div>
             ))}

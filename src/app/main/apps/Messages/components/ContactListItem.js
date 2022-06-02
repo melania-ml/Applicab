@@ -1,4 +1,5 @@
 import parse from "html-react-parser";
+import { useSelector } from "react-redux";
 import { getWholeCaseName } from "app/main/common/functions";
 
 //material-ui
@@ -13,13 +14,16 @@ const StyledListItem = styled(ListItem)(({ theme, active }) => ({
 }));
 
 function ContactListItem(props) {
+  const { caseId } = useSelector(({ messages }) => messages);
   const chatData = props.contact;
   return (
     <StyledListItem
       button
       className="px-16 py-12 min-h-92"
       onClick={() => props.onContactClick(chatData?.case_management_id?.id)}
-      style={{ background: props.contactId === chatData.id && "#C4C4C4" }}
+      style={{
+        background: caseId === chatData?.case_management_id?.id && "#C4C4C4"
+      }}
     >
       <div className="relative">
         <Avatar
