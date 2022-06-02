@@ -59,7 +59,10 @@ const Root = styled("div")(({ theme }) => ({
     color: `${theme.palette.primary.contrastText}!important`,
     border: 0,
     padding: "0 6px",
-    borderRadius: "16px!important"
+    borderRadius: "16px!important",
+    "&:hover": {
+      background: theme.palette.primary.main
+    }
   },
   "& .for-width-cal": {
     width: "50%",
