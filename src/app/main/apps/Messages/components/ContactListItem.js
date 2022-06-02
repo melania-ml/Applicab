@@ -19,6 +19,7 @@ function ContactListItem(props) {
       button
       className="px-16 py-12 min-h-92"
       onClick={() => props.onContactClick(chatData?.case_management_id?.id)}
+      style={{ background: props.contactId === chatData.id && "#C4C4C4" }}
     >
       <div className="relative">
         <Avatar

@@ -19,6 +19,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 
 function MessageSidebar({ dossierList, callGetMessages }) {
   const { caseId, groupId } = useSelector(({ messages }) => messages);
+  const [contactId, setContactId] = useState(null);
   const dispatch = useDispatch();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
@@ -34,6 +35,27 @@ function MessageSidebar({ dossierList, callGetMessages }) {
       callGetMessages({ caseId, groupId });
     }
   }, []);
+
+  function getFilteredArray(arr, _searchText) {
+    if (_searchText.length === 0) {
+      return arr;
+    }
+    return FuseUtils.filterArrayByString(arr, _searchText);
+  }
+
+  const filteredDossiers = getFilteredArray([...dossierList], searchText);
+  const container = {
+    show: {
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 }
+  };
 
   return (
     <div className="flex flex-col flex-auto h-full">
@@ -64,57 +86,32 @@ function MessageSidebar({ dossierList, callGetMessages }) {
 
       <FuseScrollbars className="overflow-y-auto flex-1">
         <List className="w-full">
-          {useMemo(() => {
-            function getFilteredArray(arr, _searchText) {
-              if (_searchText.length === 0) {
-                return arr;
-              }
-              return FuseUtils.filterArrayByString(arr, _searchText);
-            }
-            const filteredDossiers = getFilteredArray(
-              [...dossierList],
-              searchText
-            );
-            const container = {
-              show: {
-                transition: {
-                  staggerChildren: 0.1
-                }
-              }
-            };
-
-            const item = {
-              hidden: { opacity: 0, y: 20 },
-              show: { opacity: 1, y: 0 }
-            };
-
-            return (
-              <motion.div
-                className="flex flex-col shrink-0"
-                variants={container}
-                initial="hidden"
-                animate="show"
-              >
-                {filteredDossiers.map((contact) => (
-                  <motion.div variants={item} key={contact?.id}>
-                    <ContactListItem
-                      contact={contact}
-                      onContactClick={async (id) => {
-                        dispatch(setCaseNameObj(contact.case_management_id));
-                        dispatch(setCaseId(id));
-                        dispatch(setGroupId(contact?.id));
-                        await callGetMessages({
-                          caseId: id,
-                          groupId: contact?.id,
-                          isMobile
-                        });
-                      }}
-                    />
-                  </motion.div>
-                ))}
+          <motion.div
+            className="flex flex-col shrink-0"
+            variants={container}
+            initial="hidden"
+            animate="show"
+          >
+            {filteredDossiers.map((contact) => (
+              <motion.div variants={item} key={contact?.id}>
+                <ContactListItem
+                  contact={contact}
+                  onContactClick={async (id) => {
+                    setContactId(contact?.id);
+                    dispatch(setCaseNameObj(contact.case_management_id));
+                    dispatch(setCaseId(id));
+                    dispatch(setGroupId(contact?.id));
+                    await callGetMessages({
+                      caseId: id,
+                      groupId: contact?.id,
+                      isMobile
+                    });
+                  }}
+                  contactId={contactId}
+                />
               </motion.div>
-            );
-          }, [dossierList, searchText, dispatch, isMobile])}
+            ))}
+          </motion.div>
         </List>
       </FuseScrollbars>
     </div>
