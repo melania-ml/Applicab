@@ -267,6 +267,34 @@ function Message({ className, messages, callGetMessages }) {
                 </>
               );
             })}
+            {caseId && (
+              <form
+                onSubmit={onSubmitMessage}
+                className="absolute bottom-0 right-0 left-0 py-16 px-8"
+                style={{ marginRight: 80 }}
+              >
+                <Paper className="flex items-center relative rounded-24 shadow">
+                  <InputBase
+                    autoFocus={false}
+                    id="message-input"
+                    className="flex-1 flex grow shrink-0 mx-16 ltr:mr-48 rtl:ml-48 my-8"
+                    placeholder="Type your message"
+                    autoComplete="off"
+                    onChange={onInputChange}
+                    value={messageText}
+                  />
+                  <IconButton
+                    className="absolute ltr:right-0 rtl:left-0 top-0"
+                    type="submit"
+                    size="large"
+                  >
+                    <Icon className="text-24" color="action">
+                      send
+                    </Icon>
+                  </IconButton>
+                </Paper>
+              </form>
+            )}
           </div>
         ) : (
           <div className="flex flex-col flex-1">
@@ -284,32 +312,6 @@ function Message({ className, messages, callGetMessages }) {
           </div>
         )}
       </FuseScrollbars>
-      <form
-        onSubmit={onSubmitMessage}
-        className="absolute bottom-0 right-0 left-0 py-16 px-8"
-        style={{ marginRight: 80 }}
-      >
-        <Paper className="flex items-center relative rounded-24 shadow">
-          <InputBase
-            autoFocus={false}
-            id="message-input"
-            className="flex-1 flex grow shrink-0 mx-16 ltr:mr-48 rtl:ml-48 my-8"
-            placeholder="Type your message"
-            autoComplete="off"
-            onChange={onInputChange}
-            value={messageText}
-          />
-          <IconButton
-            className="absolute ltr:right-0 rtl:left-0 top-0"
-            type="submit"
-            size="large"
-          >
-            <Icon className="text-24" color="action">
-              send
-            </Icon>
-          </IconButton>
-        </Paper>
-      </form>
     </div>
   );
 }
