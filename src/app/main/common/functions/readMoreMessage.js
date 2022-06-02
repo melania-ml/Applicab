@@ -4,7 +4,7 @@ import { MAX_LENGTH_MESSAGE } from "app/config";
 
 export const ReadMoreMessage = ({ str }) => {
   const [readMore, setReadMore] = useState(false);
-  const linkName = readMore ? <b>read less</b> : <b>read more</b>;
+  const linkName = readMore ? <b>moins</b> : <b>lire la suite</b>;
 
   return str.length > MAX_LENGTH_MESSAGE ? (
     <>
