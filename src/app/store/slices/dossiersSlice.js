@@ -373,11 +373,16 @@ export const updateEtapes = createAsyncThunk(
       .then((data) => {
         if (data.data && data.data.success) {
           dispatch(showMessage({ message: data.data.message }));
-          dispatch(getEtapes(getState().dossiers.listObj));
-          dispatch(getDocuments(getState().dossiers.caseId));
-          dispatch(
-            getMessages(getState().dossiers.caseId, getState().dossiers.groupId)
-          );
+          if (getState().dossiers.caseId) {
+            dispatch(getEtapes(getState().dossiers.listObj));
+            dispatch(getDocuments(getState().dossiers.caseId));
+            dispatch(
+              getMessages(
+                getState().dossiers.caseId,
+                getState().dossiers.groupId
+              )
+            );
+          }
           dispatch(setIsLoading(false));
         }
       })

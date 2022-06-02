@@ -490,11 +490,13 @@ function LawyerDialog(props) {
                 }}
               >
                 <FormControlLabel
+                  disabled={contactDialog.type === "edit"}
                   value="Enterprise"
                   control={<Radio />}
                   label="Enterprise"
                 />
                 <FormControlLabel
+                  disabled={contactDialog.type === "edit"}
                   value="Individuel"
                   control={<Radio />}
                   label="Individuel"
