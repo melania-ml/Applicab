@@ -375,6 +375,10 @@ input[type="file"]::file-selector-button {
 .dash-monavocat-tab {
   flex-direction: column;
 }
+.msg-pop-up{
+  width: 100%;
+  max-width: 210px;
+}
 @media screen and (max-width: 1700px) {
   .dash-monavocat-tab {
     flex-direction: column;

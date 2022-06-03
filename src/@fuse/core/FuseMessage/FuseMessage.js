@@ -61,7 +61,7 @@ function FuseMessage(props) {
       <SnackbarContent
         className="FuseMessage-content"
         message={
-          <div className="flex items-center">
+          <div className="flex items-center msg-pop-up">
             {variantIcon[options.variant] && (
               <Icon color="inherit">{variantIcon[options.variant]}</Icon>
             )}
