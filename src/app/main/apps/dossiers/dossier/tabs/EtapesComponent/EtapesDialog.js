@@ -78,14 +78,18 @@ function EtapesDialog({
     editDossierData,
     caseId,
     etapeId,
-    clientId
+    clientId,
+    isCaseAdded,
+    messageHeader
   } = useSelector(({ dossiers }) => dossiers);
 
   useEffect(() => {
     if (type === "new") {
       setAllFields({
         ...allFields,
-        case_name: editDossierData?.data?.case_name,
+        case_name: isCaseAdded
+          ? messageHeader?.case_name
+          : editDossierData?.data?.case_name,
         position: "",
         name: "",
         sub_name: "",
@@ -103,7 +107,11 @@ function EtapesDialog({
       });
       setAllFields({
         ...allFields,
-        case_name: fromDashboard ? caseName : editDossierData?.data?.case_name,
+        case_name: fromDashboard
+          ? caseName
+          : isCaseAdded
+          ? messageHeader?.case_name
+          : editDossierData?.data?.case_name,
         name: data.name,
         status: data.status || "A prévoir",
         sub_name: data.sub_name,
@@ -159,6 +167,8 @@ function EtapesDialog({
           id: data.id,
           case_management_id: fromDashboard
             ? caseIdDashboard
+            : isCaseAdded
+            ? caseId
             : editDossierData.data.id,
           send_notification: true,
           lawyer_notification: notifications.map(
@@ -172,11 +182,14 @@ function EtapesDialog({
           ...allFields,
           case_management_id: fromDashboard
             ? caseIdDashboard
+            : isCaseAdded
+            ? caseId
             : editDossierData.data.id,
           send_notification: true
         })
       );
     }
+    closeComposeDialog();
     if (files?.length > 0) {
       const formData = new FormData();
       for (let i = 0; i < files.length; i++) {
@@ -196,7 +209,6 @@ function EtapesDialog({
     if (fromDashboard) {
       callGetCalendarData();
     }
-    closeComposeDialog();
   };
 
   const handleRemoveItem = (e, index) => {
@@ -235,6 +247,8 @@ function EtapesDialog({
           id: data?.id,
           case_management_id: fromDashboard
             ? caseIdDashboard
+            : isCaseAdded
+            ? caseId
             : editDossierData?.data?.id,
           send_notification: false,
           lawyer_notification: notifications?.map(
@@ -248,6 +262,8 @@ function EtapesDialog({
           ...allFields,
           case_management_id: fromDashboard
             ? caseIdDashboard
+            : isCaseAdded
+            ? caseId
             : editDossierData.data.id,
           send_notification: false,
           lawyer_notification: notifications.map(

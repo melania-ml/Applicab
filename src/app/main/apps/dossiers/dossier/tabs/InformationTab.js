@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import FuseLoading from "@fuse/core/FuseLoading";
 import CaseStatus from "app/main/constants/CaseStatus";
 import Types from "app/main/constants/Types";
-import { openNewContactDialog } from "app/store/slices/contactsSlice";
+import {
+  openNewContactDialog,
+  addContactError
+} from "app/store/slices/contactsSlice";
 import {
   addCase,
   updateCase,
-  setClientId
+  setClientId,
+  getContacts
 } from "app/store/slices/dossiersSlice";
 import ContactDialog from "app/main/apps/contacts/components/ContactDialog";
 import { getUniqueTags } from "app/main/common/functions";
@@ -32,8 +37,11 @@ function InformationTab() {
     procedures,
     contacts,
     allContacts,
-    editDossierData: { data, type }
+    editDossierData: { data, type },
+    isLoading
   } = useSelector(({ dossiers }) => dossiers);
+  const { success } = useSelector(({ contacts }) => contacts);
+  const user = useSelector(({ auth }) => auth.user);
   const filter = createFilterOptions();
   const [isValid, setIsValid] = useState(false);
   const [errors, setErrors] = useState({});
@@ -51,6 +59,14 @@ function InformationTab() {
     customer_contact_id: [],
     opposing_contact_id: []
   });
+
+  useEffect(() => {
+    if (success) {
+      dispatch(getContacts(user?.data?.id));
+      dispatch(getAllContacts(user?.data?.id));
+      dispatch(addContactError());
+    }
+  }, [success]);
 
   useEffect(() => {
     const isEmpty = Object.values(errors).every((x) => x === null || x === "");
@@ -115,7 +131,9 @@ function InformationTab() {
       dispatch(updateCase({ ...allFields, case_management_id: data?.id }));
     }
   }
-
+  if (isLoading) {
+    return <FuseLoading />;
+  }
   return (
     <div classes={{ root: "p-24" }}>
       <TextField

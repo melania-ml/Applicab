@@ -18,7 +18,8 @@ import {
   setGroupId,
   setCaseId,
   getMessages,
-  setClientId
+  setClientId,
+  setIsCaseAdded
 } from "app/store/slices/dossiersSlice";
 import { CustomTooltip } from "app/main/common/components";
 
@@ -138,6 +139,7 @@ function DossiersList(props) {
                   props.navigate(`/apps/dossiers/${row?.original?.id}`);
                   dispatch(setEditDossierData(row?.original));
                   dispatch(getMessages(row?.original?.id, groupId));
+                  dispatch(setIsCaseAdded(false));
                 }}
                 variant="circular"
                 disableRipple={true}
@@ -175,6 +177,7 @@ function DossiersList(props) {
                   props.navigate(`/apps/dossiers/${row?.original?.id}`);
                   dispatch(setEditDossierData(row?.original));
                   dispatch(getMessages(row?.original?.id, groupId));
+                  dispatch(setIsCaseAdded(false));
                 }}
                 size="large"
               >
@@ -236,6 +239,7 @@ function DossiersList(props) {
             dispatch(setEditDossierData(row?.original));
             dispatch(getMessages(row?.original?.id, groupId));
             dispatch(setClientId(row?.original?.client_id));
+            dispatch(setIsCaseAdded(false));
           }
         }}
       />
