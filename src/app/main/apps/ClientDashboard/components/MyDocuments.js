@@ -21,7 +21,7 @@ export default function MyDocuments({ documents, caseData }) {
     <>
       <div rowSpacing={1}>
         <motion.div
-          className="mb-5 mb-md-0 box-shadow-dash p-5"
+          className="mb-5 mb-md-0 box-shadow-dash p-5 commonBoxShadow"
           initial={{ y: 50, opacity: 0.8 }}
           animate={{ y: 0, opacity: 1, transition: { delay: 0.3 } }}
           style={{ background: "#FFFFFF", padding: 5, borderRadius: 10 }}
@@ -71,7 +71,7 @@ export default function MyDocuments({ documents, caseData }) {
         </motion.div>
 
         <motion.div
-          className="mt-5 mb-md-0 box-shadow-dash dashBoardCard"
+          className="mt-5 mb-md-0 box-shadow-dash dashBoardCard commonBoxShadow"
           initial={{ y: 50, opacity: 0.8 }}
           animate={{ y: 0, opacity: 1, transition: { delay: 0.3 } }}
           style={{ background: "#FFFFFF", padding: 15, borderRadius: 10 }}

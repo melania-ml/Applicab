@@ -18,13 +18,24 @@ Basic Table Styles
 .dashBoardCard {
   height: min-content;
 }
-
+.commonBoxShadow{
+  box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%) !important;
+}
+.sidebarContent ul {
+  overflow-y: scroll;
+  height: 118px;
+}
 .cards {
-  width: 40rem;
+  width: 10rem;
   height: min-content;
 }
 .box-shadow-dash .search-bar-dossier {
   margin-bottom: 30px;
+}
+.dossier-client-name span{
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 /* .messagesTab{
@@ -115,7 +126,12 @@ Basic Table Styles
   overflow: hidden;
   width: 30rem;
 }
-
+.etapeTextWidthLimit{
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 400px;
+}
 table.simple {
   width: 100%;
   border: none;
@@ -356,7 +372,9 @@ input[type="file"]::-webkit-file-upload-button {
 input[type="file"]::file-selector-button {
   visibility: hidden;
 }
-
+.dash-monavocat-tab {
+  flex-direction: column;
+}
 @media screen and (max-width: 1700px) {
   .dash-monavocat-tab {
     flex-direction: column;

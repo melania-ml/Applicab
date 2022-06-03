@@ -127,26 +127,27 @@ function MainDashboard() {
     <>
       {caseList?.length > 0 && (
         <Box sx={{ flexGrow: 1 }}>
-          <Grid container spacing={5}>
-            <Grid item xs={12} md={2}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={2.5}>
               <SidebarContent
                 caseList={caseList}
                 getCallClientDashboard={getCallClientDashboard}
               />
             </Grid>
-            <Grid item xs={12} md={10}>
+            <Grid item xs={12} md={9.5}>
               <InfoCard caseData={caseData} lawyerData={lawyerData} />
-              <Grid container spacing={5} className="mt-2">
-                <Grid item xs={12} md={4}>
-                  <MyDocuments documents={documents} caseData={caseData} />
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <Calendar calendarData={calendarData} />
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <TodoList etapes={etapes} />
-                </Grid>
-              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12} md={12} className="mt-20">
+            <Calendar calendarData={calendarData} />
+          </Grid>
+
+          <Grid container spacing={3} className="mt-2">
+            <Grid item xs={12} md={8}>
+              <TodoList etapes={etapes} />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <MyDocuments documents={documents} caseData={caseData} />
             </Grid>
           </Grid>
         </Box>

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { getFormattedDateTime } from "app/main/common/functions";
+import { CustomTooltip } from "app/main/common/components";
 
 //material-ui
 import {
@@ -15,7 +16,7 @@ export default function TodoList({ etapes }) {
   const theme = useTheme();
   return (
     <motion.div
-      className="mb-5 mb-md-0 box-shadow-dash for-width-todo dashBoardCard h-full"
+      className="mb-5 mb-md-0 box-shadow-dash for-width-todo dashBoardCard h-full commonBoxShadow"
       initial={{ y: 50, opacity: 0.8 }}
       animate={{ y: 0, opacity: 1, transition: { delay: 0.3 } }}
       style={{ background: "#FFFFFF", padding: 15, borderRadius: 10 }}
@@ -46,7 +47,7 @@ export default function TodoList({ etapes }) {
                           })
                         : "-"}
                     </TableCell>
-                    <TableCell className="font-medium">
+                    <TableCell className="font-medium etapeTextWidthLimit">
                       {item.sub_name || item.name}
                     </TableCell>
                     <TableCell className="sm:table-cell">

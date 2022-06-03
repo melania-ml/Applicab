@@ -173,7 +173,7 @@ const FusePageSimple = forwardRef((props, ref) => {
           className={clsx("FusePageSimple-header", "FusePageSimple-topBg")}
         />
 
-        <div className="flex flex-auto flex-col container z-10 h-full">
+        <div className="flex flex-auto flex-col z-10 h-full">
           {props.header && props.sidebarInner && (
             <FusePageSimpleHeader header={props.header} />
           )}

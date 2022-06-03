@@ -2,6 +2,7 @@ import * as React from "react";
 import { useDispatch } from "react-redux";
 import history from "@history";
 import { getWholeCaseName } from "app/main/common/functions";
+import { CustomTooltip } from "app/main/common/components";
 import {
   getMessages,
   setCaseNameObj,
@@ -26,10 +27,10 @@ export default function InfoCard({ caseData, lawyerData }) {
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={5} columns={12}>
+        <Grid container spacing={2} columns={12}>
           <Grid item xs={12} md={6}>
-            <Item className="h-full mt-5 mt-md-0 flex items-center justify-center">
-              <div>
+            <Item className="h-full mt-md-0 flex">
+              <div className="ml-12 mt-12">
                 <h1
                   className="py-1 font-semibold text-base textWidthLimit"
                   style={{ color: theme.palette.primary.main }}
@@ -56,29 +57,31 @@ export default function InfoCard({ caseData, lawyerData }) {
           </Grid>
           <Grid item xs={12} md={6}>
             <Item className="flex items-center res-flex-direction mt-5 mt-md-0 msg-mo dash-monavocat-tab">
-              <Avatar
-                className="avatar w-72 h-72 p-8 box-content mon-avocate"
-                alt="user photo"
-                src={lawyerData?.profile || "assets/images/logos/profile.jpg"}
-              />
-              <div className="ml-12">
-                <h1
-                  className="py-1 font-semibold text-base textWidthLimit"
-                  style={{ color: theme.palette.primary.main }}
-                >
-                  Mon Avocat
-                </h1>
-                <h4 className="font-medium text-sm text-black textWidthLimit">
-                  {lawyerData?.company_name}
-                </h4>
-                <h4 className="font-medium text-sm text-black textWidthLimit">
-                  Avocat - {lawyerData?.first_name}
-                </h4>
-                {lawyerData?.website && (
+              <div className="flex">
+                <Avatar
+                  className="avatar w-72 h-72 p-8 box-content mon-avocate ml-24"
+                  alt="user photo"
+                  src={lawyerData?.profile || "assets/images/logos/profile.jpg"}
+                />
+                <div className="ml-12">
+                  <h1
+                    className="py-1 font-semibold text-base textWidthLimit mt-12	"
+                    style={{ color: theme.palette.primary.main }}
+                  >
+                    Mon Avocat
+                  </h1>
                   <h4 className="font-medium text-sm text-black textWidthLimit">
-                    {lawyerData.website}
+                    {lawyerData?.company_name}
                   </h4>
-                )}
+                  <h4 className="font-medium text-sm text-black textWidthLimit">
+                    Avocat - {lawyerData?.first_name}
+                  </h4>
+                  {lawyerData?.website && (
+                    <h4 className="font-medium text-sm text-black textWidthLimit">
+                      {lawyerData.website}
+                    </h4>
+                  )}
+                </div>
               </div>
               <Button
                 onClick={() => {
@@ -100,7 +103,7 @@ export default function InfoCard({ caseData, lawyerData }) {
                 color="secondary"
                 className="mr-16 rounded float-right ml-auto w-auto whitespace-no-wrap linkButton"
               >
-                Nouveau message
+                Messagerie
               </Button>
             </Item>
           </Grid>
