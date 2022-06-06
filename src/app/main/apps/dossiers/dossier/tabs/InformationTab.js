@@ -11,7 +11,8 @@ import {
   addCase,
   updateCase,
   setClientId,
-  getContacts
+  getContacts,
+  getAllContacts
 } from "app/store/slices/dossiersSlice";
 import ContactDialog from "app/main/apps/contacts/components/ContactDialog";
 import { getUniqueTags } from "app/main/common/functions";
