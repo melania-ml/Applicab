@@ -30,7 +30,7 @@ export default function InfoCard({ caseData, lawyerData }) {
         <Grid container spacing={2} columns={12}>
           <Grid item xs={12} md={6}>
             <Item className="h-full mt-md-0 flex">
-              <div className="ml-12 mt-12">
+              <div className="mt-12">
                 <h1
                   className="py-1 font-semibold text-base textWidthLimit"
                   style={{ color: theme.palette.primary.main }}
@@ -56,14 +56,14 @@ export default function InfoCard({ caseData, lawyerData }) {
             </Item>
           </Grid>
           <Grid item xs={12} md={6}>
-            <Item className="flex items-center res-flex-direction mt-5 mt-md-0 msg-mo dash-monavocat-tab">
-              <div className="flex">
+            <Item className="flex flex-direction mt-5 mt-md-0 msg-mo dash-monavocat-tab overflow-hidden items-center justify-between">
+              <div className="flex flex-direction res-item-center">
                 <Avatar
-                  className="avatar w-72 h-72 p-8 box-content mon-avocate ml-24"
+                  className="avatar w-72 h-72 p-8 box-content mon-avocate ml-0 ml-lg-5"
                   alt="user photo"
                   src={lawyerData?.profile || "assets/images/logos/profile.jpg"}
                 />
-                <div className="ml-12">
+                <div className="pl-12 text-monavocat">
                   <h1
                     className="py-1 font-semibold text-base textWidthLimit mt-12	"
                     style={{ color: theme.palette.primary.main }}
@@ -101,7 +101,7 @@ export default function InfoCard({ caseData, lawyerData }) {
                 }}
                 variant="contained"
                 color="secondary"
-                className="mr-16 rounded float-right ml-auto w-auto whitespace-no-wrap linkButton"
+                className="mr-16 rounded whitespace-no-wrap linkButton"
               >
                 Messagerie
               </Button>

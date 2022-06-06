@@ -372,23 +372,37 @@ input[type="file"]::-webkit-file-upload-button {
 input[type="file"]::file-selector-button {
   visibility: hidden;
 }
-.dash-monavocat-tab {
+/* .dash-monavocat-tab {
   flex-direction: column;
-}
+} */
 .msg-pop-up{
   width: 100%;
   max-width: 210px;
 }
-@media screen and (max-width: 1700px) {
+.dash-monavocat-tab .linkButton {
+  max-width: 150px;
+  width: 100%;
+}
+.dash-monavocat-tab{
+  min-height: 165px;
+}
+
+@media screen and (max-width: 1700px) and (min-width: 992px) {
   .dash-monavocat-tab {
     flex-direction: column;
   }
-  .dash-monavocat-tab button {
+}
+
+@media screen and (max-width: 1700px) {
+  /* .dash-monavocat-tab button {
     margin: 10px 0px !important;
-  }
+  } */
 }
 
 @media screen and (max-width: 767px) {
+  .dash-monavocat-tab button {
+    margin: 10px 0px !important;
+  }
   .caseManagementTabs
     .MuiTabs-flexContainer.muiltr-heg063-MuiTabs-flexContainer {
     justify-content: left;
@@ -396,6 +410,31 @@ input[type="file"]::file-selector-button {
   .res-flex-direction {
     flex-direction: column;
   }
+  .flex-direction{
+    flex-direction: column;
+  }
+  .muiltr-11hdfzg .FusePageSimple-header{
+     display: flex;
+     padding-top: 0px;
+  }
+  .muiltr-11hdfzg .FusePageSimple-header p{
+    font-size: 25px;
+ }
+ .muiltr-mhc70k-MuiGrid-root {
+	margin-top: 0px;
+	width: 100%;
+	margin-left: 0px;
+}
+.text-monavocat{
+  text-align: center;
+}
+.textWidthLimit {
+	width: 25rem;
+}
+.muiltr-mhc70k-MuiGrid-root > .MuiGrid-item {
+	padding-left: 0px;
+  padding-top: 0px;
+}
   .message-tab-header {
     flex-direction: column;
   }
@@ -446,7 +485,18 @@ input[type="file"]::file-selector-button {
   .doc-button{
     width: 100%;
   }
+  .res-item-center{
+    align-items: center;
+  }
 }
+
+@media screen and (max-width: 572px) {
+.fc .fc-daygrid-more-link {
+	top: -29px;
+}
+}
+
+
 .text-message {
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
