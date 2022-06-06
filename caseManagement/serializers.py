@@ -58,6 +58,7 @@ class GetCaseDocumentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = caseManagementDocuments
         fields = '__all__'
+        depth = 0
 
 
 class CaseTaskFilterSerializer(serializers.ModelSerializer):
@@ -157,6 +158,9 @@ class DashboardTaskSerializer(serializers.ModelSerializer):
 
 
 class DashboardClientCaseSerializer(serializers.ModelSerializer):
+    GetCaseDocumentsSerializer.Meta.depth = 1
+    case_management_documents = GetCaseDocumentsSerializer(many=True, read_only=True)
+
     class Meta:
         model = CaseManagement
         fields = ["is_deleted", "id", "created_date", "updated_date", "case_name", "status", "type", "unique_code",
@@ -212,6 +216,7 @@ class RetrieveClientGroupSerializer(serializers.ModelSerializer):
                         response["group_message"])
             un_read_count = count if count > 0 else None
         response["group_message"] = sorted(response["group_message"], key=lambda x: x["id"])
-        response["group_message"] = response["group_message"].pop() if len(response["group_message"]) > 0 else {"message": ""}
+        response["group_message"] = response["group_message"].pop() if len(response["group_message"]) > 0 else {
+            "message": ""}
         response["un_read_count"] = un_read_count
         return response

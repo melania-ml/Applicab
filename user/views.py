@@ -129,15 +129,12 @@ class registerClient(APIView):
         if clientType == "Client":
             stPasswordText = {**emailText.setPassword(), **emailText.commonUrls()}
             stPasswordText['otp'] = emailOtp
-            stPasswordText['text1'] = stPasswordText['text1'].format(
-                userName=serializer.data['last_name'] + " " + serializer.data['first_name'])
+
             stPasswordText['button_url'] = stPasswordText['button_url'] + str(serializer.data['id'])
         else:
             stPasswordText = {**emailText.setLawyerPassword(), **emailText.commonUrls()}
 
             stPasswordText['otp'] = emailOtp
-            stPasswordText['text1'] = stPasswordText['text1'].format(
-                userName=serializer.data['last_name'] + " " + serializer.data['first_name'])
             stPasswordText['button_url'] = stPasswordText['button_url'] + str(serializer.data['id'])
 
         send_email([serializer.data['email']],
@@ -220,8 +217,7 @@ class validateEmailOtp(APIView):
             userData.save()
             stPasswordText = {**emailText.setPassword(), **emailText.commonUrls()}
             stPasswordText['otp'] = emailOtp
-            stPasswordText['text1'] = stPasswordText['text1'].format(
-                userName=userData.last_name + " " + userData.first_name)
+
             stPasswordText['button_url'] = stPasswordText['button_url'] + str(userData.id)
             send_email([userData.email],
                        'Saisissez ' + str(emailOtp) + ' comme code de confirmation Applicab', 'email.html',
@@ -370,12 +366,10 @@ class userUpdateViewSet(generics.RetrieveUpdateDestroyAPIView):
         if is_lawyer:
             stPasswordText = {**emailText.setLawyerPassword(), **emailText.commonUrls()}
             stPasswordText['otp'] = emailOtp
-            stPasswordText['text1'] = stPasswordText['text1'].format(userName=lawyerName)
             stPasswordText['button_url'] = stPasswordText['button_url'] + str(user_id)
         else:
             stPasswordText = {**emailText.setPassword(), **emailText.commonUrls()}
             stPasswordText['otp'] = emailOtp
-            stPasswordText['text1'] = stPasswordText['text1'].format(userName=lawyerName)
             stPasswordText['button_url'] = stPasswordText['button_url'] + str(user_id)
         send_email([email],
                    'Saisissez ' + str(emailOtp) + ' comme code de confirmation Applicab', 'email.html',

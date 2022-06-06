@@ -4,8 +4,8 @@ from altata_sasu.settings import *
 def setPassword():
     textDict = {
         'title': 'Confirmez votre adresse e-mail 💌',
-        'text1': 'Bonjour {userName},',
-        'text2': 'Votre avocat vous a invité à rejoindre votre Espace client Applicab.',
+        'text1': 'Bonjour',
+        'text2': 'Votre avocat vous invite à rejoindre votre Espace client Applicab.',
         'text3': "Votre espace client sécurisé vous permet télécharger les documents mis à votre disposition, consulter l'état d'avancement du dossier, les diligences accomplies et celles restant à accomplir, le calendrier de l'affaire, etc.",
         'text4': "Votre code de confirmation est le suivant.",
         'text5': 'Copiez collez le simplement ou bien saisissez le dans votre interface Applicab pour poursuivre votre inscription.',
@@ -21,7 +21,7 @@ def setPassword():
 def setLawyerPassword():
     textDict = {
         'title': 'Confirmez votre adresse e-mail 💌',
-        'text1': 'Bonjour {userName},',
+        'text1': 'Bonjour',
         'text2': 'Merci de votre inscription à Applicab !',
         'text3': "Votre code de confirmation est le suivant.",
         'text4': "Copiez collez le simplement ou bien saisissez le dans votre interface Applicab pour poursuivre votre inscription.",
@@ -119,7 +119,7 @@ def welcomeLawyerText():
         'text1': 'Bonjour {userName},',
         'text2': 'Votre espace personnel a été crée avec succès.',
         'text3': "Nous sommes ravis de vous accueillir au sein de notre communauté d’avocats.",
-        'text4': "💡 L’idée : vous simplifier la vie et vous aider à réinvente la relation avocat - client.",
+        'text4': "💡 L’idée : vous simplifier la vie et vous aider à réinventer la relation avocat - client.",
         'text5': "Pour y accéder, cliquez sur le bouton suivant:",
         'button_text': 'Accéder à mon compte',
         'footer_text1': 'Bonne navigation !',
@@ -134,7 +134,7 @@ def commonUrls():
         'faceBook_image': Api_url + 'uploads/mail_template_img/faceBook.png',
         'Instagram_image': Api_url + 'uploads/mail_template_img/Instagram.png',
         'Linkedin_image': Api_url + 'uploads/mail_template_img/Linkedin.png',
-        'logo_image': Api_url + "uploads/mail_template_img/Logo.png",
+        'logo_image': Api_url + "uploads/mail_template_img/applicab.png",
         'cube_image': Api_url + 'uploads/mail_template_img/cube.png',
         'Linkedin_url': Linkedin_url,
         'faceBook_url': faceBook_url,
