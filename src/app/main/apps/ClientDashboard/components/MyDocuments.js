@@ -44,6 +44,9 @@ export default function MyDocuments({ documents, caseData }) {
                     return (
                       <TableRow key={item?.id} hover className="max-h-80">
                         <TableCell className="font-medium">
+                          {item.case_task_id.name}
+                        </TableCell>
+                        <TableCell className="font-medium">
                           {item.file_name}
                         </TableCell>
                         <TableCell className="sm:table-cell">
