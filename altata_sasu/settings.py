@@ -33,9 +33,9 @@ ALLOWED_HOSTS = ['*']
 AUTH_USER_MODEL = 'user.User'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Application definition
-Api_url = "http://178.79.138.121:8080/"
-Admin_url = 'http://applicab.admin.sctestingsite.com/'
-site_url = 'http://applicab.admin.sctestingsite.com/login'
+Api_url = "https://backend.applicab-avocats.com/"
+Admin_url = 'https://app.applicab-avocats.com/'
+site_url = 'https://app.applicab-avocats.com/login'
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -86,33 +86,33 @@ TEMPLATES = [
         },
     },
 ]
-
+USE_X_FORWARDED_HOST = True
 WSGI_APPLICATION = 'altata_sasu.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'applicab_samcom',
-        'USER': 'admin',
-        'PASSWORD': 'Sam#1234',
-        'HOST': '85.159.209.23',
-        'PORT': '5432',
-    }
-}
-#CLIENT-DB
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'postgres',
-#         'USER': 'altata',
-#         'PASSWORD': 'altata@0987#',
-#         'HOST': '13.38.87.178',
+#         'NAME': 'applicab_samcom',
+#         'USER': 'admin',
+#         'PASSWORD': 'Sam#1234',
+#         'HOST': '85.159.209.23',
 #         'PORT': '5432',
 #     }
 # }
+#CLIENT-DB
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgres',
+        'USER': 'altata',
+        'PASSWORD': 'altata@0987#',
+        'HOST': '13.38.87.178',
+        'PORT': '5432',
+    }
+}
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
@@ -164,8 +164,8 @@ MEDIA_URL = '/uploads/'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 EMAIL_HOST = 'ssl0.ovh.net'
-EMAIL_HOST_USER = 'support@applicab-avocats.com'
-EMAIL_HOST_PASSWORD = "(*nM45!ynq>7M#'."
+EMAIL_HOST_USER = 'no-reply@applicab-avocats.com'
+EMAIL_HOST_PASSWORD = "Applicab123@"
 EMAIL_PORT = 587
 
 ATA_UPLOAD_MAX_MEMORY_SIZE = 50000000

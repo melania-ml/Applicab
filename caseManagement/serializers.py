@@ -143,7 +143,7 @@ class DashboardTaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = caseManagementTask
         fields = '__all__'
-        depth = 1
+        depth = 2
 
     def to_representation(self, instance):
         response = super().to_representation(instance)

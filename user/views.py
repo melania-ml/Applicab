@@ -105,7 +105,7 @@ class registerClient(APIView):
             case_management_id__in=caseData).values_list('id', flat=True))
         groupUnDeletedChat = list(caseManagementChatGroup.objects.filter(
             case_management_id__in=caseData).values_list('id', flat=True))
-        groupChat = groupDeletedChat+groupUnDeletedChat
+        groupChat = groupDeletedChat + groupUnDeletedChat
         caseManagementGroupMessage.objects.filter(group_id__in=groupChat).hard_delete()
         caseManagementGroupMessage.deleted_objects.filter(group_id__in=groupChat).hard_delete()
         caseManagementChatGroup.objects.filter(case_management_id__in=caseData).hard_delete()
@@ -117,7 +117,7 @@ class registerClient(APIView):
         Nature.objects.filter(user_id=user.id).hard_delete()
 
         # Removing client's messages
-        clients = list(User.objects.filter(lawyer_id=user.id).values_list('id', flat=True)) #.delete()
+        clients = list(User.objects.filter(lawyer_id=user.id).values_list('id', flat=True))  # .delete()
         clients.append(user.id)
         caseManagementGroupMessage.objects.filter(message_send_by__in=clients).hard_delete()
         caseManagementGroupMessage.deleted_objects.filter(message_send_by__in=clients).hard_delete()
@@ -127,13 +127,14 @@ class registerClient(APIView):
 
     def sendSetPasswordOtp(self, serializer, emailOtp, clientType):
         if clientType == "Client":
-            stPasswordText = emailText.setPassword() | emailText.commonUrls()
+            stPasswordText = {**emailText.setPassword(), **emailText.commonUrls()}
             stPasswordText['otp'] = emailOtp
             stPasswordText['text1'] = stPasswordText['text1'].format(
                 userName=serializer.data['last_name'] + " " + serializer.data['first_name'])
             stPasswordText['button_url'] = stPasswordText['button_url'] + str(serializer.data['id'])
         else:
-            stPasswordText = emailText.setLawyerPassword() | emailText.commonUrls()
+            stPasswordText = {**emailText.setLawyerPassword(), **emailText.commonUrls()}
+
             stPasswordText['otp'] = emailOtp
             stPasswordText['text1'] = stPasswordText['text1'].format(
                 userName=serializer.data['last_name'] + " " + serializer.data['first_name'])
@@ -175,6 +176,8 @@ class loginClient(APIView):
             authenticated = user.check_password(password)
 
             if authenticated:
+                user.terms_condition = True
+                user.save()
                 serializer = self.serializers_class(user, context={'request': request})
                 update_last_login(None, user)
                 res = ResponseInfo(serializer.data, USER_LOGGED_IN_SUCCESSFULLY, True, status.HTTP_200_OK)
@@ -215,7 +218,7 @@ class validateEmailOtp(APIView):
             userData.email_token = setPasswordToken.lower()
             userData.email_otp_date = datetime.now()
             userData.save()
-            stPasswordText = emailText.setPassword() | emailText.commonUrls()
+            stPasswordText = {**emailText.setPassword(), **emailText.commonUrls()}
             stPasswordText['otp'] = emailOtp
             stPasswordText['text1'] = stPasswordText['text1'].format(
                 userName=userData.last_name + " " + userData.first_name)
@@ -252,10 +255,10 @@ class setPassword(APIView):
 
     def welcomeEmail(self, userData):
         if userData.is_lawyer:
-            welcomeText = emailText.welcomeLawyerText() | emailText.commonUrls()
+            welcomeText = {**emailText.welcomeLawyerText(), **emailText.commonUrls()}
             welcomeText['text1'] = welcomeText['text1'].format(userName=userData.last_name + " " + userData.first_name)
         else:
-            welcomeText = emailText.welcomeClientText() | emailText.commonUrls()
+            welcomeText = {**emailText.welcomeClientText(), **emailText.commonUrls()}
             welcomeText['text1'] = welcomeText['text1'].format(userName=userData.last_name + " " + userData.first_name)
         send_email([userData.email], 'Bienvenue sur Applicab !', 'email.html', welcomeText)
 
@@ -272,7 +275,7 @@ class forgotPassword(APIView):
             userData.forgot_password_token = forgotPasswordToken
             userData.save()
 
-            forgotPasswordText = emailText.forgotPassword() | emailText.commonUrls()
+            forgotPasswordText = {**emailText.forgotPassword(), **emailText.commonUrls()}
             forgotPasswordText['text1'] = forgotPasswordText['text1'].format(
                 userName=userData.last_name + " " + userData.first_name)
             forgotPasswordText['text4'] = forgotPasswordText['text4'].format(userEmail=userData.email)
@@ -365,12 +368,12 @@ class userUpdateViewSet(generics.RetrieveUpdateDestroyAPIView):
 
     def sendOtpEmail(self, emailOtp, email, lawyerName, user_id, is_lawyer):
         if is_lawyer:
-            stPasswordText = emailText.setLawyerPassword() | emailText.commonUrls()
+            stPasswordText = {**emailText.setLawyerPassword(), **emailText.commonUrls()}
             stPasswordText['otp'] = emailOtp
             stPasswordText['text1'] = stPasswordText['text1'].format(userName=lawyerName)
             stPasswordText['button_url'] = stPasswordText['button_url'] + str(user_id)
         else:
-            stPasswordText = emailText.setPassword() | emailText.commonUrls()
+            stPasswordText = {**emailText.setPassword(), **emailText.commonUrls()}
             stPasswordText['otp'] = emailOtp
             stPasswordText['text1'] = stPasswordText['text1'].format(userName=lawyerName)
             stPasswordText['button_url'] = stPasswordText['button_url'] + str(user_id)
@@ -400,13 +403,15 @@ class uploadUserCsvViewSet(APIView):
                         or not row['Mobile'] or not row['Comments'] or not row['Fixe'] or not row['Profession'] \
                         or not row['Department'] or not row['DOB'] or not row['Nationality'] or not row['Native City'] \
                         or not row['Legal Status'] or not row['Country'] or not row['Address'] or not row['City'] \
-                        or not row['First Name'] or not row['Last Name'] or not row['RCS City'] or not row['Company Name']:
+                        or not row['First Name'] or not row['Last Name'] or not row['RCS City'] or not row[
+                    'Company Name']:
                     resString += str(_) + ','
                     nullData = True
             if nullData:
                 res = ResponseInfo({}, resString, False, status.HTTP_200_OK)
                 return Response(res.success_payload(), status=status.HTTP_200_OK)
         except Exception as e:
+            print(e)
             res = ResponseInfo([], UPLOAD_VALID_CSV, False, status.HTTP_401_UNAUTHORIZED)
             return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
 
@@ -488,4 +493,21 @@ class clientTypeViewSet(APIView):
             return Response(res.success_payload(), status=status.HTTP_200_OK)
         except Exception as err:
             res = ResponseInfo([], SOMETHING_WENT_WRONG, False, status.HTTP_401_UNAUTHORIZED)
+            return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
+
+class termsAndCondition(APIView):
+    def post(self, requests):
+        try:
+            _dict = {'terms_condition': False}
+            userData = User.objects.get(email=requests.data["email"])
+            if userData and userData.terms_condition:
+                _dict['terms_condition'] = True
+                res = ResponseInfo(_dict, SUCCESS, True, status.HTTP_200_OK)
+                return Response(res.success_payload(), status=status.HTTP_200_OK)
+
+            res = ResponseInfo(_dict, SUCCESS, True, status.HTTP_200_OK)
+            return Response(res.success_payload(), status=status.HTTP_200_OK)
+        except Exception as err:
+            res = ResponseInfo(_dict, SOMETHING_WENT_WRONG, True, status.HTTP_401_UNAUTHORIZED)
             return Response(res.success_payload(), status=status.HTTP_401_UNAUTHORIZED)

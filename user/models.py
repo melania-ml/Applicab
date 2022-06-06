@@ -140,6 +140,7 @@ class User(AbstractUser):
     department = models.CharField(max_length=255,null=True, blank=True)
     lawyer_id = models.ForeignKey('self', blank=True, null=True,
                                   on_delete=models.DO_NOTHING, db_column='lawyer_id')
+    terms_condition = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

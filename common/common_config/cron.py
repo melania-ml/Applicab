@@ -29,7 +29,7 @@ def taskLawyerNotification():
                     inviteDate = sendInviteData.strftime("%m/%d/%Y, %H:%M")
                     if inviteDate == currantDate:
                         if case.case_management_id and case.case_management_id.lawyer_id:
-                            notificationEmailText = emailText.lawyerTaskNotification() | emailText.commonUrls()
+                            notificationEmailText = {**emailText.lawyerTaskNotification(), **emailText.commonUrls()}
                             notificationEmailText['text2'] = notificationEmailText['text2'].format(
                                 taskName=case.name, taskStatus=case.status)
                             send_email([case.case_management_id.lawyer_id.email],

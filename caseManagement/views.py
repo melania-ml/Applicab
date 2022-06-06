@@ -284,10 +284,11 @@ class caseManagementTaskView(APIView):
             serializer = self.serializers_class(taskList, data=bodyParams)
             if serializer.is_valid():
                 serializer.save()
+                caseData = CaseManagement.objects.get(id=serializer.data['case_management_id'])
 
                 # prepare Email Notification
                 if sendNotification:
-                    self.taskNotificationEmail(bodyParams['client_id'])
+                    self.taskNotificationEmail(bodyParams['client_id'], caseData.case_name)
                     self.sendTaskMessage(bodyParams['case_management_id'], request.user, serializer.data['message'],
                                          serializer.data['subject'], serializer.data['notification_date'])
                 res = ResponseInfo(serializer.data, SUCCESS, True,
@@ -352,12 +353,12 @@ class caseManagementTaskView(APIView):
                                status.HTTP_401_UNAUTHORIZED)
             return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
 
-    def taskNotificationEmail(self, client_id):
+    def taskNotificationEmail(self, client_id, case_name):
         userData = User.objects.filter(id__in=client_id)
         for user in userData:
-            notificationEmailText = emailText.taskNotification() | emailText.commonUrls()
+            notificationEmailText = {**emailText.taskNotification(), **emailText.commonUrls()}
             send_email([user.email],
-                       'Altata - Notification 🔔', 'email.html',
+                       case_name + ' - Notification 🔔', 'email.html',
                        notificationEmailText)
 
     def sendTaskMessage(self, caseId, lawyerId, message, subject, notificationDate):
@@ -380,9 +381,10 @@ class caseManagementCreateTaskView(APIView):
 
         if serializer.is_valid():
             serializer.save()
+            caseData = CaseManagement.objects.get(id=bodyParams['case_management_id'])
             # prepare Email Notification
             if bodyParams['send_notification'] and 'client_id' in bodyParams:
-                caseManagementTaskView.taskNotificationEmail(self, bodyParams['client_id'])
+                caseManagementTaskView.taskNotificationEmail(self, bodyParams['client_id'], caseData.case_name)
                 caseManagementTaskView.sendTaskMessage(self, bodyParams['case_management_id'], request.user,
                                                        serializer.data['message'], serializer.data['subject'],
                                                        serializer.data['notification_date'])
@@ -542,7 +544,7 @@ class caseGroupMessageViewSet(APIView):
             return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
 
     def messageEmailNotification(self, lawyer_email, case_name):
-        notificationEmailText = emailText.MessageLawyerNotification() | emailText.commonUrls()
+        notificationEmailText = {**emailText.MessageLawyerNotification() , **emailText.commonUrls()}
         send_email([lawyer_email],
                    case_name + ' - Notification 🔔', 'email.html',
                    notificationEmailText)

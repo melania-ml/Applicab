@@ -16,4 +16,5 @@ urlpatterns = [
     path('uploadUserCsv', uploadUserCsvViewSet.as_view(), name="uploadUserCsv"),
     path('getClientTitle', clientTitleViewSet.as_view(), name="getClientTitle"),
     path('getClientType', clientTypeViewSet.as_view(), name="getClientType"),
+    path('getTermsAndCondition', termsAndCondition.as_view(), name="termsAndCondition"),
 ]

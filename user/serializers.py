@@ -15,7 +15,7 @@ class UserSerializer(serializers.ModelSerializer):
                   'last_name', 'phone_number', 'password', 'email_otp', 'email_token', 'client_type', 'legal_status',
                   'title', 'company_name', 'country', 'nationality', 'address', 'city', 'postal_code', 'capital_social',
                   'RCS_city', 'native_city', 'number', 'fixe', 'comments', 'tags', 'profession', 'status', 'department',
-                  'lawyer_id', 'is_lawyer', 'date_of_birth'
+                  'lawyer_id', 'is_lawyer', 'date_of_birth','civil_status'
                   ]
 
     def create(self, validated_data):
@@ -31,7 +31,7 @@ class LoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['password', 'email', 'jwtoken', 'id', 'first_name', 'last_name', 'profile',
-                  'last_login', 'is_superuser', 'is_lawyer']
+                  'last_login', 'is_superuser', 'is_lawyer', 'terms_condition']
         read_only_fields = ['jwtoken']
         depth = 1
 
