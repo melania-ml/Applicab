@@ -16,6 +16,7 @@ urlpatterns = [
     path('addDefaultCaseTask', caseManagementCreateTaskView.as_view(), name="addCases"),
     path('bulkReplicaCaseTask', caseManagementTaskView.as_view(), name="addCases"),
     path('uploadCaseDocuments', caseManagementDocumentsView.as_view(), name="uploadCaseDocuments"),
+    path('deleteCaseDocuments', caseManagementDocumentsView.as_view(), name="deleteCaseDocuments"),
     path('bulkUpdateTask', bulkCaseTaskOperationsViewSet.as_view(), name="bulkUpdateTask"),
     path('bulkDeleteTask', bulkCaseTaskOperationsViewSet.as_view(), name="bulkDeleteTask"),
     path('bulkRestoreTask', bulkCaseTaskOperationsViewSet.as_view(), name="bulkRestoreTask"),

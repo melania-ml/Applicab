@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 
 from django.db.models import Q
@@ -441,10 +442,25 @@ class caseManagementDocumentsView(APIView):
             res = ResponseInfo({"data": serializer.errors}, "something went wrong", False,
                                status.HTTP_401_UNAUTHORIZED)
             return Response(res.success_payload(), status.HTTP_401_UNAUTHORIZED)
-
         except Exception as err:
             res = ResponseInfo(err, SOMETHING_WENT_WRONG, False,
                                status.HTTP_401_UNAUTHORIZED)
+            return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
+
+    def delete(self, request):
+        try:
+            docIds = request.data['document_id']
+            documents = caseManagementDocuments.objects.filter(id__in=docIds)
+            for dock in documents:
+                try:
+                    os.unlink('uploads/'+str(dock.case_document))
+                except Exception:
+                    pass
+            documents.hard_delete()
+            res = ResponseInfo([], SUCCESS, True, status.HTTP_200_OK)
+            return Response(res.success_payload(), status=status.HTTP_200_OK)
+        except Exception as err:
+            res = ResponseInfo(err, SOMETHING_WENT_WRONG, False,status.HTTP_401_UNAUTHORIZED)
             return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
 
 
