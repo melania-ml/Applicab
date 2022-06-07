@@ -442,7 +442,9 @@ function EtapesDialog({
                   }}
                   onOpen={() => setIsDialogOpen(true)}
                   onClose={() => {
-                    allFields.notification_date && addNotification();
+                    allFields.notification_date &&
+                      !notifications?.length &&
+                      addNotification();
                     setIsDialogOpen(false);
                   }}
                   ampm={false}

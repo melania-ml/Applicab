@@ -87,6 +87,8 @@ const defaultValues = {
 };
 
 function Login() {
+  const [showPassword, setShowPassword] = useState(false);
+  const [isRememberMe, setIsRememberMe] = useState(true);
   const dispatch = useDispatch();
   const login = useSelector(({ auth }) => auth.login);
   const {
@@ -101,8 +103,6 @@ function Login() {
 
   const { isValid, dirtyFields, errors } = formState;
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [isRememberMe, setIsRememberMe] = useState(true);
   useEffect(() => {
     if (localStorage.getItem("email") && localStorage.getItem("password")) {
       setValue("email", localStorage.getItem("email") || "", {
@@ -226,7 +226,7 @@ function Login() {
                   )}
                 />
 
-                <div className="flex flex-row items-center justify-between pb-32">
+                <div className="flex flex-row items-center justify-between">
                   <FormGroup>
                     <FormControlLabel
                       control={
@@ -242,7 +242,48 @@ function Login() {
                     Mot de passe oublié ?
                   </Link>
                 </div>
-
+                <div className="flex flex-row">
+                  <FormGroup>
+                    <FormControlLabel
+                      control={<Checkbox disabled defaultChecked={true} />}
+                      label={
+                        <p>
+                          J'accepte les{" "}
+                          <a
+                            href="http://www.applicab-avocat.com/gtc"
+                            target={"blank"}
+                            style={{
+                              textDecoration: "none"
+                            }}
+                          >
+                            conditions générales
+                          </a>{" "}
+                          et d'utilisation d’applicab
+                        </p>
+                      }
+                    />
+                  </FormGroup>
+                </div>
+                <div className="flex flex-row pb-32">
+                  <FormGroup>
+                    <FormControlLabel
+                      control={<Checkbox disabled defaultChecked={true} />}
+                      label={
+                        <p>
+                          J'accepte le{" "}
+                          <a
+                            href="http://www.applicab-avocat.com/gdpr"
+                            target={"blank"}
+                            style={{ textDecoration: "none" }}
+                          >
+                            traitement de mes données
+                          </a>{" "}
+                          conforméent à la charte vie privée d’applicab
+                        </p>
+                      }
+                    />
+                  </FormGroup>
+                </div>
                 <Button
                   type="submit"
                   variant="contained"
