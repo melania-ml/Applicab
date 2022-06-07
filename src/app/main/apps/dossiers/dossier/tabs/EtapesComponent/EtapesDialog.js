@@ -75,6 +75,7 @@ function EtapesDialog({
   const dispatch = useDispatch();
   const {
     etapeDialog: { data, props, type },
+    success,
     editDossierData,
     caseId,
     etapeId,
@@ -84,7 +85,7 @@ function EtapesDialog({
   } = useSelector(({ dossiers }) => dossiers);
 
   useEffect(() => {
-    if (type === "new") {
+    if (success && type === "new") {
       setAllFields({
         ...allFields,
         case_name: isCaseAdded
@@ -127,7 +128,7 @@ function EtapesDialog({
       });
       setNotifications(data.lawyer_notification?.map((e) => ({ count: e })));
     }
-  }, [data, type]);
+  }, [data, type, props.open, success]);
 
   const onFileUpload = (e) => {
     setFiles(e.target.files);
@@ -185,7 +186,10 @@ function EtapesDialog({
             : isCaseAdded
             ? caseId
             : editDossierData.data.id,
-          send_notification: true
+          send_notification: true,
+          lawyer_notification: notifications.map(
+            (notification) => notification.count
+          )
         })
       );
     }
