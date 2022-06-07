@@ -15,7 +15,8 @@ import {
   updateEtapes,
   addEtapes,
   uploadDocument,
-  getDocuments
+  getDocuments,
+  deleteDocument
 } from "app/store/slices/dossiersSlice";
 
 //material-ui
@@ -72,6 +73,7 @@ function EtapesDialog({
   const [isInvite, setIsInvite] = useState(false);
   const [isAddNotification, setIsAddNotification] = useState(false);
   const [isDateAdded, setIsDateAdded] = useState(false);
+  const [deletedEtapeIds, setDeletedEtapeIds] = useState([]);
   const dispatch = useDispatch();
   const {
     etapeDialog: { data, props, type },
@@ -82,7 +84,7 @@ function EtapesDialog({
     isCaseAdded,
     messageHeader
   } = useSelector(({ dossiers }) => dossiers);
-
+  const [documentData, setDocumentData] = useState([]);
   useEffect(() => {
     if (type === "new") {
       setAllFields({
@@ -126,8 +128,9 @@ function EtapesDialog({
         position: data.position
       });
       setNotifications(data.lawyer_notification?.map((e) => ({ count: e })));
+      setDocumentData(data?.case_documents);
     }
-  }, [data, type]);
+  }, [data, type, props.open]);
 
   const onFileUpload = (e) => {
     setFiles(e.target.files);
@@ -157,6 +160,11 @@ function EtapesDialog({
       ? dispatch(closeEditEtapeDialog())
       : dispatch(closeNewEtapeDialog());
   }
+
+  const removeDocument = (doc) => {
+    setDeletedEtapeIds([...deletedEtapeIds, doc.id]);
+    setDocumentData(documentData.filter((document) => !document.id === doc.id));
+  };
 
   const sendMessage = async () => {
     if (type === "edit") {
@@ -202,6 +210,9 @@ function EtapesDialog({
       formData.append("case_task_id", type === "new" ? etapeId : data.id);
       await dispatch(uploadDocument(formData));
       setFiles(null);
+    }
+    if (deletedEtapeIds && deletedEtapeIds?.length > 0) {
+      dispatch(deleteDocument(deletedEtapeIds));
     }
     setTimeout(() => {
       dispatch(getDocuments(caseId));
@@ -296,6 +307,9 @@ function EtapesDialog({
       formData.append("case_task_id", type === "new" ? etapeId : data.id);
       dispatch(uploadDocument(formData));
       setFiles(null);
+    }
+    if (deletedEtapeIds && deletedEtapeIds?.length > 0) {
+      dispatch(deleteDocument(deletedEtapeIds));
     }
     setTimeout(() => {
       dispatch(getDocuments(caseId));
@@ -658,11 +672,29 @@ function EtapesDialog({
             />
           </Button>
         </div>
-        {data?.case_documents &&
-          data.case_documents.length > 0 &&
-          data.case_documents.map((doc) => {
-            return <p>{doc.file_name}</p>;
-          })}
+        <div className="mt-2">
+          {documentData &&
+            documentData.length > 0 &&
+            documentData.map((doc) => {
+              return (
+                <div className="flex align-center">
+                  <p>{doc.file_name}</p>{" "}
+                  <Icon
+                    style={{
+                      fontSize: "large",
+                      color: "#BABABF",
+                      cursor: "pointer",
+                      marginLeft: 5,
+                      color: "black"
+                    }}
+                    onClick={(e) => removeDocument(doc)}
+                  >
+                    clear
+                  </Icon>
+                </div>
+              );
+            })}
+        </div>
       </DialogContent>
       <DialogActions className="justify-between p-4 pb-16 res-flex-direction res-flex-direction">
         <div className="px-16">

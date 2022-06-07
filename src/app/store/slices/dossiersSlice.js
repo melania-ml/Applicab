@@ -406,6 +406,20 @@ export const uploadDocument = createAsyncThunk(
   }
 );
 
+export const deleteDocument = createAsyncThunk(
+  "dossiersApp/dossiers/deleteDocument",
+  async (ids, { dispatch }) => {
+    await axios
+      .delete("api/caseManagement/deleteCaseDocuments", {
+        data: { document_id: ids }
+      })
+      .then(() => {})
+      .catch((errors) => {
+        return dispatch(showMessage(errors));
+      });
+  }
+);
+
 export const getDocuments = (id) => async (dispatch) => {
   await axios
     .post(`api/common/filterData/caseManagement/caseManagementDocuments`, {
