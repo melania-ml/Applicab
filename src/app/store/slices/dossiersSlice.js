@@ -156,6 +156,7 @@ export const addCase = createAsyncThunk(
           dispatch(showMessage({ message: data.data.message }));
           dispatch(setIsCaseAdded(true));
           dispatch(setCaseId(data.data.data?.id));
+          dispatch(setListObj({ case_management_id: data.data.data?.id }));
           dispatch(
             getMessages(data.data.data?.id, getState().dossiers.groupId)
           );
@@ -316,7 +317,7 @@ export const getMessages =
         dispatch(readGroupMessages(group_id));
       })
       .catch((error) => {
-        dispatch(showMessage({ message: error.response.message }));
+        dispatch(showMessage({ message: error?.response?.message }));
       });
   };
 
