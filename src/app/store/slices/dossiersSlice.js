@@ -356,10 +356,12 @@ export const addEtapes = createAsyncThunk(
           dispatch(getDocuments(getState().dossiers.caseId));
           dispatch(showMessage({ message: data.data.message }));
           dispatch(setIsLoading(false));
+          return dispatch(addEtapeSuccess());
         }
       })
       .catch((error) => {
-        return dispatch(showMessage({ message: error.response.message }));
+        dispatch(showMessage({ message: error.response.message }));
+        return dispatch(addEtapeError(error));
       });
   }
 );
@@ -440,7 +442,8 @@ const dossiersSlice = createSlice({
       props: {
         open: false
       },
-      data: null
+      data: null,
+      success: false
     },
     natures: [],
     procedures: [],
@@ -467,6 +470,12 @@ const dossiersSlice = createSlice({
   reducers: {
     setEtapeId: (state, action) => {
       state.etapeId = action.payload;
+    },
+    addEtapeSuccess: (state, action) => {
+      state.success = true;
+    },
+    addEtapeError: (state, action) => {
+      state.success = false;
     },
     setListObj: (state, action) => {
       state.listObj = action.payload;
@@ -596,6 +605,8 @@ const dossiersSlice = createSlice({
 
 export const {
   setEtapeId,
+  addEtapeSuccess,
+  addEtapeError,
   setIsLoading,
   setDossiers,
   setMessages,
