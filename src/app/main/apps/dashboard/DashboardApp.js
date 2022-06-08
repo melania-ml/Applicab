@@ -56,6 +56,8 @@ const Root = styled(FusePageSimple)(({ theme }) => ({
 }));
 
 function DashboardApp() {
+  const [status, setStatus] = useState("");
+  const [dossier, setDossier] = useState("");
   const [calendarData, setCalendarData] = useState([]);
   const dispatch = useDispatch();
   const pageLayout = useRef(null);
@@ -86,9 +88,19 @@ function DashboardApp() {
   return (
     <>
       <Root
-        header={<Filters callGetCalendarData={callGetCalendarData} />}
+        header={
+          <Filters
+            status={status}
+            setStatus={setStatus}
+            dossier={dossier}
+            setDossier={setDossier}
+            callGetCalendarData={callGetCalendarData}
+          />
+        }
         content={
           <Calendar
+            status={status}
+            dossier={dossier}
             calendarData={calendarData}
             callGetCalendarData={callGetCalendarData}
           />

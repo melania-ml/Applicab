@@ -6,9 +6,13 @@ import { getDossiers } from "app/store/slices/dossiersSlice";
 //material-ui
 import { Autocomplete, TextField } from "@mui/material";
 
-export default function Filters({ callGetCalendarData }) {
-  const [status, setStatus] = useState("");
-  const [dossier, setDossier] = useState("");
+export default function Filters({
+  status,
+  setStatus,
+  dossier,
+  setDossier,
+  callGetCalendarData
+}) {
   const { dossiers } = useSelector(({ dossiers }) => dossiers);
   const dispatch = useDispatch();
 

@@ -75,7 +75,12 @@ const Root = styled("div")(({ theme }) => ({
   }
 }));
 
-export default function Calendar({ calendarData, callGetCalendarData }) {
+export default function Calendar({
+  status,
+  dossier,
+  calendarData,
+  callGetCalendarData
+}) {
   const [currentDate, setCurrentDate] = useState();
   const [caseName, setCaseName] = useState("");
   const [caseId, setCaseId] = useState(null);
@@ -152,6 +157,8 @@ export default function Calendar({ calendarData, callGetCalendarData }) {
         callGetCalendarData={callGetCalendarData}
         caseName={caseName}
         caseIdDashboard={caseId}
+        status={status}
+        dossier={dossier}
       />
     </Root>
   );

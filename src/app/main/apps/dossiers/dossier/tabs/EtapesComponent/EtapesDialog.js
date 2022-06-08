@@ -45,7 +45,9 @@ function EtapesDialog({
   fromDashboard,
   callGetCalendarData,
   caseName,
-  caseIdDashboard
+  caseIdDashboard,
+  status,
+  dossier
 }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [files, setFiles] = useState(null);
@@ -224,7 +226,10 @@ function EtapesDialog({
       dispatch(getDocuments(caseId));
     }, 2000);
     if (fromDashboard) {
-      callGetCalendarData();
+      callGetCalendarData({
+        case_management_id: dossier,
+        status: status
+      });
     }
     dispatch(setIsLoading(false));
   };
@@ -324,7 +329,10 @@ function EtapesDialog({
       dispatch(getDocuments(caseId));
     }, 2000);
     if (fromDashboard) {
-      callGetCalendarData();
+      callGetCalendarData({
+        case_management_id: dossier,
+        status: status
+      });
     }
     dispatch(setIsLoading(false));
   };
