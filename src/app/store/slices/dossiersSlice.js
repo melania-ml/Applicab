@@ -370,7 +370,6 @@ export const addEtapes = createAsyncThunk(
 export const updateEtapes = createAsyncThunk(
   "dossiersApp/dossiers/updateEtapes",
   async (allfields, { dispatch, getState }) => {
-    dispatch(setIsLoading(true));
     await axios
       .put("api/caseManagement/updateCaseTask", allfields)
       .then((data) => {
@@ -378,7 +377,6 @@ export const updateEtapes = createAsyncThunk(
           dispatch(showMessage({ message: data.data.message }));
           if (getState().dossiers.caseId) {
             dispatch(getEtapes(getState().dossiers.listObj));
-            dispatch(getDocuments(getState().dossiers.caseId));
             dispatch(
               getMessages(
                 getState().dossiers.caseId,
@@ -386,7 +384,6 @@ export const updateEtapes = createAsyncThunk(
               )
             );
           }
-          dispatch(setIsLoading(false));
         }
       })
       .catch((errors) => {

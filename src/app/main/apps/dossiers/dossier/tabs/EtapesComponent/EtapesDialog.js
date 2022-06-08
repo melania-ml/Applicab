@@ -16,11 +16,11 @@ import {
   addEtapes,
   uploadDocument,
   getDocuments,
-  deleteDocument
+  deleteDocument,
+  setIsLoading
 } from "app/store/slices/dossiersSlice";
 
 //material-ui
-import DateTimePicker from "@mui/lab/DateTimePicker";
 import {
   Typography,
   Toolbar,
@@ -48,24 +48,6 @@ function EtapesDialog({
   caseIdDashboard
 }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [allFields, setAllFields] = useState({
-    position: "",
-    case_name: "",
-    name: "",
-    sub_name: "",
-    status: "A prévoir",
-    notification_date: null,
-    client_id: [],
-    subject: "",
-    message: `<p><b>Chère Madame, Cher Monsieur,</b></br>
-    Je vous confirme bien volontiers notre rendez-vous du ........... prochain à .. heures.</br></br>
-    <b>Je vous invite à me confirmer le numéro de téléphone sur lequel je pourrai vous joindre
-    Voici le lien pour participer à notre visioconférence.</br>
-    Je vous recevrai au (adresse du cabinet)</b></br></br>
-    Dans l'intervalle,</br>
-    Je vous prie de croire, <b>Chère Madame, Cher Monsieur,</b> à l'assurance de mes salutations
-    distinguées.</p>`
-  });
   const [files, setFiles] = useState(null);
   const [isValid, setIsValid] = useState(false);
   const [notifications, setNotifications] = useState([]);
@@ -85,9 +67,27 @@ function EtapesDialog({
     isCaseAdded,
     messageHeader
   } = useSelector(({ dossiers }) => dossiers);
+  const [allFields, setAllFields] = useState({
+    position: "",
+    case_name: "",
+    name: "",
+    sub_name: "",
+    status: "A prévoir",
+    notification_date: null,
+    client_id: [],
+    subject: data?.name || "",
+    message: `<p><b>Chère Madame, Cher Monsieur,</b></br>
+    Je vous confirme bien volontiers notre rendez-vous du ........... prochain à .. heures.</br></br>
+    <b>Je vous invite à me confirmer le numéro de téléphone sur lequel je pourrai vous joindre
+    Voici le lien pour participer à notre visioconférence.</br>
+    Je vous recevrai au (adresse du cabinet)</b></br></br>
+    Dans l'intervalle,</br>
+    Je vous prie de croire, <b>Chère Madame, Cher Monsieur,</b> à l'assurance de mes salutations
+    distinguées.</p>`
+  });
   const [documentData, setDocumentData] = useState([]);
   useEffect(() => {
-    if (success && type === "new") {
+    if (success || type === "new") {
       setAllFields({
         ...allFields,
         case_name: isCaseAdded
@@ -103,33 +103,34 @@ function EtapesDialog({
         message: ""
       });
       setNotifications([]);
-    }
-    if (data && Object.keys(data).length !== 0) {
-      const clientIdArr = data?.client_id?.map((a) => {
-        return a.id;
-      });
-      setAllFields({
-        ...allFields,
-        case_name: fromDashboard
-          ? caseName
-          : isCaseAdded
-          ? messageHeader?.case_name
-          : editDossierData?.data?.case_name,
-        name: data.name,
-        status: data.status || "A prévoir",
-        sub_name: data.sub_name,
-        subject: data.subject || data.name, //client requiremnt to put name if subject is not there
-        notification_date:
-          data.notification_date &&
-          getFormattedDateTime({
-            date: data.notification_date
-          }),
-        client_id: clientIdArr || [],
-        message: data.message,
-        position: data.position
-      });
-      setNotifications(data.lawyer_notification?.map((e) => ({ count: e })));
-      setDocumentData(data?.case_documents);
+    } else if (type === "edit") {
+      if (data && Object.keys(data).length !== 0) {
+        const clientIdArr = data?.client_id?.map((a) => {
+          return a.id;
+        });
+        setAllFields({
+          ...allFields,
+          case_name: fromDashboard
+            ? caseName
+            : isCaseAdded
+            ? messageHeader?.case_name
+            : editDossierData?.data?.case_name,
+          name: data.name,
+          status: data.status || "A prévoir",
+          sub_name: data.sub_name,
+          subject: data.subject || data.name, //client requiremnt to put name if subject is not there
+          notification_date:
+            data.notification_date &&
+            getFormattedDateTime({
+              date: data.notification_date
+            }),
+          client_id: clientIdArr || [],
+          message: data.message,
+          position: data.position
+        });
+        setNotifications(data.lawyer_notification?.map((e) => ({ count: e })));
+        setDocumentData(data?.case_documents);
+      }
     }
   }, [data, type, props.open, success]);
 
@@ -168,6 +169,21 @@ function EtapesDialog({
   };
 
   const sendMessage = async () => {
+    closeComposeDialog();
+    dispatch(setIsLoading(true));
+    if (files?.length > 0) {
+      const formData = new FormData();
+      for (let i = 0; i < files.length; i++) {
+        formData.append("case_document", files[i]);
+      }
+      formData.append(
+        "case_management_id",
+        fromDashboard ? caseIdDashboard : editDossierData.data.id
+      );
+      formData.append("case_task_id", type === "new" ? etapeId : data.id);
+      await dispatch(uploadDocument(formData));
+      setFiles(null);
+    }
     if (type === "edit") {
       await dispatch(
         updateEtapes({
@@ -201,20 +217,6 @@ function EtapesDialog({
         })
       );
     }
-    closeComposeDialog();
-    if (files?.length > 0) {
-      const formData = new FormData();
-      for (let i = 0; i < files.length; i++) {
-        formData.append("case_document", files[i]);
-      }
-      formData.append(
-        "case_management_id",
-        fromDashboard ? caseIdDashboard : editDossierData.data.id
-      );
-      formData.append("case_task_id", type === "new" ? etapeId : data.id);
-      await dispatch(uploadDocument(formData));
-      setFiles(null);
-    }
     if (deletedEtapeIds && deletedEtapeIds?.length > 0) {
       dispatch(deleteDocument(deletedEtapeIds));
     }
@@ -224,6 +226,7 @@ function EtapesDialog({
     if (fromDashboard) {
       callGetCalendarData();
     }
+    dispatch(setIsLoading(false));
   };
 
   const handleRemoveItem = (e, index) => {
@@ -255,6 +258,21 @@ function EtapesDialog({
     setIsDateAdded(true);
   };
   const onSubmit = () => {
+    closeComposeDialog();
+    dispatch(setIsLoading(true));
+    if (files?.length > 0) {
+      const formData = new FormData();
+      for (let i = 0; i < files.length; i++) {
+        formData.append("case_document", files[i]);
+      }
+      formData.append(
+        "case_management_id",
+        fromDashboard ? caseIdDashboard : editDossierData.data.id
+      );
+      formData.append("case_task_id", type === "new" ? etapeId : data.id);
+      dispatch(uploadDocument(formData));
+      setFiles(null);
+    }
     if (type === "edit") {
       dispatch(
         updateEtapes({
@@ -299,29 +317,16 @@ function EtapesDialog({
         message: ""
       });
     }
-    if (files?.length > 0) {
-      const formData = new FormData();
-      for (let i = 0; i < files.length; i++) {
-        formData.append("case_document", files[i]);
-      }
-      formData.append(
-        "case_management_id",
-        fromDashboard ? caseIdDashboard : editDossierData.data.id
-      );
-      formData.append("case_task_id", type === "new" ? etapeId : data.id);
-      dispatch(uploadDocument(formData));
-      setFiles(null);
-    }
     if (deletedEtapeIds && deletedEtapeIds?.length > 0) {
       dispatch(deleteDocument(deletedEtapeIds));
     }
     setTimeout(() => {
       dispatch(getDocuments(caseId));
     }, 2000);
-    closeComposeDialog();
     if (fromDashboard) {
       callGetCalendarData();
     }
+    dispatch(setIsLoading(false));
   };
 
   return (
@@ -620,7 +625,7 @@ function EtapesDialog({
             autoComplete="off"
             fullWidth
             inputProps={{ maxLength: 100 }}
-            value={allFields.subject || data?.name}
+            value={allFields.subject}
             onChange={(e) => {
               setAllFields({
                 ...allFields,
