@@ -82,7 +82,7 @@ function EtapesDialog({
   });
   const [documentData, setDocumentData] = useState([]);
   useEffect(() => {
-    if (success || type === "new") {
+    if (success && type === "new") {
       setAllFields({
         ...allFields,
         case_name: isCaseAdded
