@@ -171,6 +171,7 @@ function DossiersList(props) {
                 onClick={(ev) => {
                   ev.stopPropagation();
                   dispatch(setCaseId(row?.original?.id));
+                  dispatch(setClientId(row?.original?.client_id));
                   dispatch(setGroupId(row?.original?.case_group?.id));
                   dispatch(setMessageTabFromAction(false));
                   dispatch(setEtapeTabFromAction(true));
