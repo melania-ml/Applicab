@@ -78,14 +78,7 @@ function EtapesDialog({
     notification_date: null,
     client_id: [],
     subject: data?.name || "",
-    message: `<p><b>Chère Madame, Cher Monsieur,</b></br>
-    Je vous confirme bien volontiers notre rendez-vous du ........... prochain à .. heures.</br></br>
-    <b>Je vous invite à me confirmer le numéro de téléphone sur lequel je pourrai vous joindre
-    Voici le lien pour participer à notre visioconférence.</br>
-    Je vous recevrai au (adresse du cabinet)</b></br></br>
-    Dans l'intervalle,</br>
-    Je vous prie de croire, <b>Chère Madame, Cher Monsieur,</b> à l'assurance de mes salutations
-    distinguées.</p>`
+    message: ""
   });
   const [documentData, setDocumentData] = useState([]);
   useEffect(() => {
@@ -105,6 +98,7 @@ function EtapesDialog({
         message: ""
       });
       setNotifications([]);
+      setDocumentData([]);
     } else if (type === "edit") {
       if (data && Object.keys(data).length !== 0) {
         const clientIdArr = data?.client_id?.map((a) => {
@@ -180,7 +174,11 @@ function EtapesDialog({
       }
       formData.append(
         "case_management_id",
-        fromDashboard ? caseIdDashboard : editDossierData.data.id
+        fromDashboard
+          ? caseIdDashboard
+          : isCaseAdded
+          ? caseId
+          : editDossierData.data.id
       );
       formData.append("case_task_id", type === "new" ? etapeId : data.id);
       await dispatch(uploadDocument(formData));
@@ -272,7 +270,11 @@ function EtapesDialog({
       }
       formData.append(
         "case_management_id",
-        fromDashboard ? caseIdDashboard : editDossierData.data.id
+        fromDashboard
+          ? caseIdDashboard
+          : isCaseAdded
+          ? caseId
+          : editDossierData.data.id
       );
       formData.append("case_task_id", type === "new" ? etapeId : data.id);
       dispatch(uploadDocument(formData));
