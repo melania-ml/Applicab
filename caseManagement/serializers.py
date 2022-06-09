@@ -141,9 +141,12 @@ class GetCaseSerializer(serializers.ModelSerializer):
 
 
 class DashboardTaskSerializer(serializers.ModelSerializer):
+    case_documents = GetCaseDocumentsSerializer(many=True, read_only=True)
+
     class Meta:
         model = caseManagementTask
         fields = '__all__'
+        read_only_fields = ['case_documents']
         depth = 2
 
     def to_representation(self, instance):

@@ -141,6 +141,8 @@ class User(AbstractUser):
     lawyer_id = models.ForeignKey('self', blank=True, null=True,
                                   on_delete=models.DO_NOTHING, db_column='lawyer_id')
     terms_condition = models.BooleanField(default=False)
+    terms_condition_date = models.DateTimeField(auto_now=False, default=django.utils.timezone.now)
+
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

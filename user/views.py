@@ -173,8 +173,11 @@ class loginClient(APIView):
             authenticated = user.check_password(password)
 
             if authenticated:
-                user.terms_condition = True
-                user.save()
+                if not user.terms_condition:
+                    user.terms_condition_date = datetime.now()
+                    user.terms_condition = True
+                    user.save()
+
                 serializer = self.serializers_class(user, context={'request': request})
                 update_last_login(None, user)
                 res = ResponseInfo(serializer.data, USER_LOGGED_IN_SUCCESSFULLY, True, status.HTTP_200_OK)

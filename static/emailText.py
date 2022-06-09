@@ -4,7 +4,7 @@ from altata_sasu.settings import *
 def setPassword():
     textDict = {
         'title': 'Confirmez votre adresse e-mail 💌',
-        'text1': 'Bonjour',
+        'text1': 'Bonjour,',
         'text2': 'Votre avocat vous invite à rejoindre votre Espace client Applicab.',
         'text3': "Votre espace client sécurisé vous permet télécharger les documents mis à votre disposition, consulter l'état d'avancement du dossier, les diligences accomplies et celles restant à accomplir, le calendrier de l'affaire, etc.",
         'text4': "Votre code de confirmation est le suivant.",
@@ -21,7 +21,7 @@ def setPassword():
 def setLawyerPassword():
     textDict = {
         'title': 'Confirmez votre adresse e-mail 💌',
-        'text1': 'Bonjour',
+        'text1': 'Bonjour,',
         'text2': 'Merci de votre inscription à Applicab !',
         'text3': "Votre code de confirmation est le suivant.",
         'text4': "Copiez collez le simplement ou bien saisissez le dans votre interface Applicab pour poursuivre votre inscription.",

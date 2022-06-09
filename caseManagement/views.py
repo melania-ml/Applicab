@@ -173,6 +173,7 @@ class casesManagement(APIView):
             reqData = request.data
             caseManagementDocuments.objects.filter(case_management_id__in=reqData['case_management_id']).hard_delete()
             caseManagementTask.objects.filter(case_management_id__in=reqData['case_management_id']).hard_delete()
+            caseManagementTask.deleted_objects.filter(case_management_id__in=reqData['case_management_id']).hard_delete()
             groupChat = list(caseManagementChatGroup.objects.filter(
                 case_management_id__in=reqData['case_management_id']).values_list('id', flat=True))
             caseManagementGroupMessage.objects.filter(group_id__in=groupChat).hard_delete()
@@ -321,6 +322,7 @@ class caseManagementTaskView(APIView):
             taskList = caseManagementTask.objects.filter(id__in=taskId)
             for task in taskList:
                 task.id = None
+
                 task.is_default = False
                 task.case_management_id = CaseManagement.objects.get(pk=caseId)
                 bulk_list.append(task)
@@ -602,7 +604,7 @@ class dashboardViewSet(APIView):
                 res = ResponseInfo([], "Please check payload for filter keyword..", False, status.HTTP_401_UNAUTHORIZED)
                 return Response(res.errors_payload(), status=status.HTTP_401_UNAUTHORIZED)
             caseTask = caseManagementTask.objects.filter(**query).order_by("notification_date")
-            serializer = self.serializers_class(caseTask, many=True)
+            serializer = self.serializers_class(caseTask, many=True, context={'request': request})
 
             res = ResponseInfo(serializer.data, SUCCESS, True, status.HTTP_200_OK)
             return Response(res.success_payload(), status=status.HTTP_200_OK)
@@ -624,7 +626,7 @@ class clientDashboardViewSet(APIView):
 
             # for case-task with filtered status
             caseTaskData = caseManagementTask.objects.filter(Q(case_management_id=case_id),
-                                                             ~Q(status="Archivé")).order_by("notification_date")
+                                                             ~Q(status="Archivé")).order_by("position")
             self.taskSerializers_class.Meta.depth = 0
             taskSerializer = self.taskSerializers_class(caseTaskData, many=True)
 
