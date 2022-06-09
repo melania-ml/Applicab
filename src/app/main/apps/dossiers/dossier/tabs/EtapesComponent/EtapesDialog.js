@@ -175,10 +175,11 @@ function EtapesDialog({
       ? dispatch(closeEditEtapeDialog())
       : dispatch(closeNewEtapeDialog());
   }
-
-  const removeDocument = (doc) => {
+  const removeDocument = (doc, index) => {
+    const _tempDocuments = [...documentData];
+    _tempDocuments.splice(index, 1);
     setDeletedEtapeIds([...deletedEtapeIds, doc.id]);
-    setDocumentData(documentData.filter((document) => !document.id === doc.id));
+    setDocumentData([..._tempDocuments]);
   };
 
   const sendMessage = async () => {
@@ -711,7 +712,7 @@ function EtapesDialog({
         <div className="mt-2">
           {documentData &&
             documentData.length > 0 &&
-            documentData.map((doc) => {
+            documentData.map((doc, index) => {
               return (
                 <div className="flex align-center">
                   <p>{doc.file_name}</p>{" "}
@@ -723,7 +724,7 @@ function EtapesDialog({
                       marginLeft: 5,
                       color: "black"
                     }}
-                    onClick={(e) => removeDocument(doc)}
+                    onClick={(e) => removeDocument(doc, index)}
                   >
                     clear
                   </Icon>
