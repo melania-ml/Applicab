@@ -99,6 +99,23 @@ function EtapesDialog({
       });
       setNotifications([]);
       setDocumentData([]);
+    } else if (type === "new") {
+      setAllFields({
+        ...allFields,
+        case_name: isCaseAdded
+          ? messageHeader?.case_name
+          : editDossierData?.data?.case_name,
+        position: "",
+        name: "",
+        sub_name: "",
+        status: "A prévoir",
+        notification_date: null,
+        client_id: [],
+        subject: "",
+        message: ""
+      });
+      setNotifications([]);
+      setDocumentData([]);
     } else if (type === "edit") {
       if (data && Object.keys(data).length !== 0) {
         const clientIdArr = data?.client_id?.map((a) => {
