@@ -365,6 +365,10 @@ export const addEtapes = createAsyncThunk(
           dispatch(showMessage({ message: data.data.message }));
           dispatch(getEtapes(getState().dossiers.listObj));
           dispatch(getDocuments(getState().dossiers.caseId));
+          dispatch(
+            getMessages(getState().dossiers.caseId, getState().dossiers.groupId)
+          );
+          dispatch(showMessage({ message: data.data.message }));
           dispatch(setIsLoading(false));
           return dispatch(addEtapeSuccess());
         }
