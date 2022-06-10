@@ -185,55 +185,40 @@ function EtapesDialog({
   const sendMessage = async () => {
     closeComposeDialog();
     dispatch(setIsLoading(true));
-    if (files?.length > 0) {
-      const formData = new FormData();
-      for (let i = 0; i < files.length; i++) {
-        formData.append("case_document", files[i]);
-      }
-      formData.append(
-        "case_management_id",
-        fromDashboard
+    if (type === "edit") {
+      let obj = {};
+      obj["allFields"] = {
+        ...allFields,
+        message: allFields.message,
+        id: data.id,
+        case_management_id: fromDashboard
           ? caseIdDashboard
           : isCaseAdded
           ? caseId
-          : editDossierData.data.id
-      );
-      formData.append("case_task_id", type === "new" ? etapeId : data.id);
-      await dispatch(uploadDocument(formData));
-      setFiles(null);
-    }
-    if (type === "edit") {
-      await dispatch(
-        updateEtapes({
-          ...allFields,
-          message: allFields.message,
-          id: data.id,
-          case_management_id: fromDashboard
-            ? caseIdDashboard
-            : isCaseAdded
-            ? caseId
-            : editDossierData.data.id,
-          send_notification: true,
-          lawyer_notification: notifications.map(
-            (notification) => notification.count
-          )
-        })
-      );
+          : editDossierData.data.id,
+        send_notification: true,
+        lawyer_notification: notifications.map(
+          (notification) => notification.count
+        )
+      };
+      obj["files"] = files;
+      dispatch(updateEtapes(obj));
     } else {
-      await dispatch(
-        addEtapes({
-          ...allFields,
-          case_management_id: fromDashboard
-            ? caseIdDashboard
-            : isCaseAdded
-            ? caseId
-            : editDossierData.data.id,
-          send_notification: true,
-          lawyer_notification: notifications.map(
-            (notification) => notification.count
-          )
-        })
-      );
+      let obj = {};
+      obj["allFields"] = {
+        ...allFields,
+        case_management_id: fromDashboard
+          ? caseIdDashboard
+          : isCaseAdded
+          ? caseId
+          : editDossierData.data.id,
+        send_notification: false,
+        lawyer_notification: notifications.map(
+          (notification) => notification.count
+        )
+      };
+      obj["files"] = files;
+      dispatch(addEtapes(obj));
     }
     if (deletedEtapeIds && deletedEtapeIds?.length > 0) {
       dispatch(deleteDocument(deletedEtapeIds));
@@ -281,54 +266,39 @@ function EtapesDialog({
   const onSubmit = () => {
     closeComposeDialog();
     dispatch(setIsLoading(true));
-    if (files?.length > 0) {
-      const formData = new FormData();
-      for (let i = 0; i < files.length; i++) {
-        formData.append("case_document", files[i]);
-      }
-      formData.append(
-        "case_management_id",
-        fromDashboard
+    if (type === "edit") {
+      let obj = {};
+      obj["allFields"] = {
+        ...allFields,
+        id: data?.id,
+        case_management_id: fromDashboard
           ? caseIdDashboard
           : isCaseAdded
           ? caseId
-          : editDossierData.data.id
-      );
-      formData.append("case_task_id", type === "new" ? etapeId : data.id);
-      dispatch(uploadDocument(formData));
-      setFiles(null);
-    }
-    if (type === "edit") {
-      dispatch(
-        updateEtapes({
-          ...allFields,
-          id: data?.id,
-          case_management_id: fromDashboard
-            ? caseIdDashboard
-            : isCaseAdded
-            ? caseId
-            : editDossierData?.data?.id,
-          send_notification: false,
-          lawyer_notification: notifications?.map(
-            (notification) => notification.count
-          )
-        })
-      );
+          : editDossierData?.data?.id,
+        send_notification: false,
+        lawyer_notification: notifications?.map(
+          (notification) => notification.count
+        )
+      };
+      obj["files"] = files;
+      dispatch(updateEtapes(obj));
     } else {
-      dispatch(
-        addEtapes({
-          ...allFields,
-          case_management_id: fromDashboard
-            ? caseIdDashboard
-            : isCaseAdded
-            ? caseId
-            : editDossierData.data.id,
-          send_notification: false,
-          lawyer_notification: notifications.map(
-            (notification) => notification.count
-          )
-        })
-      );
+      let obj = {};
+      obj["allFields"] = {
+        ...allFields,
+        case_management_id: fromDashboard
+          ? caseIdDashboard
+          : isCaseAdded
+          ? caseId
+          : editDossierData.data.id,
+        send_notification: false,
+        lawyer_notification: notifications.map(
+          (notification) => notification.count
+        )
+      };
+      obj["files"] = files;
+      dispatch(addEtapes(obj));
       setAllFields({
         ...allFields,
         position: "",

@@ -343,19 +343,28 @@ export const sendMessage = (obj) => async (dispatch) => {
       dispatch(showMessage({ message: error.response.message }));
     });
 };
-
 export const addEtapes = createAsyncThunk(
   "dossiersApp/dossiers/addEtapes",
-  async (allfields, { dispatch, getState }) => {
+  async (obj, { dispatch, getState }) => {
+    const { files, allFields } = obj;
     dispatch(setIsLoading(true));
     await axios
-      .post("api/caseManagement/createCaseTask", allfields)
+      .post("api/caseManagement/createCaseTask", allFields)
       .then((data) => {
         if (data.data.status === 201 && data.data.success) {
+          if (files?.length > 0) {
+            const formData = new FormData();
+            for (let i = 0; i < files.length; i++) {
+              formData.append("case_document", files[i]);
+            }
+            formData.append("case_management_id", getState().dossiers.caseId);
+            formData.append("case_task_id", data.data.data.id);
+            dispatch(uploadDocument(formData));
+          }
           dispatch(setEtapeId(data.data.data.id));
+          dispatch(showMessage({ message: data.data.message }));
           dispatch(getEtapes(getState().dossiers.listObj));
           dispatch(getDocuments(getState().dossiers.caseId));
-          dispatch(showMessage({ message: data.data.message }));
           dispatch(setIsLoading(false));
           return dispatch(addEtapeSuccess());
         }
@@ -369,20 +378,31 @@ export const addEtapes = createAsyncThunk(
 
 export const updateEtapes = createAsyncThunk(
   "dossiersApp/dossiers/updateEtapes",
-  async (allfields, { dispatch, getState }) => {
+  async (obj, { dispatch, getState }) => {
+    const { files, allFields } = obj;
     await axios
-      .put("api/caseManagement/updateCaseTask", allfields)
+      .put("api/caseManagement/updateCaseTask", allFields)
       .then((data) => {
         if (data.data && data.data.success) {
+          if (files?.length > 0) {
+            const formData = new FormData();
+            for (let i = 0; i < files.length; i++) {
+              formData.append("case_document", files[i]);
+            }
+            formData.append("case_management_id", getState().dossiers.caseId);
+            formData.append("case_task_id", data.data.data.id);
+            dispatch(uploadDocument(formData));
+          }
           dispatch(showMessage({ message: data.data.message }));
           if (getState().dossiers.caseId) {
-            dispatch(getEtapes(getState().dossiers.listObj));
             dispatch(
               getMessages(
                 getState().dossiers.caseId,
                 getState().dossiers.groupId
               )
             );
+            dispatch(getEtapes(getState().dossiers.listObj));
+            return dispatch(addEtapeSuccess());
           }
         }
       })
@@ -391,7 +411,6 @@ export const updateEtapes = createAsyncThunk(
       });
   }
 );
-
 export const uploadDocument = createAsyncThunk(
   "dossiersApp/dossiers/uploadDocument",
   async (document, { dispatch }) => {
